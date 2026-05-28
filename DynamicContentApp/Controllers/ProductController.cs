@@ -7,25 +7,26 @@ using System.Xml.Linq;
 
 namespace DynamicContentApp.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<BaseController> _logger;
         private readonly string _mode;
 
         private readonly IViewRenderService _viewRenderService;
-        
-        public ProductController()
-        {
-            _mode = "start";
-        }
-        public ProductController(ILogger<ProductController> logger, IViewRenderService viewRenderService)
+        private readonly IControllerRenderService _controllerRenderService;
+        //public ProductController()
+        //{
+        //    _mode = "start";
+        //}
+        public ProductController(ILogger<BaseController> logger, IViewRenderService viewRenderService) : base(logger , viewRenderService)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
-        }
-        public ProductController( IViewRenderService viewRenderService)
-        {
           
+        }
+        public ProductController(IViewRenderService viewRenderService) : base( viewRenderService)
+        {
+
             _viewRenderService = viewRenderService;
         }
         public IActionResult Index()
@@ -43,15 +44,7 @@ namespace DynamicContentApp.Controllers
             HomeViewModel HomeViewModel = new HomeViewModel();
             HomeViewModel.ReWriteUrl = "rewriteurl";
             HomeViewModel.BrowserUrl = "browserurl";
-
-            //ViewResult viewResult= View("~/Views/Product/Privacy.cshtml", HomeViewModel);
-
-
-            string html = await _viewRenderService.RenderToStringAsync("~/Views/Product/Privacy.cshtml", HomeViewModel);
-            //string html = await _viewRenderService.RenderToStringAsync(viewResult.ViewName, viewResult.Model);
-            //return View(html);
-            return View((object)html);
-            // return View( HomeViewModel);
+            return View("~/Views/Product/Privacy.cshtml", HomeViewModel, dynamicallyRender :true);
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

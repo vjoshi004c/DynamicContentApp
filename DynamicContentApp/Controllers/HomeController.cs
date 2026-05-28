@@ -12,76 +12,18 @@ using System.Threading.Tasks;
 
 namespace DynamicContentApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<BaseController> _logger;
         private readonly IViewRenderService _viewRenderService;
         private readonly IControllerRenderService _controllerRenderService;
-        public HomeController(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService)
+        public HomeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService):base(logger, viewRenderService, controllerRenderService)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
         }
 
-        //public async Task<string> InvokeDynamicController(string controllerName, string actionName, object[] parameters = null)
-        //{
-        //    string fullHtmlRendering = string.Empty;
-        //    // 1. Find the Controller Type (assuming it ends with "Controller")
-        //    var controllerType = Assembly.GetExecutingAssembly().GetTypes()
-        //        .FirstOrDefault(t => t.Name.Equals(controllerName + "Controller", StringComparison.OrdinalIgnoreCase));
-
-        //    if (controllerType != null)
-        //    {
-        //        // 2. Create instance (use your DI container if necessary)
-        //        var controllerInstance = Activator.CreateInstance(controllerType, _viewRenderService);
-
-
-        //        // 3. Get the Action Method
-        //        var methodInfo = controllerType.GetMethod(actionName,
-        //            BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-
-        //        if (methodInfo != null)
-        //        {
-        //            // 4. Invoke the method
-        //            var result = methodInfo.Invoke(controllerInstance, parameters);
-        //            //string htmldata = ((Microsoft.AspNetCore.Mvc.ViewResult)(Microsoft.AspNetCore.Mvc.ActionResult(result).Result)).ViewName;
-        //            //string htmlData = ((ViewResult)(new System.Threading.Tasks.SystemThreadingTasks_FutureDebugView<Microsoft.AspNetCore.Mvc.IActionResult>(result).Result)).ViewName;
-
-        //            //Microsoft.AspNetCore.Mvc.ViewResult viewResultFinal = new ViewResult();
-
-        //            // ((Microsoft.AspNetCore.Mvc.ViewResult)(new System.Threading.Tasks<Microsoft.AspNetCore.Mvc.IActionResult>(result).Result)).ViewName;
-
-
-        //            if (result is Task<IActionResult> viewResult)
-
-        //            // if (result is ViewResult viewResult)
-        //            {
-        //                var htmlfinal = ((Microsoft.AspNetCore.Mvc.ViewResult)viewResult.Result).Model;
-        //                if (htmlfinal != null && htmlfinal.ToString() != string.Empty)
-        //                {
-        //                    fullHtmlRendering = htmlfinal.ToString();
-        //                }
-
-        //                // string htmlfinal = ((Microsoft.AspNetCore.Mvc.ViewResult)viewResult.Result)).Model;
-
-
-        //                // string htmlfinal = viewResult.Model.ToString();
-        //                // string html = await _viewRenderService.RenderToStringAsync(viewResult.ViewName, viewResult.ViewData.Model);
-        //                // Pass the rendered HTML to string
-        //                //if (controllerInstance != null)
-        //                //{
-        //                //     html = await _viewRenderService.RenderViewToStringAsync((Controller)controllerInstance, viewResult);
-        //                //}
-        //            }
-
-
-        //        }
-
-        //    }
-        //    return fullHtmlRendering;
-        //}
-        
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -100,8 +42,20 @@ namespace DynamicContentApp.Controllers
 
             HomeViewModel.BrowserUrl = fullBrowserUrl;
             HomeViewModel.ReWriteUrl = fullUrl;
+            PageItemModel PageItemModel = new PageItemModel();
+            if (! String.IsNullOrEmpty(HttpContext.Request.Query["ID"]))
+            {
+                string project = HttpContext.Request.Query["ID"].ToString();
+                if (project == "2") { PageItemModel = MockData.GeneratePageItemModel(2); }
+                else if (project == "1") {  PageItemModel = MockData.GeneratePageItemModel(1); }
+                else {  PageItemModel = MockData.GeneratePageItemModel(Convert.ToInt32(1)); }
+            }
+            else
+            {
+                PageItemModel = MockData.GeneratePageItemModel(Convert.ToInt32(1));
+            }
 
-            PageItemModel PageItemModel = MockData.GeneratePageItemModel();
+           // PageItemModel PageItemModel = MockData.GeneratePageItemModel(1);
 
             StringBuilder htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(PageItemModel.MasterLayoutPath, HomeViewModel));
 
@@ -114,7 +68,6 @@ namespace DynamicContentApp.Controllers
                 if (item.Component.ComponentType == ComponentTypeEnum.ViewRendering)
                 {
                     string htmlContent = await _viewRenderService.RenderToStringAsync(item.Component.ComponentItemPath, HomeViewModel);
-                    //htmlContentMaster.Replace(item.Placeholder.PlaceholderName, htmlContent);
                     Utility.AddOnPlaceholderCollection(PageSectionContent, item, htmlContent);
 
                 }
@@ -122,7 +75,6 @@ namespace DynamicContentApp.Controllers
                 {
                     Task<String> htmlContent = _controllerRenderService.InvokeDynamicController(item.Component.ControllerName, item.Component.ControllerAction, null);
                     string resulthtml = await htmlContent;
-                    // htmlContentMaster.Replace(item.Placeholder.PlaceholderName, resulthtml);
                     Utility.AddOnPlaceholderCollection(PageSectionContent, item, resulthtml);
                 }
             }
@@ -134,50 +86,7 @@ namespace DynamicContentApp.Controllers
             return View(HomeViewModel);
         }
 
-        //private static void AddOnPlaceholderCollection(List<PageSectionContent> PageSectionContent, ComponenetDetailsModel item, string htmlContent)
-        //{
-        //    if (PageSectionContent.Count == 0)
-        //    {
-        //        PageSectionContent pageSectionContent = new PageSectionContent();
-        //        pageSectionContent.PlaceholderName = item.Placeholder.PlaceholderName;
-        //        pageSectionContent.HtmlContent = htmlContent;
-        //        PageSectionContent.Add(pageSectionContent);
-        //        return;
-
-        //    }
-        //    bool isItemExiseted = false;
-        //    foreach (var itempsc in PageSectionContent)
-        //    {
-        //        if (itempsc.PlaceholderName == item.Placeholder.PlaceholderName)
-        //        {
-        //            isItemExiseted = true;
-        //        }
-        //    }
-        //    if(!isItemExiseted)
-        //    //if (itempsc.PlaceholderName != item.Placeholder.PlaceholderName)
-        //    {
-        //        PageSectionContent pageSectionContent = new PageSectionContent();
-        //        pageSectionContent.PlaceholderName = item.Placeholder.PlaceholderName;
-        //        pageSectionContent.HtmlContent = htmlContent;
-        //        PageSectionContent.Add(pageSectionContent);
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        foreach (var itempsc in PageSectionContent)
-        //        {
-        //            if (itempsc.PlaceholderName == item.Placeholder.PlaceholderName)
-        //            {
-        //                itempsc.HtmlContent = itempsc.HtmlContent + htmlContent;
-        //                return;
-        //            }
-        //        }
-               
-               
-        //    }
-           
-            
-        //}
+        
 
         public IActionResult Privacy()
         {
@@ -190,81 +99,6 @@ namespace DynamicContentApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //public PageItemModel GeneratePageItemModel()
-        //{
-          
-
-        //    PageItemModel PageItemModel1 = new PageItemModel();
-
-        //    PageItemModel1.PageItemID = "1";
-        //    PageItemModel1.PageItemPath = "";
-        //    PageItemModel1.PageItemSchemaID = "";
-        //    PageItemModel1.MasterLayoutPath = "~/Views/Shared/_MasterLayout.cshtml";
-        //    PageItemModel1.ComponenetDetails = new List<ComponenetDetailsModel>();
-
-        //    PageItemModel1.PlaceholderDetails = null;
-        //    PlaceholderModel Placeholders1 = new PlaceholderModel();
-        //    PlaceholderModel Placeholders2 = new PlaceholderModel();
-        //    PlaceholderModel Placeholders3 = new PlaceholderModel();
-        //    Placeholders1.PlaceholderName = "[[PLACEHOLDER_HEADER]]";
-        //    Placeholders2.PlaceholderName = "[[PLACEHOLDER_CONTENTBODY]]";
-        //    Placeholders3.PlaceholderName = "[[PLACEHOLDER_FOOTER]]";
-        //    List<PlaceholderModel> placeholderlist = new List<PlaceholderModel>();
-        //    placeholderlist.Add(Placeholders1);
-        //    placeholderlist.Add(Placeholders2);
-        //    placeholderlist.Add(Placeholders3);
-
-        //    ComponentModel component1 = new ComponentModel();
-        //    component1.ComponentType = ComponentTypeEnum.ViewRendering;
-        //    component1.ComponentItemPath = "~/Views/Components/Header.cshtml";
-        //    PlaceholderModel placeholder1 = new PlaceholderModel();
-        //    placeholder1.PlaceholderName = "[[PLACEHOLDER_HEADER]]";
-           
-        //    ComponenetDetailsModel ComponenetDetailsModel1 = new ComponenetDetailsModel();
-        //    ComponenetDetailsModel1.Placeholder = placeholder1;
-        //    ComponenetDetailsModel1.Component = component1;
-        //    PageItemModel1.ComponenetDetails.Add(ComponenetDetailsModel1);
-
-
-        //    ComponentModel component2 = new ComponentModel();
-        //    component2.ComponentType = ComponentTypeEnum.ViewRendering;
-        //    component2.ComponentItemPath = "~/Views/Components/ContentBody.cshtml";
-        //    PlaceholderModel placeholder2 = new PlaceholderModel();
-        //    placeholder2.PlaceholderName = "[[PLACEHOLDER_CONTENTBODY]]";
-        //   // PageItemModel1.ComponenetDetails = new List<ComponenetDetailsModel>();
-        //    ComponenetDetailsModel ComponenetDetailsModel2 = new ComponenetDetailsModel();
-        //    ComponenetDetailsModel2.Placeholder = placeholder2;
-        //    ComponenetDetailsModel2.Component = component2;
-        //    PageItemModel1.ComponenetDetails.Add(ComponenetDetailsModel2);
-
-
-        //    ComponentModel component3 = new ComponentModel();
-        //    component3.ComponentType = ComponentTypeEnum.ViewRendering;
-        //    component3.ComponentItemPath = "~/Views/Components/Footer.cshtml";
-        //    PlaceholderModel placeholder3 = new PlaceholderModel();
-        //    placeholder3.PlaceholderName = "[[PLACEHOLDER_FOOTER]]";
-        //    // PageItemModel1.ComponenetDetails = new List<ComponenetDetailsModel>();
-        //    ComponenetDetailsModel ComponenetDetailsModel3 = new ComponenetDetailsModel();
-        //    ComponenetDetailsModel3.Placeholder = placeholder3;
-        //    ComponenetDetailsModel3.Component = component3;
-        //    PageItemModel1.ComponenetDetails.Add(ComponenetDetailsModel3);
-
-        //    ComponentModel component4 = new ComponentModel();
-        //    component4.ComponentType = ComponentTypeEnum.ControllerRendering;
-        //    component4.ControllerName = "Product";
-        //    component4.ControllerAction = "Privacy";
-        //    component4.ComponentItemPath = "";
-        //    PlaceholderModel placeholder4 = new PlaceholderModel();
-        //    placeholder4.PlaceholderName = "[[PLACEHOLDER_FOOTER]]";
-        //    // PageItemModel1.ComponenetDetails = new List<ComponenetDetailsModel>();
-        //    ComponenetDetailsModel ComponenetDetailsModel4 = new ComponenetDetailsModel();
-        //    ComponenetDetailsModel4.Placeholder = placeholder4;
-        //    ComponenetDetailsModel4.Component = component4;
-        //    PageItemModel1.ComponenetDetails.Add(ComponenetDetailsModel4);
-
-
-        //    return PageItemModel1;
-        //}
 
     }
 }
