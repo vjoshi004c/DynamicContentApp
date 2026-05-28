@@ -25,7 +25,7 @@ options.Add(context =>
     // If it's not a static file, rewrite internally to your generic endpoint
     if (!isStaticFile)
     {
-        context.HttpContext.Request.Path = "/home/index";
+        context.HttpContext.Request.Path = "/Generic/Start";
     }
 
     context.Result = RuleResult.SkipRemainingRules;

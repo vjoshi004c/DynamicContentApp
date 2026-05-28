@@ -9,6 +9,11 @@
   <ItemGroup>
     <Folder Include="MockData\" />
     <Folder Include="Views\Components\" />
+    <Folder Include="Views\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
 </Project>
