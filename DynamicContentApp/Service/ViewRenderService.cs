@@ -73,32 +73,37 @@ namespace DynamicContentApp.Service
             string viewName = string.IsNullOrEmpty(viewResult.ViewName) ? controller.ControllerContext.ActionDescriptor.ActionName : viewResult.ViewName;
 
             // Find the view (checks both full paths and standard action directories)
-            var viewEngineResult = viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
-            if (!viewEngineResult.Success)
+            if (viewEngine != null)
             {
-                viewEngineResult = viewEngine.FindView(controller.ControllerContext, viewName, isMainPage: true);
-            }
+                var viewEngineResult = viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: true);
+                if (!viewEngineResult.Success)
+                {
+                    viewEngineResult = viewEngine.FindView(controller.ControllerContext, viewName, isMainPage: true);
+                }
 
-            if (!viewEngineResult.Success)
-            {
-                throw new FileNotFoundException($"The view '{viewName}' could not be found.");
-            }
+                if (!viewEngineResult.Success)
+                {
+                    throw new FileNotFoundException($"The view '{viewName}' could not be found.");
+                }
 
-            using (var writer = new StringWriter())
-            {
-                var viewContext = new ViewContext(
-                    controller.ControllerContext,
-                    viewEngineResult.View,
-                    new ViewDataDictionary(controller.ViewData) { Model = viewResult.Model },
-                    //new TempDataDictionary(controller.HttpContext, controller.TempData),
-                    controller.TempData,
-                    writer,
-                    new HtmlHelperOptions()
-                );
+                using (var writer = new StringWriter())
+                {
+                    var viewContext = new ViewContext(
+                        controller.ControllerContext,
+                        viewEngineResult.View,
+                        new ViewDataDictionary(controller.ViewData) { Model = viewResult.Model },
+                        //new TempDataDictionary(controller.HttpContext, controller.TempData),
+                        controller.TempData,
+                        writer,
+                        new HtmlHelperOptions()
+                    );
 
-                await viewEngineResult.View.RenderAsync(viewContext);
-                return writer.GetStringBuilder().ToString();
+                    await viewEngineResult.View.RenderAsync(viewContext);
+                    return writer.GetStringBuilder().ToString();
+                }
+                
             }
+            return string.Empty;
         }
     }
 }

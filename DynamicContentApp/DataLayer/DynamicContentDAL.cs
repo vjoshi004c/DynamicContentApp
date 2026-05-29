@@ -24,7 +24,7 @@ namespace DynamicContentApp.DataLayer
         public bool InsertPageContent(string PageUrl, string PageContent)
         {
             SqlConnection con = null;
-            string result = "";
+            //string result = "";
             try
             {
                 con = new SqlConnection(ConnenctionString);
@@ -53,7 +53,7 @@ namespace DynamicContentApp.DataLayer
         public bool UpdatePageContent(string PageUrl, string PageContent)
         {
             SqlConnection con = null;
-            string result = "";
+            //string result = "";
             try
             {
                 con = new SqlConnection(ConnenctionString);

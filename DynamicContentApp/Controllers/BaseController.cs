@@ -14,9 +14,9 @@ namespace DynamicContentApp.Controllers
 {
     public class BaseController : Controller
     {
-        private readonly ILogger<BaseController> _logger;
-        private readonly IViewRenderService _viewRenderService;
-        private readonly IControllerRenderService _controllerRenderService;
+        private readonly ILogger<BaseController>? _logger;
+        private readonly IViewRenderService? _viewRenderService;
+        private readonly IControllerRenderService? _controllerRenderService;
         public BaseController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService)
         {
             _logger = logger;

@@ -2,7 +2,7 @@
 {
     public class DynamicContentModel
     {
-        public string PageUrl { get; set; }
-        public string PageContent { get; set; }
+        public string? PageUrl { get; set; }
+        public string? PageContent { get; set; }
     }
 }

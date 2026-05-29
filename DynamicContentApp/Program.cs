@@ -13,6 +13,7 @@ builder.Services.Configure<SystemConfigOptions>(builder.Configuration.GetSection
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IViewRenderService, ViewRenderService>();
 builder.Services.AddScoped<IControllerRenderService, ControllerRenderService>();
+builder.Services.AddScoped<ICMSService, CMSService>();
 
 
 

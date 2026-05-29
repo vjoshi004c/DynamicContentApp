@@ -24,9 +24,6 @@ namespace DynamicContentApp.Controllers
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
         }
-
-
-
         public IActionResult Error()
         {
             return View("~/Views/Product/ContentBody.cshtml");
