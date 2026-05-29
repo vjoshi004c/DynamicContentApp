@@ -1,0 +1,17 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div style="background-color:#E3D9D8;height:80vh;">
+    <h3 class="display-4">Ooops!!Error on page </h3>
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web contnet body with ASP.NET Core</a>.</p> *@
+
+
+<p>BrowserUrl -- @Model.BrowserUrl</p>
+@* <p>InternalUrl -- @Model.ReWriteUrl</p> *@
+
+    @Html.Raw(@Model.ErrorContent)
+</div>

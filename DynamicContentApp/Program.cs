@@ -1,13 +1,20 @@
+using DynamicContentApp.Models;
 using DynamicContentApp.Service;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.Configure<SystemConfigOptions>(builder.Configuration.GetSection(SystemConfigOptions.SystemConfig));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IViewRenderService, ViewRenderService>();
 builder.Services.AddScoped<IControllerRenderService, ControllerRenderService>();
+
+
 
 var app = builder.Build();
 // 1. Create a rewrite options object

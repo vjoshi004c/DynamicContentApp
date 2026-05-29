@@ -14,6 +14,8 @@ namespace DynamicContentApp.Models
 
         public string? ViewContent { get; set; }
 
+        public string?ErrorContent { get; set; }
+
 
     }
 
@@ -71,5 +73,17 @@ namespace DynamicContentApp.Models
        
     }
 
-    
+    public enum ApplicationMode
+    {
+        CONTENT_MANAGEMENT,    // 0
+        CONTENT_DELIVERY // 1
+
+    }
+    public class SystemConfigOptions
+    {
+        public const string SystemConfig = "SystemConfig";
+        public string ApplicationMode { get; set; } = "";
+       
+    }
+
 }

@@ -1,3 +1,4 @@
+using DynamicContentApp.DataLayer;
 using DynamicContentApp.JSON;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
@@ -5,11 +6,13 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DynamicContentApp.Controllers
 {
@@ -18,19 +21,19 @@ namespace DynamicContentApp.Controllers
         private readonly ILogger<BaseController> _logger;
         private readonly IViewRenderService _viewRenderService;
         private readonly IControllerRenderService _controllerRenderService;
-        public GenericController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService):base(logger, viewRenderService, controllerRenderService)
+        private readonly SystemConfigOptions _options;
+        public GenericController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options) :base(logger, viewRenderService, controllerRenderService)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
+            _options = options.Value;
         }
 
         [HttpGet]
         public async Task<IActionResult> Start()
         {
-
-            ViewData["SelectedLayout"] = "_MasterLayout";
-
+            HomeViewModel HomeViewModel = new HomeViewModel();
             string scheme = HttpContext.Request.Scheme;
             string host = HttpContext.Request.Host.Value;
             string? rawTarget = HttpContext.Features.Get<IHttpRequestFeature>()?.RawTarget;
@@ -39,21 +42,51 @@ namespace DynamicContentApp.Controllers
 
             //var fullUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}{Request.QueryString}";
             var fullUrl = Request.GetDisplayUrl();
-            HomeViewModel HomeViewModel = new HomeViewModel();
-
             HomeViewModel.BrowserUrl = fullBrowserUrl;
             HomeViewModel.ReWriteUrl = fullUrl;
-            PageItemModel PageItemModel = new PageItemModel();
-            if (! String.IsNullOrEmpty(HttpContext.Request.Query["ID"]))
+            if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_DELIVERY.ToString())
             {
-                string project = HttpContext.Request.Query["ID"].ToString();
-                if (project == "2") { PageItemModel = MockData.GeneratePageItemModel(2); }
-                else if (project == "1") {  PageItemModel = MockData.GeneratePageItemModel(1); }
-                else {  PageItemModel = MockData.GeneratePageItemModel(Convert.ToInt32(1)); }
+                IfModeIsContentDelivery(HomeViewModel);
+            }
+            if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_MANAGEMENT.ToString())
+            {
+                await IfModeIsContentManagement(HomeViewModel, false);
+            }
+
+            if (String.IsNullOrEmpty(HomeViewModel.ViewContent))
+            {
+                HomeViewModel.ErrorContent = "<div style=\"color:Red\"> <h4> Requested page " + HomeViewModel.BrowserUrl + " not available" + "<h4><div>";
+                await IfModeIsContentManagement(HomeViewModel, true);
+
+            }
+
+            return View(HomeViewModel);
+        }
+
+        private async Task IfModeIsContentManagement(HomeViewModel HomeViewModel, bool isContentDeliveryError)
+        {
+
+            ViewData["SelectedLayout"] = "_MasterLayout";
+
+            PageItemModel PageItemModel = new PageItemModel();
+            if (isContentDeliveryError)
+            {
+                PageItemModel = MockData.GeneratePageItemModel(3);
             }
             else
             {
-                PageItemModel = MockData.GeneratePageItemModel(Convert.ToInt32(1));
+                if (!String.IsNullOrEmpty(HttpContext.Request.Query["ID"]))
+                {
+                    string project = HttpContext.Request.Query["ID"].ToString();
+                    if (project == "2") { PageItemModel = MockData.GeneratePageItemModel(2); }
+                    else if (project == "1") { PageItemModel = MockData.GeneratePageItemModel(1); }
+                    else if (project == "3") { PageItemModel = MockData.GeneratePageItemModel(3); }
+                    else { PageItemModel = MockData.GeneratePageItemModel(Convert.ToInt32(1)); }
+                }
+                else
+                {
+                    PageItemModel = MockData.GeneratePageItemModel(Convert.ToInt32(1));
+                }
             }
 
             //******************* For serialize or de-serialize json 
@@ -89,13 +122,39 @@ namespace DynamicContentApp.Controllers
                 htmlContentMaster.Replace(itempsc.PlaceholderName, itempsc.HtmlContent);
             }
             HomeViewModel.ViewContent = htmlContentMaster.ToString();
-            return View(HomeViewModel);
+            if (!isContentDeliveryError)
+            {
+                SavePageEntireHtmlInDatabase(HomeViewModel);
+            }
+
         }
 
-        
+        private void IfModeIsContentDelivery(HomeViewModel HomeViewModel)
+        {
+            
+                DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+                List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserUrl);
+                if (DynamicContentlist != null && DynamicContentlist.Count > 0)
+                {
+                    HomeViewModel.ViewContent = DynamicContentlist[0].PageContent;
+                }
 
-        
 
+            
+        }
 
+        private static void SavePageEntireHtmlInDatabase(HomeViewModel HomeViewModel)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserUrl);
+            if (DynamicContentlist != null && DynamicContentlist.Count == 0)
+            {
+                dynamicContentDAL.InsertPageContent(HomeViewModel.BrowserUrl, HomeViewModel.ViewContent);
+            }
+            else
+            {
+                dynamicContentDAL.UpdatePageContent(HomeViewModel.BrowserUrl, HomeViewModel.ViewContent);
+            }
+        }
     }
 }

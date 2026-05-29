@@ -34,10 +34,10 @@ namespace DynamicContentApp.Controllers
             return View();
         }
 
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
+        public IActionResult Catalog()
+        {
+            return View();
+        }
         public async Task<IActionResult> Privacy()
         {
 
