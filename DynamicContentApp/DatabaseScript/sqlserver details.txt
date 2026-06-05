@@ -1,0 +1,22 @@
+Microsoft sqlserver 2025
+Instance name -manyapc\\MSSQLSERVER
+
+.\SQLExpress
+user -sa 
+pws -vpm031207
+
+********
+
+sqlserver management studio 2022
+4
+**********
+
+login with 
+server - manyapc
+user sa 
+pws vpmo31207
+************
+login with 
+server - vjoshi
+user sa 
+pws vpmo31207

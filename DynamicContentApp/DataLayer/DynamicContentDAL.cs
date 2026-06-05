@@ -15,12 +15,13 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
-      
-        
+       // private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+
+        private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
-       
+
+
         public bool InsertPageContent(string PageUrl, string PageContent)
         {
             SqlConnection con = null;
