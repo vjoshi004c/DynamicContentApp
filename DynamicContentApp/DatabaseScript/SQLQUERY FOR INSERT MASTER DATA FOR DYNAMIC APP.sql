@@ -217,3 +217,93 @@ select *  from assetitem
 select * from assetitemfields
 
 ------------------------------------------------------------
+delete from ComponentPresentation
+delete from ComponentPresentation
+
+INSERT INTO [dbo].[ComponentPresentation] ([ID],[ComponentPath] ,[ComponenetName] ,[ViewRenderingPath] ,[ControllerName] ,[ControllerAction] ,[IsViewRender] ,[isControllerRender])
+     VALUES    ('2930291B-D6A0-40EA-9860-BE0CC6A2F68B', '/Content/Layout/Component/View/Header' ,'Header'  ,'~/Views/Components/Header.cshtml'   ,'' ,'','1','0')
+GO
+
+INSERT INTO [dbo].[ComponentPresentation] ([ID],[ComponentPath] ,[ComponenetName] ,[ViewRenderingPath] ,[ControllerName] ,[ControllerAction] ,[IsViewRender] ,[isControllerRender])
+     VALUES    ('E27FB315-707B-4F3D-8C14-6818BAB01CC8','/Content/Layout/Component/View/Footer' ,'Footer'  ,'~/Views/Components/Footer.cshtml'   ,'' ,'','1','0')
+
+     INSERT INTO [dbo].[ComponentPresentation] ([ID],[ComponentPath] ,[ComponenetName] ,[ViewRenderingPath] ,[ControllerName] ,[ControllerAction] ,[IsViewRender] ,[isControllerRender])
+     VALUES    ('F7D5F1E9-8B43-46E1-BCDE-3431647AB876','/Content/Layout/Component/View/ContentBody' ,'ContentBody'  ,'~/Views/Components/ContentBody.cshtml'   ,'' ,'','1','0')
+
+     INSERT INTO [dbo].[ComponentPresentation] ([ID],[ComponentPath] ,[ComponenetName] ,[ViewRenderingPath] ,[ControllerName] ,[ControllerAction] ,[IsViewRender] ,[isControllerRender])
+     VALUES    ('297CCE15-B7DC-4859-87CD-073DEA87B8E9','/Content/Layout/Component/View/MiddleContent' ,'MiddleContent'  ,'~/Views/Components/MiddleContent.cshtml'   ,'' ,'','1','0')
+
+     INSERT INTO [dbo].[ComponentPresentation] ([ID],[ComponentPath] ,[ComponenetName] ,[ViewRenderingPath] ,[ControllerName] ,[ControllerAction] ,[IsViewRender] ,[isControllerRender])
+     VALUES    ('E1DD5279-53AF-4381-83FA-7773BD661E35','/Content/Layout/Component/View/BottomContent' ,'BottomContent'  ,'~/Views/Components/BottomContent.cshtml'   ,'' ,'','1','0')
+
+     INSERT INTO [dbo].[ComponentPresentation] ([ID],[ComponentPath] ,[ComponenetName] ,[ViewRenderingPath] ,[ControllerName] ,[ControllerAction] ,[IsViewRender] ,[isControllerRender])
+     VALUES    ('A1156B76-93BD-48BF-8C98-88D188148C6C','/Content/Layout/Component/View/MainNagivation' ,'MainNagivation'  ,'~/Views/Components/MainNagivation.cshtml'   ,'' ,'','1','0')
+
+     SELECT * from ComponentPresentation
+
+     ___________________________________________
+
+     GO
+
+Delete PlaceholderPresentation
+INSERT INTO [dbo].[PlaceholderPresentation] ([ID],[PlaceholderName] ,[PlaceholderPath])
+     VALUES ('55BA03B9-6780-4FE8-B53C-43AB328315D8'  ,'PLACEHOLDER_FOOTER' ,'/Layout/Placeholder/PLACEHOLDER_FOOTER')
+INSERT INTO [dbo].[PlaceholderPresentation] ([ID],[PlaceholderName] ,[PlaceholderPath])
+     VALUES ('65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'PLACEHOLDER_CONTENTBODY' ,'//Layout/Placeholder/PLACEHOLDER_CONTENTBODY')
+ INSERT INTO [dbo].[PlaceholderPresentation] ([ID],[PlaceholderName] ,[PlaceholderPath])
+     VALUES ('CA321B81-28AA-4AEB-9DC8-7FE1B6DD3F7E'  ,'PLACEHOLDER_HEADER' ,'/Layout/Placeholder/PLACEHOLDER_HEADER')
+GO
+
+SELECT * FROM PlaceholderPresentation
+
+_______________________
+
+GO
+--INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+
+delete PagePresentation
+
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('85A474C8-5BAA-4D39-BDE4-9822C9BF2884','Header' ,'3941B0BB-F2FD-483A-81EE-C73117F8C1F9'  ,'2930291B-D6A0-40EA-9860-BE0CC6A2F68B'  ,'9AA185C3-CC75-4D64-A335-C51C10FC3A96'  ,'CA321B81-28AA-4AEB-9DC8-7FE1B6DD3F7E'  ,'Header')
+
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('556C281E-3437-47D9-92F6-9FE3A58282D9','MiddleContent'  ,'3941B0BB-F2FD-483A-81EE-C73117F8C1F9'  ,'297CCE15-B7DC-4859-87CD-073DEA87B8E9'  ,'AD4A9404-87A3-46FA-94FE-F2978214C328'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'MiddleContent')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('00A75A20-D02E-4319-A21B-C1CE6FC6A8D4','MainNagivation'  ,'3941B0BB-F2FD-483A-81EE-C73117F8C1F9'  ,'A1156B76-93BD-48BF-8C98-88D188148C6C'  ,'B6965FB9-B28D-4F4A-942F-1E34A8E24D84'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'MainNagivation')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('E5761175-844C-4C4A-AFE4-1920A76D6D8C','BottomContent'  ,'3941B0BB-F2FD-483A-81EE-C73117F8C1F9'  ,'E1DD5279-53AF-4381-83FA-7773BD661E35'  ,'B748B64E-89DB-45BE-8DAA-3FB6EE2EDC69'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'BottomContent')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('1AF94AC1-B0CE-46EC-A32D-823A959EA1D3','Footer'  ,'3941B0BB-F2FD-483A-81EE-C73117F8C1F9'  ,'E27FB315-707B-4F3D-8C14-6818BAB01CC8'  ,'0EF047BE-60AD-44B8-A143-95606FED7873'  ,'55BA03B9-6780-4FE8-B53C-43AB328315D8'  ,'Footer')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('40B334B1-DDE2-4478-9F17-BC56C2A26898','ContentBody'  ,'3941B0BB-F2FD-483A-81EE-C73117F8C1F9'  ,'F7D5F1E9-8B43-46E1-BCDE-3431647AB876'  ,'AD4A9404-87A3-46FA-94FE-F2978214C328'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'ContentBody')
+GO
+
+
+
+
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('A371121F-2073-4A0B-859D-D9A3336203D1','Header' ,'94ECC1CF-19BA-4B1F-99B8-BCF1778A139D'  ,'2930291B-D6A0-40EA-9860-BE0CC6A2F68B'  ,'9AA185C3-CC75-4D64-A335-C51C10FC3A96'  ,'CA321B81-28AA-4AEB-9DC8-7FE1B6DD3F7E'   ,'Header')
+
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('57CC2CA0-ED8C-4A35-9379-864085A640B8','MiddleContent'  ,'94ECC1CF-19BA-4B1F-99B8-BCF1778A139D'  ,'297CCE15-B7DC-4859-87CD-073DEA87B8E9'  ,'AD4A9404-87A3-46FA-94FE-F2978214C328'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'MiddleContent')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('957C5F6A-E0A1-4A30-8265-7BC93E6AED04','MainNagivation'  ,'94ECC1CF-19BA-4B1F-99B8-BCF1778A139D'  ,'A1156B76-93BD-48BF-8C98-88D188148C6C'  ,'B6965FB9-B28D-4F4A-942F-1E34A8E24D84'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'MainNagivation')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('7674DC3A-FA09-431B-8B6D-1E259B90E52A','BottomContent'  ,'94ECC1CF-19BA-4B1F-99B8-BCF1778A139D'  ,'E1DD5279-53AF-4381-83FA-7773BD661E35'  ,'B748B64E-89DB-45BE-8DAA-3FB6EE2EDC69'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'BottomContent')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('56BE46B6-721C-4C44-9DF1-C3FD1E8C59D0','Footer'  ,'94ECC1CF-19BA-4B1F-99B8-BCF1778A139D'  ,'E27FB315-707B-4F3D-8C14-6818BAB01CC8'  ,'0EF047BE-60AD-44B8-A143-95606FED7873'  ,'55BA03B9-6780-4FE8-B53C-43AB328315D8'  ,'Footer')
+GO
+INSERT INTO [dbo].[PagePresentation]([ID] ,[Name],[AssetItemID] ,[ComponentID] ,[ComponentAssetID] ,[PlaceholderID] ,[AssetModelName])
+VALUES   ('71B6787A-7689-4AF9-B873-66D2DECDC180','ContentBody'  ,'94ECC1CF-19BA-4B1F-99B8-BCF1778A139D'  ,'F7D5F1E9-8B43-46E1-BCDE-3431647AB876'  ,'AD4A9404-87A3-46FA-94FE-F2978214C328'  ,'65B806FD-E7CA-4FAB-8E53-D97466ACAE91'  ,'ContentBody')
+GO
+
+select * from PagePresentation
+
+
