@@ -1,414 +1,504 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.default-color {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .topnav a.active {
+                    background-color: #af8d84;
+                    color: white;
+                }
+    </style>
+    <style>
+        .default-color {
             color: black;
-background-color:#f4f4f4;
+            background-color: #f4f4f4;
         }
         /* Toggled color */
         .highlight {
-            color:black;
-background-color:lightgray;
+            color: black;
+            background-color: lightgray;
         }
-ul, #myUL {
-  list-style-type: none;
-}
 
-#myUL {
-  margin: 0;
-  padding: 0;
-}
+        ul, #myUL {
+            list-style-type: none;
+        }
 
-.caret {
-  cursor: pointer;
-  -webkit-user-select: none; /* Safari 3.1+ */
-  -moz-user-select: none; /* Firefox 2+ */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none;
-}
+        #myUL {
+            margin: 0;
+            padding: 0;
+        }
 
-.caret::before {
-  content: "\25B6";
-  color: RED;
-  display: inline-block;
-  margin-right: 6px;
-}
+        .caret {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
 
-.caret-down::before {
-  -ms-transform: rotate(90deg); /* IE 9 */
-  -webkit-transform: rotate(90deg); /* Safari */'
-  transform: rotate(90deg);  
-}
+            .caret::before {
+                content: "\25B6";
+                color: RED;
+                display: inline-block;
+                margin-right: 6px;
+            }
 
-.nested {
-  display: none;
-}
+        .caret-down::before {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -webkit-transform: rotate(90deg); /* Safari */
+            ' transform: rotate(90deg);
+        }
 
-.active {
-  display: block;
-}
-</style>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        height: 100vh;
-        margin: 0;
-        background: #f4f4f4;
-    }
+        .nested {
+            display: none;
+        }
 
-    /* Context menu container */
-    #contextMenu {
-        position: absolute;
-        display: none;
-        background: #fff;
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-        border-radius: 5px;
-        z-index: 1000;
-        min-width: 160px;
-        overflow: hidden;
-    }
+        .active {
+            display: block;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            background: #f4f4f4;
+        }
 
-    /* Menu items */
-    #contextMenu ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+        /* Context menu container */
+        #contextMenu {
+            position: absolute;
+            display: none;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            z-index: 1000;
+            min-width: 160px;
+            overflow: hidden;
+        }
 
-    #contextMenu li {
-        padding: 10px 15px;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
+            /* Menu items */
+            #contextMenu ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
 
-    #contextMenu li:hover {
-        background: #0078d7;
-        color: white;
-    }
-</style>
+            #contextMenu li {
+                padding: 10px 15px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
 
+                #contextMenu li:hover {
+                    background: #0078d7;
+                    color: white;
+                }
+    </style>
+    <style>
+        .main-container {
+            display: flex; /* Enables Flexbox */
+            width: 100%; /* Ensures the container spans the full width available */
+            margin: 0; /* Removes default browser spacing */
+            min-height: 100dvh;
+        }
+
+        .main-container-header {
+            display: flex; /* Enables Flexbox */
+            width: 100%; /* Ensures the container spans the full width available */
+            margin: 0; /* Removes default browser spacing */
+            min-height: 7dvh;
+            background-color: #af8d84;
+        }
+
+        .sidebar-header {
+            width: 15%; /* Sets the width to 25% */
+            background-color: #af8d84;
+            border-style: solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar {
+            width: 15%; /* Sets the width to 25% */
+            background-color: #f0f0f0;
+        }
+
+        .content {
+            width: 85%; /* Sets the width to 75% */
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
-<h2>Right-click anywhere on this page to see the custom menu</h2>
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#news">Nagivation</a>
+        <a href="#contact">Publish</a>
+        <a href="#about">Review</a>
+        <a  href="#home">Presentation</a>
+        <a href="#news">Security</a>
+        <a href="#contact">Seralization</a>
+       
+    </div>
+    <div class="main-container-header">
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
 
-<!-- Custom Context Menu -->
-<div id="contextMenu">
-    <ul>
-       <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
-        <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
-        <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
-	<li id="edit_li" >Edit</li>
-        <li id="remove_li"  >Remove</li>
-        <li id="duplicate_li" >Duplicate</li>
+    </div>
+    <div class="main-container">
+        <div class="sidebar">
 
-    </ul>
-</div>
+            <h2>Content Tree</h2>
 
 
-
-<h2>Tree View</h2>
-<p>A tree view represents a hierarchical view of information, where each item can have a number of subitems.</p>
-<p>Click on the arrow(s) to open or close the tree branches.</p>
-
-<ul id="myUL">
-  <li tag="11111" ><span tag="100" class="caret default-color">Beverages</span>
-    <ul class="nested">
-      <li><span tag="101" class="caretli">Water</span>
-	</li>
-      <li><span tag="102" class="caretli ">Coffee</span></li>
-      <li><span tag="200" class="caret">Tea</span>
-        <ul class="nested">
-          <li><span tag="202" class="caretli">Black Tea</span>
-		</li>
-          <li><span tag="203" class="caretli">White Tea</span>
-		</li>
-          <li><span tag="300" class="caret default-color">Green Tea</span>
-            <ul class="nested">
-              <li><span tag="300" class="caretli">Sencha</span>
-		</li>
-              <li><span tag="301" class="caretli">Gyokuro</span>
-		</li>
-              <li><span tag="302" class="caretli">Matcha</span>
-		</li>
-              <li><span tag="303" class="caretli">Pi Lo Chun</span>
-		</li>
+            <ul id="myUL">
+                <li tag="11111">
+                    <span tag="100" class="caret default-color">Beverages</span>
+                    <ul class="nested">
+                        <li>
+                            <span tag="101" class="caretli">Water</span>
+                        </li>
+                        <li><span tag="102" class="caretli ">Coffee</span></li>
+                        <li>
+                            <span tag="200" class="caret">Tea</span>
+                            <ul class="nested">
+                                <li>
+                                    <span tag="202" class="caretli">Black Tea</span>
+                                </li>
+                                <li>
+                                    <span tag="203" class="caretli">White Tea</span>
+                                </li>
+                                <li>
+                                    <span tag="300" class="caret default-color">Green Tea</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <span tag="300" class="caretli">Sencha</span>
+                                        </li>
+                                        <li>
+                                            <span tag="301" class="caretli">Gyokuro</span>
+                                        </li>
+                                        <li>
+                                            <span tag="302" class="caretli">Matcha</span>
+                                        </li>
+                                        <li>
+                                            <span tag="303" class="caretli">Pi Lo Chun</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-          </li>
+
+        </div>
+        <div class="content" style="border-style: solid; background-color: #e0e5da;">
+            <div id="editdiv" style="display: none;  background-color: #e0e5da;">
+
+                <h2>Edit selected item - <span></span></h2>
+
+                <p>This form is to update informaiton on existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+            <div id="removediv" style="display: none; border-style: solid; background-color: #e0e5da;">
+
+                <h2>Delete selected item - <span></span></h2>
+
+                <p>This form is to remove existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+
+            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #e0e5da;">
+
+                <h2>Duplicate selected item - <span></span></h2>
+                <p>This form is to remove existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- Custom Context Menu -->
+    <div id="contextMenu">
+        <ul>
+            <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
+             <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
+             <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
+            <li id="edit_li">Edit</li>
+            <li id="remove_li">Remove</li>
+            <li id="duplicate_li">Duplicate</li>
+
         </ul>
-      </li>  
-    </ul>
-  </li>
-</ul>
-
-<br>
-
-<br>
-<br>
-
-<div id="editdiv" style="display:none;border-style:solid; background-color:skyblue;" >
-
-<h2>Edit selected item - <span></span></h2>
- 
-<p>This form is to update informaiton on existed item</p>
-<p>Click on the arrow(s) to open or close the tree branches.</p>
-
-</div>
-<div id="removediv" style="display:none;border-style:solid;background-color:lightgray;" >
-
-<h2>Delete selected item - <span></span></h2>
-
-<p>This form is to remove existed item</p>
-<p>Click on the arrow(s) to open or close the tree branches.</p>
-
-</div>
-
-<div id="duplicatediv" style="display:none;border-style:solid;background-color:lightgray;" >
-
-<h2>Duplicate selected item - <span></span></h2>
-<p>This form is to remove existed item</p>
-<p>Click on the arrow(s) to open or close the tree branches.</p>
-
-</div>
+    </div>
 
 
-<script>
+    <script>
 
 
 
- const contextMenu = document.getElementById("contextMenu");
-const editdiv = document.getElementById("editdiv");
+        const contextMenu = document.getElementById("contextMenu");
+        const editdiv = document.getElementById("editdiv");
 
-const removediv = document.getElementById("removediv");
+        const removediv = document.getElementById("removediv");
 
 
 
-var toggler = document.getElementsByClassName("caret");
-var i;
-for (i = 0; i < toggler.length; i++) {
-  toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
 
-      const spans = document.querySelectorAll('span.highlight');
-        spans.forEach(span => {
-         span.classList.remove('highlight');
+                const spans = document.querySelectorAll('span.highlight');
+                spans.forEach(span => {
+                    span.classList.remove('highlight');
+                });
+                this.classList.toggle("highlight");
+
+                //for (i = 0; i < toggler.length; i++) {
+                //    toggler[i].removeEventListener("click", function () {
+                //        alert('remove event listener');
+                //    });
+                //}
+
+
+
+                const spans1 = document.querySelectorAll('span.highlight');
+                spans1.forEach(span => {
+                    // alert('inside span highlight')
+                    //span.classList.remove('highlight');
+                    //removefromcontextmenu(this);
+
+                    setupcontextmenu(this);
+
+                });
+                //setupcontextmenu(this);
+
+
+                this.addEventListener("contextmenu1", function (e) {
+                    e.preventDefault(); // Prevent default browser menu
+                    const currenttag = e.target.getAttribute('tag');
+                    //alert(currenttag);
+
+                    // Position menu at mouse location
+                    contextMenu.style.top = `${e.clientY}px`;
+                    contextMenu.style.left = `${e.clientX}px`;
+                    contextMenu.style.display = "block";
+                    const listItems = contextMenu.querySelectorAll('ul li');
+                    listItems.forEach((li, index) => {
+
+                        li.setAttribute('itemid', currenttag);
+                        li.addEventListener("click", function (e) {
+                            e.preventDefault(); // Prevent default browser menu
+
+                            const currentitemid = e.target.getAttribute('itemid');
+                            const currentid = e.target.getAttribute('id');
+                            if (currentid == 'edit_li') {
+                                editdiv.style.display = "block";
+                                const innerElement = editdiv.querySelector('h2 span');
+                                innerElement.innerHTML = currentitemid;
+
+                                //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
+                                removediv.style.display = "none";
+                                duplicatediv.style.display = "none";
+
+                                //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+                            }
+                            if (currentid == 'remove_li') {
+                                editdiv.style.display = "none";
+                                removediv.style.display = "block";
+                                duplicatediv.style.display = "none";
+                                const innerElement = removediv.querySelector('h2 span');
+                                innerElement.innerHTML = currentitemid;
+
+
+                                //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
+                            }
+                            if (currentid == 'duplicate_li') {
+                                editdiv.style.display = "none";
+                                removediv.style.display = "none";
+                                duplicatediv.style.display = "block";
+                                const innerElement = duplicatediv.querySelector('h2 span');
+                                innerElement.innerHTML = currentitemid;
+
+
+
+                                //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
+                            }
+
+
+                        });
+
+                    });
+                });
+
+                //contextMenu.find('ul li').attr('id', currentitemid);
+
+            });
+        }
+
+        var togglerli = document.getElementsByClassName("caretli");
+        var j;
+        for (j = 0; j < togglerli.length; j++) {
+            togglerli[j].addEventListener("click", function () {
+                //this.parentElement.querySelector(".nested").classList.toggle("active");
+                //this.classList.toggle("caret-down");
+                const spans = document.querySelectorAll('span.highlight');
+                // 2. Loop through each span and remove the class
+                spans.forEach(span => {
+                    span.classList.remove('highlight');
+                });
+
+                this.classList.toggle("highlight");
+                const spans1 = document.querySelectorAll('span.highlight');
+                spans1.forEach(span => {
+                    //alert('inside span highlight')
+                    //span.classList.remove('highlight');
+                    setupcontextmenu(this);
+                });
+                //setupcontextmenu(this);
+            });
+        }
+
+        function removefromcontextmenu(element) {
+            alert('remove event');
+            element.removeEventListener("contextmenu", function (e) {
+                e.preventDefault();
+                contextMenu.style.display = "none";
+            });
+        };
+
+        function setupcontextmenu(element) {
+            //alert(element.getAttribute('tag'));
+            element.addEventListener("contextmenu", function (e) {
+                e.preventDefault(); // Prevent default browser menu
+                const currenttag = e.target.getAttribute('tag');
+                //alert(currenttag);
+
+                // Position menu at mouse location
+                contextMenu.style.top = `${e.clientY}px`;
+                contextMenu.style.left = `${e.clientX}px`;
+                contextMenu.style.display = "block";
+                const listItems = contextMenu.querySelectorAll('ul li');
+                listItems.forEach((li, index) => {
+
+                    li.setAttribute('itemid', currenttag);
+                    li.addEventListener("click", function (e) {
+                        e.preventDefault(); // Prevent default browser menu
+
+                        const currentitemid = e.target.getAttribute('itemid');
+                        const currentid = e.target.getAttribute('id');
+                        if (currentid == 'edit_li') {
+                            editdiv.style.display = "block";
+                            const innerElement = editdiv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "none";
+
+                            //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+                        }
+                        if (currentid == 'remove_li') {
+                            editdiv.style.display = "none";
+                            removediv.style.display = "block";
+                            duplicatediv.style.display = "none";
+                            const innerElement = removediv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+
+                            //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
+                        }
+                        if (currentid == 'duplicate_li') {
+                            editdiv.style.display = "none";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "block";
+                            const innerElement = duplicatediv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+
+
+                            //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
+                        }
+
+
+                    });
+
+                });
+            });
+
+
+
+        }
+
+
+    </script>
+    <script>
+
+
+        // Show custom menu on right-click
+        document.addEventListener("contextmenu1", function (e) {
+            e.preventDefault(); // Prevent default browser menu
+
+            // Position menu at mouse location
+            contextMenu.style.top = `${e.clientY}px`;
+            contextMenu.style.left = `${e.clientX}px`;
+            contextMenu.style.display = "block";
         });
-      this.classList.toggle("highlight");
 
-      //for (i = 0; i < toggler.length; i++) {
-      //    toggler[i].removeEventListener("click", function () {
-      //        alert('remove event listener');
-      //    });
-      //}
-
-
-
-  const spans1 = document.querySelectorAll('span.highlight');
-      spans1.forEach(span => {
-     // alert('inside span highlight')
-          //span.classList.remove('highlight');
-          //removefromcontextmenu(this);
-
-          setupcontextmenu(this);
-         
-      });
-//setupcontextmenu(this);
-
-
-this.addEventListener("contextmenu1", function(e) {
-        e.preventDefault(); // Prevent default browser menu
-	const currenttag = e.target.getAttribute('tag');
-//alert(currenttag);
-
-        // Position menu at mouse location
-        contextMenu.style.top = `${e.clientY}px`;
-        contextMenu.style.left = `${e.clientX}px`;
-        contextMenu.style.display = "block";
-	const listItems = contextMenu.querySelectorAll('ul li');
-	listItems.forEach((li, index) => {
-		
-  			li.setAttribute('itemid', currenttag); 
-			li.addEventListener("click", function(e) {
- 				e.preventDefault(); // Prevent default browser menu
-
-				const currentitemid = e.target.getAttribute('itemid');
-				const currentid = e.target.getAttribute('id');
-				if(currentid =='edit_li')
-				{
-					editdiv.style.display="block";
-					const innerElement = editdiv.querySelector('h2 span'); 
-					innerElement.innerHTML = currentitemid ;
-
-					//editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
-					removediv.style.display="none";
-					duplicatediv.style.display="none";
-
-					//alert('inside div - ' + currentid +' and item id -'+ currentitemid);
-				}
-				if(currentid =='remove_li')
-				{
-					editdiv.style.display="none";
-					removediv.style.display="block";
-					duplicatediv.style.display="none";
-					const innerElement = removediv.querySelector('h2 span'); 
-					innerElement.innerHTML = currentitemid ;
-
-
-					//alert('inside div -' + currentid +' and item id -'+ currentitemid);
-
-				}
-				if(currentid =='duplicate_li')
-				{
-					editdiv.style.display="none";
-					removediv.style.display="none";
-					duplicatediv.style.display="block";
-					const innerElement = duplicatediv.querySelector('h2 span'); 
-					innerElement.innerHTML = currentitemid ;
-
-
-
-					//alert('inside div -' + currentid +' and item id -'+ currentitemid);
-	
-				}
-
-
-				});
-
-			});
-   	});
-
-	//contextMenu.find('ul li').attr('id', currentitemid);
-
-  });
-}
-
-var togglerli = document.getElementsByClassName("caretli");
-var j;
-for (j = 0; j < togglerli.length; j++) {
-  togglerli[j].addEventListener("click", function() {
-    //this.parentElement.querySelector(".nested").classList.toggle("active");
-    //this.classList.toggle("caret-down");
-const spans = document.querySelectorAll('span.highlight');
-// 2. Loop through each span and remove the class
-spans.forEach(span => {
-  span.classList.remove('highlight');
-});
-
-      this.classList.toggle("highlight");
-      const spans1 = document.querySelectorAll('span.highlight');
-      spans1.forEach(span => {
-          //alert('inside span highlight')
-          //span.classList.remove('highlight');
-          setupcontextmenu(this);
-      });
-//setupcontextmenu(this);
-  });
-}
-
-    function removefromcontextmenu(element) {
-        alert('remove event');
-        element.removeEventListener("contextmenu", function (e) {
-            e.preventDefault();
+        // Hide menu on click elsewhere
+        document.addEventListener("click", function () {
             contextMenu.style.display = "none";
         });
-    };
 
-function setupcontextmenu(element) {
- //alert(element.getAttribute('tag'));
-element.addEventListener("contextmenu", function(e) {
-        e.preventDefault(); // Prevent default browser menu
-	const currenttag = e.target.getAttribute('tag');
-//alert(currenttag);
-
-        // Position menu at mouse location
-        contextMenu.style.top = `${e.clientY}px`;
-        contextMenu.style.left = `${e.clientX}px`;
-        contextMenu.style.display = "block";
-	const listItems = contextMenu.querySelectorAll('ul li');
-	listItems.forEach((li, index) => {
-		
-  			li.setAttribute('itemid', currenttag); 
-			li.addEventListener("click", function(e) {
- 				e.preventDefault(); // Prevent default browser menu
-
-				const currentitemid = e.target.getAttribute('itemid');
-				const currentid = e.target.getAttribute('id');
-				if(currentid =='edit_li')
-				{
-					editdiv.style.display="block";
-					const innerElement = editdiv.querySelector('h2 span'); 
-					innerElement.innerHTML = currentitemid ;
-
-					//editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
-					removediv.style.display="none";
-					duplicatediv.style.display="none";
-
-					//alert('inside div - ' + currentid +' and item id -'+ currentitemid);
-				}
-				if(currentid =='remove_li')
-				{
-					editdiv.style.display="none";
-					removediv.style.display="block";
-					duplicatediv.style.display="none";
-					const innerElement = removediv.querySelector('h2 span'); 
-					innerElement.innerHTML = currentitemid ;
-
-
-					//alert('inside div -' + currentid +' and item id -'+ currentitemid);
-
-				}
-				if(currentid =='duplicate_li')
-				{
-					editdiv.style.display="none";
-					removediv.style.display="none";
-					duplicatediv.style.display="block";
-					const innerElement = duplicatediv.querySelector('h2 span'); 
-					innerElement.innerHTML = currentitemid ;
-
-
-
-					//alert('inside div -' + currentid +' and item id -'+ currentitemid);
-	
-				}
-
-
-				});
-
-			});
-   	});
-
-
-
-}
-
-
-</script>
-<script>
-   
-
-    // Show custom menu on right-click
-    document.addEventListener("contextmenu1", function(e) {
-        e.preventDefault(); // Prevent default browser menu
-
-        // Position menu at mouse location
-        contextMenu.style.top = `${e.clientY}px`;
-        contextMenu.style.left = `${e.clientX}px`;
-        contextMenu.style.display = "block";
-    });
-
-    // Hide menu on click elsewhere
-    document.addEventListener("click", function() {
-        contextMenu.style.display = "none";
-    });
-
-    // Prevent menu from going off-screen
-    window.addEventListener("resize", () => {
-        contextMenu.style.display = "none";
-    });
-</script>
+        // Prevent menu from going off-screen
+        window.addEventListener("resize", () => {
+            contextMenu.style.display = "none";
+        });
+    </script>
 
 
 
