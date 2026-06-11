@@ -1,0 +1,827 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .topnav a.active {
+                    background-color: #af8d84;
+                    color: white;
+                }
+    </style>
+    <style>
+        .default-color {
+            color: black;
+            background-color: #f4f4f4;
+        }
+        /* Toggled color */
+        .highlight {
+            color: black;
+            background-color: lightgray;
+        }
+
+        ul, #myUL {
+            list-style-type: none;
+        }
+
+        #myUL {
+            margin: 0;
+            padding: 0;
+        }
+
+        .caret {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
+
+            .caret::before {
+                content: "\25B6";
+                color: RED;
+                display: inline-block;
+                margin-right: 6px;
+            }
+
+        .caret-down::before {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -webkit-transform: rotate(90deg); /* Safari */
+            ' transform: rotate(90deg);
+        }
+
+        .nested {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        /* Context menu container */
+        #contextMenu {
+            position: absolute;
+            display: none;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            z-index: 1000;
+            min-width: 160px;
+            overflow: hidden;
+        }
+
+            /* Menu items */
+            #contextMenu ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            #contextMenu li {
+                padding: 10px 15px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+                #contextMenu li:hover {
+                    background: #0078d7;
+                    color: white;
+                }
+    </style>
+    <style>
+        .main-container {
+            display: flex; /* Enables Flexbox */
+            width: 100%; /* Ensures the container spans the full width available */
+            margin: 0; /* Removes default browser spacing */
+            min-height: 100dvh;
+        }
+
+        .main-container-header {
+            display: flex; /* Enables Flexbox */
+            width: 100%; /* Ensures the container spans the full width available */
+            margin: 0; /* Removes default browser spacing */
+            min-height: 7dvh;
+            background-color: #af8d84;
+        }
+
+        .sidebar-header {
+            width: 15%; /* Sets the width to 25% */
+            background-color: #af8d84;
+            border-style: solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar {
+            width: 15%; /* Sets the width to 25% */
+            background-color: #f0f0f0;
+        }
+
+        .content {
+            width: 85%; /* Sets the width to 75% */
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="#news">Nagivation</a>
+        <a href="#contact">Publish</a>
+        <a href="#about">Review</a>
+        <a href="#home">Presentation</a>
+        <a href="#news">Security</a>
+        <a href="#contact">Seralization</a>
+
+    </div>
+    <div class="main-container-header">
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+        <div class="sidebar-header"> SubItem</div>
+
+    </div>
+    <div class="main-container">
+        <div class="sidebar">
+
+            <h2>Content Tree</h2>
+
+
+            <ul id="myUL">
+                <li id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE"  tag="11111">
+                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE"  tag="100" class="caret default-color">Main</span>
+                    <ul id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="nested">
+                        <li>
+                            <span tag="101" class="caretli">Water</span>
+                        </li>
+                        <li><span tag="102" class="caretli ">Coffee</span></li>
+                        <li>
+                            <span tag="200" class="caret">Tea</span>
+                            <ul class="nested">
+                                <li>
+                                    <span tag="202" class="caretli">Black Tea</span>
+                                </li>
+                                <li>
+                                    <span tag="203" class="caretli">White Tea</span>
+                                </li>
+                                <li>
+                                    <span tag="300" class="caret default-color">Green Tea</span>
+                                    <ul class="nested">
+                                        <li>
+                                            <span tag="300" class="caretli">Sencha</span>
+                                        </li>
+                                        <li>
+                                            <span tag="301" class="caretli">Gyokuro</span>
+                                        </li>
+                                        <li>
+                                            <span tag="302" class="caretli">Matcha</span>
+                                        </li>
+                                        <li>
+                                            <span tag="303" class="caretli">Pi Lo Chun</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+        <div class="content" style="border-style: solid; background-color: #e0e5da;">
+            <div id="editdiv" style="display: none;  background-color: #e0e5da;">
+
+                <h2>Edit selected item - <span></span></h2>
+
+                <p>This form is to update informaiton on existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+            <div id="removediv" style="display: none; border-style: solid; background-color: #e0e5da;">
+
+                <h2>Delete selected item - <span></span></h2>
+
+                <p>This form is to remove existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+
+            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #e0e5da;">
+
+                <h2>Duplicate selected item - <span></span></h2>
+                <p>This form is to remove existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- Custom Context Menu -->
+    <div id="contextMenu">
+        <ul>
+            <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
+             <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
+             <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
+            <li id="edit_li">Edit</li>
+            <li id="remove_li">Remove</li>
+            <li id="duplicate_li">Duplicate</li>
+
+        </ul>
+    </div>
+    <input type="hidden" id="hdnChildCount" runat="server" value="0"  />
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo"></script>
+</body>
+</html>
+
+    <script>
+
+                var IDSchema = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+                var childChildCountarr = [];
+
+            getDbData(IDSchema);
+            ViewContentItem(IDSchema) ;
+
+           
+
+             //alert("child cound"+childChildCountarr.length);
+            // $(childChildCountarr).each(function (index, value) {
+          // alert("childChildCountarr" );
+                    // checkChildCountNew(value);
+              //  });
+              //checkChildCountNew(IDSchema);
+
+        //alert('start calling controller');
+             function getDbData( IDSchema ) {
+
+                         var requestData = {
+                                SchemaID: IDSchema
+                         };
+                //alert(requestData);
+            $.ajax({
+                type: "GET",
+                url: "/ContentTree/GetChildSchema", // PageName/MethodName
+                //data: JSON.stringify(requestData),
+                 data: { SchemaID: IDSchema },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                     //alert("success");
+                     console.log("Success:", response);
+                     
+                     if(response.length>0)
+                     {
+                       
+                       //alert("Total records received: " + response.length);
+                               
+                      $.each(response, function(index, record) {
+                                // Access specific fields belonging to each record row
+                                console.log("Record ParentSchemaName: " + record.parentSchemaName);
+                                 console.log("Record ParentSchemaID: " + record.parentSchemaID);
+                                console.log("Record ChildSchemaName: " + record.childSchemaName);
+                                console.log("Record ChildSchemaID: " + record.childSchemaID);
+                                //childChildCountarr.push(record.childSchemaID);
+                                //alert("childSchemaID" + record.childSchemaID);
+                               //alert(childChildCountarr.length);
+                               
+                                     checkChildCount(record.childSchemaID);
+                                     //alert("After checkchildcount call hiddend" + $("#hdnChildCount").val());
+
+                                 var childhiddenCount = $("#hdnChildCount").val();
+                                 //alert("hiddend" + $("#hdnChildCount").val());
+                                  // var myUl = $("#myUL").find("#" + IDSchema);
+                                    var myUl = $("#myUL").find("ul[id='" + IDSchema+"']");
+                                if (parseInt(childhiddenCount) > 0) {
+                             
+                                   //alert("inside hidden count greater");
+                              
+
+                              
+                              // myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "' class='nested'><li><span tag='202' class='caretli'>Not Available</span></li></ul></li>");
+                                // myUl.append("<li><span  onclick=GetChildOfSelectedUL('" + record.childSchemaID + "'); tag='"+record.childSchemaID+ "' id='"+record.childSchemaID+  "' class='caret default-color'>"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "' onclick=GetChildOfSelectedUL('" + record.childSchemaID + "');  tag='"+record.childSchemaID+ "' class='nested'><li></li></ul></li>");
+                                                   myUl.append("<li><span  onclick=GetChildOfSelectedUL('" + record.childSchemaID + "'); tag='"+record.childSchemaID+ "' id='"+record.childSchemaID+  "' class='caret default-color'>"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "'  tag='"+record.childSchemaID+ "' class='nested'><li></li></ul></li>");
+                                //myUl.append("");
+                               //addEventListener_caret();
+                                
+                               }
+                               else
+                               {
+                                   //alert("inside hidden count smaller");
+                                     myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelectedLI('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                               //addEventListener_caretli()
+                               }
+
+                              
+
+                                //************************* */
+                               // var myUl = $("#myUL").find("#" + IDSchema);
+                               // myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelected('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                              
+                                //****************** 
+                                 //  let specificUl = $('ul#myList');
+                               // var myUl = $("#myUL").find("#" + IDSchema);
+                               
+                               //myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span>");
+                               // myUl.append("<ul id='"+record.childSchemaID+ "' class='nested'>");
+                              
+                              
+
+                         });
+                           //myUl.append("</li></ul");
+                         }
+                // Code to handle successful server response
+                //console.log("Success:", response);
+                       // alert(response.message + " Status is: " + response.currentStatus);
+                     },
+                 error: function (xhr, status, error) {
+                // Code to handle execution errors
+                        console.error("Error occurred:", error);
+                         alert("Error occurred:" + error);
+                    }
+            });
+        }
+
+        function checkChildCount( IDSchema ) {
+            var childCount= 0;
+                         var requestData = {
+                                SchemaID: IDSchema
+                         };
+
+                        // $("#hdnChildCount").val('0');
+            $.ajax({
+                type: "GET",
+                url: "/ContentTree/GetChildSchema", // PageName/MethodName
+                //data: JSON.stringify(requestData),
+                 data: { SchemaID: IDSchema },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                 async: false,
+                success: function (response) {
+                     //alert("checkChildCount");
+                     //console.log("Success:", response);
+                    // alert(response.length);
+                         if(response.length>0)
+                         {
+                             $("#hdnChildCount").val(response.length);
+                             //alert(response.length);
+                             //alert("inside checkchildcount" + $("#hdnChildCount").val());
+                            //childCount=response.length;
+                           //console.log("Total records received: " + response.length);
+                     
+                         }
+                         else 
+                         {
+                              $("#hdnChildCount").val("0");
+                               //alert("inside checkchildcount if count zero" + $("#hdnChildCount").val());
+                         }
+                     },
+                 error: function (xhr, status, error) {
+                        console.error("Error occurred:", error);
+                         alert("Error occurred:" + error);
+                    }
+            });
+            
+        }
+
+
+
+         function checkChildCountNew( IDSchema ) {
+            var childCount= 0;
+                         var requestData = {
+                                SchemaID: IDSchema
+                         };
+
+                        // $("#hdnChildCount").val('0');
+            $.ajax({
+                type: "GET",
+                url: "/ContentTree/GetChildSchema", // PageName/MethodName
+                //data: JSON.stringify(requestData),
+                 data: { SchemaID: IDSchema },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                     //alert("success");
+                     //console.log("Success:", response);
+                    // alert(response.length);
+                                if(response.length>0)
+                                {
+                           
+                              // if(childhiddenCount>0)
+                              // {
+                                  // alert("inside hidden count greater");
+                                var myUl = $("#myUL").find("#" + IDSchema);
+
+                               myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span>");
+                               myUl.append("<ul id='"+record.childSchemaID+ "' class='nested'>");
+                               myUl.append("</ul");
+                               }
+                               else
+                               {
+                                  // alert("inside hidden count smaller");
+                                     myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelected('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                               }
+
+                         
+                     },
+                 error: function (xhr, status, error) {
+                        console.error("Error occurred:", error);
+                         alert("Error occurred:" + error);
+                    }
+            });
+
+        }
+        function getDbData2( IDSchema ) {
+
+                         var requestData = {
+                                SchemaID: IDSchema
+                         };
+                //alert(requestData);
+            $.ajax({
+                type: "GET",
+                url: "/ContentTree/GetChildSchema", // PageName/MethodName
+                //data: JSON.stringify(requestData),
+                data: { SchemaID: IDSchema },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                     //alert("success");
+                     console.log("Success:", response);
+                       console.log("Total records received: " + response.length);
+                      $.each(response, function(index, record) {
+                                // Access specific fields belonging to each record row
+                                console.log("Record ParentSchemaName: " + record.parentSchemaName);
+                                 console.log("Record ParentSchemaID: " + record.parentSchemaID);
+                                console.log("Record ChildSchemaName: " + record.childSchemaName);
+                                console.log("Record ChildSchemaID: " + record.childSchemaID);
+
+                               // var childCount= checkChildCount( IDSchema );
+                               // if(childCount>0)
+                               // {
+                               //  var myUl = $("#myUL").find("#" + IDSchema);
+
+                               // myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span>");
+                               // myUl.append("<ul id='"+record.childSchemaID+ "' class='nested'>");
+                               // myUl.append("</ul");
+                               // }
+                               // else 
+                               // {
+                                     myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelected('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                               //}
+
+                         });
+                // Code to handle successful server response
+                //console.log("Success:", response);
+                       // alert(response.message + " Status is: " + response.currentStatus);
+                     },
+                 error: function (xhr, status, error) {
+                // Code to handle execution errors
+                        console.error("Error occurred:", error);
+                         alert("Error occurred:" + error);
+                    }
+            });
+        }
+   
+    function  GetChildOfSelectedLI(childSchemaID) {
+       // alert('GetChildOfSelectedLI event' +childSchemaID);
+       // getDbData( childSchemaID );
+        addEventListener_caretli(childSchemaID)
+        ViewContentItem(childSchemaID) ;
+       
+    };
+
+     function  GetChildOfSelectedUL(childSchemaID) {
+        //alert('GetChildOfSelectedUL event' +childSchemaID);
+        getDbData( childSchemaID );
+        addEventListener_caret(childSchemaID);
+        ViewContentItem(childSchemaID) ;
+      //alert('GetChildOfSelectedUI event' +childSchemaID);
+    };
+
+     function GetChildOfSelected1(childSchemaID) {
+        //alert('GetChildOfSelected event' );
+
+    };
+
+     function addEventListener_caret(childSchemaID) {
+
+         //e.preventDefault();
+         //e.stopPropagation();
+           var toggler = document.getElementById(childSchemaID);
+            //alert("addEventListener_caret"+toggler.getAttribute("id"));
+
+        const contextMenu = document.getElementById("contextMenu");
+        const editdiv = document.getElementById("editdiv");
+        const removediv = document.getElementById("removediv");
+
+        //var toggler = document.getElementsByClassName("caret");
+        var i;
+       // for (i = 0; i < toggler.length; i++) {
+           // toggler[i].addEventListener("click", function (e) {
+                toggler.parentElement.querySelector(".nested").classList.toggle("active");
+                 //toggler.parentElement.querySelector(".nested").classList.add("active");
+                // toggler.classList.toggle("active");
+                toggler.classList.toggle("caret-down");
+                //alert("add listener")
+                const idSchema = toggler.getAttribute('id');
+               //alert("add listener" +idSchema)
+
+               const allchildLi = toggler.parentElement.querySelectorAll('ul li');
+              // alert("allchildLi" +allchildLi)
+               //alert("allchildLi length" +allchildLi.length)
+
+               allchildLi.forEach(span => {
+                    //span.classList.remove('highlight');
+                     span.remove();
+                     //alert("allchildLi remove" +allchildLi)
+                });
+                 getDbData(childSchemaID);
+                const spans = document.querySelectorAll('span.highlight');
+                spans.forEach(span => {
+                    span.classList.remove('highlight');
+                });
+               // toggler.classList.toggle("highlight");
+                if (toggler) {
+                      // alert(togglerli.getAttribute("id"));
+                     toggler.classList.add('highlight');
+                      setupcontextmenu(toggler);
+                    }
+    return;
+                //for (i = 0; i < toggler.length; i++) {
+                //    toggler[i].removeEventListener("click", function () {
+                //        alert('remove event listener');
+                //    });
+                //}
+
+
+
+                // const spans1 = document.querySelectorAll('span.highlight');
+                // spans1.forEach(span => {
+                //      //alert('inside span highlight')
+                //     //span.classList.remove('highlight');
+                //     //removefromcontextmenu(this);
+
+                //     setupcontextmenu(this);
+
+                // });
+
+           // });
+        //}
+
+     }
+     function ViewContentItem( currentitemid) {
+     
+                            editdiv.style.display = "block";
+                            const innerElement = editdiv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "none";
+
+                            //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+                        
+               }
+
+
+     function addEventListener_caretli(childSchemaID) {
+         // e.preventDefault();
+         //e.stopPropagation();
+          var togglerli = document.getElementById(childSchemaID);
+
+          //alert(togglerli.getAttribute("id"));
+       // var j;
+
+      //  for (j = 0; j < togglerli.length; j++) {
+            //togglerli.addEventListener("click", function () {
+               // alert('inside caretli')
+                //this.parentElement.querySelector(".nested").classList.toggle("active");
+                //this.classList.toggle("caret-down");
+                const spans = document.querySelectorAll('span.highlight');
+                // 2. Loop through each span and remove the class
+                spans.forEach(span => {
+                    span.classList.remove('highlight');
+                });
+
+                //togglerli.classList.toggle("highlight");
+                  if (togglerli) {
+                      // alert(togglerli.getAttribute("id"));
+                     togglerli.classList.add('highlight');
+                    }
+               
+                setupcontextmenu(togglerli);
+
+                return;
+               
+     }
+
+        //************************ */
+
+         if(IDSchema ="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE")
+            {
+           
+                const contextMenu = document.getElementById("contextMenu");
+                const editdiv = document.getElementById("editdiv");
+
+                const removediv = document.getElementById("removediv");
+
+
+
+                var toggler = document.getElementsByClassName("caret");
+                var i;
+                for (i = 0; i < toggler.length; i++) {
+                    toggler[i].addEventListener("click", function (e) {
+                        this.parentElement.querySelector(".nested").classList.toggle("active");
+                        this.classList.toggle("caret-down");
+                        const idSchema = this.getAttribute('id');
+
+                       const allchildLi = this.parentElement.querySelectorAll('ul li');
+              
+                       allchildLi.forEach(span => {
+                             span.remove();
+                        });
+                         getDbData(idSchema);
+                        const spans = document.querySelectorAll('span.highlight');
+                        spans.forEach(span => {
+                            span.classList.remove('highlight');
+                        });
+                        this.classList.toggle("highlight");
+                        const spans1 = document.querySelectorAll('span.highlight');
+                        spans1.forEach(span => {
+                            setupcontextmenu(this);
+
+                        });
+                        ViewContentItem(idSchema) ;
+
+                    });
+                }
+                  
+        }
+
+        // var togglerli = document.getElementsByClassName("caretli");
+        // var j;
+        // for (j = 0; j < togglerli.length; j++) {
+        //     togglerli[j].addEventListener("click", function () {
+        //         alert('inside caretli')
+        //         const spans = document.querySelectorAll('span.highlight');
+        //         spans.forEach(span => {
+        //             span.classList.remove('highlight');
+        //         });
+
+        //         this.classList.toggle("highlight");
+        //         const spans1 = document.querySelectorAll('span.highlight');
+        //         spans1.forEach(span => {
+        //             setupcontextmenu(this);
+        //         });
+        //     });
+        // }
+
+        function removefromcontextmenu(element) {
+            //alert('remove event');
+            element.removeEventListener("contextmenu", function (e) {
+                e.preventDefault();
+                contextMenu.style.display = "none";
+            });
+        };
+
+        function setupcontextmenu(element) {
+            //alert(element.getAttribute('tag'));
+            element.addEventListener("contextmenu", function (e) {
+                e.preventDefault(); // Prevent default browser menu
+                const currenttag = e.target.getAttribute('tag');
+                //alert(currenttag);
+                 const curid = e.target.getAttribute('id');
+                 //alert(curid);
+                //alert(currenttag);
+
+                // Position menu at mouse location
+                contextMenu.style.top = `${e.clientY}px`;
+                contextMenu.style.left = `${e.clientX}px`;
+                contextMenu.style.display = "block";
+                const listItems = contextMenu.querySelectorAll('ul li');
+                listItems.forEach((li, index) => {
+
+                    li.setAttribute('itemid', currenttag);
+                    li.addEventListener("click", function (e) {
+                        e.preventDefault(); // Prevent default browser menu
+
+                       const currentitemid = e.target.getAttribute('itemid');
+                        //const currentitemid = e.target.getAttribute('id');
+                       // alert(currentitemid);
+                        const currentid = e.target.getAttribute('id');
+                        if (currentid == 'edit_li') {
+                            editdiv.style.display = "block";
+                            const innerElement = editdiv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "none";
+
+                            //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+                        }
+                        if (currentid == 'remove_li') {
+                            editdiv.style.display = "none";
+                            removediv.style.display = "block";
+                            duplicatediv.style.display = "none";
+                            const innerElement = removediv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+
+                            //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
+                        }
+                        if (currentid == 'duplicate_li') {
+                            editdiv.style.display = "none";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "block";
+                            const innerElement = duplicatediv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+
+
+                            //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
+                        }
+
+
+                    });
+
+                });
+            });
+
+
+
+        }
+
+
+    </script>
+    <script>
+
+
+        // Show custom menu on right-click
+        document.addEventListener("contextmenu1", function (e) {
+            e.preventDefault(); // Prevent default browser menu
+
+            // Position menu at mouse location
+            contextMenu.style.top = `${e.clientY}px`;
+            contextMenu.style.left = `${e.clientX}px`;
+            contextMenu.style.display = "block";
+        });
+
+        // Hide menu on click elsewhere
+        document.addEventListener("click", function () {
+            contextMenu.style.display = "none";
+        });
+
+        // Prevent menu from going off-screen
+        window.addEventListener("resize", () => {
+            contextMenu.style.display = "none";
+        });
+    </script>
+
+    
+

@@ -26,12 +26,15 @@ options.Add(context =>
 {
     var request = context.HttpContext.Request;
     var path = request.Path.Value;
-
+    path =path?.ToUpper();
+    bool isDynamicController = !string.IsNullOrEmpty(path) && path.Contains("/CONTENTTREE");
     // Check if the path looks like a static file (contains a file extension)
     bool isStaticFile = !string.IsNullOrEmpty(path) && path.Contains('.');
 
+     
+
     // If it's not a static file, rewrite internally to your generic endpoint
-    if (!isStaticFile)
+    if (!isStaticFile && !isDynamicController)
     {
         context.HttpContext.Request.Path = "/Generic/Start";
     }

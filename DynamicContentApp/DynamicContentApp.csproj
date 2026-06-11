@@ -11,6 +11,7 @@
     <Folder Include="DatabaseScript\" />
     <Folder Include="Treeview\" />
     <Folder Include="Views\Components\" />
+    <Folder Include="Views\ContentTree\" />
     <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 

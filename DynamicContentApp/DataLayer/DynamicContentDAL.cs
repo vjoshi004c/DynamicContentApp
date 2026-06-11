@@ -15,9 +15,9 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-       // private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
-        private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+       // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
 
@@ -123,7 +123,51 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-       
+
+        public List<ContentTreeModel> GetContentTreeItems(string schemaID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<ContentTreeModel> custlist = null;
+            try
+            {
+                custlist = new List<ContentTreeModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_get_contenttree_item", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@SchemaID", schemaID);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ContentTreeModel cobj = new ContentTreeModel();
+                    cobj.ParentSchemaName = ds.Tables[0].Rows[i]["ParentSchemaName"].ToString();
+                    cobj.ParentSchemaID = ds.Tables[0].Rows[i]["ParentSchemaID"].ToString();
+                    cobj.ChildSchemaName = ds.Tables[0].Rows[i]["ChildSchemaName"].ToString();
+                    cobj.ChildSchemaID = ds.Tables[0].Rows[i]["ChildSchemaID"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
     }
 }

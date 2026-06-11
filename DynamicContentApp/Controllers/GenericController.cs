@@ -42,6 +42,12 @@ namespace DynamicContentApp.Controllers
             HomeViewModel.BrowserUrl = fullBrowserUrl;
             HomeViewModel.ReWriteUrl = fullUrl;
 
+            //if (HomeViewModel.BrowserUrl == "http://localhost:5287/content")
+            //{
+
+            //}
+
+
             ViewData["SelectedLayout"] = "_MasterLayout";
 
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_DELIVERY.ToString())
