@@ -56,6 +56,30 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
+        public IActionResult SaveSchema( string SchemaName, string SchemaPath, string SchemaParent)
+        {
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            //if (String.IsNullOrEmpty(SchemaID))
+            //{
+            //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            //}
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+           bool isInsertSuccess = dynamicContentDAL.InsertSchema( SchemaName,  SchemaPath,  SchemaParent);
+            //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            //{
+
+            //}
+            if (isInsertSuccess)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetRootNode()
         {
 

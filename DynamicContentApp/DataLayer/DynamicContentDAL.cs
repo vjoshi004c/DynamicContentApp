@@ -17,10 +17,40 @@ namespace DynamicContentApp.DataLayer
 
         private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
-       // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+        // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
+        public bool InsertSchema(string SchemaName, string SchemaPath, string SchemaParent)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@ID", "");
+                cmd.Parameters.AddWithValue("@SchemaName", SchemaName);
+                cmd.Parameters.AddWithValue("@SchemaPath", SchemaPath);
+                cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         public bool InsertPageContent(string PageUrl, string PageContent)
         {

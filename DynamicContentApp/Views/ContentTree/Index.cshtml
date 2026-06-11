@@ -155,10 +155,15 @@
             width: 85%; /* Sets the width to 75% */
             background-color: #e0e0e0;
         }
+
+        .fake-disabled-button {
+            pointer-events: none; /* Block clicks */
+            opacity: 0.5; /* Fade out */
+        }
     </style>
 </head>
 <body>
-    <div class="topnav">
+    @* <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#news">Nagivation</a>
         <a href="#contact">Publish</a>
@@ -177,7 +182,7 @@
         <div class="sidebar-header"> SubItem</div>
         <div class="sidebar-header"> SubItem</div>
 
-    </div>
+    </div> *@
     <div class="main-container">
         <div class="sidebar">
 
@@ -228,10 +233,35 @@
         <div class="content" style="border-style: solid; background-color: #e0e5da;">
             <div id="adddiv" style="display: none;  background-color: #e0e5da;">
 
+                <form action="/schema/add" method="POST" id="addSchemaForm">
                 <h2>Add new item - <span></span></h2>
 
-                <p>This form is to add informaiton on existed item</p>
-                <p>Click on the arrow(s) to open or close the tree branches.</p>
+                <p>
+                    <label for="schemaName">Schema Name:</label>
+                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px" >
+                </p>
+                <p>
+                    <label for="schemaPath">Schema Path:</label>
+                    <input type="text" id="txtSchemaPath" name="schemaPath" style="width:500px">
+                </p>
+                <p>
+                    <label for="schemaParent">Schema Parent:</label>
+                        <input type="text" id="txtSchemaParent" name="schemaParent" style="width:500px" >
+                </p>
+                <p>
+
+                       @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+
+                        <button id="btnAddSchemaFields"  class="fake-disabled-button">Add Fields</button>
+                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
+
+                        <button id="btnSaveSchema">Save Schema</button>
+                       
+                </p>
+
+               @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p> <button type="submit">Submit</button></p> *@
+                </form>
 
             </div>
 
@@ -547,13 +577,93 @@
     function  GetChildOfSelectedLI(childSchemaID) {
        // alert('GetChildOfSelectedLI event' +childSchemaID);
        // getDbData( childSchemaID );
+        //var toggler = document.getElementById(childSchemaID);
+       //toggler.removeEventListener("contextmenu");
         addEventListener_caretli(childSchemaID)
         ViewContentItem(childSchemaID) ;
        
     };
+         $('#btnSaveSchema').on('click', function(e) {
+        e.preventDefault(); // This stops the form from submitting and redirecting
+            e.stopPropagation();
+             alert('saveSchema' );
+                 $("#btnAddSchemaFields").removeClass("fake-disabled-button");
+                 // $("#btnSaveSchema").addClass("fake-disabled-button");
+
+                    //var inputValue = $('#username').val();
+                    // addSchemaForm
+
+                     //var parentForm = this.closest('form');
+                       // alert(parentForm.id  );
+                         // var txtSchemaName = $('#addSchemaForm').find('input[id="txtSchemaName"]').val();
+                         //    var txtSchemaPath = $('#addSchemaForm').find('input[id="txtSchemaPath"]').val();
+                         //     var txtSchemaParent = $('#addSchemaForm').find('input[id="txtSchemaParent"]').val();
+                             var  txtSchemaName = $(this).closest('form').find('input[id="txtSchemaName"]').val();
+                              var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
+                              var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
+
+                              // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+
+                                 $.ajax({
+                                        type: "GET",
+                                        url: "/ContentTree/SaveSchema", // PageName/MethodName
+                                        //data: JSON.stringify(requestData),
+                                              data: { SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent },
+                                        contentType: "application/json; charset=utf-8",
+                                         dataType: "json",
+                                        success: function (response) {
+                                            //alert("success");
+                                         console.log("Success:", response);
+                                        
+                                        //  console.log("Total records received: " + response.length);
+                                        //     $.each(response, function(index, record) {
+                                        //  // Access specific fields belonging to each record row
+                                        //  console.log("Record ParentSchemaName: " + record.parentSchemaName);
+                                        //   console.log("Record ParentSchemaID: " + record.parentSchemaID);
+                                        //  console.log("Record ChildSchemaName: " + record.childSchemaName);
+                                        //  console.log("Record ChildSchemaID: " + record.childSchemaID);
+
+                                        // });
+                
+                                     },
+                                  error: function (xhr, status, error) {
+                                 // Code to handle execution errors
+                                         console.error("Error occurred:", error);
+                                          alert("Error occurred:" + error);
+                                     }
+                             });
+
+                });
+
+        $('#btnAddSchemaFields').on('click', function(e) {
+         e.preventDefault(); // This stops the form from submitting and redirecting
+             e.stopPropagation();
+              alert('addfieldschema' );
+                  $("#btnSaveSchema").addClass("fake-disabled-button");
+
+                    const currentitemid = e.target.getAttribute('itemid');
+                  //$("#btnAddSchemaFields").removeClass("fake-disabled-button");
+     });
+
+
+     //  function  saveSchema() {
+     //        e.preventDefault();
+     //       e.stopPropagation();
+     //        alert('saveSchema' );
+     //          $("btnAddSchemaFields").removeClass("fake-disabled-button");
+              
+
+     //        //<button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button>
+              
+     //           return false;
+     // };
+
+    
 
      function  GetChildOfSelectedUL(childSchemaID) {
         //alert('GetChildOfSelectedUL event' +childSchemaID);
+        //var toggler = document.getElementById(childSchemaID);
+      // toggler.removeEventListener("contextmenu");
         getDbData( childSchemaID );
         addEventListener_caret(childSchemaID);
         ViewContentItem(childSchemaID) ;
@@ -608,7 +718,7 @@
                      toggler.classList.add('highlight');
                       setupcontextmenu(toggler);
                     }
-    return;
+   // return;
                 //for (i = 0; i < toggler.length; i++) {
                 //    toggler[i].removeEventListener("click", function () {
                 //        alert('remove event listener');
@@ -756,33 +866,30 @@
         }
 
         function setupcontextmenu(element) {
-            //alert(element.getAttribute('tag'));
+                if (!element.dataset.hasClickListener) {
+            // alert("inside hasClickListener");
+            //element.on("contextmenu", function (e) {
             element.addEventListener("contextmenu", function (e) {
+                  //alert("setupcontextmenu");
+                  e.stopPropagation();
                 e.preventDefault(); // Prevent default browser menu
                 const currenttag = e.target.getAttribute('tag');
                 //alert(currenttag);
                  const curid = e.target.getAttribute('id');
-                 //alert(curid);
-                //alert(currenttag);
-
                 // Position menu at mouse location
                 contextMenu.style.top = `${e.clientY}px`;
                 contextMenu.style.left = `${e.clientX}px`;
                 contextMenu.style.display = "block";
                 const listItems = contextMenu.querySelectorAll('ul li');
                 closeAllViewPanels();
-                        // editdiv.style.display = "none";
-                        //     removediv.style.display = "none";
-                        //     duplicatediv.style.display = "none";
-                        //     refreshdiv.style.display = "none";
-                        //     adddiv.style.display = "none";
 
                 listItems.forEach((li, index) => {
 
                     li.setAttribute('itemid', currenttag);
+                   if (!li.dataset.hasClickListener) {
                     li.addEventListener("click", function (e) {
                         e.preventDefault(); // Prevent default browser menu
-
+                         e.stopPropagation();
                        const currentitemid = e.target.getAttribute('itemid');
                         //const currentitemid = e.target.getAttribute('id');
                        // alert(currentitemid);
@@ -792,6 +899,13 @@
                             const innerElement = adddiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
 
+                              var innerSchemaPathElement = adddiv.querySelector('#txtSchemaParent');
+                             //innerSchemaPathElement.setAttribute("val" ,currentitemid);
+                             //innerSchemaPathElement.innerHTML= currentitemid;
+                            // innerSchemaPathElement.val(currentitemid) ;
+                              $("#addSchemaForm #txtSchemaParent").val(currentitemid);
+                             //alert(innerSchemaPathElement.innerHTML);
+                             //alert($("#addSchemaForm #schemaParent").val());
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                             // editdiv.style.display = "none";
                             // removediv.style.display = "none";
@@ -809,14 +923,14 @@
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                             // removediv.style.display = "none";
                             // duplicatediv.style.display = "none";
-
+                             //alert(innerElement.innerHTML);
                             //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
                         }
                         if (currentid == 'edit_li') {
                             editdiv.style.display = "block";
                             const innerElement = editdiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
-
+                            // alert(innerElement.innerHTML);
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                             // removediv.style.display = "none";
                             // duplicatediv.style.display = "none";
@@ -830,7 +944,7 @@
                             const innerElement = removediv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
 
-
+                             //alert(innerElement.innerHTML);
                             //alert('inside div -' + currentid +' and item id -'+ currentitemid);
 
                         }
@@ -841,22 +955,20 @@
                            
                             const innerElement = duplicatediv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
-
-
-
+                             //alert(innerElement.innerHTML);
                             //alert('inside div -' + currentid +' and item id -'+ currentitemid);
-
                         }
-
-
+                         contextMenu.style.display = "none";
                     });
-
+                      li.dataset.hasClickListener = "true";
+                   }// end of !li.dataset.hasClickListener
                 });
             });
-
-
-
+          }
+           element.dataset.hasClickListener = "true"; //end of !element.dataset.hasClickListener
         }
+
+
 
 
     </script>
