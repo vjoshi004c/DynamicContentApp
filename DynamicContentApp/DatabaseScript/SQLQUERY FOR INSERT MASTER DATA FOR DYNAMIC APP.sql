@@ -56,6 +56,86 @@ VALUES    ('3B6B4A0A-CE7A-4CFA-8B9D-47ED4DC89DC0',      'Model',     '/Schema/Ge
 update [dbo].[AssetSchema] set [ParentID]='2EB94A78-CC78-4C33-84EA-C2B583A9C8BD' where id = 'E9E34FBE-0F61-4B16-BA71-E938365FBA61'
 update [dbo].[AssetSchema] set [ParentID]='2EB94A78-CC78-4C33-84EA-C2B583A9C8BD' where id = 'EB60F493-F53B-4388-B17E-B3D1A3A0456E'
 
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    (  '98765071-870F-4D6E-9C2B-7B4289CFD876'  ,  'Header',     '/Schema/Generic/PlaceholderTemplate', '8CEE3BBE-195F-416A-A204-1B15BE16AD66')
+INSERT INTO [dbo].[AssetSchema]( [ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    (  '2AF482AE-C5D8-4D07-9F4A-010699A6BDC8',    'Footer',     '/Schema/Generic/PlaceholderTemplate', '8CEE3BBE-195F-416A-A204-1B15BE16AD66')
+INSERT INTO [dbo].[AssetSchema]( [ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    (    'D45238F6-473B-4C54-AC4B-EC7DAD072A48',   'ContentBody',     '/Schema/Generic/PlaceholderTemplate', '8CEE3BBE-195F-416A-A204-1B15BE16AD66')
+INSERT INTO [dbo].[AssetSchema]([ID] , [SchemaName] ,[SchemaPath], [ParentID])
+VALUES    (   '40243409-86FE-488D-885B-F5573BF13884',    'ContentTop',     '/Schema/Generic/PlaceholderTemplate', '8CEE3BBE-195F-416A-A204-1B15BE16AD66')
+INSERT INTO [dbo].[AssetSchema]([ID] , [SchemaName] ,[SchemaPath], [ParentID])
+VALUES    (  'C06D2B89-2780-48A2-B2F8-7EEEE5C4A895',     'ContentMiddle',     '/Schema/Generic/PlaceholderTemplate', '8CEE3BBE-195F-416A-A204-1B15BE16AD66')
+INSERT INTO [dbo].[AssetSchema]( [ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ( 'D2845137-E036-4536-8AE1-88733E3B3E8E' ,   'ContentBootom',     '/Schema/Generic/PlaceholderTemplate', '8CEE3BBE-195F-416A-A204-1B15BE16AD66')
+
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('3DE3D088-C2CA-4B3C-99CD-612296509BE8',      'HomeViewModel',     '/Schema/Generic/Model/HomeViewModel', '3B6B4A0A-CE7A-4CFA-8B9D-47ED4DC89DC0')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('2F433119-3A7D-4CB3-A09D-443C74A653E0',      'ProductViewModel',     '/Schema/Generic/Model/HomeViewModel', '3B6B4A0A-CE7A-4CFA-8B9D-47ED4DC89DC0')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('5F24782D-19C9-4BFF-B90C-ABC4BE48AA69',      'SystemSchema',     '/Schema/Generic/Schema/System', '1049D17E-6C1C-45A9-9B75-5F779B61023E')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('B1D85537-FBC1-49B8-887F-61A7DD62F2C7',      'ProjectSchema',     '/Schema/Generic/Schema/Project', '1049D17E-6C1C-45A9-9B75-5F779B61023E')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('32D4E807-DD87-4019-93D5-9524DD4D4293',      'CommonSchema',     '/Schema/Generic/Schema/Project', '1049D17E-6C1C-45A9-9B75-5F779B61023E')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('24EEE53B-5962-4442-ABC4-DB813DBE1B92',      'Home',     '/Schema/Generic/Content/Home', 'D1B2BE76-C76B-447A-A30A-DDDF4959A8FC')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('205BEE5A-8E89-4359-830D-591AB6798214',      'SampleSite1',     '/Schema/Generic/Content/SampleSite1', 'D1B2BE76-C76B-447A-A30A-DDDF4959A8FC')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('11CD8862-0CFA-4EB7-A670-9ABDF8217B29',      'SampleSite2',     '/Schema/Generic/Content/SampleSite2', 'D1B2BE76-C76B-447A-A30A-DDDF4959A8FC')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('B2E50BE7-F7BE-4778-AB3A-5E52773571F2',      'Workflow',     '/Schema/Generic/Setting/Workflow', 'DC30B818-0EF8-4BF9-84E2-812EC508A483')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('18D607FD-938E-42FD-936A-8003A8F604D7',      'Languages',     '/Schema/Generic/Setting.Languages', 'DC30B818-0EF8-4BF9-84E2-812EC508A483')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('C69B3996-65BE-4BFE-B545-0A7E419B0749',      'System',     '/Schema/Generic/Setting/System', 'DC30B818-0EF8-4BF9-84E2-812EC508A483')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('9A0B3186-1E5F-47A8-9ED6-C7FB4346CB0F',      'System',     '/Schema/Generic/Media/System', 'B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('F6CEFB03-0492-42CF-AD84-EEDA1CF29668',      'Common',     '/Schema/Generic/Media/Common', 'B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('1FD66191-4977-4931-B4BC-C9757F42A242',      'Project',     '/Schema/Generic/Media/Project', 'B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('2F2C74B2-DB3B-44F8-9BF7-F9482A6038FF',      'SampleSite1',     '/Schema/Generic/Schema/Project/SampleSite1', 'B1D85537-FBC1-49B8-887F-61A7DD62F2C7')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('DA45384F-07F1-4BC2-BE5B-73183577E83C',      'SampleSite1',     '/Schema/Generic/Schema/Project/SampleSite1', 'B1D85537-FBC1-49B8-887F-61A7DD62F2C7')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('6656B0C9-60C0-4F13-9C95-5868FCCE9DA5',      'Base',     '/Schema/Generic/Schema/Project/SampleSite1/Base', '2F2C74B2-DB3B-44F8-9BF7-F9482A6038FF')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('74B2EF4B-C264-474F-ABA1-066F494264CD',      'Page',     '/Schema/Generic/Schema/Project//SampleSite2/Page', '2F2C74B2-DB3B-44F8-9BF7-F9482A6038FF')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('76A29DE8-C46C-49DE-9362-A073D3FB8E35',      'Component',     '/Schema/Generic/Schema/Project//SampleSite2/Component', '2F2C74B2-DB3B-44F8-9BF7-F9482A6038FF')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('F23A917E-8D1C-467B-8419-06E8F48A6FCF',      'Header',     '/Schema/Generic/Schema/Project/SampleSite1/Base/Header', '6656B0C9-60C0-4F13-9C95-5868FCCE9DA5')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('85B01480-B8AC-4EB2-ABA1-A280E0A6FA04',      'Footer',     '/Schema/Generic/Schema/Project/SampleSite1/Base/Footer', '6656B0C9-60C0-4F13-9C95-5868FCCE9DA5')
+
+INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
+VALUES    ('07BE06E2-13C3-4F58-A8B5-67F8BA2FB0F7',      'Search',     '/Schema/Generic/Schema/Project/SampleSite1/Base/Search', '6656B0C9-60C0-4F13-9C95-5868FCCE9DA5')
+
 GO
 --[AssetFields][AssetFields]
 INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  

@@ -185,8 +185,8 @@
 
 
             <ul id="myUL">
-                <li id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE">
-                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="caret default-color">Main</span>
+                <li id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE"  tag="11111">
+                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE"  tag="100" class="caret default-color">Main</span>
                     <ul id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="nested">
                         <li>
                             <span tag="101" class="caretli">Water</span>
@@ -226,23 +226,6 @@
 
         </div>
         <div class="content" style="border-style: solid; background-color: #e0e5da;">
-            <div id="adddiv" style="display: none;  background-color: #e0e5da;">
-
-                <h2>Add new item - <span></span></h2>
-
-                <p>This form is to add informaiton on existed item</p>
-                <p>Click on the arrow(s) to open or close the tree branches.</p>
-
-            </div>
-
-            <div id="refreshdiv" style="display: none;  background-color: #e0e5da;">
-
-                <h2>Refresh existed item - <span></span></h2>
-
-                <p>This form is to add informaiton on existed item</p>
-                <p>Click on the arrow(s) to open or close the tree branches.</p>
-
-            </div>
             <div id="editdiv" style="display: none;  background-color: #e0e5da;">
 
                 <h2>Edit selected item - <span></span></h2>
@@ -280,9 +263,7 @@
             <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
              <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
              <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
-            <li id="add_li">Add</li>
             <li id="edit_li">Edit</li>
-            <li id="refresh_li">Refresh</li>
             <li id="remove_li">Remove</li>
             <li id="duplicate_li">Duplicate</li>
 
@@ -632,14 +613,14 @@
 
      }
      function ViewContentItem( currentitemid) {
-                            closeAllViewPanels();
+     
                             editdiv.style.display = "block";
                             const innerElement = editdiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
 
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
-                           // removediv.style.display = "none";
-                           // duplicatediv.style.display = "none";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "none";
 
                             //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
                         
@@ -746,15 +727,6 @@
             });
         };
 
-        function closeAllViewPanels()
-        {
-                        editdiv.style.display = "none";
-                            removediv.style.display = "none";
-                            duplicatediv.style.display = "none";
-                            refreshdiv.style.display = "none";
-                            adddiv.style.display = "none";
-        }
-
         function setupcontextmenu(element) {
             //alert(element.getAttribute('tag'));
             element.addEventListener("contextmenu", function (e) {
@@ -770,13 +742,6 @@
                 contextMenu.style.left = `${e.clientX}px`;
                 contextMenu.style.display = "block";
                 const listItems = contextMenu.querySelectorAll('ul li');
-                closeAllViewPanels();
-                        // editdiv.style.display = "none";
-                        //     removediv.style.display = "none";
-                        //     duplicatediv.style.display = "none";
-                        //     refreshdiv.style.display = "none";
-                        //     adddiv.style.display = "none";
-
                 listItems.forEach((li, index) => {
 
                     li.setAttribute('itemid', currenttag);
@@ -787,46 +752,21 @@
                         //const currentitemid = e.target.getAttribute('id');
                        // alert(currentitemid);
                         const currentid = e.target.getAttribute('id');
-                        if (currentid == 'add_li') {
-                            adddiv.style.display = "block";
-                            const innerElement = adddiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
-
-                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
-                            // editdiv.style.display = "none";
-                            // removediv.style.display = "none";
-                            // duplicatediv.style.display = "none";
-                            // refreshdiv.style.display = "none";
-                            // adddiv.style.display = "none";
-
-                            //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
-                        }
-                        if (currentid == 'refresh_li') {
-                            refreshdiv.style.display = "block";
-                            const innerElement = refreshdiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
-
-                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
-                            // removediv.style.display = "none";
-                            // duplicatediv.style.display = "none";
-
-                            //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
-                        }
                         if (currentid == 'edit_li') {
                             editdiv.style.display = "block";
                             const innerElement = editdiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
 
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
-                            // removediv.style.display = "none";
-                            // duplicatediv.style.display = "none";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "none";
 
                             //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
                         }
                         if (currentid == 'remove_li') {
-                             removediv.style.display = "block";
-                            // editdiv.style.display = "none";
-                            // duplicatediv.style.display = "none";
+                            editdiv.style.display = "none";
+                            removediv.style.display = "block";
+                            duplicatediv.style.display = "none";
                             const innerElement = removediv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
 
@@ -835,10 +775,9 @@
 
                         }
                         if (currentid == 'duplicate_li') {
-                             duplicatediv.style.display = "block";
-                            // editdiv.style.display = "none";
-                            // removediv.style.display = "none";
-                           
+                            editdiv.style.display = "none";
+                            removediv.style.display = "none";
+                            duplicatediv.style.display = "block";
                             const innerElement = duplicatediv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
 
