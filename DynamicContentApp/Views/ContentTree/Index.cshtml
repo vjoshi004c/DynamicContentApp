@@ -156,9 +156,28 @@
             background-color: #e0e0e0;
         }
 
+        .unfake-disabled-button {
+            background-color: red;
+            border-color: red;
+            border-style: none;
+            color: white;
+            height: 2em;
+            width: 10em;
+        }
         .fake-disabled-button {
             pointer-events: none; /* Block clicks */
             opacity: 0.5; /* Fade out */
+            height: 2em;
+            width: 10em;
+        }
+
+        
+
+        .scroll-container {
+            width: 30dvh; /* Limits the horizontal size */
+          
+            height: 100dvh; /* Limits the vertical size */
+            overflow: auto; /* Automatically adds x and y scrollbars if needed */
         }
     </style>
 </head>
@@ -183,8 +202,8 @@
         <div class="sidebar-header"> SubItem</div>
 
     </div> *@
-    <div class="main-container">
-        <div class="sidebar">
+    <div class="main-container " >
+        <div class="sidebar scroll-container ">
 
             <h2>Content Tree</h2>
 
@@ -230,11 +249,11 @@
             </ul>
 
         </div>
-        <div class="content" style="border-style: solid; background-color: #e0e5da;">
+        <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #e0e5da;padding:2em;">
             <div id="adddiv" style="display: none;  background-color: #e0e5da;">
 
                 <form action="/schema/add" method="POST" id="addSchemaForm">
-                <h2>Add new item - <span></span></h2>
+                <h2>To create new item under parent node- <span></span></h2>
 
                 <p>
                     <label for="schemaName">Schema Name:</label>
@@ -242,22 +261,28 @@
                 </p>
                 <p>
                     <label for="schemaPath">Schema Path:</label>
-                    <input type="text" id="txtSchemaPath" name="schemaPath" style="width:500px">
+                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-button"  style="width:500px">
                 </p>
                 <p>
                     <label for="schemaParent">Schema Parent:</label>
-                        <input type="text" id="txtSchemaParent" name="schemaParent" style="width:500px" >
+                        <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-button"  style="width:500px">
                 </p>
                 <p>
 
                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                        <button id="btnAddSchemaFields"  class="fake-disabled-button">Add Fields</button>
+                        <button id="btnAddSchemaFields"  class="unfake-disabled-button fake-disabled-button">Add Fields</button>
                         @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
-                        <button id="btnSaveSchema">Save Schema</button>
+                        <button id="btnSaveSchema" class="unfake-disabled-button" >Create Schema</button>
                        
                 </p>
+
+                    <p>
+                        <span id="lblAddMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema has been created successfully.</span>
+                        <span id="lblAddMessageError" style="width:1000px;display:none;font-size:2em;color:red"> >Opps! Error while creating schema.</span>
+                      
+                    </p>
 
                @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                     <p> <button type="submit">Submit</button></p> *@
@@ -265,7 +290,7 @@
 
             </div>
 
-            <div id="refreshdiv" style="display: none;  background-color: #e0e5da;">
+            <div id="refreshdiv" style="display: none;  border-color:#f4f4f4;background-color: #e0e5da;padding:2em;padding:2em;">
 
                 <h2>Refresh existed item - <span></span></h2>
 
@@ -275,22 +300,83 @@
             </div>
             <div id="editdiv" style="display: none;  background-color: #e0e5da;">
 
-                <h2>Edit selected item - <span></span></h2>
+                <form action="/schema/edit" method="POST" id="editSchemaForm">
+                    <h2>To edit selected item -  <span></span></h2>
 
-                <p>This form is to update informaiton on existed item</p>
-                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+                    <p>
+                        <label for="schemaID">Schema ID:</label>
+                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-button"  style="width:500px">
+                    </p>
+                    <p>
+                        <label for="schemaName">Schema Name:</label>
+                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
+                    </p>
+                    <p>
+                        <label for="schemaPath">Schema Path:</label>
+                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-button"  style="width:500px">
+                    </p>
+                    <p>
+                        <label for="schemaParent">Schema Parent:</label>
+                        <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-button"  style="width:500px">
+                    </p>
+                    <p>
+
+                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+
+                        <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button">Edit Fields</button>
+                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
+
+                        <button id="btnEditSchema" class="unfake-disabled-button" >Save Schema</button>
+
+                    </p>
+
+                    <p>
+                        <span id="lblEditMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema has been modified successfully.</span>
+                        <span id="lblEditMessageError" style="width:1000px;display:none;font-size:2em;color:red"> >Opps! Error while modifying schema.</span>
+
+                    </p>
+
+                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p> <button type="submit">Submit</button></p> *@
+                </form>
 
             </div>
-            <div id="removediv" style="display: none; border-style: solid; background-color: #e0e5da;">
+            <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#e0e5da;padding:2em;">
 
-                <h2>Delete selected item - <span></span></h2>
+                <form action="/schema/delete" method="POST" id="deleteSchemaForm">
+                    <h2>To delete selected item -  <span></span></h2>
+                    <h4>Are you sure you want to delete this item?  <span></span></h4>
 
-                <p>This form is to remove existed item</p>
-                <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p>
+                        <label for="schemaID">Schema ID:</label>
+                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-button" style="width:500px">
+                    </p>
+                    
+                    <p>
+
+                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+
+                       
+                        <button id="btnCancelDelete" class="unfake-disabled-button" >Cancel</button>
+                        <button id="btnDeleteSchema" class="unfake-disabled-button" >Delete Schema</button>
+
+                    </p>
+
+                    
+
+                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p> <button type="submit">Submit</button></p> *@
+                </form>
+                <p>
+                    <span id="lblDeleteMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema deleted successfully.</span>
+                    <span id="lblDeleteMessageError" style="width:1000px;display:none;font-size:2em;color:red"> >Opps! Error while deleting schema.</span>
+
+                </p>
 
             </div>
 
-            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #e0e5da;">
+            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #e0e5da;padding:2em;">
 
                 <h2>Duplicate selected item - <span></span></h2>
                 <p>This form is to remove existed item</p>
@@ -310,11 +396,12 @@
             <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
              <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
              <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
-            <li id="add_li">Add</li>
+            <li id="add_li">Create</li>
             <li id="edit_li">Edit</li>
-            <li id="refresh_li">Refresh</li>
             <li id="remove_li">Remove</li>
             <li id="duplicate_li">Duplicate</li>
+            <li id="refresh_li">Refresh</li>
+            
 
         </ul>
     </div>
@@ -586,8 +673,17 @@
          $('#btnSaveSchema').on('click', function(e) {
         e.preventDefault(); // This stops the form from submitting and redirecting
             e.stopPropagation();
-             alert('saveSchema' );
+             //alert('saveSchema' );
                  $("#btnAddSchemaFields").removeClass("fake-disabled-button");
+                    var MessageSucess=  $("#lblAddMessageSucess");
+                           var MessageError=  $("#lblAddMessageError");
+                             MessageSucess.css('display', 'none');
+                                MessageError.css('display', 'none');
+
+                           // MessageSucess.style.display = "none";
+                         // MessageErrir.style.display= "none";
+                   
+                
                  // $("#btnSaveSchema").addClass("fake-disabled-button");
 
                     //var inputValue = $('#username').val();
@@ -612,8 +708,13 @@
                                         contentType: "application/json; charset=utf-8",
                                          dataType: "json",
                                         success: function (response) {
-                                            //alert("success");
+                                           // alert("success");
                                          console.log("Success:", response);
+
+                                            MessageSucess.css('display', 'block');
+                                           MessageError.css('display', 'none');
+                                                   //MessageSucess.style.display = "block";
+                                               // MessageErrir.style.display= "none";
                                         
                                         //  console.log("Total records received: " + response.length);
                                         //     $.each(response, function(index, record) {
@@ -627,6 +728,11 @@
                 
                                      },
                                   error: function (xhr, status, error) {
+                                         MessageSucess.css('display', 'none');
+                                            MessageError.css('display', 'block');
+
+                                         // MessageSucess.style.display = "none";
+                                               //  MessageErrir.style.display= "block";
                                  // Code to handle execution errors
                                          console.error("Error occurred:", error);
                                           alert("Error occurred:" + error);
@@ -634,6 +740,232 @@
                              });
 
                 });
+
+                   $('#btnCancelDelete').on('click', function(e) {
+                        e.preventDefault();
+                         e.stopPropagation();
+                             //alert('btnCancelDelete' );
+                           var MessageSucess=  $("#lblDeleteMessageSucess");
+                           var MessageError=  $("#lblDeleteMessageError");
+                           var deleteSchemaForm=  $("#deleteSchemaForm");
+                             MessageError.css('display', 'none');
+                              deleteSchemaForm.css('display', 'none');
+                               MessageSucess.css('display', 'block');
+                                   MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
+                                      MessageSucess.html("<strong>Cancellation successful. The Item has not been deleted.</strong>");
+                                         //MessageSucess.html("Action canceled. The item was not deleted.");
+                                           // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
+
+
+                                 //$("#mySpan").html("<strong>New HTML Content</strong>");
+
+                         });
+
+                    $('#btnDeleteSchema').on('click', function(e) {
+                        e.preventDefault(); 
+                        e.stopPropagation();
+               // alert('btnEditSchema' );
+                  // $("#btnEditSchemaFields").removeClass("fake-disabled-button");
+                               var MessageSucess=  $("#lblDeleteMessageSucess");
+                               var MessageError=  $("#lblDeleteMessageError");
+                               var deleteSchemaForm=  $("#deleteSchemaForm");
+                               MessageSucess.css('display', 'none');
+                               MessageError.css('display', 'none');
+                                MessageSucess.html("");
+
+                             // MessageSucess.style.display = "none";
+                           // MessageErrir.style.display= "none";
+
+
+                   // $("#btnSaveSchema").addClass("fake-disabled-button");
+
+                      //var inputValue = $('#username').val();
+                      // addSchemaForm
+
+                       //var parentForm = this.closest('form');
+                         // alert(parentForm.id  );
+                           // var txtSchemaName = $('#addSchemaForm').find('input[id="txtSchemaName"]').val();
+                           //    var txtSchemaPath = $('#addSchemaForm').find('input[id="txtSchemaPath"]').val();
+                           //     var txtSchemaParent = $('#addSchemaForm').find('input[id="txtSchemaParent"]').val();
+                            var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+                               // var  txtSchemaName = $(this).closest('form').find('input[id="txtSchemaName"]').val();
+                               //  var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
+                               //  var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
+
+                                // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+
+                                   $.ajax({
+                                          type: "GET",
+                                           url: "/ContentTree/DeleteSchema", // PageName/MethodName
+                                          //data: JSON.stringify(requestData),
+                                                   data: { SchemaID: txtSchemaID},
+                                          contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                          success: function (response) {
+                                              //alert("success");
+                                          // alert("Success:", response);
+                                            deleteSchemaForm.css('display', 'none');
+                                              MessageSucess.css('display', 'block');
+                                                MessageError.css('display', 'none');
+
+                                                MessageSucess.html("Schema has been deleted successfully");
+                                                     //MessageSucess.style.display = "block";
+                                                 // MessageErrir.style.display= "none";
+
+                                          //  console.log("Total records received: " + response.length);
+                                          //     $.each(response, function(index, record) {
+                                          //  // Access specific fields belonging to each record row
+                                          //  console.log("Record ParentSchemaName: " + record.parentSchemaName);
+                                          //   console.log("Record ParentSchemaID: " + record.parentSchemaID);
+                                          //  console.log("Record ChildSchemaName: " + record.childSchemaName);
+                                          //  console.log("Record ChildSchemaID: " + record.childSchemaID);
+
+                                          // });
+
+                                       },
+                                    error: function (xhr, status, error) {
+                                           MessageSucess.css('display', 'none');
+                                              MessageError.css('display', 'block');
+                                                  MessageError.val("Opps! Error while deleting schema.");
+
+                                           // MessageSucess.style.display = "none";
+                                                 //  MessageErrir.style.display= "block";
+                                   // Code to handle execution errors
+                                           console.error("Error occurred:", error);
+                                            alert("Error occurred:" + error);
+                                       }
+                               });
+
+                  });
+
+
+                  $('#btnEditSchema').on('click', function(e) {
+         e.preventDefault(); // This stops the form from submitting and redirecting
+             e.stopPropagation();
+              // alert('btnEditSchema' );
+                  $("#btnEditSchemaFields").removeClass("fake-disabled-button");
+                      var MessageSucess=  $("#lblEditMessageSucess");
+                             var MessageError=  $("#lblEditMessageError");
+                              MessageSucess.css('display', 'none');
+                                 MessageError.css('display', 'none');
+
+                            // MessageSucess.style.display = "none";
+                          // MessageErrir.style.display= "none";
+
+
+                  // $("#btnSaveSchema").addClass("fake-disabled-button");
+
+                     //var inputValue = $('#username').val();
+                     // addSchemaForm
+
+                      //var parentForm = this.closest('form');
+                        // alert(parentForm.id  );
+                          // var txtSchemaName = $('#addSchemaForm').find('input[id="txtSchemaName"]').val();
+                          //    var txtSchemaPath = $('#addSchemaForm').find('input[id="txtSchemaPath"]').val();
+                          //     var txtSchemaParent = $('#addSchemaForm').find('input[id="txtSchemaParent"]').val();
+                           var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+                              var  txtSchemaName = $(this).closest('form').find('input[id="txtSchemaName"]').val();
+                               var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
+                               var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
+
+                               // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+
+                                  $.ajax({
+                                         type: "GET",
+                                          url: "/ContentTree/UpdateSchema", // PageName/MethodName
+                                         //data: JSON.stringify(requestData),
+                                                  data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent },
+                                         contentType: "application/json; charset=utf-8",
+                                          dataType: "json",
+                                         success: function (response) {
+                                             //alert("success");
+                                         // alert("Success:", response);
+
+                                             MessageSucess.css('display', 'block');
+                                            MessageError.css('display', 'none');
+                                                    //MessageSucess.style.display = "block";
+                                                // MessageErrir.style.display= "none";
+
+                                         //  console.log("Total records received: " + response.length);
+                                         //     $.each(response, function(index, record) {
+                                         //  // Access specific fields belonging to each record row
+                                         //  console.log("Record ParentSchemaName: " + record.parentSchemaName);
+                                         //   console.log("Record ParentSchemaID: " + record.parentSchemaID);
+                                         //  console.log("Record ChildSchemaName: " + record.childSchemaName);
+                                         //  console.log("Record ChildSchemaID: " + record.childSchemaID);
+
+                                         // });
+
+                                      },
+                                   error: function (xhr, status, error) {
+                                          MessageSucess.css('display', 'none');
+                                             MessageError.css('display', 'block');
+
+                                          // MessageSucess.style.display = "none";
+                                                //  MessageErrir.style.display= "block";
+                                  // Code to handle execution errors
+                                          console.error("Error occurred:", error);
+                                           alert("Error occurred:" + error);
+                                      }
+                              });
+
+                 });
+
+                  function getSchema( IDSchema ) {
+
+                           var MessageSucess=  $("#lblEditMessageSucess");
+                            var MessageError=  $("#lblEditMessageError");
+                             MessageSucess.css('display', 'none');
+                            MessageError.css('display', 'none');
+                $.ajax({
+                 type: "GET",
+                  url: "/ContentTree/GetSchema", // PageName/MethodName
+                 //data: JSON.stringify(requestData),
+                 data: { SchemaID: IDSchema },
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (response) {
+                      //alert("success");
+                      //alert("Success:", response);
+                        // alert("Total records received: " + response.length);
+                       $.each(response, function(index, record) {
+                                 // Access specific fields belonging to each record row
+                                   //alert("Record ID: " + record.id);
+                                    //alert("Record SchemaName: " + record.schemaName);
+                                    //alert("Record SchemaPath: " + record.schemaPath);
+                                   // alert("Record ParentID: " + record.parentID);
+
+                                       $("#editSchemaForm #txtSchemaID").val(record.id);
+                                           $("#editSchemaForm #txtSchemaName").val(record.schemaName);
+                                             $("#editSchemaForm #txtSchemaPath").val(record.schemaPath);
+                                               $("#editSchemaForm #txtSchemaParent").val(record.parentID);
+
+                                // var childCount= checkChildCount( IDSchema );
+                                // if(childCount>0)
+                                // {
+                                //  var myUl = $("#myUL").find("#" + IDSchema);
+
+                                // myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span>");
+                                // myUl.append("<ul id='"+record.childSchemaID+ "' class='nested'>");
+                                // myUl.append("</ul");
+                                // }
+                                // else
+                                // {
+                                     // myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelected('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                                //}
+
+                          });
+                 // Code to handle successful server response
+                 //console.log("Success:", response);
+                        // alert(response.message + " Status is: " + response.currentStatus);
+                      },
+                  error: function (xhr, status, error) {
+                 // Code to handle execution errors
+                         console.error("Error occurred:", error);
+                          alert("Error occurred:" + error);
+                     }
+             });
+         }
 
         $('#btnAddSchemaFields').on('click', function(e) {
          e.preventDefault(); // This stops the form from submitting and redirecting
@@ -746,6 +1078,7 @@
                             editdiv.style.display = "block";
                             const innerElement = editdiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
+                              getSchema( currentitemid );
 
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                            // removediv.style.display = "none";
@@ -898,12 +1231,32 @@
                             adddiv.style.display = "block";
                             const innerElement = adddiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
-
+                              //$("#btnAddSchemaFields").addClass("fake-disabled-button");
                               var innerSchemaPathElement = adddiv.querySelector('#txtSchemaParent');
                              //innerSchemaPathElement.setAttribute("val" ,currentitemid);
                              //innerSchemaPathElement.innerHTML= currentitemid;
                             // innerSchemaPathElement.val(currentitemid) ;
-                              $("#addSchemaForm #txtSchemaParent").val(currentitemid);
+
+                                $('#addSchemaForm').find('button[id="btnAddSchemaFields"]').addClass("fake-disabled-button");
+                                  $('#addSchemaForm').find('input[id="txtSchemaName"]').val('');
+                                       $('#addSchemaForm').find('label[id="txtSchemaPath"]').val('');
+                                           $('#addSchemaForm').find('input[id="txtSchemaParent"]').val(currentitemid);
+                                           // $('#addSchemaForm').find('input[id="txtSchemaParent"]').val('');
+                                          // $('#lblAddMessageSucess').val('');
+                                            // $('#lblAddMessageError').val('');
+
+                                           var MessageSucess=  $("#lblAddMessageSucess");
+                                           var MessageError=  $("#lblAddMessageError");
+                                           MessageSucess.css('display', 'none');
+                                           MessageError.css('display', 'none');
+
+                                            // $('#addSchemaForm').find('input[id="txtSchemaName"]').val('');
+                              // $("#addSchemaForm #txtSchemaName").val('');
+                                //$("#addSchemaForm #txtSchemaPath").val('');
+                                  // $("#addSchemaForm #lblAddMessageSucess").val('');
+                                   //  $("#addSchemaForm #lblAddMessageError").val('');
+                                // $("#addSchemaForm #txtSchemaParent").val(currentitemid);
+                                     //alert( $('#lblAddMessageSucess').innerHtml);
                              //alert(innerSchemaPathElement.innerHTML);
                              //alert($("#addSchemaForm #schemaParent").val());
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
@@ -930,6 +1283,22 @@
                             editdiv.style.display = "block";
                             const innerElement = editdiv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
+                              $("#addSchemaForm #txtSchemaName").val('');
+                                 $("#addSchemaForm #txtSchemaPath").val('');
+                                     $("#addSchemaForm #lblEditMessageSucess").val('');
+                                      $("#addSchemaForm #lblEditMessageError").val('');
+                                  $("#addSchemaForm #txtSchemaParent").val(currentitemid);
+                              //alert($("#addSchemaForm #lblEditMessageSucess").val());
+
+
+                                            var MessageSucess=  $("#lblEditMessageSucess");
+                                            var MessageError=  $("#lblEditMessageError");
+                                            MessageSucess.css('display', 'none');
+                                            MessageError.css('display', 'none');
+                              getSchema( currentitemid );
+                               
+
+                               // $("#editSchemaForm #txtSchemaID").val(currentitemid);
                             // alert(innerElement.innerHTML);
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                             // removediv.style.display = "none";
@@ -943,6 +1312,23 @@
                             // duplicatediv.style.display = "none";
                             const innerElement = removediv.querySelector('h2 span');
                             innerElement.innerHTML = currentitemid;
+                              // $("#deleteSchemaForm #txtSchemaName").val('');
+                              //      $("#deleteSchemaForm #txtSchemaPath").val('');
+                              //          $("#deleteSchemaForm #lblEditMessageSucess").val('');
+                              //           $("#deleteSchemaForm #lblEditMessageError").val('');
+                                     $("#deleteSchemaForm #txtSchemaID").val(currentitemid);
+                               //alert($("#addSchemaForm #lblEditMessageSucess").val());
+
+
+                                             var MessageSucess=  $("#lblDeleteMessageSucess");
+                                             var MessageError=  $("#lblDeleteEditMessageError");
+                                             MessageSucess.css('display', 'none');
+                                             MessageError.css('display', 'none');
+                                             MessageSucess.html("");
+                                             var deleteSchemaForm=  $("#deleteSchemaForm");
+                                             deleteSchemaForm.css('display', 'block');
+                             
+                               
 
                              //alert(innerElement.innerHTML);
                             //alert('inside div -' + currentid +' and item id -'+ currentitemid);

@@ -78,6 +78,74 @@ namespace DynamicContentApp.Controllers
                 return Ok(false);
             }
         }
+
+       
+
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult UpdateSchema(string SchemaID,  string SchemaName, string SchemaPath, string SchemaParent)
+        {
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            //if (String.IsNullOrEmpty(SchemaID))
+            //{
+            //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            //}
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            bool isInsertSuccess = dynamicContentDAL.UpdateSchema(SchemaID ,SchemaName, SchemaPath, SchemaParent);
+            //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            //{
+
+            //}
+            if (isInsertSuccess)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
+
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult DeleteSchema(string SchemaID)
+        {
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            //if (String.IsNullOrEmpty(SchemaID))
+            //{
+            //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            //}
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            bool isInsertSuccess = dynamicContentDAL.DeleteSchema(SchemaID);
+            //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            //{
+
+            //}
+            if (isInsertSuccess)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
+
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetSchema(string SchemaID)
+        {
+
+           // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID);
+            if (SchemaModellist != null && SchemaModellist.Count == 0)
+            {
+
+            }
+            return Ok(SchemaModellist);
+        }
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetRootNode()

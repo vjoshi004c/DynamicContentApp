@@ -52,6 +52,119 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
+        public bool UpdateSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", SchemaID);
+                cmd.Parameters.AddWithValue("@SchemaName", SchemaName);
+                cmd.Parameters.AddWithValue("@SchemaPath", SchemaPath);
+                cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
+                cmd.Parameters.AddWithValue("@Query", 2);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public bool DeleteSchema(string SchemaID)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", SchemaID);
+                cmd.Parameters.AddWithValue("@SchemaName", "");
+                cmd.Parameters.AddWithValue("@SchemaPath", "");
+                cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@Query", 3);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+      
+
+
+        public List<SchemaModel> GetSchema(string SchemaID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<SchemaModel> custlist = null;
+            try
+            {
+                custlist = new List<SchemaModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", SchemaID);
+                cmd.Parameters.AddWithValue("@SchemaName", "");
+                cmd.Parameters.AddWithValue("@SchemaPath", "");
+                cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@Query", 4);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    SchemaModel cobj = new SchemaModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.SchemaName = ds.Tables[0].Rows[i]["SchemaName"].ToString();
+                    cobj.SchemaPath = ds.Tables[0].Rows[i]["SchemaPath"].ToString();
+                    cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public bool InsertPageContent(string PageUrl, string PageContent)
         {
             SqlConnection con = null;
