@@ -171,6 +171,12 @@
             width: 10em;
         }
 
+        .fake-disabled-input {
+            pointer-events: none; /* Block clicks */
+            opacity: 0.5; /* Fade out */
+            height: 1em;
+            width: 10em;
+        }
         
 
         .scroll-container {
@@ -209,7 +215,7 @@
 
 
             <ul id="myUL">
-                <li id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE">
+                <li  tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE">
                     <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="caret default-color">Main</span>
                     <ul id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="nested">
                         <li>
@@ -249,8 +255,9 @@
             </ul>
 
         </div>
-        <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #e0e5da;padding:2em;">
-            <div id="adddiv" style="display: none;  background-color: #e0e5da;">
+        <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #EFF5E9;padding:2em;">
+            <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #D3E0C3;padding:2em;">
+                <div id="adddiv" style="display: none;  background-color: #D3E0C3;">
 
                 <form action="/schema/add" method="POST" id="addSchemaForm">
                 <h2>To create new item under parent node- <span></span></h2>
@@ -261,11 +268,11 @@
                 </p>
                 <p>
                     <label for="schemaPath">Schema Path:</label>
-                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-button"  style="width:500px">
+                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
                 </p>
                 <p>
                     <label for="schemaParent">Schema Parent:</label>
-                        <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-button"  style="width:500px">
+                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
                 </p>
                 <p>
 
@@ -290,7 +297,7 @@
 
             </div>
 
-            <div id="refreshdiv" style="display: none;  border-color:#f4f4f4;background-color: #e0e5da;padding:2em;padding:2em;">
+                <div id="refreshdiv" style="display: none;  border-color:#f4f4f4;background-color: #D3E0C3;padding:2em;padding:2em;">
 
                 <h2>Refresh existed item - <span></span></h2>
 
@@ -298,7 +305,7 @@
                 <p>Click on the arrow(s) to open or close the tree branches.</p>
 
             </div>
-            <div id="editdiv" style="display: none;  background-color: #e0e5da;">
+                <div id="editdiv" style="display: none;  background-color: #D3E0C3;">
 
                 <form action="/schema/edit" method="POST" id="editSchemaForm">
                     <h2>To edit selected item -  <span></span></h2>
@@ -306,7 +313,7 @@
 
                     <p>
                         <label for="schemaID">Schema ID:</label>
-                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-button"  style="width:500px">
+                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
                     </p>
                     <p>
                         <label for="schemaName">Schema Name:</label>
@@ -314,11 +321,11 @@
                     </p>
                     <p>
                         <label for="schemaPath">Schema Path:</label>
-                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-button"  style="width:500px">
+                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
                     </p>
                     <p>
                         <label for="schemaParent">Schema Parent:</label>
-                        <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-button"  style="width:500px">
+                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
                     </p>
                     <p>
 
@@ -342,7 +349,7 @@
                 </form>
 
             </div>
-            <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#e0e5da;padding:2em;">
+                <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#D3E0C3;padding:2em;">
 
                 <form action="/schema/delete" method="POST" id="deleteSchemaForm">
                     <h2>To delete selected item -  <span></span></h2>
@@ -350,8 +357,12 @@
 
                     <p>
                         <label for="schemaID">Schema ID:</label>
-                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-button" style="width:500px">
+                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
                     </p>
+                        <p>
+                            <label for="schemaName">Schema Name:</label>
+                            <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
+                        </p>
                     
                     <p>
 
@@ -384,6 +395,7 @@
 
             </div>
 
+        </div>
         </div>
     </div>
 
@@ -1076,15 +1088,18 @@
      function ViewContentItem( currentitemid) {
                             closeAllViewPanels();
                             editdiv.style.display = "block";
-                            const innerElement = editdiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+                              const innerElement = editdiv.querySelector('h2 span');
+                              var content=$("#" +currentitemid).html();
+                            //innerElement.innerHTML = currentitemid;
+                            // innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
                               getSchema( currentitemid );
-
-                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
+                            //$("#editSchemaForm #txtSchemaName").val(content);
+                            //const innerElement = editdiv.querySelector('h2 span');
+                           //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                            // removediv.style.display = "none";
-                           // duplicatediv.style.display = "none";
-
-                            //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+                          // duplicatediv.style.display = "none";
+                          //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
                         
                }
 
@@ -1230,7 +1245,10 @@
                         if (currentid == 'add_li') {
                             adddiv.style.display = "block";
                             const innerElement = adddiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+                            //innerElement.innerHTML = currentitemid;
+                              var content=$("#" +currentitemid).html();
+                                 innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                                 //innerElement.innerHTML = content+ " {" +currentitemid +"}";
                               //$("#btnAddSchemaFields").addClass("fake-disabled-button");
                               var innerSchemaPathElement = adddiv.querySelector('#txtSchemaParent');
                              //innerSchemaPathElement.setAttribute("val" ,currentitemid);
@@ -1281,8 +1299,8 @@
                         }
                         if (currentid == 'edit_li') {
                             editdiv.style.display = "block";
-                            const innerElement = editdiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+                            //const innerElement = editdiv.querySelector('h2 span');
+                            //innerElement.innerHTML = currentitemid;
                               $("#addSchemaForm #txtSchemaName").val('');
                                  $("#addSchemaForm #txtSchemaPath").val('');
                                      $("#addSchemaForm #lblEditMessageSucess").val('');
@@ -1295,8 +1313,16 @@
                                             var MessageError=  $("#lblEditMessageError");
                                             MessageSucess.css('display', 'none');
                                             MessageError.css('display', 'none');
-                              getSchema( currentitemid );
-                               
+                                            
+                                            getSchema( currentitemid );
+                                       
+                                            var content=$("#" +currentitemid).html();
+                                              //$("#editSchemaForm #txtSchemaName").val(content);
+                                                 const innerElement = editdiv.querySelector('h2 span');
+                                              innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                                innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+
+                                               // alert(innerElement.innerHTML);
 
                                // $("#editSchemaForm #txtSchemaID").val(currentitemid);
                             // alert(innerElement.innerHTML);
@@ -1310,8 +1336,7 @@
                              removediv.style.display = "block";
                             // editdiv.style.display = "none";
                             // duplicatediv.style.display = "none";
-                            const innerElement = removediv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+                            
                               // $("#deleteSchemaForm #txtSchemaName").val('');
                               //      $("#deleteSchemaForm #txtSchemaPath").val('');
                               //          $("#deleteSchemaForm #lblEditMessageSucess").val('');
@@ -1327,6 +1352,12 @@
                                              MessageSucess.html("");
                                              var deleteSchemaForm=  $("#deleteSchemaForm");
                                              deleteSchemaForm.css('display', 'block');
+
+                                             var content=$("#" +currentitemid).html();
+                                             $("#deleteSchemaForm #txtSchemaName").val(content);
+                                              const innerElement = removediv.querySelector('h2 span');
+                                             //innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
                              
                                
 
