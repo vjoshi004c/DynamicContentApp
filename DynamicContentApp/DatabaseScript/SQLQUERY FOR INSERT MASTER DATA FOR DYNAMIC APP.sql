@@ -23,8 +23,9 @@ select * from assetitem
 --AssetSchema]
 select * from AssetSchema
 INSERT INTO [dbo].[AssetSchema]([ID] ,[SchemaName] ,[SchemaPath], [ParentID])
-VALUES    ('4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE',      'DynamicContent',     '/Schema/DynamicContent', '4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE')
+VALUES    ('4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE',      'UniversalCMS',     '/Schema/DynamicContent', '4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE')
 update [dbo].[AssetSchema] set [ParentID]= null where id = '4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE'
+update [dbo].[AssetSchema] set SchemaName=  'UniversalCMS' where id = '4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE'
 
 select * from AssetSchema where id ='E17E4A01-ECCA-4B9F-886C-7BE198091843'
 

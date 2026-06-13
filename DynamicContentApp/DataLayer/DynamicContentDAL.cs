@@ -15,9 +15,10 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
         // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+        private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentSecond;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
         public bool InsertSchema(string SchemaName, string SchemaPath, string SchemaParent)
@@ -141,13 +142,23 @@ namespace DynamicContentApp.DataLayer
                 da.SelectCommand = cmd;
                 ds = new DataSet();
                 da.Fill(ds);
+                string schemapath = string.Empty;
+                if (ds.Tables[1] != null && ds.Tables[1].Rows != null)
+                {
+                    for (int i = 0; i < ds.Tables[1].Rows.Count; i++)
+                    {
+                        schemapath = schemapath + "/" + ds.Tables[1].Rows[i]["SchemaName"].ToString();
+
+                    }
+                }
 
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     SchemaModel cobj = new SchemaModel();
                     cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
                     cobj.SchemaName = ds.Tables[0].Rows[i]["SchemaName"].ToString();
-                    cobj.SchemaPath = ds.Tables[0].Rows[i]["SchemaPath"].ToString();
+                   // cobj.SchemaPath = ds.Tables[0].Rows[i]["SchemaPath"].ToString();
+                    cobj.SchemaPath = schemapath;
                     cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
                     custlist.Add(cobj);
                 }
