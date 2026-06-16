@@ -78,8 +78,29 @@ namespace DynamicContentApp.Controllers
                 return Ok(false);
             }
         }
+        public IActionResult SaveSchemaField(string SchemaID, string SchemaName, string SchemaFieldType)
+        {
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            //if (String.IsNullOrEmpty(SchemaID))
+            //{
+            //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            //}
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            bool isInsertSuccess = dynamicContentDAL.InsertSchemaField(SchemaID, SchemaName, SchemaFieldType);
+            //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            //{
 
-       
+            //}
+            if (isInsertSuccess)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
+
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
@@ -146,6 +167,25 @@ namespace DynamicContentApp.Controllers
             }
             return Ok(SchemaModellist);
         }
+
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetFieldType()
+        {
+
+            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<SchemaFieldType> SchemaFieldTypeList = dynamicContentDAL.GetFieldType();
+            if (SchemaFieldTypeList != null && SchemaFieldTypeList.Count == 0)
+            {
+
+            }
+            return Ok(SchemaFieldTypeList);
+        }
+        
+
+
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetRootNode()

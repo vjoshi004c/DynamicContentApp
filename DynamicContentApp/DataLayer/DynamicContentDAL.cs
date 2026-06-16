@@ -51,7 +51,37 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+        public bool InsertSchemaField(string SchemaID, string SchemaName, string SchemaFieldType)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema_fields", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@ID", "");
+                cmd.Parameters.AddWithValue("@SchemaID", SchemaID);
+                cmd.Parameters.AddWithValue("@FieldTypeID", SchemaFieldType);
+                cmd.Parameters.AddWithValue("@FieldName", SchemaName);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public bool UpdateSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent)
         {
             SqlConnection con = null;
@@ -115,9 +145,53 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
-      
 
 
+        public List<SchemaFieldType> GetFieldType()
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<SchemaFieldType> custlist = null;
+            try
+            {
+                custlist = new List<SchemaFieldType>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_fields_type", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", "");
+                cmd.Parameters.AddWithValue("@FieldName", "");
+                cmd.Parameters.AddWithValue("@FieldType", "");
+                cmd.Parameters.AddWithValue("@Query", 5);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    SchemaFieldType cobj = new SchemaFieldType();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.FieldName = ds.Tables[0].Rows[i]["FieldName"].ToString();
+                    cobj.FieldType = ds.Tables[0].Rows[i]["FieldType"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public List<SchemaModel> GetSchema(string SchemaID)
         {
 

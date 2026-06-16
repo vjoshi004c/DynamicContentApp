@@ -14,6 +14,17 @@
 
     }
 
+    public class SchemaFieldType
+    {
+        public string? ID { get; set; }
+        public string? FieldName { get; set; }
+
+        public string? FieldType { get; set; }
+
+
+
+    }
+
     public class SchemaFields
     {
         public string? ID { get; set; }

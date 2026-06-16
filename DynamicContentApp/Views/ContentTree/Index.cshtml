@@ -3,6 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/lib/jquery/dist/jquery.min.js"></script>
+   
+    
     <style>
         body {
             margin: 0;
@@ -294,6 +296,7 @@
                @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                     <p> <button type="submit">Submit</button></p> *@
                 </form>
+                    <div id="dynamicFormContainer_Add"></div>
 
             </div>
 
@@ -331,7 +334,7 @@
 
                         @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                        <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button">Edit Fields</button>
+                        <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button">Add Fields</button>
                         @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
                         <button id="btnEditSchema" class="unfake-disabled-button" >Save Schema</button>
@@ -347,6 +350,7 @@
                     @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                     <p> <button type="submit">Submit</button></p> *@
                 </form>
+                    <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:solid; border-color:darkslategray; padding:2em;display:none;"></div>
 
             </div>
                 <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#D3E0C3;padding:2em;">
@@ -1086,6 +1090,7 @@
 
      }
      function ViewContentItem( currentitemid) {
+          $("#btnEditSchemaFields").removeClass("fake-disabled-button");
                             closeAllViewPanels();
                             editdiv.style.display = "block";
                               const innerElement = editdiv.querySelector('h2 span');
@@ -1308,7 +1313,7 @@
                                   $("#addSchemaForm #txtSchemaParent").val(currentitemid);
                               //alert($("#addSchemaForm #lblEditMessageSucess").val());
 
-
+                               $('#editSchemaForm').find('button[id="btnAddSchemaFields"]').removeClass("fake-disabled-button");
                                             var MessageSucess=  $("#lblEditMessageSucess");
                                             var MessageError=  $("#lblEditMessageError");
                                             MessageSucess.css('display', 'none');
@@ -1412,6 +1417,7 @@
             contextMenu.style.display = "none";
         });
     </script>
+<script src="/js/custom/dynamicSchemaFields.js"></script>
 
     
 
