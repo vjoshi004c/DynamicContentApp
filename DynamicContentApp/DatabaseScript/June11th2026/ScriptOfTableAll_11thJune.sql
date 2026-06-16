@@ -1,21 +1,22 @@
 USE [TestPFP]
 GO
-/****** Object:  Table [dbo].[AssetFields]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[AssetFieldsType]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[AssetFields](
+CREATE TABLE [dbo].[AssetFieldsType](
 	[ID] [varchar](100) NOT NULL,
 	[FieldName] [varchar](max) NULL,
 	[FieldType] [varchar](100) NULL,
+	[FieldCategory] [varchar](100) NULL,
  CONSTRAINT [PK_AssetFields] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetItem]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[AssetItem]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -33,7 +34,7 @@ CREATE TABLE [dbo].[AssetItem](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetItemFields]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[AssetItemFields]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -50,7 +51,7 @@ CREATE TABLE [dbo].[AssetItemFields](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetItemLayout]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[AssetItemLayout]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -66,7 +67,7 @@ CREATE TABLE [dbo].[AssetItemLayout](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetSchema]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[AssetSchema]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -76,13 +77,14 @@ CREATE TABLE [dbo].[AssetSchema](
 	[SchemaName] [varchar](max) NULL,
 	[SchemaPath] [varchar](max) NULL,
 	[ParentID] [varchar](100) NULL,
+	[AssetTypeID] [varchar](100) NULL,
  CONSTRAINT [PK_AssetSchema] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetSchemaFields]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[AssetSchemaFields]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -99,7 +101,7 @@ CREATE TABLE [dbo].[AssetSchemaFields](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ComponentPresentation]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[ComponentPresentation]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,7 +121,7 @@ CREATE TABLE [dbo].[ComponentPresentation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PageContent]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[PageContent]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +132,7 @@ CREATE TABLE [dbo].[PageContent](
 	[PageUpdatedDate] [datetime] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PagePresentation]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[PagePresentation]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -149,7 +151,7 @@ CREATE TABLE [dbo].[PagePresentation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PlaceholderPresentation]    Script Date: 6/11/2026 9:23:08 AM ******/
+/****** Object:  Table [dbo].[PlaceholderPresentation]    Script Date: 6/16/2026 1:49:53 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +166,7 @@ CREATE TABLE [dbo].[PlaceholderPresentation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[AssetFields] ADD  CONSTRAINT [DF_AssetFields_ID]  DEFAULT (newid()) FOR [ID]
+ALTER TABLE [dbo].[AssetFieldsType] ADD  CONSTRAINT [DF_AssetFields_ID]  DEFAULT (newid()) FOR [ID]
 GO
 ALTER TABLE [dbo].[AssetItem] ADD  CONSTRAINT [DF_AssetItem_ID]  DEFAULT (newid()) FOR [ID]
 GO
@@ -215,11 +217,6 @@ ALTER TABLE [dbo].[AssetSchema]  WITH CHECK ADD  CONSTRAINT [FK_AssetSchema_Asse
 REFERENCES [dbo].[AssetSchema] ([ID])
 GO
 ALTER TABLE [dbo].[AssetSchema] CHECK CONSTRAINT [FK_AssetSchema_AssetSchema1]
-GO
-ALTER TABLE [dbo].[AssetSchemaFields]  WITH CHECK ADD  CONSTRAINT [FK_AssetSchemaFields_FieldID_AssetFields_ID] FOREIGN KEY([FieldTypeID])
-REFERENCES [dbo].[AssetFields] ([ID])
-GO
-ALTER TABLE [dbo].[AssetSchemaFields] CHECK CONSTRAINT [FK_AssetSchemaFields_FieldID_AssetFields_ID]
 GO
 ALTER TABLE [dbo].[AssetSchemaFields]  WITH CHECK ADD  CONSTRAINT [FK_AssetSchemaFields_SchemaID_AssetSchema_ID] FOREIGN KEY([SchemaID])
 REFERENCES [dbo].[AssetSchema] ([ID])

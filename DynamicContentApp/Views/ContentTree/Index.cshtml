@@ -265,17 +265,24 @@
                 <h2>To create new item under parent node- <span></span></h2>
 
                 <p>
-                    <label for="schemaName">Schema Name:</label>
+                    <label for="schemaName">Asset Name:</label>
                         <input type="text" id="txtSchemaName" name="schemaName" style="width:500px" >
                 </p>
                 <p>
-                    <label for="schemaPath">Schema Path:</label>
+                    <label for="schemaPath">Asset Path:</label>
                             <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
                 </p>
                 <p>
-                    <label for="schemaParent">Schema Parent:</label>
+                    <label for="schemaParent">Asset Parent:</label>
                             <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
                 </p>
+                        <p>
+                            <label for="AssetTypeDropdown_Add">AssetType:</label>
+                            <!-- 1. Create the empty HTML Dropdown -->
+                            <select id="AssetTypeDropdown_Add">
+                               @*  <option value="">-- Select an Option --</option> *@
+                            </select>
+                        </p>
                 <p>
 
                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
@@ -315,21 +322,28 @@
 
 
                     <p>
-                        <label for="schemaID">Schema ID:</label>
+                        <label for="schemaID">Asset ID:</label>
                             <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
                     </p>
                     <p>
-                        <label for="schemaName">Schema Name:</label>
+                        <label for="schemaName">Asset Name:</label>
                         <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
                     </p>
                     <p>
-                        <label for="schemaPath">Schema Path:</label>
+                        <label for="schemaPath">Asset Path:</label>
                             <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
                     </p>
                     <p>
-                        <label for="schemaParent">Schema Parent:</label>
-                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
+                        <label for="schemaParent">Asset Parent:</label>
+                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px;">
                     </p>
+                        <p>
+                            <label for="AssetTypeDropdown_Edit">AssetType:</label>
+                            <!-- 1. Create the empty HTML Dropdown -->
+                            <select id="AssetTypeDropdown_Edit">
+                                @* <option value="">-- Select an Option --</option> *@
+                            </select>
+                        </p>
                     <p>
 
                         @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
@@ -385,7 +399,7 @@
                 </form>
                 <p>
                     <span id="lblDeleteMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema deleted successfully.</span>
-                    <span id="lblDeleteMessageError" style="width:1000px;display:none;font-size:2em;color:red"> >Opps! Error while deleting schema.</span>
+                    <span id="lblDeleteMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while deleting schema.</span>
 
                 </p>
 
@@ -714,13 +728,26 @@
                               var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
                               var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
 
+                                 var  ddlAssetTypeValue = $(this).closest('form').find('select[id="AssetTypeDropdown_Add"]').val();
+
+                                 
+                                // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+                                      //alert( $("#AssetTypeDropdown_Edit").val());
+                                   //alert(ddlAssetTypeValue);
+                                   if(ddlAssetTypeValue == "")
+                                 {
+                                      alert("Asset Type is mising. Please select AssetType.");
+                                      return;
+                                 }
+                                  //alert(ddlAssetTypeValue);
+
                               // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
 
                                  $.ajax({
                                         type: "GET",
                                         url: "/ContentTree/SaveSchema", // PageName/MethodName
                                         //data: JSON.stringify(requestData),
-                                              data: { SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent },
+                                                 data: { SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue },
                                         contentType: "application/json; charset=utf-8",
                                          dataType: "json",
                                         success: function (response) {
@@ -818,25 +845,33 @@
                                           contentType: "application/json; charset=utf-8",
                                            dataType: "json",
                                           success: function (response) {
+                                                 //alert(response.status);
+                                                    //alert(response.error);
+                                                     // alert(response.message);
+                                                deleteSchemaForm.css('display', 'none');
+                                               if (response.status == true) {
+                                                    
+                                                            
+                                                            MessageSucess.css('display', 'block');
+                                                            MessageError.css('display', 'none');
+                                                            // MessageSucess.html("Schema has been deleted successfully");
+                                                               MessageSucess.html(response.message);
+                                                    } 
+                                                    else {
+                                                        
+                                                            MessageSucess.css('display', 'none');
+                                                            MessageError.css('display', 'block');
+                                                            // MessageError.val("Opps! Error while deleting schema. " + response.error);
+                                                               //MessageError.html(response.error);
+                                                                  MessageError.html(response.message + " [ " + response.error +" ]");
+       
+                                                    }
+
+
                                               //alert("success");
                                           // alert("Success:", response);
-                                            deleteSchemaForm.css('display', 'none');
-                                              MessageSucess.css('display', 'block');
-                                                MessageError.css('display', 'none');
-
-                                                MessageSucess.html("Schema has been deleted successfully");
-                                                     //MessageSucess.style.display = "block";
-                                                 // MessageErrir.style.display= "none";
-
-                                          //  console.log("Total records received: " + response.length);
-                                          //     $.each(response, function(index, record) {
-                                          //  // Access specific fields belonging to each record row
-                                          //  console.log("Record ParentSchemaName: " + record.parentSchemaName);
-                                          //   console.log("Record ParentSchemaID: " + record.parentSchemaID);
-                                          //  console.log("Record ChildSchemaName: " + record.childSchemaName);
-                                          //  console.log("Record ChildSchemaID: " + record.childSchemaID);
-
-                                          // });
+                                             
+                                                     
 
                                        },
                                     error: function (xhr, status, error) {
@@ -883,20 +918,28 @@
                               var  txtSchemaName = $(this).closest('form').find('input[id="txtSchemaName"]').val();
                                var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
                                var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
-
+                                var  ddlAssetTypeValue = $(this).closest('form').find('select[id="AssetTypeDropdown_Edit"]').val();
                                // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+                                     //alert( $("#AssetTypeDropdown_Edit").val());
+                                  //alert(ddlAssetTypeValue);
+                                  if(ddlAssetTypeValue == "")
+                                {
+                                     alert("Asset Type is mising. Please select AssetType.");
+                                     return;
+                                }
+
 
                                   $.ajax({
                                          type: "GET",
                                           url: "/ContentTree/UpdateSchema", // PageName/MethodName
                                          //data: JSON.stringify(requestData),
-                                                  data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent },
+                                                   data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue},
                                          contentType: "application/json; charset=utf-8",
                                           dataType: "json",
                                          success: function (response) {
                                              //alert("success");
                                          // alert("Success:", response);
-
+                                         
                                              MessageSucess.css('display', 'block');
                                             MessageError.css('display', 'none');
                                                     //MessageSucess.style.display = "block";
@@ -955,6 +998,9 @@
                                            $("#editSchemaForm #txtSchemaName").val(record.schemaName);
                                              $("#editSchemaForm #txtSchemaPath").val(record.schemaPath);
                                                $("#editSchemaForm #txtSchemaParent").val(record.parentID);
+                                                      $('#editSchemaForm #AssetTypeDropdown_Edit').val(record.assetTypeID);
+                                                        //alert(record.assetTypeID);
+                                                      // alert($('#editSchemaForm #AssetTypeDropdown_Edit').val());
 
                                 // var childCount= checkChildCount( IDSchema );
                                 // if(childCount>0)
@@ -1351,12 +1397,20 @@
 
 
                                              var MessageSucess=  $("#lblDeleteMessageSucess");
-                                             var MessageError=  $("#lblDeleteEditMessageError");
-                                             MessageSucess.css('display', 'none');
-                                             MessageError.css('display', 'none');
-                                             MessageSucess.html("");
+                                             var MessageError=  $("#lblDeleteMessageError");
+                                             
+                                              // alert("inside delete");
                                              var deleteSchemaForm=  $("#deleteSchemaForm");
                                              deleteSchemaForm.css('display', 'block');
+                                              MessageSucess.css('display', 'none');
+                                              MessageError.css('display', 'none');
+                                              MessageSucess.html("");
+                                                MessageError.html("");
+                                                 // MessageSucess.text('');
+                                                 //  MessageError.text('');
+
+                                                 //    MessageSucess.empty();
+                                                 //     MessageError.empty();
 
                                              var content=$("#" +currentitemid).html();
                                              $("#deleteSchemaForm #txtSchemaName").val(content);
@@ -1417,6 +1471,7 @@
             contextMenu.style.display = "none";
         });
     </script>
+<script src="/js/custom/dynamicAssetTypeDropdown.js"></script>
 <script src="/js/custom/dynamicSchemaFields.js"></script>
 
     

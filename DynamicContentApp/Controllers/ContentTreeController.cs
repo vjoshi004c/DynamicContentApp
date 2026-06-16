@@ -56,7 +56,7 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult SaveSchema( string SchemaName, string SchemaPath, string SchemaParent)
+        public IActionResult SaveSchema( string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             //if (String.IsNullOrEmpty(SchemaID))
@@ -64,7 +64,7 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
-           bool isInsertSuccess = dynamicContentDAL.InsertSchema( SchemaName,  SchemaPath,  SchemaParent);
+           bool isInsertSuccess = dynamicContentDAL.InsertSchema( SchemaName,  SchemaPath,  SchemaParent, AssetTypeID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 
@@ -104,7 +104,7 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult UpdateSchema(string SchemaID,  string SchemaName, string SchemaPath, string SchemaParent)
+        public IActionResult UpdateSchema(string SchemaID,  string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             //if (String.IsNullOrEmpty(SchemaID))
@@ -112,7 +112,7 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
-            bool isInsertSuccess = dynamicContentDAL.UpdateSchema(SchemaID ,SchemaName, SchemaPath, SchemaParent);
+            bool isInsertSuccess = dynamicContentDAL.UpdateSchema(SchemaID ,SchemaName, SchemaPath, SchemaParent,  AssetTypeID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 
@@ -137,20 +137,26 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
-            bool isInsertSuccess = dynamicContentDAL.DeleteSchema(SchemaID);
+            //bool isInsertSuccess = dynamicContentDAL.DeleteSchema(SchemaID);
+
+            SchemaDeleteModel SchemaDeleteModel  = dynamicContentDAL.DeleteSchema(SchemaID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 
             //}
-            if (isInsertSuccess)
-            {
-                return Ok(true);
-            }
-            else
-            {
-                return Ok(false);
-            }
+            return Ok(SchemaDeleteModel);
+            //if (isInsertSuccess)
+            //{
+            //    return Ok(true);
+            //}
+            //else
+            //{
+            //    return Ok(false);
+            //}
         }
+
+
+
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]

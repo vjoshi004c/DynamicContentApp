@@ -1,16 +1,27 @@
 ﻿namespace DynamicContentApp.Models
 {
-   
-        public class SchemaModel
-        {
-            public string? ID { get; set; }
-            public string? SchemaName { get; set; }
 
-            public string? SchemaPath { get; set; }
+    public class SchemaModel
+    {
+        public string? ID { get; set; }
+        public string? SchemaName { get; set; }
 
-            public string? ParentID { get; set; }
-            public List<SchemaFields>? SchemaFields{ get; set; }
+        public string? SchemaPath { get; set; }
 
+        public string? ParentID { get; set; }
+        public List<SchemaFields>? SchemaFields { get; set; }
+
+        public string? AssetTypeID { get; set; }
+
+
+    }
+
+    public class SchemaDeleteModel
+    {
+        public bool? Status { get; set; }
+        public string? Error { get; set; }
+
+        public string? Message { get; set; }
 
     }
 

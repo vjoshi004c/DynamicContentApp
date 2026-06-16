@@ -15,13 +15,13 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
         // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
-        private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentSecond;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+        //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentSecond;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
-        public bool InsertSchema(string SchemaName, string SchemaPath, string SchemaParent)
+        public bool InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
             SqlConnection con = null;
             //string result = "";
@@ -35,6 +35,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaName", SchemaName);
                 cmd.Parameters.AddWithValue("@SchemaPath", SchemaPath);
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
+                cmd.Parameters.AddWithValue("@AssetTypeID", AssetTypeID);
                 cmd.Parameters.AddWithValue("@Query", 1);
 
                 con.Open();
@@ -83,7 +84,7 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-        public bool UpdateSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent)
+        public bool UpdateSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
             SqlConnection con = null;
             //string result = "";
@@ -97,6 +98,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaName", SchemaName);
                 cmd.Parameters.AddWithValue("@SchemaPath", SchemaPath);
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
+                cmd.Parameters.AddWithValue("@AssetTypeID", AssetTypeID);
                 cmd.Parameters.AddWithValue("@Query", 2);
 
                 con.Open();
@@ -114,9 +116,10 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-        public bool DeleteSchema(string SchemaID)
+        public SchemaDeleteModel DeleteSchema(string SchemaID)
         {
             SqlConnection con = null;
+            SchemaDeleteModel SchemaDeleteModel = new SchemaDeleteModel();
             //string result = "";
             try
             {
@@ -128,17 +131,24 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaName", "");
                 cmd.Parameters.AddWithValue("@SchemaPath", "");
                 cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@AssetTypeID", "");
                 cmd.Parameters.AddWithValue("@Query", 3);
 
                 con.Open();
 
                 cmd.ExecuteScalar();
                 // result = cmd.ExecuteScalar().ToString();
-                return true;
+                SchemaDeleteModel.Error = string.Empty;
+                SchemaDeleteModel.Status = true;
+                SchemaDeleteModel.Message = "Schema has been deleted successfully";
+                return SchemaDeleteModel;
             }
             catch (Exception ex)
             {
-                return false;
+                SchemaDeleteModel.Error = ex.Message.ToString();
+                SchemaDeleteModel.Status = false;
+                SchemaDeleteModel.Message = "Opps! Error while deleting schema.";
+                return SchemaDeleteModel;
             }
             finally
             {
@@ -210,6 +220,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaName", "");
                 cmd.Parameters.AddWithValue("@SchemaPath", "");
                 cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@AssetTypeID", "");
                 cmd.Parameters.AddWithValue("@Query", 4);
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();
@@ -234,6 +245,7 @@ namespace DynamicContentApp.DataLayer
                    // cobj.SchemaPath = ds.Tables[0].Rows[i]["SchemaPath"].ToString();
                     cobj.SchemaPath = schemapath;
                     cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    cobj.AssetTypeID = ds.Tables[0].Rows[i]["AssetTypeID"].ToString();
                     custlist.Add(cobj);
                 }
 

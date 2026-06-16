@@ -9,6 +9,7 @@ delete from placeholderpresentation
 delete from ComponentPresentation
 delete from assetitemfields
 delete from assetitem
+delete from AssetFieldsType
 
 select *  from assetschemafields
 select * from assetfields 
@@ -19,6 +20,52 @@ select * from ComponentPresentation
 select * from assetitemfields
 select * from assetitem
 
+
+-- AssetFieldsType
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('0E6A14C7-B8EB-4042-AC5A-450DCE5B3FFA', 'MultiList'    ,'MULTILIST'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('115A7A1E-D135-42E7-BAB2-7E400F4AF29E', 'MultilineText'    ,'MULTILINE_TEXT'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('1E0C6229-01D2-45E5-8A66-65F2964DDD8F', 'SimpleText'    ,'SIMPLLE_TEXT'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('395A153E-1967-490C-B293-42824E754DAF', 'Link'    ,'LINK'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('5CE9E74B-B79B-421C-A346-00DFA1410D76', 'Date'    ,'DATE'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('919175D2-D5D6-4BAB-B213-655E40E29FB0', 'Dropdown'    ,'DROPDOWN'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('A9F7BBE1-2FEA-40D4-BC43-0A0C2E20C824', 'Image'    ,'IMAGE'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('DC218D8D-1F5C-4C94-AF79-A90B75097EB1', 'Checkbox'    ,'CHECKBOX'    ,'DATATYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('E19765AD-A559-40F0-837A-132841CAD972', 'HTMLText'    ,'HTML_TEXT'    ,'DATATYPE')
+
+GO
+
+
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('5BC9CA65-E5A3-454A-A803-9DF082F323BE', 'ContentItem'    ,'CONTENT_ITEM'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('69596F18-F516-4367-8526-E555D066C65E',  'PageRender'    ,'PAGE_RENDER'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('0101616E-6830-4C65-95E1-1E72F2C6D222',  'ViewRender'    ,'VIEW_RENDER'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('8C9068B2-9562-4757-947F-C6DA3389D13F',  'ControllerRender'    ,'CONTROLLER_RENDER'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('F68F4270-2631-4C21-BEF0-3334B6DEB417',  'Model'    ,'MODEL'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ('574F5063-25EE-4A17-BCFE-9D9DFFF4D17C',  'Placeholder'    ,'PLACEHOLDER'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ( '8C56BDB9-B8F3-4BD2-9B5D-F412FEAEFC69', 'Schema'    ,'SCHEMA'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ( 'E07A9DCD-D00E-42AE-A23F-3CD047F939E4', 'MediaImageItem'    ,'MEDIA_IMAGE_ITEM'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ( '83E496BA-B047-4742-9F74-F7DADC4449D7', 'MediaFileItem'    ,'MEDIA_FILE_ITEM'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ( 'FC80D56A-8CCE-4617-BF9E-FF80B178F75A', 'Language'    ,'LANGUAGE'    ,'ENTITYTYPE')
+INSERT INTO [dbo].[AssetFieldsType] ([ID] ,[FieldName] ,[FieldType] ,[FieldCategory])
+VALUES   ( 'B39AC555-FD24-4E60-911C-8504FB0721B3', 'Folder'    ,'FOLDER'    ,'ENTITYTYPE')
 -------------------------------
 --AssetSchema]
 select * from AssetSchema
