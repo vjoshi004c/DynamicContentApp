@@ -41,8 +41,28 @@
         }
     });
 
-    $select.on("change", function () {
-        //alert("You selected: " + $(this).val());
+    $select1.on("change", function () {
+
+        var selectedID = $(this).val();
+        var selectedText = $(this).find("option:selected").text();
+        //alert("You selected: " + selectedID);
+        //alert("You selected: " + selectedText);
+        if (selectedText.toUpperCase() === "CONTENT_ITEM") {
+            //alert("You selected: " + selectedID);
+            //alert("You selected: " + selectedText);
+            $("#spanAssetItemSchema_Add").css("display", "block");
+        }
+    });
+    $select2.on("change", function () {
+        var selectedID = $(this).val();
+        var selectedText = $(this).find("option:selected").text();
+        //alert(selectedText);
+        if (selectedText.toUpperCase() === "CONTENT_ITEM") {
+            //alert("You selected: " + selectedID);
+            //alert("You selected: " + selectedText);
+            $("#spanAssetItemSchema_Edit").css("display", "block");
+        }
+       
     });
     function getFieldType(optionsData) {
         //alert("getFieldType");
