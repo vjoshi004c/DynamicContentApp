@@ -9,6 +9,7 @@
     public class ContentTreeModel
     {
         public string? ParentSchemaName { get; set; }
+        public string? SchemaPath { get; set; }
         public string? ParentSchemaID { get; set; }
         public string? ChildSchemaName { get; set; }
         public string? ChildSchemaID { get; set; }
