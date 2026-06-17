@@ -1,6 +1,23 @@
 ﻿namespace DynamicContentApp.Models
 {
+    public class ContentItemModel
+    {
+        public string? ID { get; set; }
+        public string? SchemaName { get; set; }
 
+        public string? SchemaPath { get; set; }
+
+        public string? ParentID { get; set; }
+        
+        public bool? IsPageItem { get; set; }
+        public string? SchemaID { get; set; }
+
+        public string? MasterPageLayoutPathaPath { get; set; }
+
+        public string? AssetTypeID { get; set; }
+
+
+    }
     public class SchemaModel
     {
         public string? ID { get; set; }

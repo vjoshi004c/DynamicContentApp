@@ -1,13 +1,14 @@
 ﻿using DynamicContentApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.Data;
 using Microsoft.Data.SqlClient;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
 
 namespace DynamicContentApp.DataLayer
 {
@@ -20,6 +21,42 @@ namespace DynamicContentApp.DataLayer
         // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentSecond;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
+
+        public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_master", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", "");
+                cmd.Parameters.AddWithValue("@ItemName", SchemaName);
+                cmd.Parameters.AddWithValue("@ItemPath", SchemaPath);
+                cmd.Parameters.AddWithValue("@IsPageItem", 0);
+                cmd.Parameters.AddWithValue("@SchemaID", AssetItemSchema);
+                cmd.Parameters.AddWithValue("@MasterPageLayoutPath", AssetTypeID);
+                cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
+                cmd.Parameters.AddWithValue("@AssetType", AssetTypeID);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         public bool InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
@@ -116,6 +153,85 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+
+        public bool UpdateAssetItemSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_master", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", SchemaID);
+                cmd.Parameters.AddWithValue("@ItemName", SchemaName);
+                cmd.Parameters.AddWithValue("@ItemPath", SchemaPath);
+                cmd.Parameters.AddWithValue("@IsPageItem", 0);
+                cmd.Parameters.AddWithValue("@SchemaID", AssetItemSchema);
+                cmd.Parameters.AddWithValue("@MasterPageLayoutPath", "");
+                cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
+                cmd.Parameters.AddWithValue("@AssetType", AssetTypeID);
+                cmd.Parameters.AddWithValue("@Query", 2);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public SchemaDeleteModel DeleteAssetItemSchema(string SchemaID)
+        {
+            SqlConnection con = null;
+            SchemaDeleteModel SchemaDeleteModel = new SchemaDeleteModel();
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_master", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", SchemaID);
+                cmd.Parameters.AddWithValue("@ItemName", "");
+                cmd.Parameters.AddWithValue("@ItemPath", "");
+                cmd.Parameters.AddWithValue("@IsPageItem", 0);
+                cmd.Parameters.AddWithValue("@SchemaID", "");
+                cmd.Parameters.AddWithValue("@MasterPageLayoutPath", "");
+                cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@AssetType", "");
+                cmd.Parameters.AddWithValue("@Query", 3);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                SchemaDeleteModel.Error = string.Empty;
+                SchemaDeleteModel.Status = true;
+                SchemaDeleteModel.Message = "Schema has been deleted successfully";
+                return SchemaDeleteModel;
+            }
+            catch (Exception ex)
+            {
+                SchemaDeleteModel.Error = ex.Message.ToString();
+                SchemaDeleteModel.Status = false;
+                SchemaDeleteModel.Message = "Opps! Error while deleting schema.";
+                return SchemaDeleteModel;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public SchemaDeleteModel DeleteSchema(string SchemaID)
         {
             SqlConnection con = null;
@@ -203,6 +319,64 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+        
+        public List<ContentItemModel> GetAssetItemSchema(string SchemaID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<ContentItemModel> custlist = null;
+            try
+            {
+                custlist = new List<ContentItemModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", SchemaID);
+                cmd.Parameters.AddWithValue("@ItemName", "");
+                cmd.Parameters.AddWithValue("@ItemPath", "");
+                cmd.Parameters.AddWithValue("@IsPageItem", 0);
+                cmd.Parameters.AddWithValue("@SchemaID", "");
+                cmd.Parameters.AddWithValue("@MasterPageLayoutPath", "");
+                cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@AssetType", "");
+                cmd.Parameters.AddWithValue("@Query", 4);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+                
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ContentItemModel cobj = new ContentItemModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.SchemaName = ds.Tables[0].Rows[i]["ItemName"].ToString();
+                     cobj.SchemaPath = ds.Tables[0].Rows[i]["ItemPath"].ToString();
+                    cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    cobj.IsPageItem = Convert.ToBoolean(ds.Tables[0].Rows[i]["IsPageItem"].ToString());
+                    cobj.SchemaID = ds.Tables[0].Rows[i]["SchemaID"].ToString();
+                    cobj.MasterPageLayoutPathaPath = ds.Tables[0].Rows[i]["MasterPageLayoutPath"].ToString();
+                    cobj.AssetTypeID = ds.Tables[0].Rows[i]["AssetType"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+       }
+
         public List<SchemaModel> GetSchema(string SchemaID)
         {
 

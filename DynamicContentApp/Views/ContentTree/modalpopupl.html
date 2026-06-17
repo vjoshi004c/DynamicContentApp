@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<link rel="stylesheet" href="https://jquery.com">
+<script src="https://jquery.com"></script>
+<script src="https://jquery.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+   
+
+<style>
+.modal-overlay {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ /* background: rgba(0, 0, 0, 0.6);*/
+  z-index: 1000;
+}
+
+/* Centered content box */
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button corner positioning */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+Enter open module to open popu window 
+++++++++++++++++++++++++++++++++
+<input type="hidden" id="hdnValue" name="hiddenvalue" value="">
+<button id="openModal">Open Modal</button>
+
+<!-- Modal Overlay & Window -->
+<div id="modalOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <span id="closeModal" class="close-btn">&times;</span>
+    <h2>Modal Title</h2>
+    <p>This is a custom jQuery modal popup window.</p>
+
+
+<form action="/submit-form-endpoint" method="POST">
+  
+  <!-- Text Field -->
+  <div>
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+  </div>
+
+  <!-- Email Field -->
+  <div>
+    <label for="emailAddress">Email Address:</label>
+    <input type="email" id="emailAddress" name="emailAddress" required placeholder="john@example.com">
+  </div>
+
+  <!-- Password Field -->
+  <div>
+    <label for="userPassword">Password:</label>
+    <input type="password" id="userPassword" name="userPassword" required>
+  </div>
+
+  <!-- Dropdown Select Menu -->
+  <div>
+    <label for="country">Country:</label>
+    <select id="country" name="country">
+      <option value="">--Please choose an option--</option>
+      <option value="us">United States</option>
+      <option value="ca">Canada</option>
+      <option value="uk">United Kingdom</option>
+    </select>
+  </div>
+
+  <!-- Radio Buttons (Choose one) -->
+  <div>
+    <p>Preferred Contact Method:</p>
+    <input type="radio" id="contactEmail" name="contactMethod" value="email" checked>
+    <label for="contactEmail">Email</label>
+    
+    <input type="radio" id="contactPhone" name="contactMethod" value="phone">
+    <label for="contactPhone">Phone</label>
+  </div>
+
+  <!-- Checkbox (Multi-select or True/False) -->
+  <div>
+    <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+    <label for="subscribe">Subscribe to newsletter</label>
+  </div>
+
+  <!-- Multi-line Text Area -->
+  <div>
+    <label for="comments">Comments/Questions:</label><br>
+    <textarea id="comments" name="comments" rows="4" cols="30"></textarea>
+  </div>
+
+  <!-- Submit Button -->
+  <div>
+    <button type="button" id="submit" >Submit Form</button>
+  </div>
+
+</form>
+ 
+
+  </div>
+</div>
+</body>
+
+<script>
+
+$(document).ready(function() {
+  
+  // Open modal on button click
+  $('#openModal').on('click', function() {
+    $('#modalOverlay').fadeIn(300);
+  });
+
+  // Close modal on 'X' click
+  $('#closeModal').on('click', function() {
+    $('#modalOverlay').fadeOut(200);
+  });
+
+  // Close modal when clicking outside the modal box (on the overlay)
+  $('#modalOverlay').on('click', function(event) {
+    if ($(event.target).is('#modalOverlay')) {
+     // $('#modalOverlay').fadeOut(200);
+ 	$('#modalOverlay').fadeIn(300);
+
+    }
+  });
+
+$('#submit').on('click', function(event) {
+alert("start submit");
+    if ($(event.target).is('#submit')) {
+	$('#hdnValue').val($('#fullName').val());
+      $('#modalOverlay').fadeOut(200);
+ 	//$('#modalOverlay').fadeIn(300);
+
+alert("end submit");
+	return false;
+
+    }
+  });
+
+  
+});
+</script>
