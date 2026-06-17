@@ -1,6 +1,6 @@
 USE [TestPFP]
 GO
-/****** Object:  Table [dbo].[AssetFieldsType]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[AssetFieldsType]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[AssetFieldsType](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetItem]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[AssetItem]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -28,13 +28,16 @@ CREATE TABLE [dbo].[AssetItem](
 	[SchemaID] [varchar](100) NULL,
 	[IsPageItem] [bit] NULL,
 	[MasterPageLayoutPath] [varchar](100) NULL,
+	[ParentID] [varchar](100) NULL,
+	[AssetType] [varchar](100) NULL,
+	[AssetItemSchemaMapped] [varchar](100) NULL,
  CONSTRAINT [PK_AssetItem] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetItemFields]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[AssetItemFields]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -51,7 +54,7 @@ CREATE TABLE [dbo].[AssetItemFields](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetItemLayout]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[AssetItemLayout]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -67,7 +70,7 @@ CREATE TABLE [dbo].[AssetItemLayout](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetSchema]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[AssetSchema]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -84,7 +87,7 @@ CREATE TABLE [dbo].[AssetSchema](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AssetSchemaFields]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[AssetSchemaFields]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -101,7 +104,7 @@ CREATE TABLE [dbo].[AssetSchemaFields](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ComponentPresentation]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[ComponentPresentation]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,7 +124,7 @@ CREATE TABLE [dbo].[ComponentPresentation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PageContent]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[PageContent]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +135,7 @@ CREATE TABLE [dbo].[PageContent](
 	[PageUpdatedDate] [datetime] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PagePresentation]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[PagePresentation]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +154,7 @@ CREATE TABLE [dbo].[PagePresentation](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PlaceholderPresentation]    Script Date: 6/16/2026 1:49:53 PM ******/
+/****** Object:  Table [dbo].[PlaceholderPresentation]    Script Date: 6/17/2026 3:33:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
