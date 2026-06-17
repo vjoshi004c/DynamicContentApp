@@ -30,12 +30,26 @@
 
         public string? AssetTypeID { get; set; }
 
+        public string? AssetItemSchema { get; set; }
+
+        
+
 
     }
 
     public class SchemaDeleteModel
     {
         public bool? Status { get; set; }
+        public string? Error { get; set; }
+
+        public string? Message { get; set; }
+
+    }
+
+    public class SchemaInsertModel
+    {
+        public bool? Status { get; set; }
+        public string? NewSchemaId { get; set; }
         public string? Error { get; set; }
 
         public string? Message { get; set; }

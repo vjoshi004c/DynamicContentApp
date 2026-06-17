@@ -22,7 +22,7 @@ namespace DynamicContentApp.DataLayer
         //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentSecond;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
-        public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema)
+        public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
         {
             SqlConnection con = null;
             //string result = "";
@@ -37,9 +37,10 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@ItemPath", SchemaPath);
                 cmd.Parameters.AddWithValue("@IsPageItem", 0);
                 cmd.Parameters.AddWithValue("@SchemaID", AssetItemSchema);
-                cmd.Parameters.AddWithValue("@MasterPageLayoutPath", AssetTypeID);
+                cmd.Parameters.AddWithValue("@MasterPageLayoutPath", "");
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
                 cmd.Parameters.AddWithValue("@AssetType", AssetTypeID);
+                cmd.Parameters.AddWithValue("@AssetItemSchemaMapped", AssetItemSchemaMapped);
                 cmd.Parameters.AddWithValue("@Query", 1);
 
                 con.Open();
@@ -58,10 +59,11 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
-        public bool InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
+        public string InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
             SqlConnection con = null;
             //string result = "";
+            string newId = string.Empty;
             try
             {
                 con = new SqlConnection(ConnenctionString);
@@ -77,13 +79,20 @@ namespace DynamicContentApp.DataLayer
 
                 con.Open();
 
-                cmd.ExecuteScalar();
+               // cmd.ExecuteScalar();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                      newId = Convert.ToString(result);
+                    //Console.WriteLine($"Newly Inserted ID: {newId}");
+                }
                 // result = cmd.ExecuteScalar().ToString();
-                return true;
+                return newId;
             }
             catch (Exception ex)
             {
-                return false;
+                return string.Empty; 
             }
             finally
             {
@@ -420,6 +429,8 @@ namespace DynamicContentApp.DataLayer
                     cobj.SchemaPath = schemapath;
                     cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
                     cobj.AssetTypeID = ds.Tables[0].Rows[i]["AssetTypeID"].ToString();
+                    cobj.AssetItemSchema = ds.Tables[0].Rows[i]["AssetItemSchema"].ToString();
+                    
                     custlist.Add(cobj);
                 }
 
