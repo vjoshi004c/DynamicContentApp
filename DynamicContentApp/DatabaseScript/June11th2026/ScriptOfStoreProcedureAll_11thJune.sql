@@ -51,7 +51,7 @@ if(@Query=4)
       ,[FieldType]
      
       FROM 
-        [TestPFP].[dbo].[AssetFieldsType]
+        [dbo].[AssetFieldsType]
 
        WHERE ID= @ID
     END
@@ -63,7 +63,7 @@ if(@Query=4)
       ,[FieldType]
      
       FROM 
-        [TestPFP].[dbo].[AssetFieldsType]
+       [dbo].[AssetFieldsType]
 
             Order BY [FieldType]
     END

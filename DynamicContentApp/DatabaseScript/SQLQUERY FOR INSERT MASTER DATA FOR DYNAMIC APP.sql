@@ -2,7 +2,7 @@
 GO
 ---------------------------------
 delete  from assetschemafields
-delete from assetfields 
+--delete from assetfields 
 delete from assetschema --where id <> '4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE'
 delete  from pagepresentation 
 delete from placeholderpresentation
@@ -12,7 +12,7 @@ delete from assetitem
 delete from AssetFieldsType
 
 select *  from assetschemafields
-select * from assetfields 
+--select * from assetfields 
 select * from assetschema
 select *  from pagepresentation 
 select * from placeholderpresentation
@@ -235,24 +235,24 @@ update [dbo].[AssetSchema] set [ParentID]='2EB94A78-CC78-4C33-84EA-C2B583A9C8BD'
 GO
 --select * from AssetFields
 --[AssetFields][AssetFields]
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('0E6A14C7-B8EB-4042-AC5A-450DCE5B3FFA','MultiList', 'MULTILIST')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('115A7A1E-D135-42E7-BAB2-7E400F4AF29E','MultilineText', 'MULTILINE_TEXT')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('1E0C6229-01D2-45E5-8A66-65F2964DDD8F','SimpleText', 'SIMPLLE_TEXT')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('395A153E-1967-490C-B293-42824E754DAF','Link', 'LINK')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('5CE9E74B-B79B-421C-A346-00DFA1410D76','Date', 'DATE')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('919175D2-D5D6-4BAB-B213-655E40E29FB0','Dropdown', 'DROPDOWN')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('A9F7BBE1-2FEA-40D4-BC43-0A0C2E20C824','Image', 'IMAGE')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('DC218D8D-1F5C-4C94-AF79-A90B75097EB1','Checkbox', 'CHECKBOX')
-INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
-VALUES ('E19765AD-A559-40F0-837A-132841CAD972','HTMLText', 'HTML_TEXT')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('0E6A14C7-B8EB-4042-AC5A-450DCE5B3FFA','MultiList', 'MULTILIST')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('115A7A1E-D135-42E7-BAB2-7E400F4AF29E','MultilineText', 'MULTILINE_TEXT')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('1E0C6229-01D2-45E5-8A66-65F2964DDD8F','SimpleText', 'SIMPLLE_TEXT')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('395A153E-1967-490C-B293-42824E754DAF','Link', 'LINK')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('5CE9E74B-B79B-421C-A346-00DFA1410D76','Date', 'DATE')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('919175D2-D5D6-4BAB-B213-655E40E29FB0','Dropdown', 'DROPDOWN')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('A9F7BBE1-2FEA-40D4-BC43-0A0C2E20C824','Image', 'IMAGE')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('DC218D8D-1F5C-4C94-AF79-A90B75097EB1','Checkbox', 'CHECKBOX')
+--INSERT INTO [dbo].[AssetFields] ([ID] ,[FieldName] ,[FieldType])  
+--VALUES ('E19765AD-A559-40F0-837A-132841CAD972','HTMLText', 'HTML_TEXT')
 GO
 
 
@@ -510,7 +510,7 @@ VALUES   ('71B6787A-7689-4AF9-B873-66D2DECDC180','ContentBody'  ,'94ECC1CF-19BA-
 GO
 
 select *  from assetschemafields
-select * from assetfields 
+--select * from assetfields 
 select * from assetschema
 select *  from pagepresentation 
 select * from placeholderpresentation
