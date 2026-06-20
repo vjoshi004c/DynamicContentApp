@@ -1,6 +1,6 @@
-USE [TestPFP]
+USE [DynamicContentThird]
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_fields_type]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_fields_type]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -63,7 +63,7 @@ if(@Query=4)
       ,[FieldType]
      
       FROM 
-       [dbo].[AssetFieldsType]
+        [dbo].[AssetFieldsType]
 
             Order BY [FieldType]
     END
@@ -74,7 +74,7 @@ if(@Query=4)
 END;
 --exec dca_curd_asset_fields_type @ID = '0E6A14C7-B8EB-4042-AC5A-450DCE5B3FFA',     @FieldName='', 	@FieldType ='',  	    @Query =4
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_master]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_master]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,7 +93,7 @@ CREATE  PROCEDURE [dbo].[dca_curd_asset_item_master]
 
 AS
 BEGIN
-  --select * from AssetSchema
+  --select * from AssetItem
 if(@Query=1)
 BEGIN
     INSERT INTO [dbo].[AssetItem]
@@ -129,31 +129,34 @@ END
               [IsPageItem] = @IsPageItem, 
               [MasterPageLayoutPath] = @MasterPageLayoutPath,
               [ParentID] = @ParentID, 
-                [AssetType] = @AssetType
+                [AssetType] = @AssetType,
+               [AssetItemSchemaMapped]= @AssetItemSchemaMapped
 
                 WHERE [ID] = @ID
 
             END
             else
             Begin
-                         INSERT INTO [dbo].[AssetItem]
-                       (
-                       [ItemName]
-                       ,[ItemPath]
-                       ,[SchemaID]
-                       ,[IsPageItem]
-                       ,[MasterPageLayoutPath]
-                       ,[ParentID]
-                       ,[AssetType])
-                 VALUES
-                       (
-                       @ItemName
-                       ,@ItemPath
-                       ,@SchemaID
-                       ,@IsPageItem
-                       ,@MasterPageLayoutPath
-                       ,@ParentID
-                       ,@AssetType)
+                        INSERT INTO [dbo].[AssetItem]
+           (
+           [ItemName]
+           ,[ItemPath]
+           ,[SchemaID]
+           ,[IsPageItem]
+           ,[MasterPageLayoutPath]
+           ,[ParentID]
+           ,[AssetItemSchemaMapped]
+           ,[AssetType])
+     VALUES
+           (
+           @ItemName
+           ,@ItemPath
+           ,@SchemaID
+           ,@IsPageItem
+           ,@MasterPageLayoutPath
+           ,@ParentID
+           ,@AssetItemSchemaMapped
+           ,@AssetType)
 
             END 
 
@@ -174,6 +177,7 @@ END
               ,[MasterPageLayoutPath]
               ,[ParentID]
               ,[AssetType]
+              ,AssetItemSchemaMapped
                     FROM [dbo].[AssetItem]
                      WHERE [ID] = @ID
                 
@@ -182,7 +186,7 @@ END
         
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,13 +195,12 @@ CREATE  PROCEDURE [dbo].[dca_curd_asset_schema]
 	@ID varchar(500)= '',
     @SchemaName varchar(500), 
 	@SchemaPath varchar(500)='', 
-	@ParentID  varchar(500),
-    @AssetTypeID varchar(500),
+	@ParentID  varchar(500)='',
+    @AssetTypeID varchar(500)='',
     @Query int
 
 AS
 BEGIN
-  --select * from AssetSchema
 if(@Query=1)
 BEGIN
 DECLARE @InsertedIDs TABLE (ID varchar(500));
@@ -243,14 +246,15 @@ if(@Query=3)
         DECLARE @ParentIDOfSchema Varchar(500);
         set @ParentIDOfSchema= (SELECT  [ParentID] FROM [dbo].[AssetSchema]  WHERE ID= @ID);
         if exists(
-            Select  * from assetschema ass 
+            Select 1 from assetschema ass 
             inner join assetitem aii
-            on ass.id= aii.SchemaID
+            on ass.id= aii.AssetItemSchemaMapped
             and 
             ass.ParentID = aii.ParentID
             and 
             ass.parentid =@ParentIDOfSchema
-            and ass.id =@ID )
+           and aii.AssetItemSchemaMapped =@ID
+            )
 
            BEGIN 
                  Select 
@@ -259,17 +263,18 @@ if(@Query=3)
              aii.ItemPath AS SchemaPath ,
              aii.parentid AS parentID, 
              aii.assettype AS AssetTypeID ,
-             aii.SchemaID as AssetItemSchema
- 
+             aii.SchemaID as AssetItemSchema,
+            aii.AssetItemSchemaMapped as AssetItemSchemaMapped
              from assetschema ass 
              inner join assetitem aii
-             on ass.id= aii.SchemaID
+             on ass.id= aii.AssetItemSchemaMapped
              and 
              ass.ParentID = aii.ParentID
+            
              and 
              ass.parentid =@ParentIDOfSchema
-             and ass.id =@ID;
-
+            
+             and aii.AssetItemSchemaMapped =@ID ;
 
                 WITH BreadcrumbCTE AS (
                 SELECT 
@@ -303,6 +308,7 @@ if(@Query=3)
                     ,[AssetTypeID]AS AssetTypeID
                      ,[ParentID] AS parentID
                      ,'' as AssetItemSchema
+                      ,[ID] as AssetItemSchemaMapped
                     FROM [dbo].[AssetSchema]
                 WHERE ID=@ID;
                 WITH BreadcrumbCTE AS (
@@ -333,11 +339,21 @@ if(@Query=3)
         
 END;
 
---select * from AssetSchema where parentid ='D1B2BE76-C76B-447A-A30A-DDDF4959A8FC'
---exec [dbo].[dca_curd_asset_schema]	@ID='',    @SchemaName='test4000', 	@SchemaPath ='', 	@ParentID  ='D1B2BE76-C76B-447A-A30A-DDDF4959A8FC',    @AssetTypeID ='0101616E-6830-4C65-95E1-1E72F2C6D222',    @Query =1
+--exec [dbo].[dca_curd_asset_schema]	@ID='A3971E39-8321-4ACF-91FC-0842F5674BC3',    @SchemaName='', 	@SchemaPath ='', 	@ParentID  ='',   @AssetTypeID ='',  @Query =4
 
+--exec [dbo].[dca_curd_asset_schema]	@ID='11CD8862-0CFA-4EB7-A670-9ABDF8217B29',    @SchemaName='', 	@SchemaPath ='', 	@ParentID  ='',   @AssetTypeID ='',  @Query =4
+
+--SELECT [ID] as ID
+--                     ,[SchemaName] AS SchemaName
+--                    ,[SchemaPath] AS SchemaPath 
+--                    ,[AssetTypeID]AS AssetTypeID
+--                     ,[ParentID] AS parentID
+--                     ,'' as AssetItemSchema
+--                      ,''as AssetItemSchemaMapped
+--                    FROM [dbo].[AssetSchema]
+--                WHERE ID='11CD8862-0CFA-4EB7-A670-9ABDF8217B29';
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema_fields]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema_fields]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -408,7 +424,7 @@ END;
 --select * from AssetSchemaFields where schemaid = '710FBE40-8EBD-4FDE-BA99-282501FA809A'
 --select * from AssetSchemaFields where id = '0183C8A4-A2A0-4F34-A180-C245C03771CA'
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_AssetFields]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_AssetFields]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -471,7 +487,7 @@ END;
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_contenttree_item]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_contenttree_item]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -525,7 +541,7 @@ ELSE
 --'D1B2BE76-C76B-447A-A30A-DDDF4959A8FC',
 --'DC30B818-0EF8-4BF9-84E2-812EC508A483')
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_page_content]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_page_content]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -546,7 +562,7 @@ BEGIN
 					 WHERE   PageUrl = @PageUrl	
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_schema]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_schema]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -581,7 +597,7 @@ END
 -- EXEC dca_get_schema @SchemaID ='74826E3E-C2EA-45DC-A328-43F115F45161'
 --EXEC dca_get_schema 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -653,7 +669,7 @@ select * from AssetItem
 
 */
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item_fields]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item_fields]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -683,7 +699,7 @@ BEGIN
         
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_page_content]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_page_content]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -711,7 +727,7 @@ BEGIN
         ); 
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_update_page_content]    Script Date: 6/17/2026 3:33:28 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_update_page_content]    Script Date: 6/20/2026 9:52:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

@@ -138,7 +138,7 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult UpdateAssetItemSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema)
+        public IActionResult UpdateAssetItemSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
         {
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             //if (String.IsNullOrEmpty(SchemaID))
@@ -146,7 +146,7 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
-            bool isInsertSuccess = dynamicContentDAL.UpdateAssetItemSchema(SchemaID, SchemaName, SchemaPath, SchemaParent, AssetTypeID, AssetItemSchema);
+            bool isInsertSuccess = dynamicContentDAL.UpdateAssetItemSchema(SchemaID, SchemaName, SchemaPath, SchemaParent, AssetTypeID, AssetItemSchema, AssetItemSchemaMapped);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 

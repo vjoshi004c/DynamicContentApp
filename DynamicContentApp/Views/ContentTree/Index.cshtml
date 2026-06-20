@@ -329,6 +329,10 @@
                         <label for="schemaID">Asset ID:</label>
                             <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
                     </p>
+                        <p>
+                            <label for="schemaID">Asset Item TreeID:</label>
+                            <input type="text" id="txtAssetItemTreeeID" name="assetItemTreeeID" class="fake-disabled-input" style="width:500px">
+                        </p>
                     <p>
                         <label for="schemaName">Asset Name:</label>
                         <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
@@ -746,7 +750,7 @@
                                       return;
                                  }
                                    var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchema"]').val();
-
+                                     alert("InsertAssetItemSchema" +txtAssetItemSchema);
                                       // alert("SaveSchema");
                                   //alert(ddlAssetTypeValue);
 
@@ -762,9 +766,10 @@
                                                  data: { SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue },
                                         contentType: "application/json; charset=utf-8",
                                          dataType: "json",
+                                           async: false,
                                         success: function (response) {
-                                              NewSchemaId=response.NewSchemaId;
-                                              alert(response.NewSchemaId);
+                                              NewSchemaId=response.newSchemaId;
+                                              alert("SaveSchema"+response.newSchemaId);
                                          console.log("Success:", response);
 
                                             MessageSucess.css('display', 'block');
@@ -794,9 +799,9 @@
                                           //alert("Error occurred:" + error);
                                      }
                              });
-                               if(txtAssetItemSchema !== "" || txtAssetItemSchema !== "NONE")
+                               if(txtAssetItemSchema !== "" || txtAssetItemSchema !== "NONE" && NewSchemaId != "")
                                      {
-                                alert(InsertAssetItemSchema);
+                                  alert("InsertAssetItemSchema NewSchemaId" +NewSchemaId);
                                     $.ajax({
                                          type: "GET",
                                           url: "/ContentTree/InsertAssetItemSchema", // PageName/MethodName
@@ -971,11 +976,17 @@
                           //    var txtSchemaPath = $('#addSchemaForm').find('input[id="txtSchemaPath"]').val();
                           //     var txtSchemaParent = $('#addSchemaForm').find('input[id="txtSchemaParent"]').val();
                            var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+                             alert("txtSchemaID"+txtSchemaID);
                               var  txtSchemaName = $(this).closest('form').find('input[id="txtSchemaName"]').val();
+                               
+                                const innerElement = editdiv.querySelector('h2 span');
+                                 alert(innerElement.innerHTML);
+
                                var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
                                var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
                                 var  ddlAssetTypeValue = $(this).closest('form').find('select[id="AssetTypeDropdown_Edit"]').val();
-                               // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+                                      var  txtAssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
+                                  alert("txtAssetItemTreeeID "+txtAssetItemTreeeID  );
                                      //alert( $("#AssetTypeDropdown_Edit").val());
                                   //alert(ddlAssetTypeValue);
                                   if(ddlAssetTypeValue == "")
@@ -984,7 +995,8 @@
                                      return;
                                 }
                                   var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchema"]').val();
-                                  // alert(txtAssetItemSchema);
+                                   alert("txtAssetItemSchema"+txtAssetItemSchema);
+                                    
 
                              
                                       //alert("UpdateSchema");
@@ -992,8 +1004,9 @@
                                          type: "GET",
                                           url: "/ContentTree/UpdateSchema", // PageName/MethodName
                                          //data: JSON.stringify(requestData),
-                                                   data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue},
-                                         contentType: "application/json; charset=utf-8",
+                                                  // data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue},
+                                         data: { SchemaID: txtAssetItemTreeeID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue},
+                                                   contentType: "application/json; charset=utf-8",
                                           dataType: "json",
                                          success: function (response) {
                                              //alert("success");
@@ -1030,11 +1043,12 @@
                                  {
 
                                    alert("UpdateAssetItemSchema");
+                                     alert("txtSchemaID"+txtSchemaID);
                                    $.ajax({
                                           type: "GET",
                                            url: "/ContentTree/UpdateAssetItemSchema", // PageName/MethodName
                                           //data: JSON.stringify(requestData),
-                                                      data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue,AssetItemSchema:txtAssetItemSchema},
+                                                        data: { SchemaID: txtSchemaID,  SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue,AssetItemSchema:txtAssetItemSchema,AssetItemSchemaMapped:txtAssetItemTreeeID},
                                           contentType: "application/json; charset=utf-8",
                                            dataType: "json",
                                           success: function (response) {
@@ -1073,11 +1087,22 @@
                  });
 
                   function getSchema( IDSchema ) {
+                      //alert(IDSchema);
 
                            var MessageSucess=  $("#lblEditMessageSucess");
                             var MessageError=  $("#lblEditMessageError");
                              MessageSucess.css('display', 'none');
                             MessageError.css('display', 'none');
+
+                             $("#editSchemaForm #txtSchemaID").val('');
+                              $("#editSchemaForm #txtSchemaName").val('');
+                              $("#editSchemaForm #txtSchemaPath").val('');
+                              $("#editSchemaForm #txtSchemaParent").val('');
+                              $('#editSchemaForm #AssetTypeDropdown_Edit').val('0');
+                              $("#editSchemaForm #txtAssetItemSchema").val('');
+                               $("#editSchemaForm #txtAssetItemTreeeID").val(IDSchema);
+
+                            // alert("getSchema");
                 $.ajax({
                  type: "GET",
                   url: "/ContentTree/GetSchema", // PageName/MethodName
@@ -1100,9 +1125,22 @@
                                            $("#editSchemaForm #txtSchemaName").val(record.schemaName);
                                              $("#editSchemaForm #txtSchemaPath").val(record.schemaPath);
                                                $("#editSchemaForm #txtSchemaParent").val(record.parentID);
-                                                      $('#editSchemaForm #AssetTypeDropdown_Edit').val(record.assetTypeID);
-                                                        // alert(record.assetTypeID);
+                                               if(record.assetTypeID !='')
+                                               {
+                                                 $('#editSchemaForm #AssetTypeDropdown_Edit').val(record.assetTypeID);
+                                               }
+                                               else
+                                               {
+                                                     $('#editSchemaForm #AssetTypeDropdown_Edit').val(0);
+                                               }
+                                                      
+                                                        // alert("assetTypeID" +record.assetTypeID);
+                                                       // alert(record.assetTypeID);
                                                           $("#editSchemaForm #txtAssetItemSchema").val(record.assetItemSchema);
+                                                             //alert("assetItemSchemaMapped" +record.assetItemTreeeID);
+                                                            
+                                                                 $("#editSchemaForm #txtAssetItemTreeeID").val(record.assetItemTreeeID);
+                                                                 
                                                              //alert(record.assetItemSchema);
                                                            //alert("inside getSchema");
                                                             //alert(assetItemSchema);
@@ -1280,7 +1318,7 @@
                               var content=$("#" +currentitemid).html();
                             //innerElement.innerHTML = currentitemid;
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
-                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
                               getSchema( currentitemid );
                             //$("#editSchemaForm #txtSchemaName").val(content);
                             //const innerElement = editdiv.querySelector('h2 span');
@@ -1435,7 +1473,7 @@
                             const innerElement = adddiv.querySelector('h2 span');
                             //innerElement.innerHTML = currentitemid;
                               var content=$("#" +currentitemid).html();
-                                 innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                                 innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{Content Tree ID - " +currentitemid +"}</span>";
                                  //innerElement.innerHTML = content+ " {" +currentitemid +"}";
                               //$("#btnAddSchemaFields").addClass("fake-disabled-button");
                               var innerSchemaPathElement = adddiv.querySelector('#txtSchemaParent');
@@ -1507,14 +1545,14 @@
                                             var MessageError=  $("#lblEditMessageError");
                                             MessageSucess.css('display', 'none');
                                             MessageError.css('display', 'none');
-                                            
+                                             alert(currentitemid);
                                             getSchema( currentitemid );
                                        
                                             var content=$("#" +currentitemid).html();
                                               //$("#editSchemaForm #txtSchemaName").val(content);
                                                  const innerElement = editdiv.querySelector('h2 span');
                                               innerElement.innerHTML = content+ " {" +currentitemid +"}";
-                                                innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                                                 innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" > {ContentTree ID -" +currentitemid +"}</span>";
 
                                                // alert(innerElement.innerHTML);
 

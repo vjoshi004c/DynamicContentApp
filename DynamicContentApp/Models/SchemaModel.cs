@@ -16,6 +16,7 @@
 
         public string? AssetTypeID { get; set; }
 
+        public string? AssetItemTreeeID { get; set; }
 
     }
     public class SchemaModel
@@ -31,8 +32,9 @@
         public string? AssetTypeID { get; set; }
 
         public string? AssetItemSchema { get; set; }
+        public string? AssetItemTreeeID { get; set; }
 
-        
+
 
 
     }

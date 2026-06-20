@@ -16,10 +16,10 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
         // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
-        //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentSecond;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+        private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
         public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
@@ -163,7 +163,7 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
-        public bool UpdateAssetItemSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema)
+        public bool UpdateAssetItemSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
         {
             SqlConnection con = null;
             //string result = "";
@@ -181,8 +181,10 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@MasterPageLayoutPath", "");
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
                 cmd.Parameters.AddWithValue("@AssetType", AssetTypeID);
+                cmd.Parameters.AddWithValue("@AssetItemSchemaMapped", AssetItemSchemaMapped);
                 cmd.Parameters.AddWithValue("@Query", 2);
 
+ 
                 con.Open();
 
                 cmd.ExecuteScalar();
@@ -430,7 +432,8 @@ namespace DynamicContentApp.DataLayer
                     cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
                     cobj.AssetTypeID = ds.Tables[0].Rows[i]["AssetTypeID"].ToString();
                     cobj.AssetItemSchema = ds.Tables[0].Rows[i]["AssetItemSchema"].ToString();
-                    
+                    cobj.AssetItemTreeeID = ds.Tables[0].Rows[i]["AssetItemSchemaMapped"].ToString();
+
                     custlist.Add(cobj);
                 }
 
