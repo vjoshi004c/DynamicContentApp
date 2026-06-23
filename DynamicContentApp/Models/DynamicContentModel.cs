@@ -14,4 +14,16 @@
         public string? ChildSchemaName { get; set; }
         public string? ChildSchemaID { get; set; }
     }
+
+    public class AssertFieldsModel
+    {
+        public string? SchemaFieldID { get; set; }
+        public string? SchemaParentID { get; set; }
+        public string? SchemaFieldName { get; set; }
+        public string? SchemaFieldType { get; set; }
+        public string? AssetItemID { get; set; }
+        public string? AssetSchemaID { get; set; }
+        public string? AssetFieldID { get; set; }
+        public string? AssetFieldValue { get; set; }
+    }
 }

@@ -376,7 +376,9 @@
                     @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                     <p> <button type="submit">Submit</button></p> *@
                 </form>
-                    <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:solid; border-color:darkslategray; padding:2em;display:none;"></div>
+                    <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+
+                    <div id="dynamicFormContainer_Edit_AssetFieldDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
 
             </div>
                 <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#D3E0C3;padding:2em;">
@@ -1110,6 +1112,7 @@
                  data: { SchemaID: IDSchema },
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
+                   async: false,
                  success: function (response) {
                       //alert("success");
                       //alert("Success:", response);
@@ -1174,9 +1177,171 @@
                      }
              });
 
+                        var  AssetItemID = $("#editSchemaForm #txtSchemaID").val();
+                           var  AssetItemSchemaID = $("#editSchemaForm #txtAssetItemSchema").val();
+                            var  AssetItemTreeeID = $("#editSchemaForm #txtAssetItemTreeeID").val();
+                          //alert("AssetItemID" + AssetItemID);
+                                //var  AssetItemSchemaID = $('#editSchemaForm').find('input[id="txtAssetItemSchema"]').val();
+                                  //var AssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
+                                 // var  AssetItemID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+               ViewContentDetailItem( AssetItemID, AssetItemSchemaID,AssetItemTreeeID);
 
          }
-           function IsAssetItemSchemaType( IDSchema, RecordCount ) {
+          function ViewContentDetailItem( assetItemID, assetItemSchemaID,assetItemTreeeID) {
+
+                            const optionsData = [
+                                // { value: "0", text: "-Select Field Type -" }
+                                    //{ value: "1", text: "Text" },
+                                    //{ value: "2", text: "Multiline" },
+                                    //{ value: "3", text: "HtmlText" }
+                            ];
+
+                                 //var recordassetID2= "record.assetID2";
+                                 //var recordassetSchemaID2= "record.assetID2";
+                               
+                                 //let newElement2= { assetID:  recordassetID2  , assetSchemaID:  recordassetSchemaID2 ,assetFieldID: + "record.assetFieldID"  ,assetFieldName: + "record.assetFieldName"  ,assetFieldValue:+ "record.assetFieldValue" };
+                                 //optionsData.push(newElement2);
+
+                                 //let newElement3= { assetID: + "record.assetID2"  , assetSchemaID: + "record.assetSchemaID2" ,assetFieldID: + "record.assetFieldID"  ,assetFieldName: + "record.assetFieldName"  ,assetFieldValue:+ "record.assetFieldValue" };
+                                  //optionsData.push(newElement3);
+
+                             $.ajax({
+                  type: "GET",
+                  url: "/ContentTree/GetAssetItemDetails", // PageName/MethodName
+                  //data: JSON.stringify(requestData),
+                  data: { AssetItemID: assetItemID, AssetItemSchemaID:assetItemSchemaID, AssetItemTreeeID: assetItemTreeeID},
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  async: false,
+                  success: function (response) {
+                  $.each(response, function(index, record) 
+                                    {
+                                        //alert(record.schemaFieldID + record.schemaParentID + record.schemaFieldName +   record.schemaFieldType +record.assetItemID+record.assetFieldID+record.assetFieldValue);
+                                        let newElement2= { schemaFieldID:  record.schemaFieldID  , schemaParentID:  record.schemaParentID ,schemaFieldName: record.schemaFieldName  ,schemaFieldType:  record.schemaFieldType ,assetItemID: record.assetItemID ,assetFieldID: record.assetFieldID,assetFieldValue: record.assetFieldValue};
+                                         optionsData.push(newElement2);
+                                          //alert(record.schemaFieldName);
+                                        
+                                     });
+                       },
+                   error: function (xhr, status, error) {
+                          console.error("Error occurred:", error);
+                      }
+              });
+
+                RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID)
+              
+            }
+       function RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID) {
+                  //alert(optionsData.length)
+                  $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "block");
+                 $("#dynamicFormContainer_Edit_AssetFieldDetails").empty();
+                
+                    const form = $('<form>').attr({ method: 'post', action: 'submitFields', id: '_AssetFieldDetails_Edit_Container' });
+                    var hdnAssetItemID = 'hdn_' +assetItemID;
+                    var hdnAssetItemSchemaID= 'hdn_' +assetItemSchemaID;
+
+                   // for hidden field to care assetid
+                    const SchemaSpan1 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
+                     const AssetFieldIDIDInput1 = $('<input>').attr({ type: 'text', value:assetItemID ,name: 'AssetItemId', id:hdnAssetItemID, placeholder: 'AssetFieldID' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
+                    SchemaSpan1.append(AssetFieldIDIDInput1);
+                    form.append(SchemaSpan1);
+
+                    const SchemaSpan11 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
+                       const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'text', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:hdnAssetItemSchemaID, placeholder: 'AssetFieldID' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
+                     SchemaSpan11.append(AssetFieldIDIDInput2);
+                     form.append(SchemaSpan11);
+                    $.each(optionsData, function (index, item) {
+                   // alert(item.assetID + " , " + item.assetSchemaID);
+                   // alert(item["assetID"] + " , " + item["assetSchemaID"]);
+                         var schemaParentID = item.schemaParentID;
+                         var schemaFieldType = item.schemaFieldType;
+                          var schemaFieldID =  item.schemaFieldID;
+                          var schemaFieldName = item.schemaFieldName;
+                                // alert(item.assetFieldID +' '+ item.assetFieldValue );
+                        var assetFieldID = item.assetFieldID;
+                          var assetFieldValue = item.assetFieldValue;
+
+                     
+                          
+                       // for  field to care Label of field
+                    const SchemaSpan2 = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
+                       const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
+                     SchemaSpan2.append(AssetFieldNameLabel);
+                       form.append(SchemaSpan2);
+
+                            // for  field to careSIMPLLE_TEXT
+                     if(item.schemaFieldType =='SIMPLLE_TEXT')
+                     {
+
+                    const SchemaSpan3 = $('<div>').attr({ style: 'padding:0em;width:80%',});
+                    const AssetFieldSingleValue = $('<input>').attr({ type: 'text', id:schemaFieldID, tag:assetFieldID, value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:80%;'});
+                    SchemaSpan3.append(AssetFieldSingleValue);
+                    form.append(SchemaSpan3);
+                     }
+
+                         // for field to care MULTILINE_TEXT
+                     if(item.schemaFieldType =='MULTILINE_TEXT')
+                         {
+                    const SchemaSpan4 = $('<div>').attr({ style: 'padding:0em;width:80%', });
+                    const AssetFieldNameInput = $('<input>').attr({ type: 'textarea',id:schemaFieldID,tag:assetFieldID,value:assetFieldValue, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:80%;min-height: 50px;'});
+                    SchemaSpan4.append(AssetFieldNameInput);
+                    form.append(SchemaSpan4);
+                         }
+
+                       // for field to care DROPDOWN
+                    const optionsDataDropdwon = [
+                                      { value: "", text: "-Select Field Type -" },
+                                      { value: "1", text: "Text" },
+                                      { value: "2", text: "Multiline" },
+                                      { value: "3", text: "HtmlText" }
+                                                  ];
+                    const $select = $("<select>", {
+                              id: "FieldTypeSelect1",
+                              name: "FieldTypeSelect",
+                               style:'width:64%;'
+                     });
+                     $.each(optionsDataDropdwon, function (index, item) {
+                    // Validate that both value and text exist
+                    if (typeof item.value === "string" && typeof item.text === "string") {
+                        $("<option>", {
+                            value: item.value,
+                            text: item.text
+                        }).appendTo($select);
+                    }
+                    });
+
+                    const SchemaSpan5 = $('<span>').attr({ style: 'padding:0em;width:80%', });
+                    SchemaSpan5.append($select);
+                    $select.on("change", function () {
+
+                        var selectedID = $(this).val();
+                        var selectedText = $(this).find("option:selected").text();
+                        //alert("You selected: " + selectedID);
+                        alert("You selected: " + selectedText);
+                        //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
+                            //alert("You selected: " + selectedID);
+                            //alert("You selected: " + selectedText);
+                            //$("#spanAssetItemSchema_Add").css("display", "block");
+                    // }
+                    });
+                    //form.append(SchemaSpan5);
+
+
+                    // const SchemaSpan6 = $('<span>').attr({ style: 'padding:0em;width:80%', });
+                    // const AssetFieldCheckbox = $('<input>').attr({ type: 'checkbox', name: 'AssetFieldCheckbox', placeholder: 'Asset Field Checkbox' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
+                    // SchemaSpan6.append(AssetFieldCheckbox);
+                    //form.append(SchemaSpan6);
+                    });
+
+                // add action button to save 
+                    const SchemaSpan2 = $('<div>').attr({ style: 'padding-top:3em;width:80%', });
+                    const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Asset Fields', class:'unfake-disabled-button' });
+                    SchemaSpan2.append(submitButton);
+                    form.append(SchemaSpan2);
+
+                $("#dynamicFormContainer_Edit_AssetFieldDetails").append(form);
+      }
+      function IsAssetItemSchemaType( IDSchema, RecordCount ) {
 
                             // var MessageSucess=  $("#lblEditMessageSucess");
                             //  var MessageError=  $("#lblEditMessageError");
@@ -1326,8 +1491,19 @@
                            // removediv.style.display = "none";
                           // duplicatediv.style.display = "none";
                           //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+
+                               // var  AssetItemSchemaID = $('#editSchemaForm').find('input[id="txtAssetItemSchema"]').val();
+                               //   var AssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
+                               //   var  AssetItemID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+
+                                // var AssetItemSchemaID= ("#editSchemaForm #txtAssetItemSchema").val();
+                                // var AssetItemTreeeID= $("#editSchemaForm #txtAssetItemTreeeID").val();
+                                // var AssetItemID= $("#editSchemaForm #txtSchemaID").val();
+                               
                         
                }
+
+       
 
 
      function addEventListener_caretli(childSchemaID) {

@@ -7,10 +7,10 @@
         $("#dynamicFormContainer_Edit").css("display", "block");
         // Example data array (could come from API, DB, etc.)
         const optionsData = [
-            { value: "", text: "-Select Field Type -" }
-            //{ value: "1", text: "Text" },
-            //{ value: "2", text: "Multiline" },
-            //{ value: "3", text: "HtmlText" }
+            { value: "", text: "-Select Field Type -" },
+            { value: "1", text: "Text" },
+            { value: "2", text: "Multiline" },
+            { value: "3", text: "HtmlText" }
         ];
 
         

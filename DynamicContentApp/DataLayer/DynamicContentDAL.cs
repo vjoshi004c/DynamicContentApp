@@ -16,10 +16,10 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestPFP;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
         // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
-        private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+        //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
         public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
@@ -551,7 +551,58 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+       
 
+             public List<AssertFieldsModel> GetAssetItemDetails(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<AssertFieldsModel> custlist = null;
+            try
+            {
+                custlist = new List<AssertFieldsModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_field_details", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
+                cmd.Parameters.AddWithValue("@AssetItemSchemaID", AssetItemSchemaID);
+                cmd.Parameters.AddWithValue("@AssetItemTreeeID", AssetItemTreeeID);
+                cmd.Parameters.AddWithValue("@Query", 4);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AssertFieldsModel cobj = new AssertFieldsModel();
+                    cobj.SchemaFieldID = ds.Tables[0].Rows[i]["SchemaFieldID"].ToString();
+                    cobj.SchemaParentID = ds.Tables[0].Rows[i]["SchemaParentID"].ToString();
+                    cobj.SchemaFieldName = ds.Tables[0].Rows[i]["SchemaFieldName"].ToString();
+                    cobj.SchemaFieldType = ds.Tables[0].Rows[i]["SchemaFieldType"].ToString();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.AssetSchemaID = ds.Tables[0].Rows[i]["AssetSchemaID"].ToString();
+                    cobj.AssetFieldID = ds.Tables[0].Rows[i]["AssetFieldID"].ToString();
+                    cobj.AssetFieldValue = ds.Tables[0].Rows[i]["AssetFieldValue"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public List<ContentTreeModel> GetContentTreeItems(string schemaID)
         {
 

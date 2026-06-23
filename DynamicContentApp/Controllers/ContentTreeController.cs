@@ -53,6 +53,19 @@ namespace DynamicContentApp.Controllers
             }
             return Ok(ContentTreeModellist);
         }
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetAssetItemDetails(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID)
+        {
+            
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<AssertFieldsModel> ContentTreeModellist = dynamicContentDAL.GetAssetItemDetails(AssetItemID,  AssetItemSchemaID,  AssetItemTreeeID);
+            if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            {
+
+            }
+            return Ok(ContentTreeModellist);
+        }
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
