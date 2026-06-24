@@ -1,6 +1,6 @@
 USE [TestPFP]
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_fields_type]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_fields_type]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -74,7 +74,7 @@ if(@Query=4)
 END;
 --exec dca_curd_asset_fields_type @ID = '0E6A14C7-B8EB-4042-AC5A-450DCE5B3FFA',     @FieldName='', 	@FieldType ='',  	    @Query =4
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_field_details]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_field_details]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -83,37 +83,119 @@ CREATE  PROCEDURE [dbo].[dca_curd_asset_item_field_details]
 	@AssetItemID varchar(500)= '',
     @AssetItemSchemaID varchar(500), 
 	@AssetItemTreeeID varchar(500)='', 
+    @SchemaFieldID varchar(500)= '',
+    @AssetFieldID varchar(500)= '', 
+    @AssetFieldValue varchar(500)= '' ,
     @Query int
 
 AS
 BEGIN
+if(@Query=1)
+BEGIN
+
+if(@AssetFieldID = '')
+    BEGIN 
+    INSERT INTO [dbo].[AssetItemFields]
+           (
+           [AssetFieldID]
+           ,[AssetFieldValue]
+           ,[AssetSchemaID]
+           ,[AssetItemID])
+     VALUES
+           (
+          @SchemaFieldID
+            ,@AssetFieldValue
+            ,@AssetItemSchemaID
+           ,@AssetItemID
+           )
+    END 
+else 
+    BEGIN 
+    
+    UPDATE [dbo].[AssetItemFields]
+    SET 
+       --[AssetFieldID] = @SchemaFieldID
+      [AssetFieldValue] = @AssetFieldValue
+      --,[AssetSchemaID] = @AssetItemSchemaID
+      --,[AssetItemID] = @AssetItemID
+    WHERE 
+         ID= @AssetFieldID
+    END
+
+    --SELECT * FROM [AssetItemFields]
+END 
+
 if(@Query=4)
 BEGIN
-        Select 
-                    ass.ID as SchemaFieldID, 
-                    ass.ParentID as SchemaParentID, 
-                    aft.FieldName AS SchemaFieldName, 
-                    AFT.FieldType AS SchemaFieldType,
-                    aif.AssetItemID as AssetItemID,
-                    aif.AssetSchemaID as AssetSchemaID,
-                    aif.AssetFieldID as AssetFieldID, 
-                    aif.AssetFieldValue AS AssetFieldValue
-        FROM AssetSchema as ass
-        inner join  AssetFieldsType aft 
-            on ass.AssetTypeID = aft.ID
-        left JOIN AssetitemFields aif
-            on aif.id= aif.AssetFieldID
-        where 
-            ass.parentid = @AssetItemSchemaID
-             
 
+            if not exists( select Top 1 *  from AssetItemFields where assetitemid =@AssetItemID)
+            BEGIN
+                    Select 
+                                ass.ID as SchemaFieldID, 
+                                ass.SchemaName  as SchemaFieldName,
+                                ass.ParentID as SchemaParentID, 
+                               -- aft.FieldName AS SchemaFieldName, 
+                                AFT.FieldType AS SchemaFieldType,
+                                aif.AssetItemID as AssetItemID,
+                                aif.AssetSchemaID as AssetSchemaID,
+                                aif.ID as AssetFieldID, 
+                                aif.AssetFieldValue AS AssetFieldValue
+                                   -- ait.ID as AssetItemMainID
+                        FROM AssetSchema as ass
+                        inner join  AssetFieldsType aft 
+                                on ass.AssetTypeID = aft.ID
+                        -- left join AssetItem ait
+                        -- on ass.id = ait.SchemaID
+                        left JOIN AssetitemFields aif
+                                on aif.id= aif.AssetFieldID
+                        where 
+                                ass.parentid = @AssetItemSchemaID
+        
+            END
+ELSE
+            BEGIN 
+                    select 
+                            aif.AssetFieldID AS SchemaFieldID, 
+                               ass.SchemaName as SchemaFieldName,
+                               ass.ParentID as SchemaParentID, 
+                               -- aft.FieldName AS SchemaFieldName, 
+                                aft.FieldType AS SchemaFieldType,
+                               aif.AssetItemID as AssetItemID,
+                               aif.AssetSchemaID as AssetSchemaID,
+                                aif.ID as AssetFieldID, 
+                               aif.AssetFieldValue AS AssetFieldValue
+                   from AssetItemFields  aif
+                   INNER JOIN AssetSchema ass 
+                   on 
+                        ass.id = aif.AssetFieldID
+                   inner join 
+                        AssetFieldsType aft 
+                    on 
+                        ass.AssetTypeID = aft.ID
+                    where 
+                        AssetSchemaid=@AssetItemSchemaID AND AssetItemID=@AssetItemID
+          
+
+            END 
 END
         
 END;
-
+-- where aif.AssetSchemaid='3CECF310-6B73-4C48-89B0-3E6BF151A819' AND aif.AssetItemID='982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
+           --select Top 1 *  from AssetItemFields where assetitemid ='982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
+           --select count(*) from AssetItemFields where assetitemid ='982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
+           -- select * from AssetItemFields where AssetSchemaid='3CECF310-6B73-4C48-89B0-3E6BF151A819' AND AssetItemID='982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
+           --select * from AssetItemFields where Assetschemaid ='3CECF310-6B73-4C48-89B0-3E6BF151A819' and assetitemid= '982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
+           -- delete  from AssetItemFields where Assetschemaid ='3CECF310-6B73-4C48-89B0-3E6BF151A819' and assetitemid= '982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
 -- exec dca_curd_asset_item_field_details @AssetItemID ='',    @AssetItemSchemaID ='3CECF310-6B73-4C48-89B0-3E6BF151A819',	@AssetItemTreeeID ='',    @Query =4
+--exec dca_curd_asset_item_field_details @AssetItemID ='982C5020-54F1-4DA3-84AD-74BE7BAEE4DF',    @AssetItemSchemaID ='3CECF310-6B73-4C48-89B0-3E6BF151A819',	@AssetItemTreeeID ='', @SchemaFieldID = '147430C6-719E-4C1E-83C3-0D038B5F2DC9',  @AssetFieldID = '',     @AssetFieldValue = 'cms overview shot description' ,   @Query =1
+-- select *   FROM AssetFieldsType
+--select * from AssetItemFields where AssetSchemaid='3CECF310-6B73-4C48-89B0-3E6BF151A819' AND AssetItemID='982C5020-54F1-4DA3-84AD-74BE7BAEE4DF'
+--select * from assetitem 
+
+
+
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_master]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_master]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -225,7 +307,7 @@ END
         
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -392,7 +474,7 @@ END;
 --                    FROM [dbo].[AssetSchema]
 --                WHERE ID='11CD8862-0CFA-4EB7-A670-9ABDF8217B29';
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema_fields]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema_fields]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -463,7 +545,7 @@ END;
 --select * from AssetSchemaFields where schemaid = '710FBE40-8EBD-4FDE-BA99-282501FA809A'
 --select * from AssetSchemaFields where id = '0183C8A4-A2A0-4F34-A180-C245C03771CA'
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_AssetFields]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_AssetFields]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -526,7 +608,7 @@ END;
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_contenttree_item]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_contenttree_item]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -580,7 +662,7 @@ ELSE
 --'D1B2BE76-C76B-447A-A30A-DDDF4959A8FC',
 --'DC30B818-0EF8-4BF9-84E2-812EC508A483')
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_page_content]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_page_content]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -601,7 +683,7 @@ BEGIN
 					 WHERE   PageUrl = @PageUrl	
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_schema]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_schema]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -636,7 +718,7 @@ END
 -- EXEC dca_get_schema @SchemaID ='74826E3E-C2EA-45DC-A328-43F115F45161'
 --EXEC dca_get_schema 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -708,7 +790,7 @@ select * from AssetItem
 
 */
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item_fields]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item_fields]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -738,7 +820,7 @@ BEGIN
         
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_page_content]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_page_content]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -766,7 +848,7 @@ BEGIN
         ); 
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_update_page_content]    Script Date: 6/23/2026 2:28:06 PM ******/
+/****** Object:  StoredProcedure [dbo].[dca_update_page_content]    Script Date: 6/24/2026 2:54:28 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

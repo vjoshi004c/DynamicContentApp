@@ -94,4 +94,21 @@
 
     }
 
+    public class AssetFieldsDataModel
+    {
+        public string? AssetItemID  { get; set; }
+        public string? AssetItemSchemaID { get; set; }
+
+        public string? SchemaFieldID { get; set; }
+
+        public string? AssetFieldID { get; set; }
+        public string? AssetFieldValue { get; set; }
+        
+            
+
+
+
+
+    }
+
 }

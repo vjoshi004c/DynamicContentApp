@@ -58,7 +58,7 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-
+        
         public string InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
         {
             SqlConnection con = null;
@@ -553,7 +553,7 @@ namespace DynamicContentApp.DataLayer
         }
        
 
-             public List<AssertFieldsModel> GetAssetItemDetails(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID)
+             public List<AssertFieldsModel> GetAssetItemDetails(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID, string SchemaFieldID, string AssetFieldID, string AssetFieldValue)
         {
 
 
@@ -569,6 +569,9 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
                 cmd.Parameters.AddWithValue("@AssetItemSchemaID", AssetItemSchemaID);
                 cmd.Parameters.AddWithValue("@AssetItemTreeeID", AssetItemTreeeID);
+                cmd.Parameters.AddWithValue("@SchemaFieldID", SchemaFieldID);
+                cmd.Parameters.AddWithValue("@AssetFieldID", AssetFieldID);
+                cmd.Parameters.AddWithValue("@AssetFieldValue", AssetFieldValue);
                 cmd.Parameters.AddWithValue("@Query", 4);
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();
@@ -587,6 +590,8 @@ namespace DynamicContentApp.DataLayer
                     cobj.AssetSchemaID = ds.Tables[0].Rows[i]["AssetSchemaID"].ToString();
                     cobj.AssetFieldID = ds.Tables[0].Rows[i]["AssetFieldID"].ToString();
                     cobj.AssetFieldValue = ds.Tables[0].Rows[i]["AssetFieldValue"].ToString();
+                    
+
                     custlist.Add(cobj);
                 }
 
@@ -603,6 +608,48 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+        public string SaveAssetFields(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID, string SchemaFieldID, string AssetFieldID, string AssetFieldValue)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            string newId = string.Empty;
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_field_details", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
+                cmd.Parameters.AddWithValue("@AssetItemSchemaID", AssetItemSchemaID);
+                cmd.Parameters.AddWithValue("@AssetItemTreeeID", AssetItemTreeeID);
+                cmd.Parameters.AddWithValue("@SchemaFieldID", SchemaFieldID);
+                cmd.Parameters.AddWithValue("@AssetFieldID", AssetFieldID);
+                cmd.Parameters.AddWithValue("@AssetFieldValue", AssetFieldValue);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+
+                // cmd.ExecuteScalar();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    newId = Convert.ToString(result);
+                    //Console.WriteLine($"Newly Inserted ID: {newId}");
+                }
+                // result = cmd.ExecuteScalar().ToString();
+                return newId;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public List<ContentTreeModel> GetContentTreeItems(string schemaID)
         {
 
