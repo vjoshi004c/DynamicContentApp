@@ -360,7 +360,7 @@
                         </span>
                         @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                        <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button">Add Fields</button>
+                            <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none" >Add Component</button>
                         @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
                         <button id="btnEditSchema" class="unfake-disabled-button" >Save </button>
@@ -426,6 +426,43 @@
                 <p>Click on the arrow(s) to open or close the tree branches.</p>
 
             </div>
+                <div id="masterPageDiv" style="display: block; border-style: solid; background-color: #D3E0C3;padding:2em;">
+
+                    <h2>Master Layout setting of Item <span></span></h2>
+                    <p>
+                        <label for="txtMasterPageItem">Is Item Page Type:</label>
+                        <input type="checkbox" id="chkIsItemPageType" class="unfake-disabled-input" name="MasterPageItem" style="width:100px">
+                    </p>
+                    <p>
+                        <label for="txtMasterPageItem">Enter Master Rendering:</label>
+                        <input type="text" id="txtMasterPageItem" class="unfake-disabled-input" name="MasterPageItem" style="width:500px">
+                        <button id="openPopupBtnMasterPageItem">...</button>
+                       
+                    </p>
+                    <p>
+                        <button id="btnSaveMasterLayout" class="unfake-disabled-button">Save Master Layout</button>
+
+                    </p>
+
+                </div>
+
+                <div id="ComponentPageDiv" style="display: block; border-style: solid; background-color: #D3E0C3;padding:2em;">
+
+                    <h2>Add/Edit Componenets on page item<span></span></h2>
+                    <p>
+                        <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button>
+
+                    </p>
+                    <p>
+                        <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+
+                    </p>
+                    
+                    </p>
+                    
+
+                </div>
+              
 
         </div>
         </div>
@@ -952,6 +989,12 @@
 
                   });
 
+                     $('#btnEditSchema1').on('click', function(e) {
+                        e.preventDefault(); // This stops the form from submitting and redirecting
+                         e.stopPropagation();
+                        alert('btnEditSchema' );
+
+                     });
 
                   $('#btnEditSchema').on('click', function(e) {
          e.preventDefault(); // This stops the form from submitting and redirecting
@@ -1912,7 +1955,10 @@
     </script>
 <script src="/js/custom/dynamicAssetTypeDropdown.js"></script>
 <script src="/js/custom/dynamicSchemaFields.js"></script>
+<script src="/js/custom/dynamicComponents.js"></script>
 <script src="/js/custom/dynamicSchemaPopup.js"></script>
+
+
 
 
     

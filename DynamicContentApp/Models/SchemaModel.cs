@@ -69,6 +69,25 @@
 
     }
 
+    public class AssetComponentModel
+    {
+        public string? AssetItemComponentID { get; set; }
+        public string? AssetItemID { get; set; }
+
+        public string? ComponentPath { get; set; }
+        public string? LinkedAssetItem { get; set; }
+        public string? PlaceholderPath { get; set; }
+
+    }
+    public class AssetMasterLayoutModel
+    {
+        public string? AssetItemID { get; set; }
+        public bool? IsItemPageType { get; set; }
+
+        public string? MasterpagePath { get; set; }
+      
+
+    }
     public class SchemaFields
     {
         public string? ID { get; set; }

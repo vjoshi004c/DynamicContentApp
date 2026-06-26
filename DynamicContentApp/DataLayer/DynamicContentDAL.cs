@@ -21,6 +21,205 @@ namespace DynamicContentApp.DataLayer
         // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
+       
+
+        public bool SaveAssetComponentDetails(string AssetItemComponentID , string AssetItemID, string ComponentPath, string LinkedAssetItem, string PlaceholderPath)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_components", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", AssetItemComponentID);
+                cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
+                cmd.Parameters.AddWithValue("@ComponentPath", ComponentPath);
+                cmd.Parameters.AddWithValue("@LinkedAssetItem", LinkedAssetItem);
+                cmd.Parameters.AddWithValue("@PlaceholderPath", PlaceholderPath);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public SchemaDeleteModel DeleteAssetComponentDetails(string AssetItemComponentID)
+        {
+            SqlConnection con = null;
+            SchemaDeleteModel SchemaDeleteModel = new SchemaDeleteModel();
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_components", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", AssetItemComponentID);
+                cmd.Parameters.AddWithValue("@AssetItemID", "");
+                cmd.Parameters.AddWithValue("@ComponentPath", "");
+                cmd.Parameters.AddWithValue("@LinkedAssetItem", "");
+                cmd.Parameters.AddWithValue("@AssePlaceholderPathtTypeID", "");
+                cmd.Parameters.AddWithValue("@Query", 3);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                SchemaDeleteModel.Error = string.Empty;
+                SchemaDeleteModel.Status = true;
+                SchemaDeleteModel.Message = "Schema has been deleted successfully";
+                return SchemaDeleteModel;
+            }
+            catch (Exception ex)
+            {
+                SchemaDeleteModel.Error = ex.Message.ToString();
+                SchemaDeleteModel.Status = false;
+                SchemaDeleteModel.Message = "Opps! Error while deleting schema.";
+                return SchemaDeleteModel;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public List<AssetComponentModel> GetAssetComponentDetails(string AssetItemComponentID, string AssetItemID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<AssetComponentModel> custlist = null;
+            try
+            {
+                custlist = new List<AssetComponentModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_components", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemComponentID", AssetItemComponentID);
+                cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
+                cmd.Parameters.AddWithValue("@ComponentPath", "");
+                cmd.Parameters.AddWithValue("@LinkedAssetItem", "");
+                cmd.Parameters.AddWithValue("@PlaceholderPath", "");
+                cmd.Parameters.AddWithValue("@Query", 4);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AssetComponentModel cobj = new AssetComponentModel();
+                    cobj.AssetItemComponentID = ds.Tables[0].Rows[i]["AssetItemComponentID"].ToString();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.ComponentPath = ds.Tables[0].Rows[i]["ComponentPath"].ToString();
+                    cobj.LinkedAssetItem = ds.Tables[0].Rows[i]["LinkedAssetItem"].ToString();
+                    cobj.PlaceholderPath = ds.Tables[0].Rows[i]["PlaceholderPath"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public List<AssetMasterLayoutModel> GetAssetMasterLayoutDetails( string AssetItemID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<AssetMasterLayoutModel> custlist = null;
+            try
+            {
+                custlist = new List<AssetMasterLayoutModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_masterlayout", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", AssetItemID);
+                cmd.Parameters.AddWithValue("@Query", 4);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AssetMasterLayoutModel cobj = new AssetMasterLayoutModel();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.IsItemPageType= Convert.ToBoolean(ds.Tables[0].Rows[i]["IsItemPageType"].ToString());
+                    cobj.MasterpagePath = ds.Tables[0].Rows[i]["MasterpagePath"].ToString();
+
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public bool SaveAssetMasterLayoutDetails(string AssetItemID, bool IsItemPageType, string MasterpagePath)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_item_masterlayout", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", AssetItemID);
+                cmd.Parameters.AddWithValue("@IsItemPageType", IsItemPageType);
+                cmd.Parameters.AddWithValue("@MasterpagePath", MasterpagePath);
+                cmd.Parameters.AddWithValue("@Query", 2);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
         {

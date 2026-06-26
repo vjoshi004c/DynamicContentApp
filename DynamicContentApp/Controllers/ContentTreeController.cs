@@ -36,9 +36,60 @@ namespace DynamicContentApp.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult GetAssetComponentDetails(string AssetItemComponentID, string AssetItemID)
+        {
 
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<AssetComponentModel> ContentTreeModellist = dynamicContentDAL.GetAssetComponentDetails( AssetItemComponentID,  AssetItemID);
+            if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            {
 
+            }
+            return Ok(ContentTreeModellist);
+        }
+        public IActionResult SaveAssetComponentDetails(string AssetItemComponentID,string AssetItemID, string ComponentPath, string LinkedAssetItem, string PlaceholderPath)
+        {
+            ;
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            AssetItemComponentID = string.Empty;
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            bool isInsertSuccess = dynamicContentDAL.SaveAssetComponentDetails(AssetItemComponentID,  AssetItemID,  ComponentPath,  LinkedAssetItem,  PlaceholderPath);
+            if (isInsertSuccess) { return Ok(true);  }
+            else { return Ok(false); }
+        }
+        [HttpGet]
+        public IActionResult DeleteAssetComponentDetails(string AssetItemComponentID )
+        {
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            SchemaDeleteModel SchemaDeleteModel = dynamicContentDAL.DeleteAssetComponentDetails(AssetItemComponentID);
+            return Ok(SchemaDeleteModel);
+          
+        }
 
+        [HttpGet]
+        public IActionResult GetAssetMasterLayoutDetails( string AssetItemID)
+        {
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<AssetMasterLayoutModel> ContentTreeModellist = dynamicContentDAL.GetAssetMasterLayoutDetails( AssetItemID);
+            if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            {
+
+            }
+            return Ok(ContentTreeModellist);
+        }
+        public IActionResult SaveAssetMasterLayoutDetails(string AssetItemID, bool IsItemPageType, string MasterpagePath)
+        {
+            ;
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            bool isInsertSuccess = dynamicContentDAL.SaveAssetMasterLayoutDetails( AssetItemID,  IsItemPageType,  MasterpagePath);
+
+            if (isInsertSuccess) { return Ok(true); }
+            else  { return Ok(false);  }
+        }
         [HttpPost]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult SaveAssetFieldsData([FromBody] List<AssetFieldsDataModel> AssetFieldsData)
