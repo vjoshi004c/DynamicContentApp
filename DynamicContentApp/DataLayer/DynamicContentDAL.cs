@@ -109,7 +109,7 @@ namespace DynamicContentApp.DataLayer
                 con = new SqlConnection(ConnenctionString);
                 SqlCommand cmd = new SqlCommand("dca_curd_asset_item_components", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@AssetItemComponentID", AssetItemComponentID);
+                cmd.Parameters.AddWithValue("@ID", AssetItemComponentID);
                 cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
                 cmd.Parameters.AddWithValue("@ComponentPath", "");
                 cmd.Parameters.AddWithValue("@LinkedAssetItem", "");
@@ -160,6 +160,8 @@ namespace DynamicContentApp.DataLayer
                 SqlCommand cmd = new SqlCommand("dca_curd_asset_item_masterlayout", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ID", AssetItemID);
+                cmd.Parameters.AddWithValue("@IsItemPageType", false);
+                cmd.Parameters.AddWithValue("@MasterpagePath", string.Empty);
                 cmd.Parameters.AddWithValue("@Query", 4);
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();

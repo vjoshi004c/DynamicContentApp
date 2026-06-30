@@ -291,10 +291,10 @@
 
                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                        <button id="btnAddSchemaFields"  class="unfake-disabled-button fake-disabled-button">Add Fields</button>
+                        <button id="btnAddSchemaFields"  class="unfake-disabled-button fake-disabled-button" style="display:none">Add Fields</button>
                         @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
-                        <button id="btnSaveSchema" class="unfake-disabled-button" >Create </button>
+                        <button id="btnSaveSchema" class="unfake-disabled-button" >Create Asset Item</button>
                        
                 </p>
 
@@ -363,7 +363,7 @@
                             <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none" >Add Component</button>
                         @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
-                        <button id="btnEditSchema" class="unfake-disabled-button" >Save </button>
+                        <button id="btnEditSchema" class="unfake-disabled-button" >Save Asset Item</button>
 
                     </p>
 
@@ -379,6 +379,8 @@
                     <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
 
                     <div id="dynamicFormContainer_Edit_AssetFieldDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+
+                    
 
             </div>
                 <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#D3E0C3;padding:2em;">
@@ -457,11 +459,9 @@
                         <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
 
                     </p>
-                    
-                    </p>
-                    
 
                 </div>
+                <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
               
 
         </div>
@@ -1387,7 +1387,7 @@
                 // add action button to save 
                     const SchemaSpan2 = $('<div>').attr({ style: 'padding-top:3em;width:80%', });
                     //const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Asset Fields', class:'unfake-disabled-button' });
-                        const submitButton = $('<input>').attr({ type: 'button', name:'btnSaveAssetFields', value: 'Save Asset Fields', id:'btnSaveAssetFields',  class:'unfake-disabled-button' });
+                        const submitButton = $('<input>').attr({ type: 'button', name:'btnSaveAssetFields', value: 'Save Asset Content', id:'btnSaveAssetFields',  class:'unfake-disabled-button' });
                     SchemaSpan2.append(submitButton);
                     form.append(SchemaSpan2);
 
@@ -1610,6 +1610,11 @@
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
                                innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
                               getSchema( currentitemid );
+                               //alert(currentitemid);
+                                  //alert($("#editSchemaForm #txtSchemaID").val());
+                                   var assetid = $("#editSchemaForm #txtSchemaID").val();
+                                 getAssetMasterLayoutDetails(assetid);
+                                   getAssetComponentDetails('', assetid)
                             //$("#editSchemaForm #txtSchemaName").val(content);
                             //const innerElement = editdiv.querySelector('h2 span');
                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
@@ -1628,7 +1633,183 @@
                         
                }
 
-       
+           function getAssetMasterLayoutDetails(assetItemID) {
+        //alert(assetItemID + ' ' + isItemPageType + ' ' + masterpagePath );
+                var masterPageTypeCheckbox = $("#masterPageDiv #chkIsItemPageType");
+                var masterPageItem =$("#masterPageDiv #txtMasterPageItem")
+                masterPageTypeCheckbox.prop('checked', false);
+                masterPageItem.val('');
+
+               
+
+        $.ajax({
+            type: "GET",
+            url: "/ContentTree/GetAssetMasterLayoutDetails", // PageName/MethodName
+            //data: JSON.stringify(requestData),
+            data: { AssetItemID: assetItemID },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var RecordCount = response.length;
+               // alert("Total records received: " + RecordCount);
+                $.each(response, function (index, record) {
+                    //alert(record.masterpagePath + ' ' + record.isItemPageType);
+                    //$("#masterPageDiv #txtSchemaID").val(record.assetItemID);
+                      if(record.isItemPageType === true)
+                     {
+                            $("#masterPageDiv #chkIsItemPageType").prop('checked', true);
+                             // $("#masterPageDiv #openPopupBtnMasterPageItem").css('display', 'block');
+                     }
+                     else
+                     {
+                          $("#masterPageDiv #chkIsItemPageType").prop('checked', false);
+                            //$("#masterPageDiv #openPopupBtnMasterPageItem").css('display', 'none');
+                     }
+
+                    $("#masterPageDiv #txtMasterPageItem").val(record.masterpagePath);
+                });
+                 if (masterPageTypeCheckbox.is(':checked'))
+                 {
+                    
+                      masterPageItem.prop('disabled', false);
+                  }
+                  else
+                  {
+                      
+                      masterPageItem.prop('disabled', true);
+                  }
+            },
+            error: function (xhr, status, error) {
+
+                console.error("Error occurred:", error);
+                //alert("Error occurred:" + error);
+            }
+        });
+         
+    }
+     $("#masterPageDiv #chkIsItemPageType").change(function() {
+        if ($(this).is(':checked')) {
+            $("#masterPageDiv #txtMasterPageItem").prop('disabled', false);
+               //$("#masterPageDiv #openPopupBtnMasterPageItem").css('display', 'block');
+        } else {
+            // $("#masterPageDiv #txtMasterPageItem").val('');
+            $("#masterPageDiv #txtMasterPageItem").prop('disabled', true);
+             // $("#masterPageDiv #openPopupBtnMasterPageItem").css('display', 'none');
+        }
+    });
+
+        function getAssetComponentDetails(assetItemComponentID, assetItemID) {
+            // alert(assetItemComponentID + ' ' + assetItemID  );
+              const optionsData = [];
+
+         $.ajax({
+             type: "GET",
+              url: "/ContentTree/GetAssetComponentDetails", // PageName/MethodName
+             //data: JSON.stringify(requestData),
+                 data: { AssetItemComponentID:assetItemComponentID,AssetItemID: assetItemID },
+             contentType: "application/json; charset=utf-8",
+             dataType: "json",
+               async: false,
+             success: function (response) {
+
+                     var RecordCount = response.length;
+                     // alert("getAssetComponentDetails Total records received: " + RecordCount);
+                     $.each(response, function (index, record) {
+
+                            let newElement2= { assetItemComponentID:  record.assetItemComponentID  , assetItemID:  record.assetItemID ,componentPath: record.componentPath  ,linkedAssetItem:  record.linkedAssetItem ,placeholderPath: record.placeholderPath };
+                            optionsData.push(newElement2);
+
+              
+                 });
+             },
+             error: function (xhr, status, error) {
+                 console.error("Error occurred:", error);
+             }
+         });
+           //alert("start");
+             
+             //  $.each(optionsData, function (index, item) {
+                               
+                          
+             //                    var AssetItemComponentID= item.assetItemComponentID
+             //                     var AssetItemID = item.assetItemID;
+             //                     var ComponentPath = item.componentPath;
+             //                      var LinkedAssetItem =  item.linkedAssetItem;
+             //                      var PlaceholderPath = item.placeholderPath;
+             //                      alert(AssetItemComponentID+' '+AssetItemID +' '+ComponentPath +' '+LinkedAssetItem +' '+PlaceholderPath) ;
+             // });
+              RenderAssetItemComponentDetail(optionsData, assetItemID);
+
+     }
+
+         function RenderAssetItemComponentDetail(optionsData, assetItemID) {
+                    //alert(optionsData.length + ' '+ assetItemID);
+                    $("#dynamicFormContainer_Edit_AssetFieldComponentDetails").css("display", "block");
+                     $("#dynamicFormContainer_Edit_AssetFieldComponentDetails").empty();
+
+                     const form = $('<form>').attr({ method: 'post', action: 'submitAssetItemComponents', id: 'frmAssetItemComponentDetailsContainer' });
+
+                     $.each(optionsData, function (index, item) {
+                               // alert(item.assetItemID + " , " + item.assetItemComponentID);
+                                //alert(item.assetID + " , " + item.assetItemComponentID);
+                            // alert(item["assetID"] + " , " + item["assetSchemaID"]);
+                            var assetItemComponentID= item.assetItemComponentID
+                            var assetItemID = item.assetItemID;
+                            var componentPath = item.componentPath;
+                            var linkedAssetItem =  item.linkedAssetItem;
+                            var placeholderPath = item.placeholderPath;
+
+                           //alert(assetItemComponentID+' '+assetItemID +' '+componentPath +' '+linkedAssetItem +' '+placeholderPath) ;
+                             const ComponentMainSpan = $('<div>').attr({ id:assetItemComponentID, style: 'padding-bottom:0.2em;width:80%', });
+                                  const ComponentPathSpan = $('<div>').attr({ id:assetItemComponentID, style: 'padding-bottom:0.2em;width:80%', });
+                                const ComponentPathLabel = $("<label>", {   for: 'ComponentPath',  class: "form-label",  text: 'Component Path (Include component under selected page asset Item)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
+                                ComponentPathSpan.append(ComponentPathLabel);
+                                form.append(ComponentPathSpan);
+                                const  ComponentPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
+                                 const ComponentPathTexteValue = $('<input>').attr({ type: 'text',  id:assetItemComponentID+'_ComponentPath', tag:'component', value:componentPath, name: 'ComponentPath',placeholder: 'Enter Component Path' , style:'width:80%;'});
+                                ComponentPathTextSpan.append(ComponentPathTexteValue);
+                                form.append(ComponentPathTextSpan);
+
+
+                                const ContentPathSpan = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
+                                    const ContentPathLabel = $("<label>", {   for: 'ContentPath',  class: "form-label",  text: 'Content path (Select content asset path associated with Component)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
+                                  ContentPathSpan.append(ContentPathLabel);
+                                 form.append(ContentPathSpan);
+                                 const  ContentPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
+                                      const ContentPathTexteValue = $('<input>').attr({ type: 'text',  id:assetItemComponentID+'_ContentPath', tag:'component', value:linkedAssetItem, name: 'ContentPath',placeholder: 'Enter Content Path' , style:'width:80%;'});
+                                  ContentPathTextSpan.append(ContentPathTexteValue);
+                                 form.append(ContentPathTextSpan);
+
+
+                                 const PlaceholderPathSpan = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
+                                    const PlaceholderPathLabel = $("<label>", {   for: 'PlaceholderPath',  class: "form-label",  text: 'Placeholder (Select placeholder where component will render)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
+                                  PlaceholderPathSpan.append(PlaceholderPathLabel);
+                                  form.append(PlaceholderPathSpan);
+                                  const  PlaceholderPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
+                                       const PlaceholderPathTexteValue = $('<input>').attr({ type: 'text',  id:assetItemComponentID+'_PlaceholderPath', tag:'component', value:placeholderPath, name: 'PlaceholderPath',placeholder: 'Enter Placeholder Path' , style:'width:80%;'});
+                                   PlaceholderPathTextSpan.append(PlaceholderPathTexteValue);
+                                  form.append(PlaceholderPathTextSpan);
+
+
+                                const SaveComponentSpan = $('<div>').attr({ style: 'padding-top:0.5em;width:80%', });
+                                 const SaveComponentButton = $('<input>').attr({ type: 'button', name:'btnSaveComponent', assetid:assetItemComponentID ,value: 'Edit Component', id:'btnEditAssetItemComponent',  class:'unfake-disabled-button' });
+                                SaveComponentSpan.append(SaveComponentButton);
+                                form.append(SaveComponentSpan);
+                        });
+                          $("#dynamicFormContainer_Edit_AssetFieldComponentDetails").append(form);
+
+                            $('#btnEditAssetItemComponent').on('click', function(e) {
+
+                                    const currentassetid = e.target.getAttribute('assetid');
+
+                                alert("insidebtnEditAssetItemComponent" +currentassetid );
+                                 $("#dynamicFormContainer_Component").css("display", "block");
+
+                             });
+
+
+                }
+
 
 
      function addEventListener_caretli(childSchemaID) {

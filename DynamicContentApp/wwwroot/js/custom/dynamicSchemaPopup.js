@@ -19,7 +19,20 @@
        // var isItemPageType = $("#chkIsItemPageType").val();
         var isItemPageType = $('#chkIsItemPageType').is(':checked'); 
         var assetItemID = $('[id="txtSchemaID"]').val();
+
+        if (assetItemID == '') {
+            alert("AssetItemID   should not be blank.Please select AssetItemID");
+            return false;
+        }
         //alert(txtSchemaID+ ' '+masterpagePath + ' ' + isItemPageType);
+        //if (isItemPageType == '') {
+        //    alert("IsItemPageType   should not be blank.Please select IsItemPageType");
+        //    return false;
+        //}
+        if (masterpagePath == '') {
+            alert("Masterpage Path  should not be blank. Please enter Masterpage Path");
+            return false;
+        }
         saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePath);
 
         //window.open('popup.html', 'DataSelectionPopup', 'width=400,height=300');
@@ -58,3 +71,33 @@ function saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePat
 function receiveDataFromPopup(data) {
     $('#txtAssetItemSchema').val(data);
 }
+
+//function getAssetMasterLayoutDetails(assetItemID) {
+//    //alert(assetItemID + ' ' + isItemPageType + ' ' + masterpagePath );
+
+//    $.ajax({
+//        type: "GET",
+//        url: "/ContentTree/GetAssetMasterLayoutDetails", // PageName/MethodName
+//        //data: JSON.stringify(requestData),
+//        data: { AssetItemID: assetItemID },
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (response) {
+//            var RecordCount = response.length;
+//            alert("Total records received: " + RecordCount);
+//            $.each(response, function (index, record) {
+//                alert(record.masterpagePath + ' ' + record.isItemPageType);
+//                //$("#masterPageDiv #txtSchemaID").val(record.assetItemID);
+//                $("#masterPageDiv #chkIsItemPageType").val(record.isItemPageType);
+//                $("#masterPageDiv #txtMasterPageItem").val(record.masterpagePath);
+//            });
+
+//        },
+//        error: function (xhr, status, error) {
+
+//            console.error("Error occurred:", error);
+//            //alert("Error occurred:" + error);
+//        }
+//    });
+//}
+
