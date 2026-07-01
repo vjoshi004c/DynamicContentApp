@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿
+
+$(document).ready(function () {
     $('#openPopupBtn').click(function () {
         //alert("inside open popup button");
         //e.preventDefault(); // This stops the form from submitting and redirecting
@@ -9,6 +11,48 @@
         //alert("inside open popup button");
         return false;
     });
+    $('#openPopupBtnMasterPage').click(function () {
+        $("#lblModelTitle").html('');
+        const currenttitle = this.getAttribute('title');
+        $("#lblModelTitle").html(currenttitle);
+        const parentitem = this.getAttribute('parentitem');
+        $("#hdnParentId").val(parentitem);
+        // alert($("#" + parentitem).val());
+        const parentitemvalue = $("#" + parentitem).val();
+        $("#txtSelectedItemPath").val(parentitemvalue);
+
+        $("#customModal").show();
+        return false;
+    });
+    $('#openPopupBtnAssetSchema').click(function () {
+        $("#lblModelTitle").html('');
+        const currenttitle = this.getAttribute('title');
+        $("#lblModelTitle").html(currenttitle);
+        const parentitem = this.getAttribute('parentitem');
+        $("#hdnParentId").val(parentitem);
+        // alert($("#" + parentitem).val());
+        const parentitemvalue = $("#" + parentitem).val();
+        $("#txtSelectedItemPath").val(parentitemvalue);
+
+        $("#customModal").show();
+        return false;
+    });
+       
+    $("#closeModalBtn").on("click", function () {
+        $("#customModal").hide();
+    });
+    $("#closeModalBtnSecond").on("click", function () {
+        $("#customModal").hide();
+    });
+    $("#btnSelectedItemPath").on("click", function () {
+        const parentitemid = $("#hdnParentId").val();
+        const selectedItemPath = $("#txtSelectedItemPath").val();
+        $("#" + parentitemid).val(selectedItemPath);
+       //alert($("#" + parentitem).val(selectedItemPath));
+        $("#hdnParentId").val('');
+        $("#customModal").hide();
+    });
+   
     $('#btnSaveMasterLayout').click(function (e) {
         e.preventDefault(); // This stops the form from submitting and redirecting
         e.stopPropagation();

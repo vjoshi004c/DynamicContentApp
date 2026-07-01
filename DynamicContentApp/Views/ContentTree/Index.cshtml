@@ -188,6 +188,31 @@
             overflow: auto; /* Automatically adds x and y scrollbars if needed */
         }
     </style>
+    <style>
+        .modal-overlay {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+  z-index: 1000;
+}
+/* Centered white modal window */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  width: 50%;
+  position: relative;
+}
+/* Close button positioning */
+.close-x {
+  position: absolute;
+  top: 10px; right: 15px;
+  cursor: pointer;
+  font-size: 24px;
+}
+    </style>
 </head>
 <body>
     @* <div class="topnav">
@@ -285,8 +310,8 @@
                         </p>
                 <p>
                             <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
-                                <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
-                                <input type="text" id="txtAssetItemSchema" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
+                                <label for="txtAssetItemSchemaAdd">Schema linked with Asset Item:</label>
+                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
                             </span>
 
                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
@@ -354,9 +379,9 @@
                         </p>
                     <p>
                             <span id="spanAssetItemSchema_Edit" style="display:block;padding:2em;border:solid;border-width:thin;">
-                            <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
+                                <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
                             <input type="text" id="txtAssetItemSchema" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
-                                <button id="openPopupBtn">...</button>
+                                <button id="openPopupBtnAssetSchema" title="To Select Schema Item" parentitem="txtAssetItemSchema" >...</button>
                         </span>
                         @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
@@ -441,7 +466,7 @@
                     <p>
                         <label for="txtMasterPageItem">Enter Master Rendering:</label>
                         <input type="text" id="txtMasterPageItem" class="unfake-disabled-input" name="MasterPageItem" style="width:500px">
-                        <button id="openPopupBtnMasterPageItem">...</button>
+                        <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem" >...</button>
                        
                     </p>
                     <p>
@@ -471,7 +496,21 @@
         </div>
     </div>
 
-
+    <div id="customModal" class="modal-overlay">
+        <!-- Modal Box Content -->
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close-x">&times;</span>
+            <h2><span id="lblModelTitle"></span></h2>
+            <input type="hidden" id="hdnTitle" />
+             <input type="hidden" id="hdnParentId" />
+            <input type="hidden" id="hdnAssetId" />
+            <input type="hidden" id="hdnTitle" />
+            <span>Enter path of item</span>
+            <input type="text" id="txtSelectedItemPath" value="" style="width:60%;" />
+            <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" />
+            <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" />
+        </div>
+    </div>
 
 
     <!-- Custom Context Menu -->
@@ -791,7 +830,7 @@
                                       alert("Asset Type is mising. Please select AssetType.");
                                       return;
                                  }
-                                   var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchema"]').val();
+                                   var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaAdd"]').val();
                                      //alert("InsertAssetItemSchema" +txtAssetItemSchema);
                                       // alert("SaveSchema");
                                   //alert(ddlAssetTypeValue);
@@ -2034,7 +2073,7 @@
                                            $('#addSchemaForm').find('input[id="txtSchemaParent"]').val(currentitemid);
 
                                              $('#addSchemaForm').find('select[id="AssetTypeDropdown_Add"]').val('0');
-                                                $('#addSchemaForm').find('input[id="txtAssetItemSchema"]').val('');
+                                                $('#addSchemaForm').find('input[id="txtAssetItemSchemaAdd"]').val('');
 
                                            // $('#addSchemaForm').find('input[id="txtSchemaParent"]').val('');
                                           // $('#lblAddMessageSucess').val('');

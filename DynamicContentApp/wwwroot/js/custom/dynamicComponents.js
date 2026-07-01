@@ -18,7 +18,7 @@
 
 
         // Remove any existing dropdown before creating a new one
-         $("#dynamicFormContainer_Component").empty();
+        $("#dynamicFormContainer_Component").empty();
 
         // Create the <select> element
         const $select = $("<select>", {
@@ -58,7 +58,11 @@
 
         const SchemaSpanComponent = $('<div>').attr({ style: 'padding:1em;', });
         const FieldNameeInputComponent = $('<input>').attr({ type: 'text', id: 'componentID', name: 'ComponentName', placeholder: 'Select Component ', style: 'width:80%;' });
+
+        const FieldNameeInputPopupComponentComponentName = $('<input>').attr({ type: 'button', tag: 'Popup', id: 'openPopupBtnComponentName', name: 'PopupBtnComponentName', parentitem:"componentID",  title:'To Select Component Item',  value: '...', placeholder: 'Select Component ', style: 'width:2%;' });
+
         SchemaSpanComponent.append(FieldNameeInputComponent);
+        SchemaSpanComponent.append(FieldNameeInputPopupComponentComponentName);
         form.append(SchemaSpanComponent);
 
         const SchemaDataSourceLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
@@ -69,7 +73,9 @@
 
         const SchemaSpanDatasource = $('<div>').attr({ style: 'padding:1em;', });
         const FieldNameeInputDataSource = $('<input>').attr({ type: 'text', id: 'datasourceID', name: 'DataSourceName', placeholder: 'Select DataSource Path', style: 'width:80%;' });
+        const FieldNameeInputPopupComponentDataSourceName = $('<input>').attr({ type: 'button', tag: 'Popup', id: 'openPopupBtnDataSourceName', name: 'PopupBtnDataSourceName', parentitem:"datasourceID" ,title:'To Select Content Item',  value: '...', placeholder: 'Select Component ', style: 'width:2%;' });
         SchemaSpanDatasource.append(FieldNameeInputDataSource);
+        SchemaSpanDatasource.append(FieldNameeInputPopupComponentDataSourceName);
         form.append(SchemaSpanDatasource);
 
         const SchemaPlaceholderLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
@@ -80,23 +86,68 @@
 
         const SchemaSpanPlaceholder = $('<div>').attr({ style: 'padding:1em;', });
         const FieldNameeInputPlaceholder = $('<input>').attr({ type: 'text', id: 'placeholderID', name: 'PlaceholderName', placeholder: 'Select Placeholder ', style: 'width:80%;' });
+        const FieldNameeInputPopupComponentPlaceholderName = $('<input>').attr({ type: 'button', tag: 'Popup', id: 'openPopupBtnPlaceholderName', name: 'PopupBtnPlaceholderName', parentitem:"placeholderID", title:'To Select Placeholder Item', value: '...', placeholder: 'Select Component ', style: 'width:2%;' });
         SchemaSpanPlaceholder.append(FieldNameeInputPlaceholder);
+        SchemaSpanPlaceholder.append(FieldNameeInputPopupComponentPlaceholderName);
         form.append(SchemaSpanPlaceholder);
 
-        const SchemaSpan2 = $('<div>').attr({ style: 'padding:1em;', });
-        SchemaSpan2.append($select);
+        //const SchemaSpan2 = $('<div>').attr({ style: 'padding:1em;', });
+        //SchemaSpan2.append($select);
         //form.append(SchemaSpan2);
 
         const SchemaSpan3 = $('<div>').attr({ style: 'padding:1em;', });
         const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Component', class: 'unfake-disabled-button' });
-        SchemaSpan2.append(submitButton);
-        form.append(submitButton);
+        const closeButton = $('<input>').attr({ type: 'button', value: 'Close', class: 'unfake-disabled-button' ,style: 'margin-left:1em;' });
+        SchemaSpan3.append(submitButton);
+        SchemaSpan3.append(closeButton);
+        form.append(SchemaSpan3);
 
         $("#dynamicFormContainer_Component").append(form);
         //$("#dynamicFormContainer_Edit").style.display = "block";
         //$("#dynamicform").style.display = "block";
 
+      
 
+        FieldNameeInputPopupComponentComponentName.on("click", function () {
+            $("#txtSelectedItemPath").val('');
+            $("#lblModelTitle").html('');
+            const currenttitle = this.getAttribute('title');
+            $("#lblModelTitle").html(currenttitle);
+            const parentitem = this.getAttribute('parentitem');
+            $("#hdnParentId").val(parentitem);
+            const parentitemvalue = $("#" + parentitem).val();
+            $("#txtSelectedItemPath").val(parentitemvalue);
+            $("#customModal").show(); 
+        });
+        FieldNameeInputPopupComponentDataSourceName.on("click", function () {
+            $("#txtSelectedItemPath").val('');
+            $("#lblModelTitle").html('');
+            const currenttitle = this.getAttribute('title');
+            $("#lblModelTitle").html(currenttitle);
+            const parentitem = this.getAttribute('parentitem');
+            $("#hdnParentId").val(parentitem);
+            const parentitemvalue = $("#" + parentitem).val();
+            $("#txtSelectedItemPath").val(parentitemvalue);
+            $("#customModal").show(); 
+        });
+        FieldNameeInputPopupComponentPlaceholderName.on("click", function () {
+            $("#txtSelectedItemPath").val('');
+            $("#lblModelTitle").html('');
+            const currenttitle = this.getAttribute('title');
+            $("#lblModelTitle").html(currenttitle);
+            const parentitem = this.getAttribute('parentitem');
+            $("#hdnParentId").val(parentitem);
+            const parentitemvalue = $("#" + parentitem).val();
+            $("#txtSelectedItemPath").val(parentitemvalue);
+          
+            $("#customModal").show(); 
+        });
+        
+        closeButton.on("click", function () {
+            e.preventDefault(); // This stops the form from submitting and redirecting
+            e.stopPropagation();
+            $("#dynamicFormContainer_Component").css("display", "none");
+        });
 
         submitButton.on("click", function () {
                 e.preventDefault(); // This stops the form from submitting and redirecting
@@ -146,8 +197,9 @@
             //$("#dynamicFormContainer_Edit").style.display = "none";
             $("#dynamicFormContainer_Component").css("display", "none");
             return false;
-            });
+        });
 
+      
 
         //alert("btnEditSchemaFields");
         return false;
@@ -247,7 +299,7 @@ function saveAssetItemComponent(fieldSchemaIDComponent, componentPath, linkedAss
     });
 }
 function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, linkedAssetItem, placeholderPath) {
-    alert("EditAssetFieldComponentDetailsNew dynamic" + fieldSchemaIDComponent + ' ' + componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
+   alert("EditAssetFieldComponentDetailsNew dynamic" + fieldSchemaIDComponent + ' ' + componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
 
    // e.preventDefault(); // This stops the form from submitting and redirecting
    // e.stopPropagation();
@@ -297,14 +349,20 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
 
     const SchemaSpan3 = $('<div>').attr({ style: 'padding:1em;', });
     const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Component', class: 'unfake-disabled-button' });
+    const closeButton = $('<input>').attr({ type: 'button', value: 'Close', class: 'unfake-disabled-button', style: 'margin-left:1em;' });
     SchemaSpan3.append(submitButton);
+    SchemaSpan3.append(closeButton);
     form.append(SchemaSpan3);
 
     $("#dynamicFormContainer_Component").append(form);
     //$("#dynamicFormContainer_Edit").style.display = "block";
     //$("#dynamicform").style.display = "block";
 
-
+    closeButton.on("click", function () {
+            //e.preventDefault(); // This stops the form from submitting and redirecting
+            //e.stopPropagation();
+            $("#dynamicFormContainer_Component").css("display", "none");
+        });
 
     submitButton.on("click", function (e) {
         e.preventDefault(); // This stops the form from submitting and redirecting
@@ -348,11 +406,15 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
             alert("Placeholder should not be blank.Please enter placeholder name");
             return false;
         }
-        alert(fieldSchemaIDComponent + ": " + componentPath + ": " + linkedAssetItem, placeholderPath);
+       // alert(fieldSchemaIDComponent + ": " + componentPath + ": " + linkedAssetItem, placeholderPath);
         saveAssetItemComponent(fieldSchemaIDComponent, componentPath, linkedAssetItem, placeholderPath);
         $("#dynamicComponentform").empty();
         //$("#dynamicFormContainer_Edit").style.display = "none";
         $("#dynamicFormContainer_Component").css("display", "none");
         return false;
     });
+
+   
+
+   
 }
