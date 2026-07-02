@@ -312,6 +312,7 @@
                             <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
                                 <label for="txtAssetItemSchemaAdd">Schema linked with Asset Item:</label>
                                 <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
+                                <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd">...</button>
                             </span>
 
                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
@@ -1073,7 +1074,7 @@
                                var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
                                 var  ddlAssetTypeValue = $(this).closest('form').find('select[id="AssetTypeDropdown_Edit"]').val();
                                       var  txtAssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
-                                 // alert("txtAssetItemTreeeID "+txtAssetItemTreeeID  );
+                                  alert("txtAssetItemTreeeID "+txtAssetItemTreeeID  );
                                      //alert( $("#AssetTypeDropdown_Edit").val());
                                   //alert(ddlAssetTypeValue);
                                   if(ddlAssetTypeValue == "")
