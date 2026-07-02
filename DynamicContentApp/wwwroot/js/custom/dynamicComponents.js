@@ -15,7 +15,8 @@
             { value: "3", text: "HtmlText" }
         ];
 
-
+        var txtSchemaID = $('[id="txtSchemaID"]');
+        var AssetItemID = txtSchemaID.val();
 
         // Remove any existing dropdown before creating a new one
         $("#dynamicFormContainer_Component").empty();
@@ -96,7 +97,7 @@
         //form.append(SchemaSpan2);
 
         const SchemaSpan3 = $('<div>').attr({ style: 'padding:1em;', });
-        const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Component', class: 'unfake-disabled-button' });
+        const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Component', assetItemID: AssetItemID, assetComponentId: '', class: 'unfake-disabled-button' });
         const closeButton = $('<input>').attr({ type: 'button', value: 'Close', class: 'unfake-disabled-button' ,style: 'margin-left:1em;' });
         SchemaSpan3.append(submitButton);
         SchemaSpan3.append(closeButton);
@@ -162,8 +163,12 @@
 
                 var hdnFieldSchemaIDComponent = $('[name="hdnFieldSchemaIDComponent"]');
                 var txtSchemaID = $('[id="txtSchemaID"]');
-                hdnFieldSchemaIDComponent.val(txtSchemaID.val());
-                var fieldSchemaIDComponent = hdnFieldSchemaIDComponent.val();
+                //hdnFieldSchemaIDComponent.val(txtSchemaID.val());
+                //var fieldSchemaIDComponent = hdnFieldSchemaIDComponent.val();
+
+                var fieldSchemaIDComponent = this.getAttribute('assetComponentId');
+                var fieldSchemaID = this.getAttribute('assetItemID');
+               
 
                 var formData = form.serializeArray();
                 let componentPath = '';
@@ -192,7 +197,7 @@
                     return false;
                 }
             //alert(schemaFieldid + ": " + schemaFieldName + ": " + schemaFieldType);
-            saveAssetItemComponent(fieldSchemaIDComponent, componentPath, linkedAssetItem, placeholderPath);
+            saveAssetItemComponent(fieldSchemaIDComponent, fieldSchemaID, componentPath, linkedAssetItem, placeholderPath);
             $("#dynamicComponentform").empty();
             //$("#dynamicFormContainer_Edit").style.display = "none";
             $("#dynamicFormContainer_Component").css("display", "none");
@@ -273,18 +278,19 @@
     
    
 });
-function saveAssetItemComponent(fieldSchemaIDComponent, componentPath, linkedAssetItem, placeholderPath) {
-    // alert(fieldSchemaIDComponent + ' ' + componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
-
+function saveAssetItemComponent(fieldSchemaIDComponent, assetItemID, componentPath, linkedAssetItem, placeholderPath) {
+   // alert(fieldSchemaIDComponent + ' ' + assetItemID+ ' '+ componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
+   // alert("saveAssetItemComponent" + fieldSchemaIDComponent);
     $.ajax({
         type: "GET",
         url: "/ContentTree/SaveAssetComponentDetails", // PageName/MethodName
         //data: JSON.stringify(requestData),
-        data: { AssetItemID: fieldSchemaIDComponent, ComponentPath: componentPath, LinkedAssetItem: linkedAssetItem, PlaceholderPath: placeholderPath },
+        data: { AssetItemComponentID: fieldSchemaIDComponent, AssetItemID: assetItemID,  ComponentPath: componentPath, LinkedAssetItem: linkedAssetItem, PlaceholderPath: placeholderPath },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
             if (response == true) {
+                getAssetComponentDetails('', assetItemID)
                 alert("Successfully saved:");
             }
             else {
@@ -299,7 +305,11 @@ function saveAssetItemComponent(fieldSchemaIDComponent, componentPath, linkedAss
     });
 }
 function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, linkedAssetItem, placeholderPath) {
-   alert("EditAssetFieldComponentDetailsNew dynamic" + fieldSchemaIDComponent + ' ' + componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
+    
+
+    var txtSchemaID = $('[id="txtSchemaID"]');
+    var AssetItemID = txtSchemaID.val();
+    //alert("EditAssetFieldComponentDetailsNew dynamic" + AssetItemID+' '+ fieldSchemaIDComponent + ' ' + componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
 
    // e.preventDefault(); // This stops the form from submitting and redirecting
    // e.stopPropagation();
@@ -348,7 +358,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
     //form.append(SchemaSpan2);
 
     const SchemaSpan3 = $('<div>').attr({ style: 'padding:1em;', });
-    const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Component', class: 'unfake-disabled-button' });
+    const submitButton = $('<input>').attr({ type: 'submit', value: 'Save Component', assetItemID: AssetItemID, assetComponentId:fieldSchemaIDComponent ,class: 'unfake-disabled-button' });
     const closeButton = $('<input>').attr({ type: 'button', value: 'Close', class: 'unfake-disabled-button', style: 'margin-left:1em;' });
     SchemaSpan3.append(submitButton);
     SchemaSpan3.append(closeButton);
@@ -368,7 +378,11 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         e.preventDefault(); // This stops the form from submitting and redirecting
         e.stopPropagation();
 
+        //alert("fieldSchemaIDComponent" );
+
         var form = $("#dynamicComponentform");
+
+       
         //var hdnFieldSchemaID = $('[name="hdnFieldSchemaIDComponent"]');
         //var txtAssetID = $("txtSchemaID");
         //alert("componetn submit button" + hdnFieldSchemaID);
@@ -376,9 +390,14 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         //hdnFieldSchemaID.val(txtAssetID.val());
 
         var hdnFieldSchemaIDComponent = $('[name="hdnFieldSchemaIDComponent"]');
-        var txtSchemaID = $('[id="txtSchemaID"]');
-        hdnFieldSchemaIDComponent.val(txtSchemaID.val());
-        var fieldSchemaIDComponent = hdnFieldSchemaIDComponent.val();
+       // var txtSchemaID = $('[id="txtSchemaID"]');
+       // hdnFieldSchemaIDComponent.val(txtSchemaID.val());
+        //var fieldSchemaIDComponent = hdnFieldSchemaIDComponent.val();
+        //alert("fieldSchemaIDComponent" + fieldSchemaIDComponent);
+
+        var fieldSchemaIDComponent = this.getAttribute('assetComponentId');
+        //alert("fieldSchemaIDComponent" + fieldSchemaIDComponent);
+        var fieldSchemaID = this.getAttribute('assetItemID');
 
         var formData = form.serializeArray();
         let componentPath = '';
@@ -407,7 +426,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
             return false;
         }
        // alert(fieldSchemaIDComponent + ": " + componentPath + ": " + linkedAssetItem, placeholderPath);
-        saveAssetItemComponent(fieldSchemaIDComponent, componentPath, linkedAssetItem, placeholderPath);
+        saveAssetItemComponent(fieldSchemaIDComponent, fieldSchemaID, componentPath, linkedAssetItem, placeholderPath);
         $("#dynamicComponentform").empty();
         //$("#dynamicFormContainer_Edit").style.display = "none";
         $("#dynamicFormContainer_Component").css("display", "none");

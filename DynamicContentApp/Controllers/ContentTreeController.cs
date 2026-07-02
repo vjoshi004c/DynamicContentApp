@@ -52,7 +52,7 @@ namespace DynamicContentApp.Controllers
         {
             ;
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
-            AssetItemComponentID = string.Empty;
+            //AssetItemComponentID = string.Empty;
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
             bool isInsertSuccess = dynamicContentDAL.SaveAssetComponentDetails(AssetItemComponentID,  AssetItemID,  ComponentPath,  LinkedAssetItem,  PlaceholderPath);
             if (isInsertSuccess) { return Ok(true);  }
