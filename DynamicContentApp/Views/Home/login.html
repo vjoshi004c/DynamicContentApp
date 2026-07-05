@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Web Desktop with jQuery</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('universalelement imagefinalbw.jpeg') no-repeat center center fixed;
+
+  	/*background: url('https://picsum.photos/1920/1080?blur=3') no-repeat center center fixed;*/
+
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    /* Desktop icons */
+    .desktop {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 40px;
+        padding: 10px;
+    }
+    .icon {
+        width: 200px;
+        text-align: center;
+        color: black;
+        margin: 10px;
+        cursor: pointer;
+        display: inline-block;
+font-weight:bold;
+    }
+    .icon img {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* Taskbar */
+    .taskbar {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: 40px;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        color: white;
+    }
+    .start-btn {
+        background: rgba(255,255,255,0.1);
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    /* Start menu */
+    .start-menu {
+        position: fixed;
+        bottom: 40px;
+        left: 10px;
+        width: 200px;
+        background: rgba(50,50,50,0.95);
+        color: white;
+        display: none;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .start-menu ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .start-menu li {
+        padding: 10px;
+        cursor: pointer;
+    }
+    .start-menu li:hover {
+        background: rgba(255,255,255,0.1);
+    }
+#login-form{
+        position: fixed; /* Stay in place even when scrolling */
+        width: 400px;
+        padding: 20px;
+        background: #f4f4f4;
+        /*border: 1px solid #ccc;*/
+
+       /* box-shadow: 0 0 10px rgba(0,0,0,0.3);*/
+ 	background-color: rgba(0, 0, 0, 0.0); /* Black with 50% transparency */
+    color: white;
+    }
+a{
+            color: white;
+    }
+#spanFormHeader
+{
+color: white;
+font-size:20px;
+}
+#spanLoginForm{
+color: white;
+font-size:48px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Desktop area -->
+<div class="desktop">
+
+
+<div id="login-form">
+<span id="spanLoginForm" > Universal CMS </span>
+<form>
+<div style="padding:0.2em">
+<span id="spanFormHeader" > Login</span>
+
+</div>
+
+<div style="padding:0.2em">
+<input type="text" id="username" placeholder="Username" required />
+</div>
+<div style="padding:0.2em">
+
+<input type="password" id="password" placeholder="Password" required />
+</div>
+<div style="padding-top:0.9em;padding-left:0.2em;padding-right:0.2em">
+
+<button type="button" id="login-btn">Login</button>
+<button type="button" id="login-btn">Change Password</button>
+</div>
+<div style="padding:0.2em">
+<a href="" >Forget Password</a>
+
+</div>
+
+</form>
+</div>
+<div id="welcome-message" style="display: none;">
+<p>Welcome, <span id="user-name"></span>!</p>
+<button id="logout-btn">Logout</button>
+</div>
+
+
+
+</div>
+
+<script>
+$(function() {
+    function centerForm() {
+        var $form = $('#login-form');
+        var winWidth = $(window).width();
+        var winHeight = $(window).height();
+        var formWidth = $form.outerWidth();
+        var formHeight = $form.outerHeight();
+
+        // Calculate centered position
+        var left = (winWidth - formWidth) / 2;
+        var top = (winHeight - formHeight) / 2;
+
+        // Apply position
+        $form.css({
+            left: left + 'px',
+            top: top + 'px'
+        });
+    }
+
+    // Center on load
+    centerForm();
+
+    // Recenter on window resize
+    $(window).resize(centerForm);
+});
+</script>
+
+<script>
+$(document).ready(function () {
+// Handle login
+$("#login-btn").click(function () {
+const username = $("#username").val();
+const password = $("#password").val();
+alert('user name '+ ' ' +username+ ' '  + 'password' + ' '+ password);
+
+$.ajax({
+url: "/validate-login", // Replace with your server endpoint
+method: "POST",
+data: { username: username, password: password },
+success: function (response) {
+if (response.status === "success") {
+$("#login-form").hide();
+$("#welcome-message").show();
+$("#user-name").text(response.username);
+} else {
+alert("Invalid credentials. Please try again.");
+}
+},
+error: function () {
+alert("An error occurred. Please try again later.");
+},
+});
+});
+
+// Handle logout
+$("#logout-btn").click(function () {
+$("#welcome-message").hide();
+$("#login-form").show();
+$("form")[0].reset();
+});
+});</script>
+
+</body>
+</html>

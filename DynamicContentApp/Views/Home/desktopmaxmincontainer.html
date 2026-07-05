@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>jQuery Web Desktop with Taskbar</title>
+<!-- jQuery & jQuery UI -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+
+<style>
+    body {
+        margin: 0;
+        background: url('https://picsum.photos/1920/1080?blur=3') no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+    }
+
+    /* Taskbar */
+    #taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        box-sizing: border-box;
+    }
+
+    .taskbar-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 5px 10px;
+        margin: 0 3px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .taskbar-button.active {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Window */
+    .window {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .window-header {
+        background: #0078d7;
+        color: white;
+        padding: 5px;
+        cursor: move;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+    }
+
+    .window-title {
+        font-weight: bold;
+    }
+
+    .window-buttons {
+        display: flex;
+        gap: 5px;
+    }
+
+    .window-buttons button {
+        background: rgba(255,255,255,0.3);
+        border: none;
+        color: white;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 0;
+    }
+
+    .window-content {
+        padding: 10px;
+        flex: 1;
+        overflow: auto;
+    }
+</style>
+</head>
+<body>
+
+<!-- Taskbar -->
+<div id="taskbar"></div>
+
+<!-- Example Windows -->
+<div class="window" id="win1" style="top:50px; left:50px;">
+    <div class="window-header">
+        <span class="window-title">My First Window</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        This is a draggable, resizable window with taskbar integration.
+    </div>
+</div>
+
+<div class="window" id="win2" style="top:120px; left:400px;">
+    <div class="window-header">
+        <span class="window-title">Another Window</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+
+<script>
+$(function() {
+    let zIndexCounter = 100;
+    let maximized = {};
+
+    // Initialize windows
+    $(".window").each(function() {
+        let win = $(this);
+        let id = win.attr("id");
+        let title = win.find(".window-title").text();
+
+        // Make draggable & resizable
+        win.draggable({
+            handle: ".window-header",
+            containment: "body",
+            stack: ".window"
+        }).resizable({
+            minWidth: 200,
+            minHeight: 150
+        });
+
+        // Create taskbar button
+        let btn = $("<div class='taskbar-button'></div>").text(title).attr("data-win", id);
+        $("#taskbar").append(btn);
+
+        // Taskbar button click
+        btn.on("click", function() {
+            if (win.is(":visible")) {
+                win.hide();
+            } else {
+                bringToFront(win);
+                win.show();
+            }
+        });
+
+        // Minimize
+        win.find(".min-btn").on("click", function() {
+            win.hide();
+        });
+
+        // Maximize / Restore
+        win.find(".max-btn").on("click", function() {
+            if (!maximized[id]) {
+                maximized[id] = {
+                    top: win.css("top"),
+                    left: win.css("left"),
+                    width: win.css("width"),
+                    height: win.css("height")
+                };
+                win.css({
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "calc(100% - 40px)"
+                });
+            } else {
+                win.css(maximized[id]);
+                delete maximized[id];
+            }
+        });
+
+        // Close
+        win.find(".close-btn").on("click", function() {
+            win.remove();
+            btn.remove();
+        });
+
+        // Bring to front on click
+        win.on("mousedown", function() {
+            bringToFront(win);
+        });
+    });
+
+    function bringToFront(win) {
+        $(".window").css("z-index", 100);
+        win.css("z-index", ++zIndexCounter);
+    }
+});
+</script>
+
+</body>
+</html>

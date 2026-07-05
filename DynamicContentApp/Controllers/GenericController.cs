@@ -48,7 +48,7 @@ namespace DynamicContentApp.Controllers
             //}
 
 
-            ViewData["SelectedLayout"] = "_MasterLayout";
+            //ViewData["SelectedLayout"] = "_MasterLayout";
 
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_DELIVERY.ToString())
             {
