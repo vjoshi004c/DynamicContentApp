@@ -41,6 +41,11 @@ options.Add(context =>
     {
         context.HttpContext.Request.Path = "/home/desktop";
     }
+    bool isJasonToModel = !string.IsNullOrEmpty(path) && path.Contains("JSONTOMODEL");
+    if (isJasonToModel)
+    {
+        context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
+    }
     // If it's not a static file, rewrite internally to your generic endpoint
     if (!isStaticFile && !isDynamicController && !isLoginFile && !isDesktopFile)
     {

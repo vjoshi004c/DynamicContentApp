@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using System.Text.Json;
 
 namespace DynamicContentApp.Controllers
 {
@@ -30,6 +32,38 @@ namespace DynamicContentApp.Controllers
             _controllerRenderService = controllerRenderService;
             _options = options.Value;
             _cmsService = cmsService;
+        }
+
+        [HttpGet]
+        public IActionResult JsonToModel()
+        {
+            // string json = "{ 'Name': 'John Doe', 'Age': 30, 'Address': { 'City': 'New York' } }";
+            string SquidGame = @"
+                                {
+                                    ""Name"": ""Squid Game"",
+                                    ""Genre"": ""Thriller"",
+                                    ""Rating"": {
+                                        ""Imdb"": 8.1,
+                                        ""Rotten Tomatoes"": 0.94
+                                    },
+                                    ""Year"": 2021,
+                                    ""Stars"": [""Lee Jung-jae"", ""Park Hae-soo""],
+                                    ""Language"": ""Korean"",
+                                    ""Budget"": ""$21.4 million""
+                                }";
+
+            // Deserialize into a dynamic object
+            //var jsonString = MovieStats.SquidGame;
+            //var dynamicObject = JsonSerializer.Deserialize<dynamic>(SquidGame);
+
+            dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(SquidGame);
+            // Directly access properties
+            string name = Convert.ToString(dynamicObject.Name);
+            string Genre = Convert.ToString(dynamicObject.Genre);
+            //string Imdb = Convert.ToString(dynamicObject.Rating.Imdb);
+
+            //Console.WriteLine($"{name} ({age}) lives in {city}.");
+            return View(dynamicObject);
         }
         [HttpGet]
         public IActionResult Index()
