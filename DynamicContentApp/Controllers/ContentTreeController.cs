@@ -33,10 +33,63 @@ namespace DynamicContentApp.Controllers
             _options = options.Value;
             _cmsService = cmsService;
         }
-
+       
         [HttpGet]
         public IActionResult JsonToModel()
         {
+
+            string AssetItemPath = "/UniversalCMS/Content/Article First";
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            StringBuilder JsonDataSB = new StringBuilder();
+            JsonDataSB.Append("{");
+
+
+            List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
+            if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
+            {
+                
+                foreach (var PageItemMasterDetail in PageItemMasterDetails)
+                {
+                    JsonDataSB.Append("\"AssetItemID\"" +":"+ "\""+ PageItemMasterDetail.AssetItemID +"\",");
+                    JsonDataSB.Append("\"IsPageItem\"" + ":" + "\"" + PageItemMasterDetail.IsPageItem + "\",");
+                    JsonDataSB.Append("\"MasterPageLayoutPath\"" + ":" + "\"" + PageItemMasterDetail.MasterPageLayoutPath + "\",");
+                    JsonDataSB.Append("\"SchemaID\"" + ":" + "\"" + PageItemMasterDetail.SchemaID + "\",");
+                    JsonDataSB.Append("\"ItemName\"" + ":" + "\"" + PageItemMasterDetail.ItemName + "\",");
+                    JsonDataSB.Append("\"ItemPath\"" + ":" + "\"" + PageItemMasterDetail.ItemPath + "\",");
+                }
+               
+            }
+            List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetItemFieldDetails(AssetItemPath);
+            if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count >0)
+            {
+                JsonDataSB.Append("\"" + "AssetFields" + "\"" + ":" + "{");
+                foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                {
+                    JsonDataSB.Append("\""+ AssetItemFieldDetail .AssetFieldName+ "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                }
+                JsonDataSB.Append("},");
+            }
+           
+            List<AssetItemComponentDetailsModel> AssetItemComponentDetails = dynamicContentDAL.GetAssetItemComponentDetails(AssetItemPath);
+            if (AssetItemComponentDetails != null && AssetItemComponentDetails.Count >0)
+            {
+                JsonDataSB.Append("\"" + "ComponentPresentations" + "\"" + ":" + "[");
+                foreach (var AssetItemComponentDetail in AssetItemComponentDetails)
+                {
+                    JsonDataSB.Append( "{");
+                    JsonDataSB.Append("\"" + "ComponentPath" + "\"" + ":" + "\"" + AssetItemComponentDetail.ComponentPath + "\",");
+                    JsonDataSB.Append("\"" + "LinkedAssetItem" + "\"" + ":" + "\"" + AssetItemComponentDetail.LinkedAssetItem + "\",");
+                    JsonDataSB.Append("\"" + "PlaceholderPath" + "\"" + ":" + "\"" + AssetItemComponentDetail.PlaceholderPath + "\"");
+                    JsonDataSB.Append("},");
+                }
+                JsonDataSB.Append("],");
+
+
+            }
+            JsonDataSB.Append("}");
+
+            string JsonData = JsonDataSB.ToString();
+
             // string json = "{ 'Name': 'John Doe', 'Age': 30, 'Address': { 'City': 'New York' } }";
             string SquidGame = @"
                                 {

@@ -16,13 +16,163 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
-        // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContent;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+         private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentFour;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
-       
 
+        public List<PageItemMasterDetailsModel> GetPageItemMasterDetails(string AssetItemPath)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<PageItemMasterDetailsModel> custlist = null;
+            try
+            {
+                custlist = new List<PageItemMasterDetailsModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_page_render", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemPath", AssetItemPath);
+                cmd.Parameters.AddWithValue("@Query", 1);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    PageItemMasterDetailsModel cobj = new PageItemMasterDetailsModel();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.ItemName = ds.Tables[0].Rows[i]["ItemName"].ToString();
+                    cobj.ItemPath = ds.Tables[0].Rows[i]["ItemPath"].ToString();
+                    cobj.SchemaID = ds.Tables[0].Rows[i]["SchemaID"].ToString();
+                    cobj.IsPageItem = Convert.ToBoolean(ds.Tables[0].Rows[i]["IsPageItem"].ToString());
+                    cobj.MasterPageLayoutPath = ds.Tables[0].Rows[i]["MasterPageLayoutPath"].ToString();
+                    
+                        
+                        
+
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public List<AssetItemFieldDetailsModel> GetAssetItemFieldDetails(string AssetItemPath)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<AssetItemFieldDetailsModel> custlist = null;
+            try
+            {
+                custlist = new List<AssetItemFieldDetailsModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_page_render", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemPath", AssetItemPath);
+                cmd.Parameters.AddWithValue("@Query", 2);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AssetItemFieldDetailsModel cobj = new AssetItemFieldDetailsModel();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.AssetSchemaID = ds.Tables[0].Rows[i]["AssetSchemaID"].ToString();
+                    cobj.AssetFieldName = ds.Tables[0].Rows[i]["AssetFieldName"].ToString();
+                    cobj.AssetFieldID = ds.Tables[0].Rows[i]["AssetFieldID"].ToString();
+                    cobj.AssetFieldValue = ds.Tables[0].Rows[i]["AssetFieldValue"].ToString();
+                  
+
+
+
+
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public List<AssetItemComponentDetailsModel> GetAssetItemComponentDetails(string AssetItemPath)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<AssetItemComponentDetailsModel> custlist = null;
+            try
+            {
+                custlist = new List<AssetItemComponentDetailsModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_page_render", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemPath", AssetItemPath);
+                cmd.Parameters.AddWithValue("@Query", 3);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AssetItemComponentDetailsModel cobj = new AssetItemComponentDetailsModel();
+                    cobj.ComponentID = ds.Tables[0].Rows[i]["ComponentID"].ToString();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.ComponentPath = ds.Tables[0].Rows[i]["ComponentPath"].ToString();
+                    cobj.LinkedAssetItem = ds.Tables[0].Rows[i]["LinkedAssetItem"].ToString();
+                    cobj.PlaceholderPath = ds.Tables[0].Rows[i]["PlaceholderPath"].ToString();
+
+
+
+
+
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public bool SaveAssetComponentDetails(string AssetItemComponentID , string AssetItemID, string ComponentPath, string LinkedAssetItem, string PlaceholderPath)
         {
             SqlConnection con = null;
