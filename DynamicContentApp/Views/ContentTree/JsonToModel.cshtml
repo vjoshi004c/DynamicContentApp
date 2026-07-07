@@ -1,12 +1,86 @@
-﻿<h2>Dynamically model name - @Model.Name</h2>
-<h2>Dynamically model city - @Model.Genre</h2>
-.Address.City
+﻿@using System.Text.Json
+@model dynamic
+<h2>Dynamically model AssetItemID - @Model.AssetItemID</h2>
+<h2>Dynamically model MasterPageLayoutPath - @Model.MasterPageLayoutPath</h2>
+<h2>Dynamically model SchemaID - @Model.SchemaID</h2>
+<h2>Dynamically model IsPageItem - @Model.IsPageItem</h2>
+
+
+
+<h2>Dynamically model ItemName - @Model.ItemName</h2>
+<h2>Dynamically model ItemPath - @Model.ItemPath</h2>
+
+@* @if (Model.AssetFields.SomeProperty.ValueKind != JsonValueKind.Null) *@
+@* @if (Model.AssetFields != null) *@
+@* { *@
+<h2>Dynamically model AssetFields  Title - @Model.AssetFields.Title</h2>
+<h2>Dynamically model AssetFields ArticleShortDescription - @Model.AssetFields.ArticleShortDescription</h2>
+@* } *@
 
 @{
     ViewData["Title"] = "Home Page";
 }
+<ul>
+   @foreach (var node in Model.ComponentPresentations)
+    {
+       @*  <li> ComponentPath - + @node.ComponentFields.ControllerAction</li> *@
+      @*   <li> "ComponentPath -" + @node.LinkedItemFields.Description</li> *@
+        <li> "ComponentPath -" + @node.Description</li>
+    }
+
+    @foreach (var node in Model.ComponentPresentations)
+{
+       
+         <li> "ComponentPath -" + @node.ComponentPath </li>
+        
+
+        @*  <li> ViewPath - + @node.LinkedItemFields.PlaceholderName </li> *@
+        
+        ;
+        @* @foreach (var node1 in node.ComponentFields)
+            { *@
+          @*   <li> ComponentPath - + @node.ComponentFields.ControllerAction</li> *@
+
+          @*   <li> "ControllerName -" + @node.ComponentFields.ControllerName</li>
+            <li> "ViewPath -" + @node.ComponentFields.ViewPath</li> *@
+          @*   } *@
+        @*
+        <li>"LinkedAssetItem -" + @node.LinkedAssetItem</li>
+        <li> "ComponentPath -" + @node.AssetFields.Description</li>
+        <li> "ComponentPath -" + @node.AssetFields.Title</li>
+        <li> "ComponentPath -" + @node.AssetFields.Disclamier</li>
+        <li> "ComponentPath -" + @node.AssetFields.SubHeading</li>
+        <li> "ComponentPath -" + @node.AssetFields.Heading</li>
+        
+        
+        
+        <li> "ComponentPath -" + @node.ComponentFields.ViewPath</li>
+        <li> "PlaceholderPath- " + @node.PlaceholderPath </li>
+        <li> "ComponentPath -" + @node.PlaceholderFields.PlaceholderName</li> *@
+        
+        
+   
+}
+    </ul>
+ 
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+
+@* @if (Model.ComponentPresentations != null)
+{
+    @foreach (var node in Model.ComponentPresentations)
+    {
+        @foreach (var node in Model.ComponentPresentations.EnumerateArray())
+
+            JsonElement n1 = node;
+        <p> n1.GetProperty("ComponentPath").GetString();</p>
+        <p> (JsonElement)node.GetProperty("ComponentPath").GetString();</p>
+        <p> @node.ComponentPath</p>
+
+    }
+} *@

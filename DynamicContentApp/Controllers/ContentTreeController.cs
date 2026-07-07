@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DynamicContentApp.Controllers
 {
@@ -33,12 +34,35 @@ namespace DynamicContentApp.Controllers
             _options = options.Value;
             _cmsService = cmsService;
         }
+
+        private void GetAssetData(string AssetItemPath, StringBuilder JsonDataSB, string Area)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
+            if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
+            {
+
+                List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetItemFieldDetails(AssetItemPath);
+                if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
+                {
+                   // JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                    foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                    {
+                        JsonDataSB.Append("\""+ AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                    }
+                    //JsonDataSB.Append("\"field\":\"none\"},");
+                }
+
+            }
+        }
+
+
        
         [HttpGet]
         public IActionResult JsonToModel()
         {
 
-            string AssetItemPath = "/UniversalCMS/Content/Article First";
+            string AssetItemPath = "/UniversalCMS/Content/ArticleSite";
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
             StringBuilder JsonDataSB = new StringBuilder();
             JsonDataSB.Append("{");
@@ -67,7 +91,7 @@ namespace DynamicContentApp.Controllers
                 {
                     JsonDataSB.Append("\""+ AssetItemFieldDetail .AssetFieldName+ "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                 }
-                JsonDataSB.Append("},");
+                JsonDataSB.Append("\"field\":\"none\"},");
             }
            
             List<AssetItemComponentDetailsModel> AssetItemComponentDetails = dynamicContentDAL.GetAssetItemComponentDetails(AssetItemPath);
@@ -78,17 +102,35 @@ namespace DynamicContentApp.Controllers
                 {
                     JsonDataSB.Append( "{");
                     JsonDataSB.Append("\"" + "ComponentPath" + "\"" + ":" + "\"" + AssetItemComponentDetail.ComponentPath + "\",");
+                    if (AssetItemComponentDetail != null && AssetItemComponentDetail.ComponentPath != string.Empty)
+                    {
+                        GetAssetData(AssetItemComponentDetail.ComponentPath, JsonDataSB, "ComponentFields");
+                    }
                     JsonDataSB.Append("\"" + "LinkedAssetItem" + "\"" + ":" + "\"" + AssetItemComponentDetail.LinkedAssetItem + "\",");
-                    JsonDataSB.Append("\"" + "PlaceholderPath" + "\"" + ":" + "\"" + AssetItemComponentDetail.PlaceholderPath + "\"");
-                    JsonDataSB.Append("},");
+                    if (AssetItemComponentDetail != null && AssetItemComponentDetail.LinkedAssetItem != string.Empty)
+                    {
+                        GetAssetData(AssetItemComponentDetail.LinkedAssetItem, JsonDataSB, "LinkedItemFields");
+                    }
+                    JsonDataSB.Append("\"" + "PlaceholderPath" + "\"" + ":" + "\"" + AssetItemComponentDetail.PlaceholderPath + "\",");
+                    if (AssetItemComponentDetail != null && AssetItemComponentDetail.PlaceholderPath != string.Empty)
+                    {
+                        GetAssetData(AssetItemComponentDetail.PlaceholderPath, JsonDataSB, "PlaceholderFields");
+                    }
+                    JsonDataSB.Append("\"field\":\"none\"},");
                 }
-                JsonDataSB.Append("],");
+                JsonDataSB.Append("{}]");
 
 
             }
             JsonDataSB.Append("}");
 
             string JsonData = JsonDataSB.ToString();
+
+            dynamic dynamicObjectN= JObject.Parse(JsonData);
+
+            dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(JsonData);
+
+            dynamic dynamicObject1 = JsonSerializer.Deserialize<dynamic>(JsonData);
 
             // string json = "{ 'Name': 'John Doe', 'Age': 30, 'Address': { 'City': 'New York' } }";
             string SquidGame = @"
@@ -109,14 +151,15 @@ namespace DynamicContentApp.Controllers
             //var jsonString = MovieStats.SquidGame;
             //var dynamicObject = JsonSerializer.Deserialize<dynamic>(SquidGame);
 
-            dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(SquidGame);
+           // dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(SquidGame);
             // Directly access properties
-            string name = Convert.ToString(dynamicObject.Name);
-            string Genre = Convert.ToString(dynamicObject.Genre);
+           // string name = Convert.ToString(dynamicObject.Name);
+           // string Genre = Convert.ToString(dynamicObject.Genre);
             //string Imdb = Convert.ToString(dynamicObject.Rating.Imdb);
 
             //Console.WriteLine($"{name} ({age}) lives in {city}.");
-            return View(dynamicObject);
+            return View(dynamicObjectN);
+            
         }
         [HttpGet]
         public IActionResult Index()
