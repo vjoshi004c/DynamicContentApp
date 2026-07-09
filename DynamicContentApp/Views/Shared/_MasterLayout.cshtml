@@ -1,4 +1,5 @@
-﻿@model HomeViewModel
+﻿@* @model HomeViewModel *@
+@* @model dynamic *@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,8 @@
 <body>
     <div class="container">
         <main role="main" class="pb-3">
-
+            <h2>Dynamically model AssetFields  Title - @Model.Title</h2>
+            <h2>Dynamically model AssetFields ArticleShortDescription - @Model.ArticleShortDescription</h2>
           
             [[PLACEHOLDER_HEADER]]
         </main>

@@ -63,5 +63,61 @@ namespace DynamicContentApp.Models
 
         }
 
+        public static void AddOnPlaceholderCollectionDynamic(List<PageSectionContent> PageSectionContent, dynamic item, string htmlContent)
+        {
+            if (PageSectionContent.Count == 0)
+            {
+                PageSectionContent pageSectionContent = new PageSectionContent();
+                if (item.PlaceholderName != null)
+                {
+                    pageSectionContent.PlaceholderName = item.PlaceholderName.ToString();
+                }
+                pageSectionContent.HtmlContent = htmlContent;
+                PageSectionContent.Add(pageSectionContent);
+                return;
+
+            }
+            bool isItemExiseted = false;
+            foreach (var itempsc in PageSectionContent)
+            {
+                if (item.PlaceholderName != null)
+                {
+                    if (itempsc.PlaceholderName == item.PlaceholderName.ToString())
+                    {
+                        isItemExiseted = true;
+                    }
+                }
+            }
+            if (!isItemExiseted)
+            //if (itempsc.PlaceholderName != item.Placeholder.PlaceholderName)
+            {
+                PageSectionContent pageSectionContent = new PageSectionContent();
+                if (item.PlaceholderName != null)
+                {
+                    pageSectionContent.PlaceholderName = item.PlaceholderName.ToString();
+                }
+                pageSectionContent.HtmlContent = htmlContent;
+                PageSectionContent.Add(pageSectionContent);
+                return;
+            }
+            else
+            {
+                foreach (var itempsc in PageSectionContent)
+                {
+                    if (item.PlaceholderName != null)
+                    {
+                        if (itempsc.PlaceholderName == item.PlaceholderName.ToString())
+                        {
+                            itempsc.HtmlContent = itempsc.HtmlContent + htmlContent;
+                            return;
+                        }
+                    }
+                }
+
+
+            }
+
+
+        }
     }
 }

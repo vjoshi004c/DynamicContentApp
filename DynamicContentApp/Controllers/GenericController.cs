@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -69,7 +70,10 @@ namespace DynamicContentApp.Controllers
                 {
                     PageItemID = 1;
                 }
-                await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
+               // await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
+                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService);
+              
+                await CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, PageItemID);
             }
 
             if (String.IsNullOrEmpty(HomeViewModel.ViewContent))

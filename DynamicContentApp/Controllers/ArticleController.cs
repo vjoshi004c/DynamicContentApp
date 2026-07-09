@@ -44,8 +44,8 @@ namespace DynamicContentApp.Controllers
         {
 
             HomeViewModel HomeViewModel = new HomeViewModel();
-            HomeViewModel.ReWriteUrl = "rewriteurl";
-            HomeViewModel.BrowserUrl = "browserurl";
+            HomeViewModel.ReWriteUrl = "rewriteurl1";
+            HomeViewModel.BrowserUrl = "browserurl1";
             return View("~/Views/Components/ArticleContent.cshtml", HomeViewModel, dynamicallyRender :true);
 
           
