@@ -1,6 +1,8 @@
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Logging;
@@ -40,6 +42,7 @@ namespace DynamicContentApp.Controllers
         {
             return View();
         }
+       
         public async Task<IActionResult> ContentBody()
         {
 
