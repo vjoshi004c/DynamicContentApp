@@ -21,7 +21,11 @@ $(document).ready(function () {
         const parentitemvalue = $("#" + parentitem).val();
         $("#txtSelectedItemPath").val(parentitemvalue);
 
-        $("#customModal").show();
+       //$("#customModal").show();
+        $('#customModal .modal-content').load('lookupTree #targetElement', function () {
+            $('#customModal').show();
+        });
+
         return false;
     });
     $('#openPopupBtnAssetSchema').click(function () {

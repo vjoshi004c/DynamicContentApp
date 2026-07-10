@@ -28,6 +28,7 @@ options.Add(context =>
     var path = request.Path.Value;
     path =path?.ToUpper();
     bool isDynamicController = !string.IsNullOrEmpty(path) && path.Contains("/CONTENTTREE");
+    bool isLookupController = !string.IsNullOrEmpty(path) && path.Contains("/LOOKUPTREE");
     // Check if the path looks like a static file (contains a file extension)
     bool isStaticFile = !string.IsNullOrEmpty(path) && path.Contains('.');
     bool isLoginFile = !string.IsNullOrEmpty(path) && path.Contains("LOGIN");
@@ -47,7 +48,7 @@ options.Add(context =>
         context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
     }
     // If it's not a static file, rewrite internally to your generic endpoint
-    if (!isStaticFile && !isDynamicController && !isLoginFile && !isDesktopFile)
+    if (!isStaticFile && !isDynamicController&& !isLookupController && !isLoginFile && !isDesktopFile)
     {
         context.HttpContext.Request.Path = "/Generic/Start";
     }
