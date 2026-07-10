@@ -312,7 +312,7 @@
                 <p>
                             <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
                                 <label for="txtAssetItemSchemaAdd">Schema linked with Asset Item:</label>
-                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
+                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:400px;">
                                 <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd">...</button>
                             </span>
 
@@ -1269,11 +1269,80 @@
                                 //var  AssetItemSchemaID = $('#editSchemaForm').find('input[id="txtAssetItemSchema"]').val();
                                   //var AssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
                                  // var  AssetItemID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
-               ViewContentDetailItem( AssetItemID, AssetItemSchemaID,AssetItemTreeeID);
+
+                                  //alert($("#editSchemaForm #txtSchemaPath").val());
+                                     if ($("#editSchemaForm #txtSchemaPath").val().toUpperCase().indexOf("/SCHEMA/") != -1) {
+                                        // alert("contain schema");
+                                          $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                             $("#masterPageDiv").css("display", "none");
+                                                $("#ComponentPageDiv").css("display", "none");
+                                                  //$("#txtAssetItemSchema").css("disabled", "true");
+                                                    $('#txtAssetItemSchema').prop('readonly', true);
+                                                       // $('#openPopupBtnAssetSchema').css("display", "none");
+                                                        $("#openPopupBtnAssetSchema").css("visibility", "hidden");
+                                                           $("#txtAssetItemSchema").css("background-color", "#d9d9d9");
+                                                     
+                                                 
+                                              
+    
+
+                                        // return;
+                                     }
+                                      else if ($("#editSchemaForm #txtSchemaPath").val().toUpperCase().indexOf("/MEDIA/") != -1)
+                                     {
+                                          $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                              $("#masterPageDiv").css("display", "none");
+                                                 $("#ComponentPageDiv").css("display", "none");
+                                                   //$("#txtAssetItemSchema").css("disabled", "true");
+                                                     $('#txtAssetItemSchema').prop('readonly', true);
+                                                        // $('#openPopupBtnAssetSchema').css("display", "none");
+                                                         $("#openPopupBtnAssetSchema").css("visibility", "hidden");
+                                                            $("#txtAssetItemSchema").css("background-color", "#d9d9d9");
+
+                                      }
+
+                                       else if ($("#editSchemaForm #txtSchemaPath").val().toUpperCase().indexOf("/LAYOUT/") != -1)
+                                      {
+                                           $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
+                                                    //$("#txtAssetItemSchema").css("disabled", "true");
+                                                      $('#txtAssetItemSchema').prop('readonly', true);
+                                                         // $('#openPopupBtnAssetSchema').css("display", "none");
+                                                           $("#openPopupBtnAssetSchema").css("visibility", "visible");
+                                                             $("#txtAssetItemSchema").css("background-color", "white");
+
+                                       }
+                                        else if ($("#editSchemaForm #txtSchemaPath").val().toUpperCase().indexOf("/SETTING/") != -1)
+                                       {
+                                            $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                                $("#masterPageDiv").css("display", "none");
+                                                   $("#ComponentPageDiv").css("display", "none");
+                                                     //$("#txtAssetItemSchema").css("disabled", "true");
+                                                       $('#txtAssetItemSchema').prop('readonly', true);
+                                                          // $('#openPopupBtnAssetSchema').css("display", "none");
+                                                           $("#openPopupBtnAssetSchema").css("visibility", "hidden");
+                                                              $("#txtAssetItemSchema").css("background-color", "#d9d9d9");
+
+                                        }
+
+                                     else 
+                                     {
+                                                 $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "block");
+                                                  $("#masterPageDiv").css("display", "block");
+                                                     $("#ComponentPageDiv").css("display", "block");
+                                                      //$("#txtAssetItemSchema").css("disabled", "true");
+                                                        $('#txtAssetItemSchema').prop('readonly', true);
+                                                             //$('#openPopupBtnAssetSchema').css("display", "block");
+                                                              $("#openPopupBtnAssetSchema").css("visibility", "visible");
+                                                                $("#txtAssetItemSchema").css("background-color", "white");
+
+                                     }
+                                       ViewContentDetailItem( AssetItemID, AssetItemSchemaID,AssetItemTreeeID);
 
          }
           function ViewContentDetailItem( assetItemID, assetItemSchemaID,assetItemTreeeID) {
-
+                // alert("ViewContentDetailItem");
                             const optionsData = [
                                 // { value: "0", text: "-Select Field Type -" }
                                     //{ value: "1", text: "Text" },
@@ -1312,6 +1381,7 @@
                           console.error("Error occurred:", error);
                       }
               });
+               $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
                if(optionsData.length >0)
                {
 
@@ -2062,6 +2132,9 @@
                     li.addEventListener("click", function (e) {
                         e.preventDefault(); // Prevent default browser menu
                          e.stopPropagation();
+                           $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                                $("#masterPageDiv").css("display", "none");
+                                                   $("#ComponentPageDiv").css("display", "none");
                        const currentitemid = e.target.getAttribute('itemid');
                         //const currentitemid = e.target.getAttribute('id');
                        // alert(currentitemid);
@@ -2163,6 +2236,9 @@
                             //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
                         }
                         if (currentid == 'remove_li') {
+                              $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
                              removediv.style.display = "block";
                             // editdiv.style.display = "none";
                             // duplicatediv.style.display = "none";
