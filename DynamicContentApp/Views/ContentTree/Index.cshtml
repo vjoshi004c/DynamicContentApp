@@ -282,9 +282,9 @@
             </ul>
 
         </div>
-        <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #EFF5E9;padding:2em;">
-            <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #D3E0C3;padding:2em;">
-                <div id="adddiv" style="display: none;  background-color: #D3E0C3;;border:solid;border-width:thin;padding:2em;">
+        <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:2em;">
+            <div class="content" style="border-style: solid; border-color:#f2f2f2;background-color: #f2f2f2;padding:2em;">
+                <div id="adddiv" style="display: none;  background-color: #f2f2f2;;border:solid;border-width:thin;padding:2em;">
 
                 <form action="/schema/add" method="POST" id="addSchemaForm">
                 <h2>To create new item under parent node- <span></span></h2>
@@ -337,7 +337,7 @@
 
             </div>
 
-                <div id="refreshdiv" style="display: none;  border-color:#f4f4f4;background-color: #D3E0C3;padding:2em;padding:2em;">
+                <div id="refreshdiv" style="display: none;  border-color:#f2f2f2;background-color:#f2f2f2;padding:2em;padding:2em;">
 
                 <h2>Refresh existed item - <span></span></h2>
 
@@ -345,7 +345,7 @@
                 <p>Click on the arrow(s) to open or close the tree branches.</p>
 
             </div>
-                <div id="editdiv" style="display: none;  background-color: #D3E0C3;border:solid;border-width:thin;padding:2em;">
+                <div id="editdiv" style="display: none;  background-color: #f2f2f2;border:solid;border-width:thin;padding:2em;">
 
                 <form action="/schema/edit" method="POST" id="editSchemaForm">
                     <h2>To edit selected item -  <span></span></h2>
@@ -412,7 +412,7 @@
                     
 
             </div>
-                <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#D3E0C3;padding:2em;">
+                <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#f2f2f2;padding:2em;">
 
                 <form action="/schema/delete" method="POST" id="deleteSchemaForm">
                     <h2>To delete selected item -  <span></span></h2>
@@ -450,14 +450,14 @@
 
             </div>
 
-            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #e0e5da;padding:2em;">
+                <div id="duplicatediv" style="display: none; border-style: solid; background-color: #f2f2f2;padding:2em;">
 
                 <h2>Duplicate selected item - <span></span></h2>
                 <p>This form is to remove existed item</p>
                 <p>Click on the arrow(s) to open or close the tree branches.</p>
 
             </div>
-                <div id="masterPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #D3E0C3;padding:2em;">
+                <div id="masterPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
 
                     <h2>Master Layout Settings On Page <span></span></h2>
                     <p>
@@ -477,7 +477,7 @@
 
                 </div>
 
-                <div id="ComponentPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #D3E0C3;padding:2em;">
+                <div id="ComponentPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
 
                     <h2>Manage Components On Page <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
                     <p>
@@ -1328,12 +1328,12 @@
 
                    // for hidden field to care assetid
                     const SchemaSpan1 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
-                     const AssetFieldIDIDInput1 = $('<input>').attr({ type: 'hidden', value:assetItemID ,name: 'AssetItemId', id:'hdnAssetItemID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
+                       const AssetFieldIDIDInput1 = $('<input>').attr({ type: 'hidden', value:assetItemID ,name: 'AssetItemId', id:'hdnAssetItemID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
                     SchemaSpan1.append(AssetFieldIDIDInput1);
                     form.append(SchemaSpan1);
 
                     const SchemaSpan11 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
-                       const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'hidden', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:'hdnAssetItemSchemaID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
+                         const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'hidden', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:'hdnAssetItemSchemaID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
                      SchemaSpan11.append(AssetFieldIDIDInput2);
                      form.append(SchemaSpan11);
                     $.each(optionsData, function (index, item) {
@@ -1353,7 +1353,7 @@
                        // for  field to care Label of field
                          const SchemaSpan2 = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
                       // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-                        const AssetFieldNameLabel = $("<label>", {   for: schemaFieldID,  class: "form-label",  text: schemaFieldName, style:'width:80%;background-color:#D3E0C3;border-color:none' });
+                         const AssetFieldNameLabel = $("<label>", {   for: schemaFieldID,  class: "form-label",  text: schemaFieldName, style:'width:80%;background-color:#f2f2f2;border-color:none' });
                        
 
                             // for  field to careSIMPLLE_TEXT
@@ -1805,7 +1805,7 @@
                            //alert(assetItemComponentID+' '+assetItemID +' '+componentPath +' '+linkedAssetItem +' '+placeholderPath) ;
                              const ComponentMainSpan = $('<div>').attr({ id:assetItemComponentID, style: 'padding-bottom:0.2em;width:80%', });
                                   const ComponentPathSpan = $('<div>').attr({ id:assetItemComponentID, style: 'padding-bottom:0.2em;width:80%', });
-                                 const ComponentPathLabel = $("<label>", {   for: 'ComponentPath',  class: "form-label",  text: 'Component Path (Include component under selected page asset Item)', style:'width:80%;background-color:#D3E0C3;border-color:none;pointer-events: none; opacity: 0.5; ' });
+                                  const ComponentPathLabel = $("<label>", {   for: 'ComponentPath',  class: "form-label",  text: 'Component Path (Include component under selected page asset Item)', style:'width:80%;background-color:#f2f2f2;border-color:none;pointer-events: none; opacity: 0.5; ' });
                                 ComponentPathSpan.append(ComponentPathLabel);
                                 form.append(ComponentPathSpan);
                                 const  ComponentPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
@@ -1815,7 +1815,7 @@
 
 
                                 const ContentPathSpan = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
-                                    const ContentPathLabel = $("<label>", {   for: 'ContentPath',  class: "form-label",  text: 'Content path (Select content asset path associated with Component)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
+                                     const ContentPathLabel = $("<label>", {   for: 'ContentPath',  class: "form-label",  text: 'Content path (Select content asset path associated with Component)', style:'width:80%;background-color:#f2f2f2;border-color:none' });
                                   ContentPathSpan.append(ContentPathLabel);
                                  form.append(ContentPathSpan);
                                  const  ContentPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
@@ -1825,7 +1825,7 @@
 
 
                                  const PlaceholderPathSpan = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
-                                    const PlaceholderPathLabel = $("<label>", {   for: 'PlaceholderPath',  class: "form-label",  text: 'Placeholder (Select placeholder where component will render)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
+                                     const PlaceholderPathLabel = $("<label>", {   for: 'PlaceholderPath',  class: "form-label",  text: 'Placeholder (Select placeholder where component will render)', style:'width:80%;background-color:#f2f2f2;border-color:none' });
                                   PlaceholderPathSpan.append(PlaceholderPathLabel);
                                   form.append(PlaceholderPathSpan);
                                   const  PlaceholderPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});

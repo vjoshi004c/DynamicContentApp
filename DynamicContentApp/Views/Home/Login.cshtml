@@ -96,10 +96,10 @@
         position: fixed; /* Stay in place even when scrolling */
         width: 400px;
         padding: 20px;
-        background: #f4f4f4;
+        background: #595959;
         /*border: 1px solid #ccc;*/
         /* box-shadow: 0 0 10px rgba(0,0,0,0.3);*/
-        background-color: rgba(0, 0, 0, 0.0); /* Black with 50% transparency */
+       /*  background-color: rgba(0, 0, 0, 0.0); /* Black with 50% transparency */ */
         color: white;
     }
 
@@ -122,28 +122,32 @@
 <div class="desktop">
 
 
-    <div id="login-form">
+    <div id="login-form" style="text-align: center;">
         <span id="spanLoginForm"> VJAAP CMS </span>
         <form>
-            <div style="padding:0.2em">
+           @*  <div style="padding:0.2em;text-align: center;">
                 <span id="spanFormHeader"> Login</span>
 
-            </div>
+            </div> *@
 
-            <div style="padding:0.2em">
-                <input type="text" id="username" placeholder="Username" required />
+            <div style="padding:0.2em;text-align: center;">
+                <input type="text" id="username" placeholder="Username" style="width:60%;"  required />
             </div>
-            <div style="padding:0.2em">
+            <div style="padding:0.2em;text-align: center;">
 
-                <input type="password" id="password" placeholder="Password" required />
+                <input type="password" id="password" placeholder="Password" style="width:60%;"  required />
             </div>
-            <div style="padding-top:0.9em;padding-left:0.2em;padding-right:0.2em">
+            <div style="padding-top:0.9em;padding-left:0.2em;padding-right:0.2em;text-align: center;">
 
-                <button type="button" id="login-btn">Login</button>
-                <button type="button" id="login-btn">Change Password</button>
+                <button type="button" id="login-btn" style="width:35%;" >Login</button>
+               @*  <button type="button" id="login-btn" style="width:55%;" >Change Password</button> *@
             </div>
-            <div style="padding:0.2em">
+            <div style="padding-top:2em; text-align: center;width:80%;">
+                <a href="">Change Password</a>
+                <span style="padding-left:2em;">
                 <a href="">Forget Password</a>
+
+                </span>
 
             </div>
 

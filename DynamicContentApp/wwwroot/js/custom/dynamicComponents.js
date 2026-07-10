@@ -53,7 +53,7 @@
 
         const SchemaComponentLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
         // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-        const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#D3E0C3;border-color:none' });
+        const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
         SchemaComponentLabel.append(FieldNameeLabelComponent);
         form.append(SchemaComponentLabel);
 
@@ -68,7 +68,7 @@
 
         const SchemaDataSourceLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
         // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-        const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#D3E0C3;border-color:none' });
+        const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
         SchemaDataSourceLabel.append(FieldNameeLabelDataSource);
         form.append(SchemaDataSourceLabel);
 
@@ -81,7 +81,7 @@
 
         const SchemaPlaceholderLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
         // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-        const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#D3E0C3;border-color:none' });
+        const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
         SchemaPlaceholderLabel.append(FieldNameeLabelPlaceholder);
         form.append(SchemaPlaceholderLabel);
 
@@ -322,7 +322,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
 
     const SchemaComponentLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
     // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-    const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#D3E0C3;border-color:none' });
+    const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
     SchemaComponentLabel.append(FieldNameeLabelComponent);
     form.append(SchemaComponentLabel);
 
@@ -333,7 +333,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
 
     const SchemaDataSourceLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
     // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-    const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#D3E0C3;border-color:none' });
+    const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
     SchemaDataSourceLabel.append(FieldNameeLabelDataSource);
     form.append(SchemaDataSourceLabel);
 
@@ -344,7 +344,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
 
     const SchemaPlaceholderLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
     // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-    const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#D3E0C3;border-color:none' });
+    const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
     SchemaPlaceholderLabel.append(FieldNameeLabelPlaceholder);
     form.append(SchemaPlaceholderLabel);
 
