@@ -53,7 +53,7 @@
 
         const SchemaComponentLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
         // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-        const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
+        const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#e6e6e6;border-color:none' });
         SchemaComponentLabel.append(FieldNameeLabelComponent);
         form.append(SchemaComponentLabel);
 
@@ -68,7 +68,7 @@
 
         const SchemaDataSourceLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
         // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-        const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
+        const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#e6e6e6;border-color:none' });
         SchemaDataSourceLabel.append(FieldNameeLabelDataSource);
         form.append(SchemaDataSourceLabel);
 
@@ -81,7 +81,7 @@
 
         const SchemaPlaceholderLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
         // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-        const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
+        const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#e6e6e6;border-color:none' });
         SchemaPlaceholderLabel.append(FieldNameeLabelPlaceholder);
         form.append(SchemaPlaceholderLabel);
 
@@ -322,35 +322,41 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
 
     const SchemaComponentLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
     // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-    const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
+    const FieldNameeLabelComponent = $("<label>", { for: 'componentID', class: "form-label", text: 'Component Path (Include component under selected page asset Item)', style: 'width:80%;background-color:#e6e6e6;border-color:none' });
     SchemaComponentLabel.append(FieldNameeLabelComponent);
     form.append(SchemaComponentLabel);
 
     const SchemaSpanComponent = $('<div>').attr({ style: 'padding:1em;', });
     const FieldNameeInputComponent = $('<input>').attr({ type: 'text', id: 'componentID', name: 'ComponentName', placeholder: 'Select Component ', style: 'width:80%;', value: componentPath });
     SchemaSpanComponent.append(FieldNameeInputComponent);
+    const FieldNameeInputPopupComponentComponentName = $('<input>').attr({ type: 'button', tag: 'Popup', id: 'openPopupBtnComponentName', name: 'PopupBtnComponentName', parentitem: "componentID", title: 'To Select Component Item', value: '...', placeholder: 'Select Component ', style: 'width:2%;' });
+    SchemaSpanComponent.append(FieldNameeInputPopupComponentComponentName);
     form.append(SchemaSpanComponent);
 
     const SchemaDataSourceLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
     // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-    const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
+    const FieldNameeLabelDataSource = $("<label>", { for: 'datasourceID', class: "form-label", text: 'Content path (Select content asset path associated with Component)', style: 'width:80%;background-color:#e6e6e6;border-color:none' });
     SchemaDataSourceLabel.append(FieldNameeLabelDataSource);
     form.append(SchemaDataSourceLabel);
 
     const SchemaSpanDatasource = $('<div>').attr({ style: 'padding:1em;', });
     const FieldNameeInputDataSource = $('<input>').attr({ type: 'text', id: 'datasourceID', name: 'DataSourceName', placeholder: 'Select DataSource Path', style: 'width:80%;', value: linkedAssetItem });
     SchemaSpanDatasource.append(FieldNameeInputDataSource);
+    const FieldNameeInputPopupComponentDataSourceName = $('<input>').attr({ type: 'button', tag: 'Popup', id: 'openPopupBtnDataSourceName', name: 'PopupBtnDataSourceName', parentitem: "datasourceID", title: 'To Select Content Item', value: '...', placeholder: 'Select Component ', style: 'width:2%;' });
+    SchemaSpanDatasource.append(FieldNameeInputPopupComponentDataSourceName);
     form.append(SchemaSpanDatasource);
 
     const SchemaPlaceholderLabel = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
     // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-    const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#f2f2f2;border-color:none' });
+    const FieldNameeLabelPlaceholder = $("<label>", { for: 'placeholderID', class: "form-label", text: 'Placeholder (Select placeholder where component will render)', style: 'width:80%;background-color:#e6e6e6;border-color:none' });
     SchemaPlaceholderLabel.append(FieldNameeLabelPlaceholder);
     form.append(SchemaPlaceholderLabel);
 
     const SchemaSpanPlaceholder = $('<div>').attr({ style: 'padding:1em;', });
     const FieldNameeInputPlaceholder = $('<input>').attr({ type: 'text', id: 'placeholderID', name: 'PlaceholderName', placeholder: 'Select Placeholder ', style: 'width:80%;', value: placeholderPath });
     SchemaSpanPlaceholder.append(FieldNameeInputPlaceholder);
+    const FieldNameeInputPopupComponentPlaceholderName = $('<input>').attr({ type: 'button', tag: 'Popup', id: 'openPopupBtnPlaceholderName', name: 'PopupBtnPlaceholderName', parentitem: "placeholderID", title: 'To Select Placeholder Item', value: '...', placeholder: 'Select Component ', style: 'width:2%;' });
+    SchemaSpanPlaceholder.append(FieldNameeInputPopupComponentPlaceholderName);
     form.append(SchemaSpanPlaceholder);
 
    // const SchemaSpan2 = $('<div>').attr({ style: 'padding:1em;', });
@@ -367,7 +373,40 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
     $("#dynamicFormContainer_Component").append(form);
     //$("#dynamicFormContainer_Edit").style.display = "block";
     //$("#dynamicform").style.display = "block";
+    FieldNameeInputPopupComponentComponentName.on("click", function () {
+        $("#txtSelectedItemPath").val('');
+        $("#lblModelTitle").html('');
+        const currenttitle = this.getAttribute('title');
+        $("#lblModelTitle").html(currenttitle);
+        const parentitem = this.getAttribute('parentitem');
+        $("#hdnParentId").val(parentitem);
+        const parentitemvalue = $("#" + parentitem).val();
+        $("#txtSelectedItemPath").val(parentitemvalue);
+        $("#customModal").show();
+    });
+    FieldNameeInputPopupComponentDataSourceName.on("click", function () {
+        $("#txtSelectedItemPath").val('');
+        $("#lblModelTitle").html('');
+        const currenttitle = this.getAttribute('title');
+        $("#lblModelTitle").html(currenttitle);
+        const parentitem = this.getAttribute('parentitem');
+        $("#hdnParentId").val(parentitem);
+        const parentitemvalue = $("#" + parentitem).val();
+        $("#txtSelectedItemPath").val(parentitemvalue);
+        $("#customModal").show();
+    });
+    FieldNameeInputPopupComponentPlaceholderName.on("click", function () {
+        $("#txtSelectedItemPath").val('');
+        $("#lblModelTitle").html('');
+        const currenttitle = this.getAttribute('title');
+        $("#lblModelTitle").html(currenttitle);
+        const parentitem = this.getAttribute('parentitem');
+        $("#hdnParentId").val(parentitem);
+        const parentitemvalue = $("#" + parentitem).val();
+        $("#txtSelectedItemPath").val(parentitemvalue);
 
+        $("#customModal").show();
+    });
     closeButton.on("click", function () {
             //e.preventDefault(); // This stops the form from submitting and redirecting
             //e.stopPropagation();
