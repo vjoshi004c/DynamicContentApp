@@ -200,7 +200,7 @@ namespace DynamicContentApp.Service
             // PageItemModel PageItemModel = MockData.GeneratePageItemModel(1);
 
 
-            dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace("http://localhost:5287/", ""));
+            dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace("http://localhost:5287", ""));
 
 
             string assetItemId = dynamicObject.AssetItemID;

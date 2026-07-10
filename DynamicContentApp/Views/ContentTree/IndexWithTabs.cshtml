@@ -3,7 +3,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/lib/jquery/dist/jquery.min.js"></script>
-   
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-darkness/jquery-ui.css'
+          rel='stylesheet'>
+
     
     <style>
         body {
@@ -182,7 +184,7 @@
         
 
         .scroll-container {
-            width: 50dvh; /* Limits the horizontal size */
+            width: 45dvh; /* Limits the horizontal size */
           
             height: 100dvh; /* Limits the vertical size */
             overflow: auto; /* Automatically adds x and y scrollbars if needed */
@@ -213,8 +215,24 @@
   font-size: 24px;
 }
     </style>
+    <style>
+        b {
+            float: right;
+            margin: 7px;
+            color: lime;
+        }
+
+        #geeks a:hover {
+            color: lime;
+            background: gray;
+        }
+    </style>
+
 </head>
 <body>
+    <br>
+    <br>
+    
     @* <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#news">Nagivation</a>
@@ -282,137 +300,218 @@
             </ul>
 
         </div>
-        <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:2em;">
-            <div class="content" style="border-style: solid; border-color:#f2f2f2;background-color: #f2f2f2;padding:2em;">
-                <div id="adddiv" style="display: none;  background-color: #f2f2f2;;border:solid;border-width:thin;padding:2em;">
+        <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #EFF5E9;padding:2em;">
+          
+            <div class="content" style="border-style: solid; border-color:#f4f4f4;background-color: #D3E0C3;padding:2em;">
 
-                <form action="/schema/add" method="POST" id="addSchemaForm">
-                <h2>To create new item under parent node- <span></span></h2>
+                <div id="geeks">
+                    <ul>
 
-                <p>
-                    <label for="schemaName">Asset Name:</label>
-                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px" >
-                </p>
-                <p>
-                    <label for="schemaPath">Asset Path:</label>
-                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
-                </p>
-                <p>
-                    <label for="schemaParent">Asset Parent:</label>
-                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
-                </p>
+                        <li><a href="#LinkedItemwithSchema">Asset Summary</a></li>
+                        <li><a href="#ManageContentofItem">Manage Content </a></li>
+                        <li><a href="#ManagePageLayout">Manage Page Layout</a></li>
+                        <li><a href="#ManageComponentsUnderPage">ManageComponents</a></li>
+                        <li><a href="#Search">Search</a></li>
+
+
+                    </ul>
+
+                    <div id='LinkedItemwithSchema'>
                         <p>
-                            <label for="AssetTypeDropdown_Add">AssetType:</label>
-                            <!-- 1. Create the empty HTML Dropdown -->
-                            <select id="AssetTypeDropdown_Add">
-                               @*  <option value="">-- Select an Option --</option> *@
-                            </select>
-                        </p>
-                <p>
-                            <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
-                                <label for="txtAssetItemSchemaAdd">Schema linked with Asset Item:</label>
-                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
-                                <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd">...</button>
-                            </span>
+                            <div id="adddiv" style="display: none;  background-color: #D3E0C3;border:solid;border-width:thin;padding:2em;">
 
-                       @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+                                <form action="/schema/add" method="POST" id="addSchemaForm">
+                                    <h2>To create new item under parent node- <span></span></h2>
 
-                        <button id="btnAddSchemaFields"  class="unfake-disabled-button fake-disabled-button" style="display:none">Add Fields</button>
-                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
+                                    <p>
+                                        <label for="schemaName">Asset Name:</label>
+                                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="schemaPath">Asset Path:</label>
+                                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="schemaParent">Asset Parent:</label>
+                                        <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="AssetTypeDropdown_Add">AssetType:</label>
+                                        <!-- 1. Create the empty HTML Dropdown -->
+                                        <select id="AssetTypeDropdown_Add">
+                                            @*  <option value="">-- Select an Option --</option> *@
+                                        </select>
+                                    </p>
+                                    <p>
+                                        <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
+                                            <label for="txtAssetItemSchemaAdd">Schema linked with Asset Item:</label>
+                                            <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
+                                            <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd">...</button>
+                                        </span>
 
-                        <button id="btnSaveSchema" class="unfake-disabled-button" >Create Asset Item</button>
-                       
-                </p>
+                                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                    <p>
-                        <span id="lblAddMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema has been created successfully.</span>
-                        <span id="lblAddMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while creating schema.</span>
-                      
-                    </p>
+                                        <button id="btnAddSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none">Add Fields</button>
+                                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
-               @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                                        <button id="btnSaveSchema" class="unfake-disabled-button">Create Asset Item</button>
+
+                                    </p>
+
+                                    <p>
+                                        <span id="lblAddMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema has been created successfully.</span>
+                                        <span id="lblAddMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while creating schema.</span>
+
+                                    </p>
+
+                                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                     <p> <button type="submit">Submit</button></p> *@
-                </form>
-                    <div id="dynamicFormContainer_Add"></div>
+                                </form>
+                                <div id="dynamicFormContainer_Add"></div>
 
-            </div>
+                            </div>
 
-                <div id="refreshdiv" style="display: none;  border-color:#f2f2f2;background-color:#f2f2f2;padding:2em;padding:2em;">
+                            <div id="refreshdiv" style="display: none;  border-color:#f4f4f4;background-color: #D3E0C3;padding:2em;padding:2em;">
 
-                <h2>Refresh existed item - <span></span></h2>
+                                <h2>Refresh existed item - <span></span></h2>
 
-                <p>This form is to add informaiton on existed item</p>
-                <p>Click on the arrow(s) to open or close the tree branches.</p>
+                                <p>This form is to add informaiton on existed item</p>
+                                <p>Click on the arrow(s) to open or close the tree branches.</p>
 
-            </div>
-                <div id="editdiv" style="display: none;  background-color: #f2f2f2;border:solid;border-width:thin;padding:2em;">
+                            </div>
+                            <div id="editdiv" style="display: none;  background-color: #D3E0C3;border:solid;border-width:thin;padding:2em;">
 
-                <form action="/schema/edit" method="POST" id="editSchemaForm">
-                    <h2>To edit selected item -  <span></span></h2>
+                                <form action="/schema/edit" method="POST" id="editSchemaForm">
+                                    <h2>To edit selected item -  <span></span></h2>
 
 
-                    <p>
-                        <label for="schemaID">Asset ID:</label>
-                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
-                    </p>
-                        <p>
-                            <label for="schemaID">Asset Item TreeID:</label>
-                            <input type="text" id="txtAssetItemTreeeID" name="assetItemTreeeID" class="fake-disabled-input" style="width:500px">
-                        </p>
-                    <p>
-                        <label for="schemaName">Asset Name:</label>
-                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
-                    </p>
-                    <p>
-                        <label for="schemaPath">Asset Path:</label>
-                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
-                    </p>
-                    <p>
-                        <label for="schemaParent">Asset Parent:</label>
-                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px;">
-                    </p>
-                        <p>
-                            <label for="AssetTypeDropdown_Edit">AssetType:</label>
-                            <!-- 1. Create the empty HTML Dropdown -->
-                            <select id="AssetTypeDropdown_Edit">
-                                @* <option value="">-- Select an Option --</option> *@
-                            </select>
-                        </p>
-                    <p>
-                            <span id="spanAssetItemSchema_Edit" style="display:block;padding:2em;border:solid;border-width:thin;">
-                                <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
-                            <input type="text" id="txtAssetItemSchema" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
-                                <button id="openPopupBtnAssetSchema" title="To Select Schema Item" parentitem="txtAssetItemSchema" >...</button>
-                        </span>
-                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+                                    <p>
+                                        <label for="schemaID">Asset ID:</label>
+                                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="schemaID">Asset Item TreeID:</label>
+                                        <input type="text" id="txtAssetItemTreeeID" name="assetItemTreeeID" class="fake-disabled-input" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="schemaName">Asset Name:</label>
+                                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="schemaPath">Asset Path:</label>
+                                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
+                                    </p>
+                                    <p>
+                                        <label for="schemaParent">Asset Parent:</label>
+                                        <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px;">
+                                    </p>
+                                    <p>
+                                        <label for="AssetTypeDropdown_Edit">AssetType:</label>
+                                        <!-- 1. Create the empty HTML Dropdown -->
+                                        <select id="AssetTypeDropdown_Edit">
+                                            @* <option value="">-- Select an Option --</option> *@
+                                        </select>
+                                    </p>
+                                    <p>
+                                        <span id="spanAssetItemSchema_Edit" style="display:block;padding:2em;border:solid;border-width:thin;">
+                                            <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
+                                            <input type="text" id="txtAssetItemSchema" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
+                                            <button id="openPopupBtnAssetSchema" title="To Select Schema Item" parentitem="txtAssetItemSchema">...</button>
+                                        </span>
+                                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                            <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none" >Add Component</button>
-                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
-                        </p>
-                        <p>
-                        <button id="btnEditSchema" class="unfake-disabled-button" >Save Asset Item</button>
-                        </p>
-                    
+                                        <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none">Add Component</button>
+                                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
+                                    </p>
+                                    <p>
+                                        <button id="btnEditSchema" class="unfake-disabled-button">Save Asset Item</button>
+                                    </p>
 
-                    <p>
-                        <span id="lblEditMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema has been modified successfully.</span>
-                        <span id="lblEditMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while modifying schema.</span>
 
-                    </p>
+                                    <p>
+                                        <span id="lblEditMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema has been modified successfully.</span>
+                                        <span id="lblEditMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while modifying schema.</span>
 
-                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                                    </p>
+
+                                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                     <p> <button type="submit">Submit</button></p> *@
-                </form>
-                    <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+                                </form>
+                                <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
 
-                    <div id="dynamicFormContainer_Edit_AssetFieldDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"> 
-                       
+                               
+
+
+                            </div>
                     </div>
 
-                    
+                    <div id='ManageContentofItem'>
+                        <p>
+                            <div id="dynamicFormContainer_Edit_AssetFieldDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;">
+                            </div>
 
-            </div>
-                <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#f2f2f2;padding:2em;">
+                        </p>
+                    </div>
+
+
+                    <div id='ManagePageLayout'>
+                        <p>
+                            <div id="masterPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #D3E0C3;padding:2em;">
+
+                                <h2>Master Layout Settings On Page <span></span></h2>
+                                <p>
+                                    <label for="txtMasterPageItem">Is Item Page Type:</label>
+                                    <input type="checkbox" id="chkIsItemPageType" class="unfake-disabled-input" name="MasterPageItem" style="width:100px">
+                                </p>
+                                <p>
+                                    <label for="txtMasterPageItem">Enter Master Rendering:</label>
+                                    <input type="text" id="txtMasterPageItem" class="unfake-disabled-input" name="MasterPageItem" style="width:500px">
+                                    <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem">...</button>
+
+                                </p>
+                                <p>
+                                    <button id="btnSaveMasterLayout" class="unfake-disabled-button">Save Master Layout</button>
+
+                                </p>
+
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id='ManageComponentsUnderPage'>
+                        <div id="ComponentPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #D3E0C3;padding:2em;">
+
+                            <h2>Manage Components On Page <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
+                            <p>
+                                @* <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button> *@
+
+                            </p>
+                            <p>
+                                <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+
+                            </p>
+                            <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+                        </div>
+                    </div>
+                    <div id='#Search'>
+                        <p>
+                            <div id="SearchDiv" style="display: block; border-style: solid;border-width:thin; background-color: #D3E0C3;padding:2em;">
+
+                                <h2>Search <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
+                                
+                            </div>
+
+
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+               
+                <div id="removediv" style="display:none; border-style:none; border-color:#f4f4f4;background-color:#D3E0C3;padding:2em;">
 
                 <form action="/schema/delete" method="POST" id="deleteSchemaForm">
                     <h2>To delete selected item -  <span></span></h2>
@@ -450,46 +549,16 @@
 
             </div>
 
-                <div id="duplicatediv" style="display: none; border-style: solid; background-color: #f2f2f2;padding:2em;">
+            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #e0e5da;padding:2em;">
 
                 <h2>Duplicate selected item - <span></span></h2>
                 <p>This form is to remove existed item</p>
                 <p>Click on the arrow(s) to open or close the tree branches.</p>
 
             </div>
-                <div id="masterPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
+               
 
-                    <h2>Master Layout Settings On Page <span></span></h2>
-                    <p>
-                        <label for="txtMasterPageItem">Is Item Page Type:</label>
-                        <input type="checkbox" id="chkIsItemPageType" class="unfake-disabled-input" name="MasterPageItem" style="width:100px">
-                    </p>
-                    <p>
-                        <label for="txtMasterPageItem">Enter Master Rendering:</label>
-                        <input type="text" id="txtMasterPageItem" class="unfake-disabled-input" name="MasterPageItem" style="width:500px">
-                        <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem" >...</button>
-                       
-                    </p>
-                    <p>
-                        <button id="btnSaveMasterLayout" class="unfake-disabled-button">Save Master Layout</button>
-
-                    </p>
-
-                </div>
-
-                <div id="ComponentPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
-
-                    <h2>Manage Components On Page <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
-                    <p>
-                        @* <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button> *@
-
-                    </p>
-                    <p>
-                        <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
-
-                    </p>
-                    <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
-                </div>
+               
                
               
 
@@ -534,6 +603,9 @@
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/site.js?v=hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo"></script>
+
+
+
 </body>
 </html>
 
@@ -1328,12 +1400,12 @@
 
                    // for hidden field to care assetid
                     const SchemaSpan1 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
-                       const AssetFieldIDIDInput1 = $('<input>').attr({ type: 'hidden', value:assetItemID ,name: 'AssetItemId', id:'hdnAssetItemID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
+                     const AssetFieldIDIDInput1 = $('<input>').attr({ type: 'hidden', value:assetItemID ,name: 'AssetItemId', id:'hdnAssetItemID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
                     SchemaSpan1.append(AssetFieldIDIDInput1);
                     form.append(SchemaSpan1);
 
                     const SchemaSpan11 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
-                         const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'hidden', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:'hdnAssetItemSchemaID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
+                       const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'hidden', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:'hdnAssetItemSchemaID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
                      SchemaSpan11.append(AssetFieldIDIDInput2);
                      form.append(SchemaSpan11);
                     $.each(optionsData, function (index, item) {
@@ -1353,7 +1425,7 @@
                        // for  field to care Label of field
                          const SchemaSpan2 = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
                       // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-                         const AssetFieldNameLabel = $("<label>", {   for: schemaFieldID,  class: "form-label",  text: schemaFieldName, style:'width:80%;background-color:#f2f2f2;border-color:none' });
+                        const AssetFieldNameLabel = $("<label>", {   for: schemaFieldID,  class: "form-label",  text: schemaFieldName, style:'width:80%;background-color:#D3E0C3;border-color:none' });
                        
 
                             // for  field to careSIMPLLE_TEXT
@@ -1805,7 +1877,7 @@
                            //alert(assetItemComponentID+' '+assetItemID +' '+componentPath +' '+linkedAssetItem +' '+placeholderPath) ;
                              const ComponentMainSpan = $('<div>').attr({ id:assetItemComponentID, style: 'padding-bottom:0.2em;width:80%', });
                                   const ComponentPathSpan = $('<div>').attr({ id:assetItemComponentID, style: 'padding-bottom:0.2em;width:80%', });
-                                  const ComponentPathLabel = $("<label>", {   for: 'ComponentPath',  class: "form-label",  text: 'Component Path (Include component under selected page asset Item)', style:'width:80%;background-color:#f2f2f2;border-color:none;pointer-events: none; opacity: 0.5; ' });
+                                 const ComponentPathLabel = $("<label>", {   for: 'ComponentPath',  class: "form-label",  text: 'Component Path (Include component under selected page asset Item)', style:'width:80%;background-color:#D3E0C3;border-color:none;pointer-events: none; opacity: 0.5; ' });
                                 ComponentPathSpan.append(ComponentPathLabel);
                                 form.append(ComponentPathSpan);
                                 const  ComponentPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
@@ -1815,7 +1887,7 @@
 
 
                                 const ContentPathSpan = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
-                                     const ContentPathLabel = $("<label>", {   for: 'ContentPath',  class: "form-label",  text: 'Content path (Select content asset path associated with Component)', style:'width:80%;background-color:#f2f2f2;border-color:none' });
+                                    const ContentPathLabel = $("<label>", {   for: 'ContentPath',  class: "form-label",  text: 'Content path (Select content asset path associated with Component)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
                                   ContentPathSpan.append(ContentPathLabel);
                                  form.append(ContentPathSpan);
                                  const  ContentPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
@@ -1825,7 +1897,7 @@
 
 
                                  const PlaceholderPathSpan = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
-                                     const PlaceholderPathLabel = $("<label>", {   for: 'PlaceholderPath',  class: "form-label",  text: 'Placeholder (Select placeholder where component will render)', style:'width:80%;background-color:#f2f2f2;border-color:none' });
+                                    const PlaceholderPathLabel = $("<label>", {   for: 'PlaceholderPath',  class: "form-label",  text: 'Placeholder (Select placeholder where component will render)', style:'width:80%;background-color:#D3E0C3;border-color:none' });
                                   PlaceholderPathSpan.append(PlaceholderPathLabel);
                                   form.append(PlaceholderPathSpan);
                                   const  PlaceholderPathTextSpan = $('<div>').attr({ style: 'padding:0em;width:80%',});
@@ -2243,6 +2315,34 @@
 <script src="/js/custom/dynamicSchemaFields.js"></script>
 <script src="/js/custom/dynamicComponents.js"></script>
 <script src="/js/custom/dynamicSchemaPopup.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+</script>
+<script>
+            $(document).ready(function() {
+
+                $( "#geeks" ).tabs({
+                    // event:'mouseover'
+                })
+     $("#geeks").tabs().css({
+                   'min-height': '5px',
+                   'overflow': 'auto'
+                });
+    $( "#geeks" ).tabs({
+                    active: 1,
+                   // disabled:[0, 2]
+                   
+                })
+     $("#geeks").tabs({
+                        active: false,
+                        collapsible: true
+                    })
+
+            })
+</script>
+
 
 
 
