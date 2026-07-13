@@ -1,0 +1,297 @@
+
+
+<!-- Desktop area -->
+<div class="desktop">
+    <div class="icon" data-app="Content Manager">
+        <img src="/images/contentmanager.png" alt="Notepad">
+        <div>Content Manager</div>
+    </div>
+    <div class="icon" data-app="Schema Manager">
+        <img src="/images/schemamanager.png" alt="Browser">
+        <div>Schema Manager</div>
+    </div>
+    <div class="icon" data-app="Media Manage">
+        <img src="/images/mediamanager.webp" alt="Browser">
+        <div>Media Manager</div>
+    </div>
+
+    <div class="icon" data-app="Layout Manager">
+        <img src="/images/layoutmanager.png" alt="Browser">
+        <div>Layout Manager</div>
+    </div>
+
+    <div class="icon" data-app="User Manager">
+        <img src="/images/usermanager2.webp" alt="Browser">
+        <div>User Manager</div>
+    </div>
+
+    <div class="icon" data-app="Role Manager">
+        <img src="/images/RoleManager.png" alt="Browser">
+        <div>Role Manager</div>
+    </div>
+
+    <div class="icon" data-app="Access Manager">
+        <img src="/images/accessmanager.webp" alt="Browser">
+        <div>Access Manager</div>
+    </div>
+
+    <div class="icon" data-app="Workflow Manager">
+        <img src="/images/workflowmanager.png" alt="Browser">
+        <div>Workflow Manager</div>
+    </div>
+    <div class="icon" data-app="Setting Manager">
+        <img src="/images/settingmanger.png" alt="Browser">
+        <div>Setting Manager</div>
+    </div>
+
+    <div class="icon" data-app="Publish Manager">
+        <img src="/images/publishmanager.webp" alt="Browser">
+        <div>Publish Manager</div>
+    </div>
+
+
+    <div class="icon" data-app="WebSite Manager">
+        <img src="/images/websitemanager.png" alt="Browser">
+        <div>WebSite Manager</div>
+    </div>
+    <div class="icon" data-app="Version Manager">
+        <img src="/images/vesionmanager.jpg" alt="Browser">
+        <div>Version Manager</div>
+    </div>
+
+
+    <div class="icon" data-app="MultiLanguage Manager">
+        <img src="/images/multilanguagemanager.png" alt="Browser">
+        <div>MultiLanguage Manager</div>
+    </div>
+    <div class="icon" data-app="Form Builder Manager">
+        <img src="/images/formmanager.png" alt="Browser">
+
+        <div>Form Builder Manager</div>
+    </div>
+
+
+
+
+
+</div>
+
+<!-- Taskbar -->
+<div class="taskbar" id="taskbar">
+    <div class="start-btn">Start</div>
+    <div class="taskbar-apps"></div>
+</div>
+<!--<div id="taskbar"></div>-->
+<!-- Start Menu -->
+<div class="start-menu">
+    <ul>
+        <li data-app="Content Manager">Content Manager</li>
+        <li data-app="Schema Manager">Schema Manager</li>
+        <li data-app="Media Manager">Media Manager</li>
+        <li data-app="Layout Manager">Layout Manager</li>
+        <li data-app="User Manager">User Manager</li>
+        <li data-app="Role Manager">Role Manager</li>
+        <li data-app="Access Manager">Access Manager</li>
+        <li data-app="Workflow Manager">Workflow Manager</li>
+        <li data-app="Setting Manager">Setting Manager</li>
+        <li data-app="Publish Manager">Publish Manager</li>
+        <li data-app="WebSite Manager">WebSite Manager</li>
+        <li data-app="Version Manager">Version Manager</li>
+        <li data-app="MultiLanguage Manager">MultiLanguage Manager</li>
+        <li data-app="Form Builder Manager">Form Builder Manager</li>
+
+    </ul>
+</div>
+
+<!-- Taskbar -->
+<!-- Example Windows -->
+<div class="window" id="win1" style="top:140px; left:420px;display:none;">
+    <div class="window-header">
+        <span class="window-title">My First Window</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        This is a draggable, resizable window with taskbar integration.
+    </div>
+</div>
+
+<div class="window" id="win2" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Another Window</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // Toggle Start menu
+        $(".start-btn").click(function () {
+            $(".start-menu").toggle();
+        });
+
+        // Close start menu when clicking outside
+        $(document).click(function (e) {
+            if (!$(e.target).closest('.start-btn, .start-menu').length) {
+                $(".start-menu").hide();
+            }
+        });
+
+        // Open app from desktop icon or start menu
+        $(".icon, .start-menu li").click(function () {
+            let app = $(this).data("app");
+            openApp(app);
+            $(".start-menu").hide();
+        });
+
+        function openApp(app) {
+            if (app === 'Content Manager') {
+                //var winToOpen = $("#win1").css(";
+                $("#win1").css("display", "block");
+                $("#win1").css("width", "1000px");
+                $("#win1").css("height", "700px");
+
+
+
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function () {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win1").attr('id')) {
+                        //alert($(this).attr('data-win'));
+                        $(this).css("display", "block");
+
+                    }
+
+                });
+
+
+                //alert("Opening " + app + "...");
+                //window.location.href = "http://localhost:5287/contenttree";
+                return false;
+            }
+            if (app === 'Schema Manager') {
+                //$("#win2").show("slow");
+                $("#win2").css("display", "block");
+                $("#win1").css("width", "1000px");
+                $("#win1").css("height", "700px");
+
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function () {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win2").attr('id')) {
+                        //alert($(this).attr('data-win'));
+                        $(this).css("display", "block");
+
+                    }
+
+                });
+
+                //alert("Opening " + app + "...");
+                //window.location.href = "http://localhost:5287/contenttree";
+                return false;
+            }
+
+            alert("Opening " + app + "...");
+            // Here you can load an iframe, modal, or custom app window
+        }
+    });
+</script>
+
+<script>
+    $(function () {
+        let zIndexCounter = 100;
+        let maximized = {};
+
+        // Initialize windows
+        $(".window").each(function () {
+            let win = $(this);
+            let id = win.attr("id");
+            let title = win.find(".window-title").text();
+
+            // Make draggable & resizable
+            win.draggable({
+                handle: ".window-header",
+                containment: "body",
+                stack: ".window"
+            }).resizable({
+                minWidth: 300,
+                minHeight: 250
+            });
+
+            // Create taskbar button
+            let btn = $("<div class='taskbar-button'></div>").text(title).attr("data-win", id);
+            $("#taskbar").append(btn);
+
+            // Taskbar button click
+            btn.on("click", function () {
+                if (win.is(":visible")) {
+                    win.hide();
+                } else {
+                    bringToFront(win);
+                    win.show();
+                }
+            });
+
+            // Minimize
+            win.find(".min-btn").on("click", function () {
+                win.hide();
+            });
+
+            // Maximize / Restore
+            win.find(".max-btn").on("click", function () {
+                if (!maximized[id]) {
+                    maximized[id] = {
+                        top: win.css("top"),
+                        left: win.css("left"),
+                        width: win.css("width"),
+                        height: win.css("height")
+                    };
+                    win.css({
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "calc(100% - 40px)"
+                    });
+                } else {
+                    win.css(maximized[id]);
+                    delete maximized[id];
+                }
+            });
+
+            // Close
+            win.find(".close-btn").on("click", function () {
+                //win.remove();
+                win.hide("slow");
+                //btn.remove();
+                btn.hide("slow");
+
+            });
+
+            // Bring to front on click
+            win.on("mousedown", function () {
+                bringToFront(win);
+            });
+        });
+
+        function bringToFront(win) {
+            $(".window").css("z-index", 100);
+            win.css("z-index", ++zIndexCounter);
+        }
+    });
+</script>
+
+
+<!-- Visual Studio Browser Link -->
+<!--<script type="text/javascript" src="/_vs/browserLink" async="async" id="__browserLink_initializationData" data-requestId="8685caa3b4a34d93b420ea0fffa932c8" data-requestMappingFromServer="false" data-connectUrl="http://localhost:57739/513576c0ffc441509c2aacf73843a362/browserLink"></script>-->
+<!-- End Browser Link -->
+<!--<script src="/_framework/aspnetcore-browser-refresh.js"></script>-->

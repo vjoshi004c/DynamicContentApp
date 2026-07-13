@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Web Desktop with jQuery</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
     <style>
         body {
             margin: 0;
@@ -116,6 +118,211 @@
         }
 
     </style>
+    <style>
+        /*  body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: url('universalelement imagefinalbw.jpeg') no-repeat center center fixed;
+                /*background: url('https://picsum.photos/1920/1080?blur=3') no-repeat center center fixed;*/
+
+       /*  background-size: cover;
+        overflow: hidden;
+        } */
+
+        /* Desktop icons */
+        .desktop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 40px;
+            padding: 10px;
+        }
+
+        .icon {
+            width: 200px;
+            text-align: center;
+            color: #4d4d4d;
+            margin: 10px;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+            .icon img {
+                width: 48px;
+                height: 48px;
+            }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+        }
+
+        .start-btn {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        /* Start menu */
+        .start-menu {
+            position: fixed;
+            bottom: 40px;
+            left: 10px;
+            width: 200px;
+            background: rgba(50,50,50,0.95);
+            color: white;
+            display: none;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+            .start-menu ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .start-menu li {
+                padding: 10px;
+                cursor: pointer;
+            }
+
+                .start-menu li:hover {
+                    background: rgba(255,255,255,0.1);
+                }
+
+        #login-form {
+            position: fixed; /* Stay in place even when scrolling */
+            width: 400px;
+            padding: 20px;
+            background: #f4f4f4;
+            /*border: 1px solid #ccc;*/
+            /* box-shadow: 0 0 10px rgba(0,0,0,0.3);*/
+            background-color: rgba(0, 0, 0, 0.0); /* Black with 50% transparency */
+            color: white;
+        }
+
+        a {
+            color: white;
+        }
+
+        #spanFormHeader {
+            color: white;
+            font-size: 20px;
+        }
+
+        #spanLoginForm {
+            color: white;
+            font-size: 48px;
+        }
+
+    </style>
+
+    <style>
+       /*  body {
+            margin: 0;
+            background: url('https://picsum.photos/1920/1080?blur=3') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        } */
+
+        /* Taskbar */
+        #taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+        .taskbar-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 10px;
+            margin: 0 3px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+            .taskbar-button.active {
+                background: rgba(255, 255, 255, 0.4);
+            }
+
+        /* Window */
+        .window {
+            position: absolute;
+            width: 1000px;
+            height: 700px;
+            overflow-y: auto;
+           
+            overflow-x: hidden;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .window-header {
+            background: #0078d7;
+            color: white;
+            padding: 5px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .window-title {
+            font-weight: bold;
+        }
+
+        .window-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+            .window-buttons button {
+                background: rgba(255,255,255,0.3);
+                border: none;
+                color: white;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                font-weight: bold;
+                padding: 0;
+            }
+
+        .window-content {
+            padding: 10px;
+            flex: 1;
+            overflow: auto;
+        }
+    </style>
+
+
 </head>
 <body>
     @RenderBody()

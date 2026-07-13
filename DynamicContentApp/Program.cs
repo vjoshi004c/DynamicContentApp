@@ -32,7 +32,7 @@ options.Add(context =>
     // Check if the path looks like a static file (contains a file extension)
     bool isStaticFile = !string.IsNullOrEmpty(path) && path.Contains('.');
     bool isLoginFile = !string.IsNullOrEmpty(path) && path.Contains("LOGIN");
-    bool isDesktopFile = !string.IsNullOrEmpty(path) && path.Contains("DESKTOP");
+    bool isDesktopFile = !string.IsNullOrEmpty(path) && path.Contains("DESKTOPMAIN");
 
     if (isLoginFile )
     {
@@ -40,7 +40,7 @@ options.Add(context =>
     }
     if (isDesktopFile)
     {
-        context.HttpContext.Request.Path = "/home/desktop";
+        context.HttpContext.Request.Path = "/home/DESKTOPMAIN";
     }
     bool isJasonToModel = !string.IsNullOrEmpty(path) && path.Contains("JSONTOMODEL");
     if (isJasonToModel)

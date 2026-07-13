@@ -40,6 +40,12 @@ namespace DynamicContentApp.Controllers
             return View("~/Views/Home/Desktop.cshtml");
         }
 
+        public IActionResult DesktopMain()
+        {
+            ViewData["SelectedLayout"] = "_MasterLoginDesktop";
+            return View("~/Views/Home/DesktopMain.cshtml");
+        }
+
 
         public IActionResult Privacy()
         {
