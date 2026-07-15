@@ -105,7 +105,7 @@
 <!-- Example Windows -->
 <div class="window" id="win1" style="top:140px; left:420px;display:none;">
     <div class="window-header">
-        <span class="window-title">My First Window</span>
+        <span class="window-title">Content Manager</span>
         <div class="window-buttons">
             <button class="min-btn">_</button>
             <button class="max-btn">□</button>
@@ -119,7 +119,7 @@
 
 <div class="window" id="win2" style="top:120px; left:400px;display:none;">
     <div class="window-header">
-        <span class="window-title">Another Window</span>
+        <span class="window-title">Schema Manager</span>
         <div class="window-buttons">
             <button class="min-btn">_</button>
             <button class="max-btn">□</button>
@@ -170,6 +170,12 @@
 
                        $("#win1 .window-content").html("testing Content manager manager page");
                        $("#win1 .window-content").load('/Contenttree');
+                        $("#win1").css({
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "calc(100% - 40px)"
+                    });
 
                     }
 
@@ -192,12 +198,12 @@
                     if ($(this).attr('data-win') == $("#win2").attr('id')) {
                         //alert($(this).attr('data-win'));
                         $(this).css("display", "block");
-                    //     $(this).css({
-                    //     top: 0,
-                    //     left: 0,
-                    //     width: "100%",
-                    //     height: "calc(100% - 40px)"
-                    // });
+                        $("#win2").css({
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "calc(100% - 40px)"
+                    });
 
                     }
 
