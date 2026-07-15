@@ -119,6 +119,7 @@
             const parentitemvalue = $("#" + parentitem).val();
             $("#txtSelectedItemPath").val(parentitemvalue);
             $("#customModal").show(); 
+            lookupTree('E17E4A01-ECCA-4B9F-886C-7BE198091843','ComponentTemplate');
         });
         FieldNameeInputPopupComponentDataSourceName.on("click", function () {
             $("#txtSelectedItemPath").val('');
@@ -130,6 +131,7 @@
             const parentitemvalue = $("#" + parentitem).val();
             $("#txtSelectedItemPath").val(parentitemvalue);
             $("#customModal").show(); 
+            lookupTree('D1B2BE76-C76B-447A-A30A-DDDF4959A8FC','Content');
         });
         FieldNameeInputPopupComponentPlaceholderName.on("click", function () {
             $("#txtSelectedItemPath").val('');
@@ -142,6 +144,7 @@
             $("#txtSelectedItemPath").val(parentitemvalue);
           
             $("#customModal").show(); 
+            lookupTree('8CEE3BBE-195F-416A-A204-1B15BE16AD66','PlaceholderTemplate');
         });
         
         closeButton.on("click", function () {
@@ -383,6 +386,8 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         const parentitemvalue = $("#" + parentitem).val();
         $("#txtSelectedItemPath").val(parentitemvalue);
         $("#customModal").show();
+        lookupTree('E17E4A01-ECCA-4B9F-886C-7BE198091843', 'ComponentTemplate');
+      
     });
     FieldNameeInputPopupComponentDataSourceName.on("click", function () {
         $("#txtSelectedItemPath").val('');
@@ -394,6 +399,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         const parentitemvalue = $("#" + parentitem).val();
         $("#txtSelectedItemPath").val(parentitemvalue);
         $("#customModal").show();
+        lookupTree('D1B2BE76-C76B-447A-A30A-DDDF4959A8FC', 'Content');
     });
     FieldNameeInputPopupComponentPlaceholderName.on("click", function () {
         $("#txtSelectedItemPath").val('');
@@ -406,6 +412,7 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         $("#txtSelectedItemPath").val(parentitemvalue);
 
         $("#customModal").show();
+        lookupTree('8CEE3BBE-195F-416A-A204-1B15BE16AD66', 'PlaceholderTemplate');
     });
     closeButton.on("click", function () {
             //e.preventDefault(); // This stops the form from submitting and redirecting

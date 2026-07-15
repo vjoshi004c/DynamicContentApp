@@ -76,6 +76,27 @@
             ' transform: rotate(90deg);
         }
 
+        caret_lup {
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
+
+        .caret_lup::before {
+            content: "\25B6";
+            color: RED;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .caret_lup-down::before {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -webkit-transform: rotate(90deg); /* Safari */
+            ' transform: rotate(90deg);
+        }
+
         .nested {
             display: none;
         }
@@ -466,7 +487,8 @@
                     <p>
                         <label for="txtMasterPageItem">Enter Master Rendering:</label>
                         <input type="text" id="txtMasterPageItem" class="unfake-disabled-input" name="MasterPageItem" style="width:500px">
-                        <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem" >...</button>
+                       @*  <input type="text" id="txtMasterPageItemID" class="unfake-disabled-input" name="MasterPageItemID" style="width:500px"> *@
+                        <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem" parentitemID="txtMasterPageItemID" >...</button>
                        
                     </p>
                     <p>
@@ -507,8 +529,28 @@
             <input type="hidden" id="hdnTitle" />
             <span>Enter path of item</span>
             <input type="text" id="txtSelectedItemPath" value="" style="width:60%;" />
+            <input type="text" id="txtSelectedItemID" value="" style="width:60%;" />
             <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" />
             <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" />
+            <div class="main-container">
+
+
+                <div class="sidebar scroll-container " id="myUL1Div">
+
+                    <h2 id="myUL1h1">Content Tree</h2>
+                    <ul id="myUL1">
+                        @* <li tag="1049D17E-6C1C-45A9-9B75-5F779B61023E">
+                            <span  id="1049D17E-6C1C-45A9-9B75-5F779B61023E" tag="1049D17E-6C1C-45A9-9B75-5F779B61023E" class="caret_lup default-color">Lookup tree</span>
+                            <ul id="lup_1049D17E-6C1C-45A9-9B75-5F779B61023E" class="nested" >
+                            </ul>
+                        </li> *@
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <input type="hidden" id="hdnChildCount1" runat="server" value="0" />
         </div>
     </div>
 
@@ -1790,6 +1832,7 @@
                      }
 
                     $("#masterPageDiv #txtMasterPageItem").val(record.masterpagePath);
+                       //$("#masterPageDiv #txtMasterPageItemID").val(record.assetItemID);
                 });
                  if (masterPageTypeCheckbox.is(':checked'))
                  {
@@ -2303,7 +2346,7 @@
 
 
     </script>
-    <script>
+  @*   <script>
 
 
         // Show custom menu on right-click
@@ -2325,11 +2368,16 @@
         window.addEventListener("resize", () => {
             contextMenu.style.display = "none";
         });
-    </script>
+    </script> *@
 <script src="/js/custom/dynamicAssetTypeDropdown.js"></script>
 <script src="/js/custom/dynamicSchemaFields.js"></script>
 <script src="/js/custom/dynamicComponents.js"></script>
 <script src="/js/custom/dynamicSchemaPopup.js"></script>
+
+
+
+
+
 
 
 

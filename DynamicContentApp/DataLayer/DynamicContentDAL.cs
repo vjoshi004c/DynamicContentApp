@@ -16,9 +16,9 @@ namespace DynamicContentApp.DataLayer
      public class DynamicContentDAL
     {
 
-        private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
-        // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentFour;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+         private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentFour;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
 
