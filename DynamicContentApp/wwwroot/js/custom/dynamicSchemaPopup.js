@@ -408,7 +408,7 @@ function lookupTree(IDSchema1, rootItemText) {
 
 
     function getSchema1( IDSchema ) {
-        //alert('getSchema1' + ' ' + IDSchema);
+       // alert('getSchema1' + ' ' + IDSchema);
     $.ajax({
         type: "GET",
     url: "/ContentTree/GetSchema", // PageName/MethodName
@@ -419,7 +419,8 @@ function lookupTree(IDSchema1, rootItemText) {
     async: false,
     success: function (response) {
         $.each(response, function (index, record) {
-           //alert('getSchema1' + ' ' + record.schemaPath);
+           // alert('getSchema1' + ' ' + record.schemaPath + ' ' + record.id);
+           // alert(record.schemaPath, record.id);
             $("#txtSelectedItemPath").val(record.schemaPath);
             $("#txtSelectedItemID").val(record.id);
         });

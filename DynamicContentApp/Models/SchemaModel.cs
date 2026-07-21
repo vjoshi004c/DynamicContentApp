@@ -33,6 +33,9 @@
 
         public string? AssetItemSchema { get; set; }
         public string? AssetItemTreeeID { get; set; }
+        public string? AssetItemSchemaPath { get; set; }
+
+        
 
 
 

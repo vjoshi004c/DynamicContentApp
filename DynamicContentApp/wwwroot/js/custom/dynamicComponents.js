@@ -126,8 +126,8 @@
             }
 
 
-            $("#customModal").show(); 
-            lookupTree('E17E4A01-ECCA-4B9F-886C-7BE198091843','ComponentTemplate');
+            $("#customModal").show();
+            lookupTree('BDA620AB-DC7C-4D21-A5E3-2363C6451E3F','ComponentTemplate');
         });
         FieldNameeInputPopupComponentDataSourceName.on("click", function () {
             $("#txtSelectedItemPath").val('');
@@ -405,8 +405,14 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         $("#hdnParentId").val(parentitem);
         const parentitemvalue = $("#" + parentitem).val();
         $("#txtSelectedItemPath").val(parentitemvalue);
+        $("#btnSelectedItemPath").css("display", "none");
+        $("#btnSelectedItemPathSchema").css("display", "none");
+        if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
+            // $("#btnSelectedItemPathSchema").css("visibility", "visible");
+            $("#btnSelectedItemPath").css("display", "block");
+        }
         $("#customModal").show();
-        lookupTree('E17E4A01-ECCA-4B9F-886C-7BE198091843', 'ComponentTemplate');
+        lookupTree('BDA620AB-DC7C-4D21-A5E3-2363C6451E3F', 'ComponentTemplate');
       
     });
     FieldNameeInputPopupComponentDataSourceName.on("click", function () {
@@ -418,6 +424,12 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         $("#hdnParentId").val(parentitem);
         const parentitemvalue = $("#" + parentitem).val();
         $("#txtSelectedItemPath").val(parentitemvalue);
+        $("#btnSelectedItemPath").css("display", "none");
+        $("#btnSelectedItemPathSchema").css("display", "none");
+        if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
+            // $("#btnSelectedItemPathSchema").css("visibility", "visible");
+            $("#btnSelectedItemPath").css("display", "block");
+        }
         $("#customModal").show();
         lookupTree('D1B2BE76-C76B-447A-A30A-DDDF4959A8FC', 'Content');
     });
@@ -430,6 +442,12 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         $("#hdnParentId").val(parentitem);
         const parentitemvalue = $("#" + parentitem).val();
         $("#txtSelectedItemPath").val(parentitemvalue);
+        $("#btnSelectedItemPath").css("display", "none");
+        $("#btnSelectedItemPathSchema").css("display", "none");
+        if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
+            // $("#btnSelectedItemPathSchema").css("visibility", "visible");
+            $("#btnSelectedItemPath").css("display", "block");
+        }
 
         $("#customModal").show();
         lookupTree('8CEE3BBE-195F-416A-A204-1B15BE16AD66', 'PlaceholderTemplate');

@@ -894,11 +894,11 @@
                                       alert("Asset Type is mising. Please select AssetType.");
                                       return;
                                  }
-                                  if(txtAssetItemSchemaPath == "")
-                                 {
-                                      alert("Asset Schema Path is mising. Please select schema path.");
-                                      return;
-                                 }
+                                 //  if(txtAssetItemSchemaPath == "")
+                                 // {
+                                 //      alert("Asset Schema Path is mising. Please select schema path.");
+                                 //      return;
+                                 // }
                                    var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaAdd"]').val();
                                      //alert("InsertAssetItemSchema" +txtAssetItemSchema);
                                       // alert("SaveSchema");
@@ -1160,11 +1160,11 @@
                                   var  txtAssetItemSchemaPath = $(this).closest('form').find('input[id="txtAssetItemSchemaPathEdit"]').val();
                                    //alert("txtAssetItemSchema"+txtAssetItemSchema +txtAssetItemSchemaPath);
                                     
-                                    if(txtAssetItemSchemaPath == "")
-                                 {
-                                      alert("Asset Schema Path is mising. Please select schema path.");
-                                      return;
-                                 }
+                                 //    if(txtAssetItemSchemaPath == "" )
+                                 // {
+                                 //      alert("Asset Schema Path is mising. Please select schema path.");
+                                 //      return;
+                                 // }
                              
                                       //alert("UpdateSchema");
                                   $.ajax({
@@ -1306,11 +1306,11 @@
                                                         // alert("assetTypeID" +record.assetTypeID);
                                                        // alert(record.assetTypeID);
                                                           $("#editSchemaForm #txtAssetItemSchemaEdit").val(record.assetItemSchema);
-                                                         // $("#editSchemaForm #txtAssetItemSchemaPathEdit").val(record.assetItemSchemaPath);
+                                                          $("#editSchemaForm #txtAssetItemSchemaPathEdit").val(record.assetItemSchemaPath);
 
                                                          // alert(record.assetItemSchema + '- '+ record.assetItemSchemaPath);
 
-                                                             //alert("assetItemSchemaMapped" +record.assetItemTreeeID);
+                                                            // alert("assetItemSchemaMapped" +record.assetItemTreeeID);
                                                             
                                                                  $("#editSchemaForm #txtAssetItemTreeeID").val(record.assetItemTreeeID);
                                                                  
