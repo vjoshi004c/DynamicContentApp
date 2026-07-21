@@ -50,7 +50,8 @@ options.Add(context =>
     // If it's not a static file, rewrite internally to your generic endpoint
     if (!isStaticFile && !isDynamicController&& !isLookupController && !isLoginFile && !isDesktopFile)
     {
-        context.HttpContext.Request.Path = "/Generic/Start";
+        //context.HttpContext.Request.Path = "/Generic/Start";
+        context.HttpContext.Request.Path = "/home/login";
     }
 
     context.Result = RuleResult.SkipRemainingRules;

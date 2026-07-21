@@ -222,10 +222,12 @@
 .modal-content {
             background-color: #f2f2f2;
             border: 10px solid #d9d9d9;
-            margin: 15% auto;
+            margin: 5% auto;
   padding: 20px;
   width: 50%;
   position: relative;
+  overflow: auto;
+  height:70dvh;
 }
 /* Close button positioning */
 .close-x {
@@ -332,9 +334,12 @@
                         </p>
                 <p>
                             <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
-                                <label for="txtAssetItemSchemaAdd">Schema linked with Asset Item:</label>
-                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:400px;">
-                                <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd">...</button>
+                                <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
+                                    <input type="text" id="txtAssetItemSchemaPath" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
+                                    <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd" parentitemPath="txtAssetItemSchemaPath">...</button>
+                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
+                            
+                                
                             </span>
 
                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
@@ -403,9 +408,14 @@
                     <p>
                             <span id="spanAssetItemSchema_Edit" style="display:block;padding:2em;border:solid;border-width:thin;">
                                 <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
-                            <input type="text" id="txtAssetItemSchema" name="AssetItemSchema" value="NONE" class="unfake-disabled-input" style="width:500px;">
-                                <button id="openPopupBtnAssetSchema" title="To Select Schema Item" parentitem="txtAssetItemSchema" >...</button>
-                        </span>
+                                <input type="text" id="txtAssetItemSchemaPathEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;"> 
+                                   <button id="openPopupBtnAssetSchemaEdit" title="To Select Schema Item" parentitem="txtAssetItemSchemaEdit" parentitemPath="txtAssetItemSchemaPathEdit">...</button>
+                            
+                                <input type="text" id="txtAssetItemSchemaEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
+                                
+                                @* <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchema" parentitemPath="txtAssetItemSchemaPath">...</button> *@
+                               
+                            </span>
                         @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
                             <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none" >Add Component</button>
@@ -525,13 +535,18 @@
             <h2><span id="lblModelTitle"></span></h2>
             <input type="hidden" id="hdnTitle" />
              <input type="hidden" id="hdnParentId" />
+             <input type="hidden" id="hdnParentPath" />
             <input type="hidden" id="hdnAssetId" />
             <input type="hidden" id="hdnTitle" />
             <span>Enter path of item</span>
-            <input type="text" id="txtSelectedItemPath" value="" style="width:60%;" />
-            <input type="text" id="txtSelectedItemID" value="" style="width:60%;" />
-            <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" />
-            <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" />
+            <input type="text" id="txtSelectedItemPath" value="" style="width:90%;" />
+            <input type="text" id="txtSelectedItemID" value="" style="width:90%;" />
+           
+            <div>
+                 <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" style="float:left;"/>
+            <input type="button" id="btnSelectedItemPathSchema" value="Select" class="unfake-disabled-button" style="float:left;" />
+            <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" style="margin-left:5px" />
+            </div>
             <div class="main-container">
 
 
@@ -863,13 +878,25 @@
                               var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
                               var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
 
+                              var txtAssetItemSchemaPath= $(this).closest('form').find('input[id="txtAssetItemSchemaPath"]').val();
+
                                  var  ddlAssetTypeValue = $(this).closest('form').find('select[id="AssetTypeDropdown_Add"]').val();
                                 // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
                                       //alert( $("#AssetTypeDropdown_Edit").val());
                                    //alert(ddlAssetTypeValue);
-                                   if(ddlAssetTypeValue == "")
+                                   if(txtSchemaName == "")
+                                 {
+                                      alert("Asset Name is mising. Please select Asset Name.");
+                                      return;
+                                 }
+                                   if(ddlAssetTypeValue == "0")
                                  {
                                       alert("Asset Type is mising. Please select AssetType.");
+                                      return;
+                                 }
+                                  if(txtAssetItemSchemaPath == "")
+                                 {
+                                      alert("Asset Schema Path is mising. Please select schema path.");
                                       return;
                                  }
                                    var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaAdd"]').val();
@@ -1115,18 +1142,29 @@
                                var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
                                 var  ddlAssetTypeValue = $(this).closest('form').find('select[id="AssetTypeDropdown_Edit"]').val();
                                       var  txtAssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
-                                  alert("txtAssetItemTreeeID "+txtAssetItemTreeeID  );
+                                 // alert("txtAssetItemTreeeID "+txtAssetItemTreeeID  );
                                      //alert( $("#AssetTypeDropdown_Edit").val());
                                   //alert(ddlAssetTypeValue);
-                                  if(ddlAssetTypeValue == "")
+                                   if(txtSchemaName == "")
+                                 {
+                                      alert("Asset Name is mising. Please select Asset Name.");
+                                      return;
+                                 }
+                                 //alert(ddlAssetTypeValue);
+                                  if(ddlAssetTypeValue == "0")
                                 {
                                      alert("Asset Type is mising. Please select AssetType.");
                                      return;
                                 }
-                                  var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchema"]').val();
-                                   //alert("txtAssetItemSchema"+txtAssetItemSchema);
+                                  var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaEdit"]').val();
+                                  var  txtAssetItemSchemaPath = $(this).closest('form').find('input[id="txtAssetItemSchemaPathEdit"]').val();
+                                   //alert("txtAssetItemSchema"+txtAssetItemSchema +txtAssetItemSchemaPath);
                                     
-
+                                    if(txtAssetItemSchemaPath == "")
+                                 {
+                                      alert("Asset Schema Path is mising. Please select schema path.");
+                                      return;
+                                 }
                              
                                       //alert("UpdateSchema");
                                   $.ajax({
@@ -1228,8 +1266,9 @@
                               $("#editSchemaForm #txtSchemaPath").val('');
                               $("#editSchemaForm #txtSchemaParent").val('');
                               $('#editSchemaForm #AssetTypeDropdown_Edit').val('0');
-                              $("#editSchemaForm #txtAssetItemSchema").val('');
+                              $("#editSchemaForm #txtAssetItemSchemaEdit").val('');
                                $("#editSchemaForm #txtAssetItemTreeeID").val(IDSchema);
+                               $("#editSchemaForm #txtAssetItemSchemaPathEdit").val('');
 
                             // alert("getSchema");
                 $.ajax({
@@ -1266,7 +1305,11 @@
                                                       
                                                         // alert("assetTypeID" +record.assetTypeID);
                                                        // alert(record.assetTypeID);
-                                                          $("#editSchemaForm #txtAssetItemSchema").val(record.assetItemSchema);
+                                                          $("#editSchemaForm #txtAssetItemSchemaEdit").val(record.assetItemSchema);
+                                                         // $("#editSchemaForm #txtAssetItemSchemaPathEdit").val(record.assetItemSchemaPath);
+
+                                                         // alert(record.assetItemSchema + '- '+ record.assetItemSchemaPath);
+
                                                              //alert("assetItemSchemaMapped" +record.assetItemTreeeID);
                                                             
                                                                  $("#editSchemaForm #txtAssetItemTreeeID").val(record.assetItemTreeeID);
@@ -1305,7 +1348,7 @@
              });
 
                         var  AssetItemID = $("#editSchemaForm #txtSchemaID").val();
-                           var  AssetItemSchemaID = $("#editSchemaForm #txtAssetItemSchema").val();
+                           var  AssetItemSchemaID = $("#editSchemaForm #txtAssetItemSchemaEdit").val();
                             var  AssetItemTreeeID = $("#editSchemaForm #txtAssetItemTreeeID").val();
                           //alert("AssetItemID" + AssetItemID);
                                 //var  AssetItemSchemaID = $('#editSchemaForm').find('input[id="txtAssetItemSchema"]').val();
@@ -1473,9 +1516,9 @@
                      
                           
                        // for  field to care Label of field
-                         const SchemaSpan2 = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
+                         const SchemaSpan2 = $('<div>').attr({ style: 'padding-bottom:0.2em;width:100%', });
                       // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-                         const AssetFieldNameLabel = $("<label>", {   for: schemaFieldID,  class: "form-label",  text: schemaFieldName, style:'width:80%;background-color:#f2f2f2;border-color:none' });
+                         const AssetFieldNameLabel = $("<label>", {   for: schemaFieldID,  class: "form-label",  text: schemaFieldName, style:'width:100%;background-color:#f2f2f2;border-color:none' });
                        
 
                             // for  field to careSIMPLLE_TEXT
@@ -1484,8 +1527,8 @@
                             //alert('SIMPLLE_TEXT');
                       SchemaSpan2.append(AssetFieldNameLabel);
                       form.append(SchemaSpan2);
-                    const SchemaSpan3 = $('<div>').attr({ style: 'padding:0em;width:80%',});
-                      const AssetFieldSingleValue = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:80%;'});
+                    const SchemaSpan3 = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                      const AssetFieldSingleValue = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;'});
                     SchemaSpan3.append(AssetFieldSingleValue);
                     form.append(SchemaSpan3);
                      }
@@ -1496,9 +1539,9 @@
                                   //alert('MULTILINE_TEXT');
                             SchemaSpan2.append(AssetFieldNameLabel);
                               form.append(SchemaSpan2);
-                    const SchemaSpan4 = $('<div>').attr({ style: 'padding:0em;width:80%', });
+                    const SchemaSpan4 = $('<div>').attr({ style: 'padding:0em;width:100%', });
                           //const AssetFieldNameInput = $('<input>').attr({ type: 'textarea',schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,id:schemaFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:80%;min-height: 50px;white-space: pre-wrap;'});
-                    const AssetFieldNameInput = $('<textarea>').attr({ schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,id:schemaFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:80%;min-height: 50px;white-space: pre-wrap;'}).html(assetFieldValue);
+                    const AssetFieldNameInput = $('<textarea>').attr({ schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,id:schemaFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 50px;white-space: pre-wrap;'}).html(assetFieldValue);
                     SchemaSpan4.append(AssetFieldNameInput);
                     form.append(SchemaSpan4);
                      
@@ -2250,7 +2293,7 @@
                                       $("#editSchemaForm #lblEditMessageSucess").val('');
                                        $("#editSchemaForm #lblEditMessageError").val('');
                                          $('#editSchemaForm').find('select[id="AssetTypeDropdown_Add"]').val('0');
-                                         $('#editSchemaForm').find('input[id="txtAssetItemSchema"]').val('');
+                                         $('#editSchemaForm').find('input[id="txtAssetItemSchemaEdit"]').val('');
                                    $("#editSchemaForm #txtSchemaParent").val(currentitemid);
                               //alert($("#addSchemaForm #lblEditMessageSucess").val());
 
