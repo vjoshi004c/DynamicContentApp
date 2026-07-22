@@ -3,57 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/lib/jquery/dist/jquery.min.js"></script>
-   <style>
-body {font-family: Arial;}
-
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-  
- 
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-  padding-left:2px;
-  padding-right:2px;
-  width:170px;
-  border: 1px solid black;
    
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: lightgray;
-  color:black;
-  border: 1px solid gray;
-  
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-</style>
-
     
     <style>
         body {
@@ -357,86 +307,32 @@ body {font-family: Arial;}
 
         </div>
         <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:2em;">
-             <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:2em;">
-           
-            <h2>Asset Details</h2>
-@* <p>Click on the buttons inside the tabbed menu:</p> *@
-
-<div class="tab">
-  <button id="btnContent" class="tablinks" onclick="openCity1(event, 'content')">Asset Overview</button>
-  <button class="tablinks" onclick="openCity(event, 'dynamicFormContainer_Edit_AssetFieldDetails')"> Asset Content</button>
-  <button class="tablinks" onclick="openCity(event, 'masterPageDiv')">Manage Page</button>
-  <button class="tablinks" onclick="openCity(event, 'ComponentPageDiv')">Manage Components</button>
-  <button class="tablinks" onclick="openCity(event, 'Preview')">Page Preview</button>
-  <button class="tablinks" onclick="openCity(event, 'Search')">Search</button>
-</div>
-
-<div id="Summary" class="tabcontent">
-  <h3>Asset Summary</h3>
-  <p>Asset Summary</p> 
-</div>
-
-<div id="Content" class="tabcontent">
-  <h3>Manage Asset Content</h3>
-  <p>Manage Asset ContentFrance.</p> 
-</div>
-
-<div id="Page" class="tabcontent">
-  <h3>Manage Page</h3>
-  <p>Manage Page</p>
-</div>
-<div id="Components" class="tabcontent">
-  <h3>Manage Components</h3>
-  <p>Manage Components</p>
-</div>
-<div id="Preview" class="tabcontent">
-  <h3>Page Preview</h3>
-  <p>Page Preview</p>
-
-  <div class="window" id="pagepreview" style="top:120px; left:400px;display:display;">
-    <div class="window-header">
-        <span class="window-title">Schema Manager</span>
-        <div class="window-buttons">
-            <button class="min-btn">_</button>
-            <button class="max-btn">□</button>
-            <button class="close-btn">×</button>
-        </div>
-    </div>
-    <div class="window-content">
-        You can move, resize, minimize, maximize, and close me.
-    </div>
-</div>
-</div>
-<div id="Search" class="tabcontent">
-  <h3>Search</h3>
-  <p>Search</p>
-</div>
-            
-
-            <div id="content" class="tabcontent" class="content" style="border-style: solid; border-color:#f2f2f2;background-color: #f2f2f2;padding:2em;">
+            <div class="content" style="border-style: solid; border-color:#f2f2f2;background-color: #f2f2f2;padding:2em;">
                 <div id="adddiv" style="display: none;  background-color: #f2f2f2;;border:solid;border-width:thin;padding:2em;">
-                            <form action="/schema/add" method="POST" id="addSchemaForm">
-                            <h2>To create new item under parent node- <span></span></h2>
-                            <p>
-                                <label for="schemaName">Asset Name:</label>
-                                    <input type="text" id="txtSchemaName" name="schemaName" style="width:500px" >
-                            </p>
-                            <p>
-                                <label for="schemaPath">Asset Path:</label>
-                                        <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
-                            </p>
-                            <p>
-                                <label for="schemaParent">Asset Parent:</label>
-                                <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
-                            </p>
-                            <p>
-                                <label for="AssetTypeDropdown_Add">AssetType:</label>
-                                <!-- 1. Create the empty HTML Dropdown -->
-                                <select id="AssetTypeDropdown_Add">
-                                    @*  <option value="">-- Select an Option --</option> *@
-                                </select>
-                            </p>
-                            <p>
+
+                <form action="/schema/add" method="POST" id="addSchemaForm">
+                <h2>To create new item under parent node- <span></span></h2>
+
+                <p>
+                    <label for="schemaName">Asset Name:</label>
+                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px" >
+                </p>
+                <p>
+                    <label for="schemaPath">Asset Path:</label>
+                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
+                </p>
+                <p>
+                    <label for="schemaParent">Asset Parent:</label>
+                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px">
+                </p>
+                        <p>
+                            <label for="AssetTypeDropdown_Add">AssetType:</label>
+                            <!-- 1. Create the empty HTML Dropdown -->
+                            <select id="AssetTypeDropdown_Add">
+                               @*  <option value="">-- Select an Option --</option> *@
+                            </select>
+                        </p>
+                <p>
                             <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
                                 <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
                                     <input type="text" id="txtAssetItemSchemaPath" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
@@ -446,123 +342,153 @@ body {font-family: Arial;}
                                 
                             </span>
 
-                            @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+                       @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
 
-                            <button id="btnAddSchemaFields"  class="unfake-disabled-button fake-disabled-button" style="display:none">Add Fields</button>
-                            @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
+                        <button id="btnAddSchemaFields"  class="unfake-disabled-button fake-disabled-button" style="display:none">Add Fields</button>
+                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
 
-                            <button id="btnSaveSchema" class="unfake-disabled-button" >Create Asset Item</button>    
-                            </p>
-                                <p>
-                                    <span id="lblAddMessageSucess" style="display:none;font-size:2em; color:green">Schema has been created successfully.</span>
-                                    <span id="lblAddMessageError" style="display:none;font-size:2em;color:red"> Opps! Error while creating schema.</span>
-                                </p>
-                            @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
-                                <p> <button type="submit">Submit</button></p> *@
-                            </form>
-                            @* <div id="dynamicFormContainer_Add"></div> *@
+                        <button id="btnSaveSchema" class="unfake-disabled-button" >Create Asset Item</button>
+                       
+                </p>
 
-            </div>
-
-            <div id="refreshdiv" style="display: none;  border-color:#f2f2f2;background-color:#f2f2f2;padding:2em;padding:2em;">
-                            <h2>Refresh existed item - <span></span></h2>
-                            <p>This form is to add informaiton on existed item</p>
-                            <p>Click on the arrow(s) to open or close the tree branches.</p>
-            </div>
-             <div id="editdiv" style="display: none;  background-color: #f2f2f2;border:solid;border-width:thin;padding:2em;">
-                         <form action="/schema/edit" method="POST" id="editSchemaForm">
-                                    <h2>To Edit Selected Item-  <span></span></h2>
-                                    <p>
-                                        <label for="schemaID">Asset ID:</label>
-                                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
-                                    </p>
-                                        <p>
-                                            <label for="schemaID">Asset Item TreeID:</label>
-                                            <input type="text" id="txtAssetItemTreeeID" name="assetItemTreeeID" class="fake-disabled-input" style="width:500px">
-                                        </p>
-                                    <p>
-                                        <label for="schemaName">Asset Name:</label>
-                                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
-                                    </p>
-                                    <p>
-                                        <label for="schemaPath">Asset Path:</label>
-                                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
-                                    </p>
-                                    <p>
-                                        <label for="schemaParent">Asset Parent:</label>
-                                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px;">
-                                    </p>
-                                        <p>
-                                            <label for="AssetTypeDropdown_Edit">AssetType:</label>
-                                            <!-- 1. Create the empty HTML Dropdown -->
-                                            <select id="AssetTypeDropdown_Edit">
-                                                @* <option value="">-- Select an Option --</option> *@
-                                            </select>
-                                        </p>
-                                    <p>
-                                            <span id="spanAssetItemSchema_Edit" style="display:block;padding:2em;border:solid;border-width:thin;">
-                                                <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
-                                                <input type="text" id="txtAssetItemSchemaPathEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;"> 
-                                                <button id="openPopupBtnAssetSchemaEdit" title="To Select Schema Item" parentitem="txtAssetItemSchemaEdit" parentitemPath="txtAssetItemSchemaPathEdit">...</button>
-                                                <input type="text" id="txtAssetItemSchemaEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
-                                                @* <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchema" parentitemPath="txtAssetItemSchemaPath">...</button> *@ 
-                                            </span>
-                                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
-                                            <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none" >Add Component</button>
-                                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
-                                        </p>
-                                    <p>
-                                            <button id="btnEditSchema" class="unfake-disabled-button" >Save Asset Item</button>
-                                    </p>
-                                    <p>
-                                        <span id="lblEditMessageSucess" style="display:none;font-size:2em; color:green">Schema has been modified successfully.</span>
-                                        <span id="lblEditMessageError" style="display:none;font-size:2em;color:red"> Opps! Error while modifying schema.</span>
-                                    </p>
-                                        @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
-                                        <p> <button type="submit">Submit</button></p> *@
-                                </form>
-                                 </div>
-
-            
-            <div id="removediv" style="display:none; border-style:solid; border-color:#f4f4f4;background-color:#f2f2f2;padding:2em;">
-
-                    <form action="/schema/delete" method="POST" id="deleteSchemaForm">
-                        <h2>To delete selected item -  <span></span></h2>
-                        <h4>Are you sure you want to delete this item?  <span></span></h4>
-                        <p>
-                            <label for="schemaID">Schema ID:</label>
-                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
-                        </p>
-                            <p>
-                                <label for="schemaName">Schema Name:</label>
-                                <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
-                            </p>
-                        <p>
-                            @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
-                            <button id="btnCancelDelete" class="unfake-disabled-button" >Cancel</button>
-                            <button id="btnDeleteSchema" class="unfake-disabled-button" >Delete Schema</button>
-                        </p>
-                        @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
-                        <p> <button type="submit">Submit</button></p> *@
-                    </form>
                     <p>
-                        <span id="lblDeleteMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema deleted successfully.</span>
-                        <span id="lblDeleteMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while deleting schema.</span>
+                        <span id="lblAddMessageSucess" style="display:none;font-size:2em; color:green">Schema has been created successfully.</span>
+                        <span id="lblAddMessageError" style="display:none;font-size:2em;color:red"> Opps! Error while creating schema.</span>
+                      
                     </p>
-            </div>
 
-            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #f2f2f2;padding:2em;">
-                    <h2>Duplicate selected item - <span></span></h2>
-                    <p>This form is to remove existed item</p>
-                    <p>Click on the arrow(s) to open or close the tree branches.</p>
-            </div>
+               @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p> <button type="submit">Submit</button></p> *@
+                </form>
+                    <div id="dynamicFormContainer_Add"></div>
 
             </div>
-            <div id="dynamicFormContainer_Edit" class="tabcontent" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
-           
-            <div id="dynamicFormContainer_Edit_AssetFieldDetails" class="tabcontent" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;">
+
+                <div id="refreshdiv" style="display: none;  border-color:#f2f2f2;background-color:#f2f2f2;padding:2em;padding:2em;">
+
+                <h2>Refresh existed item - <span></span></h2>
+
+                <p>This form is to add informaiton on existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
             </div>
-            <div id="masterPageDiv" class="tabcontent"  style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
+                <div id="editdiv" style="display: none;  background-color: #f2f2f2;border:solid;border-width:thin;padding:2em;">
+
+                <form action="/schema/edit" method="POST" id="editSchemaForm">
+                    <h2>To Edit Selected Item-  <span></span></h2>
+
+
+                    <p>
+                        <label for="schemaID">Asset ID:</label>
+                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
+                    </p>
+                        <p>
+                            <label for="schemaID">Asset Item TreeID:</label>
+                            <input type="text" id="txtAssetItemTreeeID" name="assetItemTreeeID" class="fake-disabled-input" style="width:500px">
+                        </p>
+                    <p>
+                        <label for="schemaName">Asset Name:</label>
+                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
+                    </p>
+                    <p>
+                        <label for="schemaPath">Asset Path:</label>
+                            <input type="text" id="txtSchemaPath" name="schemaPath" class="fake-disabled-input" style="width:500px">
+                    </p>
+                    <p>
+                        <label for="schemaParent">Asset Parent:</label>
+                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px;">
+                    </p>
+                        <p>
+                            <label for="AssetTypeDropdown_Edit">AssetType:</label>
+                            <!-- 1. Create the empty HTML Dropdown -->
+                            <select id="AssetTypeDropdown_Edit">
+                                @* <option value="">-- Select an Option --</option> *@
+                            </select>
+                        </p>
+                    <p>
+                            <span id="spanAssetItemSchema_Edit" style="display:block;padding:2em;border:solid;border-width:thin;">
+                                <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
+                                <input type="text" id="txtAssetItemSchemaPathEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;"> 
+                                   <button id="openPopupBtnAssetSchemaEdit" title="To Select Schema Item" parentitem="txtAssetItemSchemaEdit" parentitemPath="txtAssetItemSchemaPathEdit">...</button>
+                            
+                                <input type="text" id="txtAssetItemSchemaEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
+                                
+                                @* <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchema" parentitemPath="txtAssetItemSchemaPath">...</button> *@
+                               
+                            </span>
+                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+
+                            <button id="btnEditSchemaFields" class="unfake-disabled-button fake-disabled-button" style="display:none" >Add Component</button>
+                        @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
+                        </p>
+                        <p>
+                        <button id="btnEditSchema" class="unfake-disabled-button" >Save Asset Item</button>
+                        </p>
+                    
+
+                    <p>
+                        <span id="lblEditMessageSucess" style="display:none;font-size:2em; color:green">Schema has been modified successfully.</span>
+                        <span id="lblEditMessageError" style="display:none;font-size:2em;color:red"> Opps! Error while modifying schema.</span>
+
+                    </p>
+
+                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p> <button type="submit">Submit</button></p> *@
+                </form>
+                    <div id="dynamicFormContainer_Edit" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+
+                   
+                       
+                    </div>
+                <div id="dynamicFormContainer_Edit_AssetFieldDetails" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;">
+                </div>
+                <div id="removediv" style="display:none; border-style:solid; border-color:#f4f4f4;background-color:#f2f2f2;padding:2em;">
+
+                <form action="/schema/delete" method="POST" id="deleteSchemaForm">
+                    <h2>To delete selected item -  <span></span></h2>
+                    <h4>Are you sure you want to delete this item?  <span></span></h4>
+
+                    <p>
+                        <label for="schemaID">Schema ID:</label>
+                        <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
+                    </p>
+                        <p>
+                            <label for="schemaName">Schema Name:</label>
+                            <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
+                        </p>
+                    
+                    <p>
+
+                        @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+
+                       
+                        <button id="btnCancelDelete" class="unfake-disabled-button" >Cancel</button>
+                        <button id="btnDeleteSchema" class="unfake-disabled-button" >Delete Schema</button>
+
+                    </p>
+
+                    
+
+                    @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p> <button type="submit">Submit</button></p> *@
+                </form>
+                <p>
+                    <span id="lblDeleteMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema deleted successfully.</span>
+                    <span id="lblDeleteMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while deleting schema.</span>
+
+                </p>
+
+            </div>
+
+                <div id="duplicatediv" style="display: none; border-style: solid; background-color: #f2f2f2;padding:2em;">
+
+                <h2>Duplicate selected item - <span></span></h2>
+                <p>This form is to remove existed item</p>
+                <p>Click on the arrow(s) to open or close the tree branches.</p>
+
+            </div>
+                <div id="masterPageDiv" style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
+
                     <h2>Master Layout Settings On Page <span></span></h2>
                     <p>
                         <label for="txtMasterPageItem">Is Item Page Type:</label>
@@ -573,80 +499,93 @@ body {font-family: Arial;}
                         <input type="text" id="txtMasterPageItem" class="unfake-disabled-input" name="MasterPageItem" style="width:500px">
                        @*  <input type="text" id="txtMasterPageItemID" class="unfake-disabled-input" name="MasterPageItemID" style="width:500px"> *@
                         <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem" parentitemID="txtMasterPageItemID" >...</button>
+                       
                     </p>
                     <p>
                         <button id="btnSaveMasterLayout" class="unfake-disabled-button">Save Master Layout</button>
+
                     </p>
-            </div>
 
-            <div id="ComponentPageDiv" class="tabcontent" style="display: block; border-style: solid;border-width:thin; background-color:#e6e6e6;padding:2em;">
-                        <h2>Manage Components On Page <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
-                        <p>
-                            @* <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button> *@
-                        </p>
-                        <p>
-                            <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
-                        </p>
-                        <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails"  style="border-style:none; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
-           
-            </div>
-
-                 
-        
-    </div>
-</div>
-
-                <div id="customModal" class="modal-overlay">
-                    <!-- Modal Box Content -->
-                    <div class="modal-content">
-                        <span id="closeModalBtn" class="close-x">&times;</span>
-                        <h2><span id="lblModelTitle"></span></h2>
-                        <input type="hidden" id="hdnTitle" />
-                         <input type="hidden" id="hdnParentId" />
-                         <input type="hidden" id="hdnParentPath" />
-                        <input type="hidden" id="hdnAssetId" />
-                        <input type="hidden" id="hdnTitle" />
-                        <span>Enter path of item</span>
-                        <input type="text" id="txtSelectedItemPath" value="" style="width:90%;" />
-                        <input type="text" id="txtSelectedItemID" value="" style="width:90%;" />
-                        <div>
-                             <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" style="float:left;"/>
-                        <input type="button" id="btnSelectedItemPathSchema" value="Select" class="unfake-disabled-button" style="float:left;" />
-                        <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" style="margin-left:5px" />
-                        </div>
-                        <div class="main-container">
-                            <div class="sidebar scroll-container " id="myUL1Div">
-
-                                <h2 id="myUL1h1">Content Tree</h2>
-                                <ul id="myUL1">
-                                    @* <li tag="1049D17E-6C1C-45A9-9B75-5F779B61023E">
-                                        <span  id="1049D17E-6C1C-45A9-9B75-5F779B61023E" tag="1049D17E-6C1C-45A9-9B75-5F779B61023E" class="caret_lup default-color">Lookup tree</span>
-                                        <ul id="lup_1049D17E-6C1C-45A9-9B75-5F779B61023E" class="nested" >
-                                        </ul>
-                                    </li> *@
-                                </ul>
-
-                            </div>
-                        </div>
-                        <input type="hidden" id="hdnChildCount1" runat="server" value="0" />
-                    </div>
                 </div>
 
+                <div id="ComponentPageDiv" style="display: block; border-style: solid;border-width:thin; background-color:#e6e6e6;padding:2em;">
 
-            <!-- Custom Context Menu -->
-            <div id="contextMenu">
-                <ul>
-                    <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
-                     <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
-                     <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
-                    <li id="add_li">Create</li>
-                    <li id="edit_li">Edit</li>
-                    <li id="remove_li">Remove</li>
-                    <li id="duplicate_li">Duplicate</li>
-                    <li id="refresh_li">Refresh</li>
-                </ul>
+                    <h2>Manage Components On Page <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
+                    <p>
+                        @* <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button> *@
+
+                    </p>
+                    <p>
+                        <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+
+                    </p>
+                    <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails" style="border-style:none; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+                </div>
+               
+              
+
+        </div>
+        </div>
+    </div>
+
+    <div id="customModal" class="modal-overlay">
+        <!-- Modal Box Content -->
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close-x">&times;</span>
+            <h2><span id="lblModelTitle"></span></h2>
+            <input type="hidden" id="hdnTitle" />
+             <input type="hidden" id="hdnParentId" />
+             <input type="hidden" id="hdnParentPath" />
+            <input type="hidden" id="hdnAssetId" />
+            <input type="hidden" id="hdnTitle" />
+            <span>Enter path of item</span>
+            <input type="text" id="txtSelectedItemPath" value="" style="width:90%;" />
+            <input type="text" id="txtSelectedItemID" value="" style="width:90%;" />
+           
+            <div>
+                 <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" style="float:left;"/>
+            <input type="button" id="btnSelectedItemPathSchema" value="Select" class="unfake-disabled-button" style="float:left;" />
+            <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" style="margin-left:5px" />
             </div>
-            <input type="hidden" id="hdnChildCount" runat="server" value="0"  />
+            <div class="main-container">
+
+
+                <div class="sidebar scroll-container " id="myUL1Div">
+
+                    <h2 id="myUL1h1">Content Tree</h2>
+                    <ul id="myUL1">
+                        @* <li tag="1049D17E-6C1C-45A9-9B75-5F779B61023E">
+                            <span  id="1049D17E-6C1C-45A9-9B75-5F779B61023E" tag="1049D17E-6C1C-45A9-9B75-5F779B61023E" class="caret_lup default-color">Lookup tree</span>
+                            <ul id="lup_1049D17E-6C1C-45A9-9B75-5F779B61023E" class="nested" >
+                            </ul>
+                        </li> *@
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <input type="hidden" id="hdnChildCount1" runat="server" value="0" />
+        </div>
+    </div>
+
+
+    <!-- Custom Context Menu -->
+    <div id="contextMenu">
+        <ul>
+            <!-- <li id="edit_li" onclick="alert('Option 1 clicked')">Edit</li>
+             <li id="remove_li"  onclick="alert('Option 2 clicked')">Remove</li>
+             <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
+            <li id="add_li">Create</li>
+            <li id="edit_li">Edit</li>
+            <li id="remove_li">Remove</li>
+            <li id="duplicate_li">Duplicate</li>
+            <li id="refresh_li">Refresh</li>
+            
+
+        </ul>
+    </div>
+    <input type="hidden" id="hdnChildCount" runat="server" value="0"  />
 
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -1869,22 +1808,6 @@ body {font-family: Arial;}
         //}
 
      }
-     function openCity1(evt, cityName) {
-        // alert("openCity1");
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  $("#btnContent").className += " active";
-  $("#btnContent").css("background-color", " #ccc");
-  //evt.currentTarget.className += " active";
-}
      function ViewContentItem( currentitemid) {
           //$("#btnEditSchemaFields").removeClass("fake-disabled-button");
                             closeAllViewPanels();
@@ -1895,8 +1818,6 @@ body {font-family: Arial;}
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
                                innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
                               getSchema( currentitemid );
-                              openCity1(event, 'content')
-
                                //alert(currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
                                    var assetid = $("#editSchemaForm #txtSchemaID").val();
@@ -2495,30 +2416,8 @@ body {font-family: Arial;}
 <script src="/js/custom/dynamicSchemaFields.js"></script>
 <script src="/js/custom/dynamicComponents.js"></script>
 <script src="/js/custom/dynamicSchemaPopup.js"></script>
-<script>
-function openCity(evt, cityName) {
-    $("#btnContent").css("background-color", "#f4f4f4");
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-  if(cityName=='Preview')
-  {
-  // $("#pagepreview .window-content").load('/Contenttree');
-    //$("#pagepreview .window-content").load('UniversalCMS/Content/ArticleSite');
-   
-  }
 
-}
 
-</script>
 
 
 
