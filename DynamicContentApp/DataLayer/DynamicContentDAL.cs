@@ -802,6 +802,39 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+
+        public bool UpdateAssetItemPath(string AssetItemID, string AssetItemPath)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", AssetItemID);
+                cmd.Parameters.AddWithValue("@SchemaName", "");
+                cmd.Parameters.AddWithValue("@SchemaPath", AssetItemPath);
+                cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@AssetTypeID", "");
+                cmd.Parameters.AddWithValue("@Query", 5);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public bool InsertPageContent(string PageUrl, string PageContent)
         {
             SqlConnection con = null;

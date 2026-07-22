@@ -463,10 +463,22 @@ namespace DynamicContentApp.Controllers
 
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
             List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID);
-            if (SchemaModellist != null && SchemaModellist.Count == 0)
+            string AssetItemPath = string.Empty;
+            string AssetItemID = string.Empty;
+            if (SchemaModellist != null && SchemaModellist.Count > 0)
             {
+                foreach (SchemaModel item in SchemaModellist)
+                {
+                    AssetItemPath = item.SchemaPath;
+                    AssetItemID = item.ID;
+                }
 
             }
+            if (AssetItemPath != string.Empty && AssetItemID != string.Empty)
+            {
+                bool updateStatus = dynamicContentDAL.UpdateAssetItemPath(AssetItemID, AssetItemPath);
+            }
+
             return Ok(SchemaModellist);
         }
 
