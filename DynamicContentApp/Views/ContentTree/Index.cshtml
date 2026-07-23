@@ -27,8 +27,8 @@ body {font-family: Arial;}
   font-size: 17px;
   padding-left:2px;
   padding-right:2px;
-  width:170px;
-  border: 1px solid black;
+  width:16.6%;
+  border: 1px solid #d9d9d9;
    
 }
 
@@ -36,7 +36,8 @@ body {font-family: Arial;}
 .tab button:hover {
   background-color: lightgray;
   color:black;
-  border: 1px solid gray;
+  border: 1px solid #d9d9d9;
+  font-weight: bold;
   
 }
 
@@ -48,7 +49,7 @@ body {font-family: Arial;}
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 6px 12px;
+ /*  padding: 6px 12px; */
   border: 1px solid #ccc;
   border-top: none;
 }
@@ -225,7 +226,7 @@ body {font-family: Arial;}
         }
 
         .content {
-            width: 85%; /* Sets the width to 75% */
+            width: 100%; /* Sets the width to 75% */
             background-color: #e0e0e0;
         }
 
@@ -312,7 +313,7 @@ body {font-family: Arial;}
     <div class="main-container " >
         <div class="sidebar scroll-container ">
 
-            <h2>Content Tree</h2>
+           @*  <h2>Content Tree</h2> *@
 
 
             <ul id="myUL">
@@ -357,16 +358,16 @@ body {font-family: Arial;}
 
         </div>
         <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:2em;">
-             <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:2em;">
+             <div class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:0em;">
            
-            <h2>Asset Details</h2>
+            @* <h2>Asset Details</h2> *@
 @* <p>Click on the buttons inside the tabbed menu:</p> *@
 
-<div class="tab">
+<div class="tab" style="width:100%">
   <button id="btnContent" class="tablinks" onclick="openCity1(event, 'content')">Asset Overview</button>
   <button class="tablinks" onclick="openCity(event, 'dynamicFormContainer_Edit_AssetFieldDetails')"> Asset Content</button>
-  <button class="tablinks" onclick="openCity(event, 'masterPageDiv')">Manage Page</button>
-  <button class="tablinks" onclick="openCity(event, 'ComponentPageDiv')">Manage Components</button>
+  <button class="tablinks" onclick="openCity(event, 'masterPageDiv')"> Page</button>
+  <button class="tablinks" onclick="openCity(event, 'ComponentPageDiv')"> Components</button>
   <button class="tablinks" onclick="openCity(event, 'Preview')">Page Preview</button>
   <button class="tablinks" onclick="openCity(event, 'Search')">Search</button>
 </div>
@@ -390,7 +391,7 @@ body {font-family: Arial;}
   <p>Manage Components</p>
 </div>
 <div id="Preview" class="tabcontent" style="width: 100%; height: 400dvh;">
-    <div style="display: flex;justify-content: flex-end;"><input type="button" id="btnFullPreview" value="Full Preview" class="unfake-disabled-button"/></div>
+    <div style="display: flex;justify-content: flex-end;"><input type="button" id="btnFullPreview" value="Full Preview" class="unfake-disabled-button" style="margin-top:0.5em"/></div>
   @* <h3>Page Preview</h3>
   <p>Page Preview</p> *@
   <iframe id="myIframe" src="#" style="width: 100%; height: 100%; border: 1px solid #000;"></iframe>
@@ -408,14 +409,14 @@ body {font-family: Arial;}
     </div> *@
 </div>
 </div>
-<div id="Search" class="tabcontent">
-  <h3>Search</h3>
-  <p>Search</p>
+<div id="Search" class="tabcontent"  style="width: 100%; height: 400dvh;background-color:#E6E6E6">
+  <h2>Search</h2>
+   
 </div>
             
 
-            <div id="content" class="tabcontent" class="content" style="border-style: solid; border-color:#f2f2f2;background-color: #f2f2f2;padding:2em;">
-                <div id="adddiv" style="display: none;  background-color: #f2f2f2;;border:solid;border-width:thin;padding:2em;">
+            <div id="content" class="tabcontent" class="content" style="border-style: solid; border-color:#d9d9d9;background-color: #f2f2f2;padding:0em;">
+                <div id="adddiv" style="display: none;  background-color: #E6E6E6;;border:solid;border-width:thin;padding:2em;border-color:#d9d9d9">
                             <form action="/schema/add" method="POST" id="addSchemaForm">
                             <h2>To create new item under parent node- <span></span></h2>
                             <p>
@@ -442,7 +443,7 @@ body {font-family: Arial;}
                                 <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
                                     <input type="text" id="txtAssetItemSchemaPath" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
                                     <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd" parentitemPath="txtAssetItemSchemaPath">...</button>
-                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
+                                <input type="text" id="txtAssetItemSchemaAdd" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;display:none;">
                             
                                 
                             </span>
@@ -465,14 +466,14 @@ body {font-family: Arial;}
 
             </div>
 
-            <div id="refreshdiv" style="display: none;  border-color:#f2f2f2;background-color:#f2f2f2;padding:2em;padding:2em;">
+            <div id="refreshdiv" style="display: none;  border-color:#E6E6E6;background-color:#f2f2f2;padding:2em;padding:2em;">
                             <h2>Refresh existed item - <span></span></h2>
                             <p>This form is to add informaiton on existed item</p>
                             <p>Click on the arrow(s) to open or close the tree branches.</p>
             </div>
-             <div id="editdiv" style="display: none;  background-color: #f2f2f2;border:solid;border-width:thin;padding:2em;">
+             <div id="editdiv" style="display: none;  background-color: #E6E6E6;border:solid;border-width:thin;padding:2em;border-color:#d9d9d9">
                          <form action="/schema/edit" method="POST" id="editSchemaForm">
-                                    <h2>To Edit Selected Item-  <span></span></h2>
+                                    <h2>Summary of Asset -  <span></span></h2>
                                     <p>
                                         <label for="schemaID">Asset ID:</label>
                                             <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
@@ -505,7 +506,7 @@ body {font-family: Arial;}
                                                 <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
                                                 <input type="text" id="txtAssetItemSchemaPathEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;"> 
                                                 <button id="openPopupBtnAssetSchemaEdit" title="To Select Schema Item" parentitem="txtAssetItemSchemaEdit" parentitemPath="txtAssetItemSchemaPathEdit">...</button>
-                                                <input type="text" id="txtAssetItemSchemaEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
+                                                <input type="text" id="txtAssetItemSchemaEdit" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;display:none;">
                                                 @* <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchema" parentitemPath="txtAssetItemSchemaPath">...</button> *@ 
                                             </span>
                                         @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
@@ -516,8 +517,8 @@ body {font-family: Arial;}
                                             <button id="btnEditSchema" class="unfake-disabled-button" >Save Asset Item</button>
                                     </p>
                                     <p>
-                                        <span id="lblEditMessageSucess" style="display:none;font-size:2em; color:green">Schema has been modified successfully.</span>
-                                        <span id="lblEditMessageError" style="display:none;font-size:2em;color:red"> Opps! Error while modifying schema.</span>
+                                        <span id="lblEditMessageSucess" style="display:none;font-size:1em; color:green">Schema has been modified successfully.</span>
+                                        <span id="lblEditMessageError" style="display:none;font-size:1em;color:red"> Opps! Error while modifying schema.</span>
                                     </p>
                                         @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                                         <p> <button type="submit">Submit</button></p> *@
@@ -525,7 +526,7 @@ body {font-family: Arial;}
                                  </div>
 
             
-            <div id="removediv" style="display:none; border-style:solid; border-color:#f4f4f4;background-color:#f2f2f2;padding:2em;">
+            <div id="removediv" style="display:none; border-style:solid; border-color:#f4f4f4;background-color:#E6E6E6;padding:2em;">
 
                     <form action="/schema/delete" method="POST" id="deleteSchemaForm">
                         <h2>To delete selected item -  <span></span></h2>
@@ -552,18 +553,18 @@ body {font-family: Arial;}
                     </p>
             </div>
 
-            <div id="duplicatediv" style="display: none; border-style: solid; background-color: #f2f2f2;padding:2em;">
+            <div id="duplicatediv" style="display: none; border-style: solid; border-color:#d9d9d9;background-color: #E6E6E6;padding:2em;">
                     <h2>Duplicate selected item - <span></span></h2>
                     <p>This form is to remove existed item</p>
                     <p>Click on the arrow(s) to open or close the tree branches.</p>
             </div>
 
             </div>
-            <div id="dynamicFormContainer_Edit" class="tabcontent" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+            <div id="dynamicFormContainer_Edit" class="tabcontent" style="border-style:solid; border-width:thin; border-color:#d9d9d9; padding:2em;display:none;"></div>
            
-            <div id="dynamicFormContainer_Edit_AssetFieldDetails" class="tabcontent" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;">
+            <div id="dynamicFormContainer_Edit_AssetFieldDetails" class="tabcontent" style="border-style:solid; border-width:thin; border-color:#d9d9d9; padding:2em;display:none;background-color:#E6E6E6">
             </div>
-            <div id="masterPageDiv" class="tabcontent"  style="display: block; border-style: solid;border-width:thin; background-color: #f2f2f2;padding:2em;">
+            <div id="masterPageDiv" class="tabcontent"  style="display: block; border-style: solid;border-width:thin; background-color: #E6E6E6;padding:2em;">
                     <h2>Master Layout Settings On Page <span></span></h2>
                     <p>
                         <label for="txtMasterPageItem">Is Item Page Type:</label>
@@ -580,7 +581,7 @@ body {font-family: Arial;}
                     </p>
             </div>
 
-            <div id="ComponentPageDiv" class="tabcontent" style="display: block; border-style: solid;border-width:thin; background-color:#e6e6e6;padding:2em;">
+            <div id="ComponentPageDiv" class="tabcontent" style="display: block; border-style: solid;border-width:thin; background-color:#E6E6E6;padding:2em;">
                         <h2>Manage Components On Page <span style="margin-left:50%;"><button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button></span></h2>
                         <p>
                             @* <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button> *@
@@ -1557,7 +1558,7 @@ body {font-family: Arial;}
                       // for  field to care Label of field
                           const SchemaSpanHeader = $('<div>').attr({ style: 'padding-bottom:0.2em;width:80%', });
                        // const AssetFieldNameLabel = $('<input>').attr({ type: 'text', name: 'AssetFieldName', value:schemaFieldName, placeholder: 'Asset Field Name Label' , style:'width:80%;background-color:#D3E0C3;border-color:#D3E0C3'});
-                          const AssetFieldNameHeaderLabel = $("<h2>", {     class: "form-label",  text: 'To Edit Selected Item Content  ', style:'width:80%;background-color:#f2f2f2;border-color:none' });
+                          const AssetFieldNameHeaderLabel = $("<h2>", {     class: "form-label",  text: 'Detail of Asset Content', style:'width:80%;background-color:rgb(230, 230, 230);border-color:none' });
                              SchemaSpanHeader.append(AssetFieldNameHeaderLabel);
                        form.append(SchemaSpanHeader);
 
@@ -2213,12 +2214,12 @@ body {font-family: Arial;}
                 var toggler = document.getElementsByClassName("caret");
                 var i;
                 for (i = 0; i < toggler.length; i++) {
-                    toggler[i].addEventListener("click", function (e) {
-                        this.parentElement.querySelector(".nested").classList.toggle("active");
-                        this.classList.toggle("caret-down");
-                        const idSchema = this.getAttribute('id');
+                    //toggler[i].addEventListener("click", function (e) {
+                        toggler[i].parentElement.querySelector(".nested").classList.toggle("active");
+                        toggler[i].classList.toggle("caret-down");
+                        const idSchema = toggler[i].getAttribute('id');
 
-                       const allchildLi = this.parentElement.querySelectorAll('ul li');
+                       const allchildLi = toggler[i].parentElement.querySelectorAll('ul li');
               
                        allchildLi.forEach(span => {
                              span.remove();
@@ -2228,12 +2229,12 @@ body {font-family: Arial;}
                         spans.forEach(span => {
                             span.classList.remove('highlight');
                         });
-                        this.classList.toggle("highlight");
+                        toggler[i].classList.toggle("highlight");
                         const spans1 = document.querySelectorAll('span.highlight');
                         spans1.forEach(span => {
                             setupcontextmenu(this);
 
-                        });
+                       // });
                         ViewContentItem(idSchema) ;
 
                     });
@@ -2385,7 +2386,7 @@ body {font-family: Arial;}
                                             var MessageError=  $("#lblEditMessageError");
                                             MessageSucess.css('display', 'none');
                                             MessageError.css('display', 'none');
-                                             alert(currentitemid);
+                                            // alert(currentitemid);
                                             getSchema( currentitemid );
                                        
                                             var content=$("#" +currentitemid).html();
