@@ -10,13 +10,22 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DynamicContentApp.styles.css" asp-append-version="true" />
+    <style>
+            .pb-3 {
+                padding-bottom: 0rem !important;
+            }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <main role="main" class="pb-3">
-            <h2>Page Item content details on Master layout</h2>
-            <h3>Title - @Model.Title</h3>
-            <h3>ArticleShortDescription - @Model.ArticleShortDescription</h3>
+           @*  <h2>Page Item content details on Master layout</h2> *@
+            <h3>@Model.Title</h3>
+            <p>
+            <small>
+                @Model.ArticleShortDescription</small>
+                </p>
           
             [[PLACEHOLDER_HEADER]]
         </main>

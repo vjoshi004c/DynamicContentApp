@@ -3,7 +3,15 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<div style="background-color:Gray;color:white">
+<style>
+    footer {
+        text-align: center;
+        padding: 5px;
+        background-color: #abbaba;
+        color: black;
+    }
+</style>
+@* <div style="background-color:Gray;color:white">
     <h1 class="display-4">Article Footer</h1>
     <h2>Footer item content details </h2>
 
@@ -12,6 +20,29 @@
 <h3>Title - @Model.Title</h3>
     <h3>Description - @Model.Description</h3>
 <h3>PrivacyInfo - @Model.PrivacyInfo</h3>
-</div>
+</div> *@
+
+<footer>
+    <p>
+    <small>
+        Copyright © 2026 Universal CMS. All Rights Reserved.
+    </small>
+    </p>
+    <p>
+    <small>
+        Title  : @Model.Title
+    </small>
+    </p>
+        <p>
+    <small>
+        Description :  @Model.Description  
+    </small>
+    </p>
+            <p>
+    <small>
+        Privacy Info : @Model.PrivacyInfo
+    </small>
+    </p>
+</footer>
 
 

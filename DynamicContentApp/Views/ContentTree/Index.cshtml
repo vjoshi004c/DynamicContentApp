@@ -389,11 +389,11 @@ body {font-family: Arial;}
   <h3>Manage Components</h3>
   <p>Manage Components</p>
 </div>
-<div id="Preview" class="tabcontent">
-  <h3>Page Preview</h3>
-  <p>Page Preview</p>
-
-  <div class="window" id="pagepreview" style="top:120px; left:400px;display:display;">
+<div id="Preview" class="tabcontent" style="width: 100%; height: 400dvh;">
+  @* <h3>Page Preview</h3>
+  <p>Page Preview</p> *@
+  <iframe id="myIframe" src="#" style="width: 100%; height: 100%; border: 1px solid #000;"></iframe>
+  @* <div class="window" id="pagepreview" style="top:120px; left:400px;display:display;">
     <div class="window-header">
         <span class="window-title">Schema Manager</span>
         <div class="window-buttons">
@@ -404,7 +404,7 @@ body {font-family: Arial;}
     </div>
     <div class="window-content">
         You can move, resize, minimize, maximize, and close me.
-    </div>
+    </div> *@
 </div>
 </div>
 <div id="Search" class="tabcontent">
@@ -647,6 +647,7 @@ body {font-family: Arial;}
                 </ul>
             </div>
             <input type="hidden" id="hdnChildCount" runat="server" value="0"  />
+             <input type="hidden" id="hdnAssetPath" runat="server" value=""  />
 
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -1354,6 +1355,8 @@ body {font-family: Arial;}
                                        $("#editSchemaForm #txtSchemaID").val(record.id);
                                            $("#editSchemaForm #txtSchemaName").val(record.schemaName);
                                              $("#editSchemaForm #txtSchemaPath").val(record.schemaPath);
+                                              $("#hdnAssetPath").val('');
+                                               $("#hdnAssetPath").val(record.schemaPath);
                                                $("#editSchemaForm #txtSchemaParent").val(record.parentID);
                                                if(record.assetTypeID !='')
                                                {
@@ -2513,7 +2516,18 @@ function openCity(evt, cityName) {
   {
   // $("#pagepreview .window-content").load('/Contenttree');
     //$("#pagepreview .window-content").load('UniversalCMS/Content/ArticleSite');
-   
+    var iframe = document.getElementById('myIframe');
+
+     var txtSchemaPath = $("#hdnAssetPath").val();
+     var protocol = window.location.protocol; // e.g., "https:"
+        var host = window.location.host; // e.g., "www.example.com"
+        var pathname = window.location.pathname; // e.g., "/current-page"
+        var search = window.location.search; // e.g., "?query=exam
+       // alert(txtSchemaPath);
+    var urlOfPreviewPage= protocol+'//'+ host+ txtSchemaPath;
+    var newSrc = urlOfPreviewPage;
+    //alert(newSrc);
+    iframe.src = newSrc;
   }
 
 }
