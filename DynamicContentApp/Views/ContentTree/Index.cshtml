@@ -390,6 +390,7 @@ body {font-family: Arial;}
   <p>Manage Components</p>
 </div>
 <div id="Preview" class="tabcontent" style="width: 100%; height: 400dvh;">
+    <div style="display: flex;justify-content: flex-end;"><input type="button" id="btnFullPreview" value="Full Preview" class="unfake-disabled-button"/></div>
   @* <h3>Page Preview</h3>
   <p>Page Preview</p> *@
   <iframe id="myIframe" src="#" style="width: 100%; height: 100%; border: 1px solid #000;"></iframe>
@@ -2529,6 +2530,23 @@ function openCity(evt, cityName) {
     //alert(newSrc);
     iframe.src = newSrc;
   }
+
+ 
+   $('#btnFullPreview').on('click', function(e) {
+
+       //alert("full preivew");
+        e.preventDefault(); // This stops the form from submitting and redirecting
+     e.stopPropagation();
+      var txtSchemaPath = $("#hdnAssetPath").val();
+     var protocol = window.location.protocol; // e.g., "https:"
+        var host = window.location.host; // e.g., "www.example.com"
+        var pathname = window.location.pathname; // e.g., "/current-page"
+         // e.g., "?query=exam
+       // alert(txtSchemaPath);
+      var urlOfPreviewPage= protocol+'//'+ host+ txtSchemaPath;
+     
+      window.open(urlOfPreviewPage, '_blank');
+       });
 
 }
 
