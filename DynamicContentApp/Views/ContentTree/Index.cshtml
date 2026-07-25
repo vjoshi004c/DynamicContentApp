@@ -364,12 +364,12 @@ body {font-family: Arial;}
 @* <p>Click on the buttons inside the tabbed menu:</p> *@
 
 <div class="tab" style="width:100%">
-  <button id="btnContent" class="tablinks" onclick="openCity1(event, 'content')">Asset Overview</button>
-  <button class="tablinks" onclick="openCity(event, 'dynamicFormContainer_Edit_AssetFieldDetails')"> Asset Content</button>
-  <button class="tablinks" onclick="openCity(event, 'masterPageDiv')"> Page</button>
-  <button class="tablinks" onclick="openCity(event, 'ComponentPageDiv')"> Components</button>
-  <button class="tablinks" onclick="openCity(event, 'Preview')">Page Preview</button>
-  <button class="tablinks" onclick="openCity(event, 'Search')">Search</button>
+  <button id="btnContent" tag="Content" class="tablinks" onclick="openCity1(event, 'content')">Asset Overview</button>
+  <button id="btnAssetdetail" class="tablinks" tag="Assetdetail" onclick="openCity(event, 'dynamicFormContainer_Edit_AssetFieldDetails')"> Asset Content</button>
+  <button id="btnPage" class="tablinks" tag="Page" onclick="openCity(event, 'masterPageDiv')"> Page</button>
+  <button id="btnComponents" class="tablinks" tag="Components" onclick="openCity(event, 'ComponentPageDiv')"> Components</button>
+  <button id="btnPreview" class="tablinks" tag="Preview" onclick="openCity(event, 'Preview')">Page Preview</button>
+  <button id="btnSearch" class="tablinks" tag="Search" onclick="openCity(event, 'Search')">Search</button>
 </div>
 
 <div id="Summary" class="tabcontent">
@@ -1884,6 +1884,60 @@ body {font-family: Arial;}
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
+    var txtSchemaPath = $("#hdnAssetPath").val();
+
+    var tabTag= tablinks[i].getAttribute('tag');
+     //alert("openCity1 tag" +txtSchemaPath + tabTag +tabcontent[i]);
+     if (txtSchemaPath.indexOf("/"+ "Content" ) != -1) {
+
+         $("#btnPage").css("display", "block");
+          $("#btnComponents").css("display", "block");
+           $("#btnPreview").css("display", "block");
+            $("#btnSearch").css("display", "block");
+             $("#btnAssetdetail").css("display", "block");
+     }
+     if (txtSchemaPath.indexOf("/"+ "Layout" ) != -1) {
+
+         $("#btnPage").css("display", "none");
+          $("#btnComponents").css("display", "none");
+           $("#btnPreview").css("display", "none");
+            $("#btnSearch").css("display", "none");
+             $("#btnAssetdetail").css("display", "block");
+     }
+     if (txtSchemaPath.indexOf("/"+ "Media" ) != -1) {
+
+         $("#btnPage").css("display", "none");
+          $("#btnComponents").css("display", "none");
+           $("#btnPreview").css("display", "none");
+            $("#btnSearch").css("display", "none");
+             $("#btnAssetdetail").css("display", "block");
+     }
+      if (txtSchemaPath.indexOf("/"+ "Setting" ) != -1) {
+
+         $("#btnPage").css("display", "none");
+          $("#btnComponents").css("display", "none");
+           $("#btnPreview").css("display", "none");
+            $("#btnSearch").css("display", "none");
+             $("#btnAssetdetail").css("display", "block");
+     }
+	if (txtSchemaPath.indexOf("/"+ "Schema" ) != -1) {
+
+         $("#btnPage").css("display", "none");
+          $("#btnComponents").css("display", "none");
+           $("#btnPreview").css("display", "none");
+            $("#btnSearch").css("display", "none");
+             $("#btnAssetdetail").css("display", "none");
+          
+          
+          
+        // if(tabTag= "Page")
+        // {
+        //    $("#btnContent").css("display", "none");
+        // 	//tabcontent[i].css("display", "none");
+        //     alert("openCity1 tag" +tabTag +tabcontent[i]);
+        // }
+    }
+
   }
   document.getElementById(cityName).style.display = "block";
   $("#btnContent").className += " active";
