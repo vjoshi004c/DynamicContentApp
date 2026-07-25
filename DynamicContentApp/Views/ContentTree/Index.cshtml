@@ -1613,6 +1613,56 @@ body {font-family: Arial;}
                      
                          }
 
+                     if(item.schemaFieldType =='CHECKBOX')
+                     {
+                          SchemaSpan2.append(AssetFieldNameLabel);
+                              form.append(SchemaSpan2);
+                               const SchemaSpanCheckbox= $('<div>').attr({ style: 'padding:0em;width:100%', });
+                               if(item.assetFieldValue=="")
+                               {
+                                   assetFieldValue= "false";
+                               }
+                              var AssetFieldNameCheckbox= false;
+                               if(assetFieldValue== 'true')
+                               {
+                                 AssetFieldNameCheckbox = $('<input>').attr({ checked:true, type: 'checkbox',  schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Option' , style:'width:2%;'});
+                               }
+                               else 
+                               {
+                                   
+                                 AssetFieldNameCheckbox = $('<input>').attr({ checked:false, type: 'checkbox', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Option' , style:'width:2%;'});
+                               }
+                                SchemaSpanCheckbox.append(AssetFieldNameCheckbox);
+                                form.append(SchemaSpanCheckbox);
+
+                                AssetFieldNameCheckbox.on("change", function () {
+                                        var selectedID = $(this).val();
+                                         
+                                         if(selectedID=='false')
+                                         {
+                                          $(this).prop("checked", true);
+                                          $(this).val("true");
+                                         }
+                                         else 
+                                         {
+                                              $(this).prop("checked", false);
+                                              $(this).val("false");
+                                         }
+
+
+
+                                        //var selectedText = $(this).find("option:selected").text();
+                                        //alert("You selected: " + selectedID);
+                                       // alert("You selected: " + selectedText);
+                                        //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
+                                            //alert("You selected: " + selectedID);
+                                            //alert("You selected: " + selectedText);
+                                            //$("#spanAssetItemSchema_Add").css("display", "block");
+                                            // }
+                                            });
+                                        //alert(item.assetFieldValue);
+                    }
+
                        // for field to care DROPDOWN
                     const optionsDataDropdwon = [
                                       { value: "", text: "-Select Field Type -" },
