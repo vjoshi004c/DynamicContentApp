@@ -1695,7 +1695,7 @@ body {font-family: Arial;}
                          SchemaSpan2.append(AssetFieldNameLabel);
                          form.append(SchemaSpan2);
                           const SchemaSpanDate= $('<div>').attr({ style: 'padding:0em;width:100%', });
-                          AssetFieldNameDate = $('<input>').attr({ checked:true, type: 'text',  schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Date' , style:'width:25%;'});
+                          AssetFieldNameDate = $('<input>').attr({ checked:true, type: 'text',  class:"datetime", schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Date' , style:'width:25%;'});
                   
                               
                                 SchemaSpanDate.append(AssetFieldNameDate);
@@ -1705,7 +1705,7 @@ body {font-family: Arial;}
                                 //         var selectedID = $(this).val();
                                 //         alert("date selection" +selectedID);
                                 // }
-                                 AssetFieldNameDate.datepicker({
+                                 AssetFieldNameDate.datetimepicker({
                                         //  dateFormat: "mm-dd-yy", // Year-Month-Day
                                         // format: 'Y-m-d H:i',
                                           // format: 'd/m/Y H:i A',
@@ -1717,7 +1717,8 @@ body {font-family: Arial;}
                                             dateFormat: "yy-mm-dd",   // Date format
                                             timeFormat: "HH:mm",      // 24-hour format
                                            controlType: "select",    // Dropdowns for hours/minutes
-                                            oneLine: true           // Show date & time in one line
+                                            oneLine: true,           // Show date & time in one line
+                                             showButtonPanel: true
                                            // minDate: 0,               // Disable past dates
                                             //stepMinute: 5  ,           // Minute step
                                         // onSelect: function(dateText) {
