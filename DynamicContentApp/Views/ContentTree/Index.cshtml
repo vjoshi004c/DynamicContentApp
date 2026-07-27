@@ -2,7 +2,41 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+            
     <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <link type="text/css" href="/css/jquery-ui.css"        rel="stylesheet" />
+    @* <script src="/lib/jquery/dist/jquery-ui.min.js"></script> *@
+    <!-- jQuery Timepicker Addon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input {
+            padding: 8px;
+            width: 250px;
+        }
+    </style>
+
+
+       <style>
+        .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid Gray;
+    background: Gray;
+    color: White;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    border: 1px solid #003eff;
+    background: Red;
+    font-weight: normal;
+    color: white;
+}
+</style>
    <style>
 body {font-family: Arial;}
 
@@ -652,6 +686,8 @@ body {font-family: Arial;}
              <input type="hidden" id="hdnAssetPath" runat="server" value=""  />
 
     <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery/dist/jquery-ui.min.js"></script>
+        
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/site.js?v=hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo"></script>
 </body>
@@ -1648,20 +1684,73 @@ body {font-family: Arial;}
                                               $(this).prop("checked", false);
                                               $(this).val("false");
                                          }
-
-
-
-                                        //var selectedText = $(this).find("option:selected").text();
-                                        //alert("You selected: " + selectedID);
-                                       // alert("You selected: " + selectedText);
-                                        //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
-                                            //alert("You selected: " + selectedID);
-                                            //alert("You selected: " + selectedText);
-                                            //$("#spanAssetItemSchema_Add").css("display", "block");
-                                            // }
-                                            });
-                                        //alert(item.assetFieldValue);
+                                          });
                     }
+                    if(item.schemaFieldType =='DATE')
+                     {
+                        // alert("Date");
+                         SchemaSpan2.append(AssetFieldNameLabel);
+                         form.append(SchemaSpan2);
+                          const SchemaSpanDate= $('<div>').attr({ style: 'padding:0em;width:100%', });
+                          AssetFieldNameDate = $('<input>').attr({ checked:true, type: 'text',  schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Date' , style:'width:25%;'});
+                  
+                              
+                                SchemaSpanDate.append(AssetFieldNameDate);
+                                form.append(SchemaSpanDate);
+
+                                // AssetFieldNameDate.on("onSelect", function () {
+                                //         var selectedID = $(this).val();
+                                //         alert("date selection" +selectedID);
+                                // }
+                                 AssetFieldNameDate.datepicker({
+                                        //  dateFormat: "mm-dd-yy", // Year-Month-Day
+                                        // format: 'Y-m-d H:i',
+                                          // format: 'd/m/Y H:i A',
+                                          // timeFormat: 'HH:mm:ss',  // 24-hour format with minutes
+                                           //changeMonth: true,      // Dropdown for month
+                                            // changeYear: true  ,  
+                                            //  minDate: 0,
+                                            // maxDate: '+1M'// Dropdown for year
+                                            dateFormat: "yy-mm-dd",   // Date format
+                                            timeFormat: "HH:mm",      // 24-hour format
+                                           controlType: "select",    // Dropdowns for hours/minutes
+                                            oneLine: true           // Show date & time in one line
+                                           // minDate: 0,               // Disable past dates
+                                            //stepMinute: 5  ,           // Minute step
+                                        // onSelect: function(dateText) {
+                                        //     dateValue = dateText; // Store selected date
+                                        //     alert("date selection" +dateValue);
+                                        //     //$("#saveDate").show(); // Show save button
+                                        // }
+                                    });
+                                         
+                                         
+                     }
+                      if(item.schemaFieldType =='DROPDOWN')
+                     {
+
+                     }
+                      if(item.schemaFieldType =='IMAGE')
+                     {
+
+                     }
+                     if(item.schemaFieldType =='LINK')
+                     {
+
+                     }
+                     if(item.schemaFieldType =='MULTILIST')
+                     {
+
+                     }
+                     
+                     if(item.schemaFieldType =='HTML_TEXT')
+                     {
+
+                     }
+                     
+                     
+
+
 
                        // for field to care DROPDOWN
                     const optionsDataDropdwon = [
