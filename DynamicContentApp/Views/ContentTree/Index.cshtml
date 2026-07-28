@@ -13,7 +13,108 @@
     <!-- jQuery Timepicker Addon -->
     @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css"> *@
+    <!!-- htmleditor style -->
+     <style>
+        * {
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .editor-container {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+        }
+
+        .pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+            /* Style the buttons inside the tab */
+            .tab button {
+                background-color: inherit;
+                float: left;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                padding: 14px 16px;
+                transition: 0.3s;
+                font-size: 17px;
+                padding-left: 2px;
+                padding-right: 2px;
+                width: 16.6%;
+                border: 1px solid #d9d9d9;
+            }
+
+                /* Change background color of buttons on hover */
+                .tab button:hover {
+                    background-color: lightgray;
+                    color: black;
+                    border: 1px solid #d9d9d9;
+                    font-weight: bold;
+                }
+
+                /* Create an active/current tablink class */
+                .tab button.active {
+                    background-color: #ccc;
+                }
+
+        /* Style the tab content */
+        .tabcontenteditor {
+            display: none;
+            /*  padding: 6px 12px; */
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+
+
+    <!-- end of html editor style-->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -1755,8 +1856,97 @@ body {font-family: Arial;}
                      
                      if(item.schemaFieldType =='HTML_TEXT')
                      {
+                                             SchemaSpan2.append(AssetFieldNameLabel);
+                                                form.append(SchemaSpan2);
+                                          const SchemaSpanHtmlDiv = $('<div>').attr({ style: 'width:100%' , class:"tab",id:"editordiv"});
+                                              const previewid = 'PREVIEW_EDITOR_'+schemaFieldID;
+                                                  const htmlid = 'HTML_EDITOR_'+schemaFieldID
 
-                     }
+                                                       const previewcall =    "openCityEditor(event,'"+  previewid+"');";
+                                                                 const htmlcall =    "openCityEditor(event,'"+  htmlid+"');";
+
+                                                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"PREVIEW", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;'});
+                                                                                        const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text:"HTML", class:"tablinkseditor" ,onclick:htmlcall, schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"HTML", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value2' , style:'width:10%;'});
+                                        
+                                        SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton2);
+                                            SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
+                                           form.append(SchemaSpanHtmlDiv);
+
+                                                  // alert("HTML_TEXT - " +assetFieldValue);
+
+
+                                                        const SchemaSpanHtmlDiv_HTML = $('<div>').attr({ id:htmlid, class:"pane tabcontenteditor", style:"height:500px"});
+                                                                     const AssetFieldNameInput_HTML = $('<textarea>').attr({ id:"html-input", placeholder:"Type <h1>Hello World</h1>...",schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 400px;white-space: pre-wrap;'}).html(assetFieldValue);;
+
+                                                            SchemaSpanHtmlDiv_HTML.append(AssetFieldNameInput_HTML);
+                                                    form.append(SchemaSpanHtmlDiv_HTML);
+
+                                                                const SchemaSpanHtmlDiv_PREVIEW = $('<div>').attr({ id:previewid, class:"pane tabcontenteditor", style:"height:500px"});
+                                                                const AssetFieldNameInput_PREVIEW  = $('<iframe>').attr({ id:"live-preview" ,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 400px;white-space: pre-wrap;'});
+
+                                                                SchemaSpanHtmlDiv_PREVIEW.append(AssetFieldNameInput_PREVIEW);
+                                                                form.append(SchemaSpanHtmlDiv_PREVIEW);
+
+                                                                            //const htmlCode = $('#html-input').val();
+                                                                               // alert(htmlCode);
+
+                                                                                              //var previewcode = $('#live-preview').val(assetFieldValue);
+                                                                                        //alert(previewcode);
+
+                                                                           // var $preview = $('#live-preview');
+                                                                                   // $preview.style.display = "block";
+                                                                           // const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+                                                                            // Get access to the iframe internal document context
+                                                                            //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+                                                                            // Open context, write code, and close stream to safely render
+                                                                                // $preview .open();
+                                                                                // $preview .write(htmlCode);
+                                                                                // $preview .close();
+
+                                                                    AssetFieldNameInput_HTML.on("keyup input", function () {
+                                                                     //alert("inside keyup");
+                                                                    const htmlCode = $(this).val();
+                                                                    const $preview = $('#live-preview');
+
+                                                                    const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+                                                                    // Get access to the iframe internal document context
+                                                                    //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+                                                                    // Open context, write code, and close stream to safely render
+                                                                    previewDoc.open();
+                                                                    previewDoc.write(htmlCode);
+                                                                    previewDoc.close();
+                                                                 });
+
+                                                                        
+
+                                                                                  AssetFieldHtmlbutton1.on("click", function () {
+                                                                        // alert("inside keyup");
+                                                                            const htmlCode = $('#html-input').val();
+                                                                                //alert(htmlCode);
+                                                                        const $preview = $('#live-preview');
+
+                                                                        const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+                                                                        // Get access to the iframe internal document context
+                                                                        //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+                                                                        // Open context, write code, and close stream to safely render
+                                                                        previewDoc.open();
+                                                                        previewDoc.write(htmlCode);
+                                                                        previewDoc.close();
+                                                                     });
+                                                                             //document.getElementById(previewid).style.display = "block";
+                                                                             // document.getElementById(previewid).trigger("click");
+
+
+                                                
+
+                         
+                         }
                      
                      
 
@@ -2705,6 +2895,11 @@ body {font-family: Arial;}
 <script src="/js/custom/dynamicSchemaPopup.js"></script>
 <script>
 function openCity(evt, cityName) {
+        //alert("openCity");
+             //document.getElementById(previewid).style.display = "block";
+            // document.getElementById(previewid).trigger("click");
+
+
     $("#btnContent").css("background-color", "#f4f4f4");
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -2755,6 +2950,83 @@ function openCity(evt, cityName) {
 }
 
 </script>
+
+<!-- html editor related -->
+@* <script>
+    $(document).ready(function () {
+        document.getElementById("PREVIEW").style.display = "block";
+        // Target the textarea and the iframe
+        const $input = $('#html-input');
+        const $preview = $('#live-preview');
+
+        // Listen for input modifications in real-time
+        $input.on('keyup input', function () {
+            // Fetch the plain text/HTML code from textarea
+            const htmlCode = $(this).val();
+
+            // Get access to the iframe internal document context
+            const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+
+            // Open context, write code, and close stream to safely render
+            previewDoc.open();
+            previewDoc.write(htmlCode);
+            previewDoc.close();
+        });
+
+        // Optional: Insert default placeholder markup on load
+        $input.val('<h1>Welcome!</h1>\n<p>Start typing HTML code on the left to see it render live on the right.</p>\n<button onclick="alert(\'Interactivity works!\')">Click Me</button>').trigger('input');
+    });
+
+
+</script> *@
+<script>
+
+    function openCityEditor(evt, cityName) {
+
+        //alert("openCityEditor");
+        //$("#btnContent").css("background-color", "#f4f4f4");
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontenteditor");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinkseditor");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+         const currentid = "PREVIEW_EDITOR_"+$(evt.target).attr('id');
+         //alert("PREVIEW_EDITOR" + cityName + "   "+ currentid);
+        
+        // if (cityName == currentid) {
+           
+        //     document.getElementById(currentid).style.display = "block";
+        //       alert("PREVIEW_EDITOR" + document.getElementById(currentid).value);
+        //     //// $("#pagepreview .window-content").load('/Contenttree');
+        //     ////$("#pagepreview .window-content").load('UniversalCMS/Content/ArticleSite');
+        //     //var iframe = document.getElementById('myIframe');
+
+        //     //var txtSchemaPath = $("#hdnAssetPath").val();
+        //     //var protocol = window.location.protocol; // e.g., "https:"
+        //     //var host = window.location.host; // e.g., "www.example.com"
+        //     //var pathname = window.location.pathname; // e.g., "/current-page"
+        //     //var search = window.location.search; // e.g., "?query=exam
+        //     //// alert(txtSchemaPath);
+        //     //var urlOfPreviewPage = protocol + '//' + host + txtSchemaPath;
+        //     //var newSrc = urlOfPreviewPage;
+        //     ////alert(newSrc);
+        //     //iframe.src = newSrc;
+        // }
+        if (cityName == 'dynamicFormContainer_Edit_AssetFieldDetails') {
+            //document.getElementById(cityName).style.display = "block";
+            $("#btnContent").trigger("click");
+        }
+    }
+
+</script>
+
+<!-- end html editor related-->
 
 
 
