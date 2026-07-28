@@ -94,6 +94,13 @@ namespace DynamicContentApp.Service
                 JsonDataSB.Append("\"" + "AssetFields" + "\"" + ":" + "{");
                 foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                 {
+                    // string newvalue =  AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"");
+                    // string newvalue = AssetItemFieldDetail.AssetFieldValue.Replace('"', '\"');
+                    //string newvalue = AssetItemFieldDetail.AssetFieldValue.ToString();
+                    //AssetItemFieldDetail.AssetFieldValue=newvalue.Replace("\"", "\\\"")
+
+                        string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
+                    AssetItemFieldDetail.AssetFieldValue = result;
                     JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                 }
                 JsonDataSB.Append("\"field\":\"none\"},");
@@ -130,6 +137,8 @@ namespace DynamicContentApp.Service
             JsonDataSB.Append("}");
 
             string JsonData = JsonDataSB.ToString();
+
+            //JSON.stringify(JsonData);
 
             dynamic dynamicObjectN = JObject.Parse(JsonData);
 
