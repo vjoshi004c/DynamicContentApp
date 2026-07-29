@@ -76,7 +76,7 @@
         }
 
             /* Style the buttons inside the tab */
-            .tab button {
+            .tab button, .tab input[type="button"] {
                 background-color: inherit;
                 float: left;
                 border: none;
@@ -92,15 +92,26 @@
             }
 
                 /* Change background color of buttons on hover */
-                .tab button:hover {
+                .tab input[type="button"]:hover {
                     background-color: lightgray;
                     color: black;
                     border: 1px solid #d9d9d9;
                     font-weight: bold;
                 }
+                 .tab button:hover {
+                    background-color: lightgray;
+                    color: black;
+                    border: 1px solid #d9d9d9;
+                    font-weight: bold;
+                }
+                 
 
                 /* Create an active/current tablink class */
                 .tab button.active {
+                    background-color: #ccc;
+                }
+
+                    .tab input[type="button"].active {
                     background-color: #ccc;
                 }
 
@@ -1865,23 +1876,23 @@ body {font-family: Arial;}
                                                        const previewcall =    "openCityEditor(event,'"+  previewid+"');";
                                                                  const htmlcall =    "openCityEditor(event,'"+  htmlid+"');";
 
-                                                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"PREVIEW", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;'});
-                                                                                        const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text:"HTML", class:"tablinkseditor" ,onclick:htmlcall, schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"HTML", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value2' , style:'width:10%;'});
-                                        
+                                                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"PREVIEW", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;padding:3px;font-size:13;'});
+                const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text: "HTML", class: "tablinkseditor", onclick: htmlcall, schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, id: schemaFieldID, value: "HTML", name: 'AssetFieldSingleValue', placeholder: 'Enter Asset Field Value2', style: 'width:10%;padding:3px;font-size:13;' });
+                SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
                                         SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton2);
-                                            SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
+                                       
                                            form.append(SchemaSpanHtmlDiv);
 
                                                   // alert("HTML_TEXT - " +assetFieldValue);
 
 
-                                                        const SchemaSpanHtmlDiv_HTML = $('<div>').attr({ id:htmlid, class:"pane tabcontenteditor", style:"height:500px"});
+                                                        const SchemaSpanHtmlDiv_HTML = $('<div>').attr({ id:htmlid, class:"pane tabcontenteditor", style:"height:500px;display:block;"});
                                                                      const AssetFieldNameInput_HTML = $('<textarea>').attr({ id:"html-input", placeholder:"Type <h1>Hello World</h1>...",schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 400px;white-space: pre-wrap;'}).html(assetFieldValue);;
 
                                                             SchemaSpanHtmlDiv_HTML.append(AssetFieldNameInput_HTML);
-                                                    form.append(SchemaSpanHtmlDiv_HTML);
+                                                            form.append(SchemaSpanHtmlDiv_HTML);
 
-                                                                const SchemaSpanHtmlDiv_PREVIEW = $('<div>').attr({ id:previewid, class:"pane tabcontenteditor", style:"height:500px"});
+                                                                const SchemaSpanHtmlDiv_PREVIEW = $('<div>').attr({ id:previewid, class:"pane tabcontenteditor", style:"height:500px;"});
                                                                 const AssetFieldNameInput_PREVIEW  = $('<iframe>').attr({ id:"live-preview" ,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 400px;white-space: pre-wrap;'});
 
                                                                 SchemaSpanHtmlDiv_PREVIEW.append(AssetFieldNameInput_PREVIEW);
