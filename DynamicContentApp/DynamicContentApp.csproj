@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="DatabaseScript\August1st2026\" />
     <Folder Include="MockData\" />
-    <Folder Include="DatabaseScript\" />
     <Folder Include="Treeview\" />
     <Folder Include="Views\Components\" />
     <Folder Include="Views\ContentTree\" />
