@@ -14,6 +14,26 @@
     @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css"> *@
     <!!-- htmleditor style -->
+    <style>
+        .modern-file-input::file-selector-button {
+          /*   padding-left: 1rem;
+            padding-right:1rem;
+            padding:0.1rem; */
+            background-color: gray;
+            color: #ffffff;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            height: 2em;
+            width: 10em;
+        }
+
+            /* Add hover mechanics */
+            .modern-file-input::file-selector-button:hover {
+                background-color: lightgray;
+            }
+    </style>
      <style>
         * {
             box-sizing: border-box;
@@ -662,7 +682,7 @@ body {font-family: Arial;}
                                         @*<button id="btnSaveSchema"  onclick="saveSchema();">Save Schema</button>*@
                                         </p>
                                     <p>
-                                            <button id="btnEditSchema" class="unfake-disabled-button" >Save Asset Item</button>
+                            <button id="btnEditSchema" class="unfake-disabled-button">Save Asset Item</button> <button id="btnUploadMedia" class="unfake-disabled-button" style="margin-left:10px;visibility:hidden; ">Upload Media</button>
                                     </p>
                                     <p>
                                         <span id="lblEditMessageSucess" style="display:none;font-size:1em; color:green">Schema has been modified successfully.</span>
@@ -671,6 +691,13 @@ body {font-family: Arial;}
                                         @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
                                         <p> <button type="submit">Submit</button></p> *@
                                 </form>
+
+                                    @* <div>
+                                        <p>
+                                           
+                                        </p>
+                                    </div> *@
+
                                  </div>
 
             
@@ -727,6 +754,7 @@ body {font-family: Arial;}
                     <p>
                         <button id="btnSaveMasterLayout" class="unfake-disabled-button">Save Master Layout</button>
                     </p>
+                
             </div>
 
             <div id="ComponentPageDiv" class="tabcontent" style="display: block; border-style: solid;border-width:thin; background-color:#E6E6E6;padding:2em;">
@@ -781,6 +809,23 @@ body {font-family: Arial;}
                         <input type="hidden" id="hdnChildCount1" runat="server" value="0" />
                     </div>
                 </div>
+
+
+    <div id="customModalMedia" class="modal-overlay" >
+        <!-- Modal Box Content -->
+        <div class="modal-content" style="height:15dvh">
+            <span id="closeMediaModalBtn" class="close-x">&times;</span>
+            <h2><span id="lblModelMediaTitle"></span></h2>
+            <div style="border:2px solid #d9d9d9;padding:10px;">
+            <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" id="fileInput" name="uploadedFile" required style="width:60%" class="modern-file-input" />
+                    <button type="button" style="height: 2em;width: 10em;background-color:red;color:white;border-color:red;" id="uploadBtn">Upload</button>
+            </form>
+            <div id="statusMessage"></div>
+            </div>
+        </div>
+    </div>
+
 
 
             <!-- Custom Context Menu -->
@@ -1564,6 +1609,8 @@ body {font-family: Arial;}
                      }
              });
 
+                                $("#btnUploadMedia").css("visibility", "hidden")
+
                         var  AssetItemID = $("#editSchemaForm #txtSchemaID").val();
                            var  AssetItemSchemaID = $("#editSchemaForm #txtAssetItemSchemaEdit").val();
                             var  AssetItemTreeeID = $("#editSchemaForm #txtAssetItemTreeeID").val();
@@ -1600,6 +1647,10 @@ body {font-family: Arial;}
                                                         // $('#openPopupBtnAssetSchema').css("display", "none");
                                                          $("#openPopupBtnAssetSchema").css("visibility", "hidden");
                                                             $("#txtAssetItemSchema").css("background-color", "#d9d9d9");
+                                                                     //$("#btnUploadMedia").css("visibility", "visible")
+                                                                   //$("#btnUploadMedia").css("display", "block");
+
+
 
                                       }
 
@@ -1852,51 +1903,122 @@ body {font-family: Arial;}
                      {
 
                      }
-                      if(item.schemaFieldType =='IMAGE')
+                          if(item.schemaFieldType =='MULTILIST')
                      {
+                             
 
                      }
                      if(item.schemaFieldType =='LINK')
                      {
 
                      }
-                     if(item.schemaFieldType =='MULTILIST')
+
+                    if(item.schemaFieldType =='FILE')
+                        {
+                                     const htmlid = 'MEDIAFILE_'+schemaFieldID
+                                     SchemaSpan2.append(AssetFieldNameLabel);
+                                                        form.append(SchemaSpan2);
+                                                                 const AssetFieldHtmlb_MediaUploadInsert = $('<input>').attr({title:"Upload Media File" ,type: 'button', text:"Upload File",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:'Upload Media File', name: 'AssetFieldSingleValue',placeholder: 'Enter Media File Value1' , style:'background-color:Gray;color:white;width:10%;margin-left:15px;padding:3px;font-size:12px;'});
+                                    SchemaSpan2.append(AssetFieldHtmlb_MediaUploadInsert);
+
+                                         const SchemaSpanMediaDiv_Media = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                                    const AssetFieldHtmlb_Media = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
+                                SchemaSpanMediaDiv_Media.append(AssetFieldHtmlb_Media);
+                                form.append(SchemaSpanMediaDiv_Media);
+
+
+                                         AssetFieldHtmlb_MediaUploadInsert.on("click", function () {
+                                                                            //alert("inside AssetFieldHtmlb_MediaInsert");
+                                                                            const mediaPath = $('#'+htmlid).val();
+                                                                                //alert(mediaPath);
+                                                                                     $("#lblModelTitle").html('');
+                                                                                    const currenttitle = this.getAttribute('title');
+                                                                                    $("#lblModelTitle").html(currenttitle);
+                                                                                    $("#hdnParentId").val(htmlid);
+                                                                                    $("#btnSelectedItemPath").css("display", "none");
+                                                                                    $("#btnSelectedItemPathSchema").css("display", "none");
+                                                                                        if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
+                                                                                    // $("#btnSelectedItemPath").css("visibility", "visible");
+                                                                                    $("#btnSelectedItemPath").css("display", "block");
+                                                                                    $("#txtSelectedItemPath").val(mediaPath);
+                                                                                    $("#txtSelectedItemID").val('');
+                                                                                                    }
+                                                                                    $("#lblModelMediaTitle").html('');
+                                                                                    $("#lblModelMediaTitle").html('To Upload Media File');
+                                                                                    $("#customModalMedia").show();
+                                                                    });
+
+
+
+                            }
+                         if(item.schemaFieldType =='IMAGE')
                      {
 
+                                const htmlid = 'MEDIAFILE_'+schemaFieldID
+                            SchemaSpan2.append(AssetFieldNameLabel);
+                                const AssetFieldHtmlb_MediaInsert = $('<input>').attr({title:"Select Media Item" ,type: 'button', text:"Insert Media",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:'Insert Media File', name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;margin-left:15px;padding:3px;font-size:12px;'});
+                            SchemaSpan2.append(AssetFieldHtmlb_MediaInsert);
+
+                            form.append(SchemaSpan2);
+
+                            const SchemaSpanMediaDiv_Media = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                                const AssetFieldHtmlb_Media = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
+                            SchemaSpanMediaDiv_Media.append(AssetFieldHtmlb_Media);
+                            form.append(SchemaSpanMediaDiv_Media);
+                                     AssetFieldHtmlb_MediaInsert.on("click", function () {
+                                                                        //alert("inside AssetFieldHtmlb_MediaInsert");
+                                                                        const mediaPath = $('#'+htmlid).val();
+                                                                            //alert(mediaPath);
+                                                                                 $("#lblModelTitle").html('');
+                                                                                const currenttitle = this.getAttribute('title');
+                                                                                $("#lblModelTitle").html(currenttitle);
+                                                                                $("#hdnParentId").val(htmlid);
+                                                                                $("#btnSelectedItemPath").css("display", "none");
+                                                                                $("#btnSelectedItemPathSchema").css("display", "none");
+                                                                                    if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
+                                                                                // $("#btnSelectedItemPath").css("visibility", "visible");
+                                                                                $("#btnSelectedItemPath").css("display", "block");
+                                                                                $("#txtSelectedItemPath").val(mediaPath);
+                                                                                $("#txtSelectedItemID").val('');
+                                                                                                }
+                                                                                 $("#customModal").show();
+                                                                                       lookupTree('B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9', 'MediaItem');
+                                                                });
+                               
                      }
                      
                      if(item.schemaFieldType =='HTML_TEXT')
                      {
-                                             SchemaSpan2.append(AssetFieldNameLabel);
-                                                form.append(SchemaSpan2);
-                                          const SchemaSpanHtmlDiv = $('<div>').attr({ style: 'width:100%' , class:"tab",id:"editordiv"});
-                                              const previewid = 'PREVIEW_EDITOR_'+schemaFieldID;
-                                                  const htmlid = 'HTML_EDITOR_'+schemaFieldID
+                                                    SchemaSpan2.append(AssetFieldNameLabel);
+                                                    form.append(SchemaSpan2);
+                                                    const SchemaSpanHtmlDiv = $('<div>').attr({ style: 'width:100%' , class:"tab",id:"editordiv"});
+                                                    const previewid = 'PREVIEW_EDITOR_'+schemaFieldID;
+                                                    const htmlid = 'HTML_EDITOR_'+schemaFieldID
 
-                                                       const previewcall =    "openCityEditor(event,'"+  previewid+"');";
-                                                                 const htmlcall =    "openCityEditor(event,'"+  htmlid+"');";
+                                                    const previewcall =    "openCityEditor(event,'"+  previewid+"');";
+                                                    const htmlcall =    "openCityEditor(event,'"+  htmlid+"');";
 
-                                                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"PREVIEW", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;padding:3px;font-size:12px;'});
-                const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text: "HTML", class: "tablinkseditor", onclick: htmlcall, schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, id: schemaFieldID, value: "HTML", name: 'AssetFieldSingleValue', placeholder: 'Enter Asset Field Value2', style: 'width:10%;padding:3px;font-size:12px;' });
-                SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
-                                        SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton2);
+                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"PREVIEW", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;padding:3px;font-size:12px;'});
+                                                    const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text: "HTML", class: "tablinkseditor", onclick: htmlcall, schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, id: schemaFieldID, value: "HTML", name: 'AssetFieldSingleValue', placeholder: 'Enter Asset Field Value2', style: 'width:10%;padding:3px;font-size:12px;' });
+                                                    SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
+                                                    SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton2);
                                        
-                                           form.append(SchemaSpanHtmlDiv);
+                                                     form.append(SchemaSpanHtmlDiv);
 
                                                   // alert("HTML_TEXT - " +assetFieldValue);
 
 
-                                                        const SchemaSpanHtmlDiv_HTML = $('<div>').attr({ id:htmlid, class:"pane tabcontenteditor", style:"height:500px;display:block;"});
-                                                                     const AssetFieldNameInput_HTML = $('<textarea>').attr({ id:"html-input", placeholder:"Type <h1>Hello World</h1>...",schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 400px;white-space: pre-wrap;overflow-y:auto;'}).html(assetFieldValue);;
+                                                    const SchemaSpanHtmlDiv_HTML = $('<div>').attr({ id:htmlid, class:"pane tabcontenteditor", style:"height:500px;display:block;"});
+                                                    const AssetFieldNameInput_HTML = $('<textarea>').attr({ id:"html-input", placeholder:"Type <h1>Hello World</h1>...",schemaFieldID:schemaFieldID, assetFieldID:assetFieldID,tag:'component',value:assetFieldValue, rows:5,cols: 50, name: 'AssetFieldMultiLineValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;min-height: 400px;white-space: pre-wrap;overflow-y:auto;'}).html(assetFieldValue);;
 
-                                                            SchemaSpanHtmlDiv_HTML.append(AssetFieldNameInput_HTML);
-                                                            form.append(SchemaSpanHtmlDiv_HTML);
+                                                    SchemaSpanHtmlDiv_HTML.append(AssetFieldNameInput_HTML);
+                                                    form.append(SchemaSpanHtmlDiv_HTML);
 
-                                                                const SchemaSpanHtmlDiv_PREVIEW = $('<div>').attr({ id:previewid, class:"pane tabcontenteditor", style:"height:500px;"});
-                const AssetFieldNameInput_PREVIEW = $('<iframe>').attr({ id: "live-preview", schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, rows: 5, cols: 50, name: 'AssetFieldMultiLineValue', placeholder: 'Enter Asset Field Value', style: 'width:100%;min-height: 400px;white-space: pre-wrap;o verflow-y:auto;'});
+                                                    const SchemaSpanHtmlDiv_PREVIEW = $('<div>').attr({ id:previewid, class:"pane tabcontenteditor", style:"height:500px;"});
+                                                    const AssetFieldNameInput_PREVIEW = $('<iframe>').attr({ id: "live-preview", schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, rows: 5, cols: 50, name: 'AssetFieldMultiLineValue', placeholder: 'Enter Asset Field Value', style: 'width:100%;min-height: 400px;white-space: pre-wrap;o verflow-y:auto;'});
 
-                                                                SchemaSpanHtmlDiv_PREVIEW.append(AssetFieldNameInput_PREVIEW);
-                                                                form.append(SchemaSpanHtmlDiv_PREVIEW);
+                                                    SchemaSpanHtmlDiv_PREVIEW.append(AssetFieldNameInput_PREVIEW);
+                                                    form.append(SchemaSpanHtmlDiv_PREVIEW);
 
                                                                             //const htmlCode = $('#html-input').val();
                                                                                // alert(htmlCode);
@@ -1916,42 +2038,42 @@ body {font-family: Arial;}
                                                                                 // $preview .write(htmlCode);
                                                                                 // $preview .close();
 
-                                                                    AssetFieldNameInput_HTML.on("keyup input", function () {
-                                                                     //alert("inside keyup");
-                                                                    const htmlCode = $(this).val();
-                                                                    const $preview = $('#live-preview');
+                                                            AssetFieldNameInput_HTML.on("keyup input", function () {
+                                                                //alert("inside keyup");
+                                                            const htmlCode = $(this).val();
+                                                            const $preview = $('#live-preview');
 
-                                                                    const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+                                                            const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
 
-                                                                    // Get access to the iframe internal document context
-                                                                    //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+                                                            // Get access to the iframe internal document context
+                                                            //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
 
-                                                                    // Open context, write code, and close stream to safely render
-                                                                    previewDoc.open();
-                                                                    previewDoc.write(htmlCode);
-                                                                    previewDoc.close();
-                                                                 });
+                                                            // Open context, write code, and close stream to safely render
+                                                            previewDoc.open();
+                                                            previewDoc.write(htmlCode);
+                                                            previewDoc.close();
+                                                            });
 
                                                                         
 
-                                                                                  AssetFieldHtmlbutton1.on("click", function () {
-                                                                        // alert("inside keyup");
-                                                                            const htmlCode = $('#html-input').val();
-                                                                                //alert(htmlCode);
-                                                                        const $preview = $('#live-preview');
+                                                            AssetFieldHtmlbutton1.on("click", function () {
+                                                            // alert("inside keyup");
+                                                            const htmlCode = $('#html-input').val();
+                                                            //alert(htmlCode);
+                                                            const $preview = $('#live-preview');
 
-                                                                        const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+                                                            const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
 
-                                                                        // Get access to the iframe internal document context
-                                                                        //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
+                                                            // Get access to the iframe internal document context
+                                                            //const previewDoc = $preview[0].contentDocument || $preview[0].contentWindow.document;
 
-                                                                        // Open context, write code, and close stream to safely render
-                                                                        previewDoc.open();
-                                                                        previewDoc.write(htmlCode);
-                                                                        previewDoc.close();
-                                                                     });
-                                                                             //document.getElementById(previewid).style.display = "block";
-                                                                             // document.getElementById(previewid).trigger("click");
+                                                            // Open context, write code, and close stream to safely render
+                                                            previewDoc.open();
+                                                            previewDoc.write(htmlCode);
+                                                            previewDoc.close();
+                                                            });
+                                                            //document.getElementById(previewid).style.display = "block";
+                                                            // document.getElementById(previewid).trigger("click");
 
 
                                                 
@@ -3038,6 +3160,40 @@ function openCity(evt, cityName) {
 </script>
 
 <!-- end html editor related-->
+
+<!-- script related to upload media file-->
+@* <script>
+    $(document).ready(function () {
+        $("#uploadBtn").click(function () {
+            var fileInput = $("#fileInput")[0].files[0];
+
+            if (!fileInput) {
+                $("#statusMessage").text("Please select a file first.");
+                return;
+            }
+
+            // Build the multi-part form payload
+            var formData = new FormData();
+            formData.append("uploadedFile", fileInput);
+
+            $.ajax({
+                url: '/File/UploadAndSave', // Your C# Controller Endpoint
+                type: 'POST',
+                data: formData,
+                contentType: false, // Required: Tells jQuery not to set headers
+                processData: false, // Required: Tells jQuery not to convert data
+                success: function (response) {
+                    $("#statusMessage").text(response.message).css("color", "green");
+                },
+                error: function () {
+                    $("#statusMessage").text("An error occurred during upload.").css("color", "red");
+                }
+            });
+        });
+    });
+</script> *@
+
+<!-- end of script upload media file -->
 
 
 

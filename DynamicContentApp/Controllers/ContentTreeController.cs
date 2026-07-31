@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
-using System.Text.Json;
-using Newtonsoft.Json.Linq;
 
 namespace DynamicContentApp.Controllers
 {
@@ -26,6 +27,55 @@ namespace DynamicContentApp.Controllers
         private readonly IControllerRenderService _controllerRenderService;
         private readonly SystemConfigOptions _options;
         private readonly ICMSService _cmsService;
+
+        private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+
+        [HttpPost]
+        public async Task<IActionResult> UploadAndSave(IFormFile uploadedFile)
+        {
+            if (uploadedFile == null || uploadedFile.Length == 0)
+            {
+                return Json(new { message = "No file data received." });
+            }
+
+            try
+            {
+                // 1. Read file info and convert content to a byte array 
+                string fileName = Path.GetFileName(uploadedFile.FileName);
+                string contentType = uploadedFile.ContentType;
+                byte[] fileData;
+
+                using (var targetMemoryStream = new MemoryStream())
+                {
+                    await uploadedFile.CopyToAsync(targetMemoryStream);
+                    fileData = targetMemoryStream.ToArray();
+                }
+
+                // 2. Perform parameterized SQL command execution to save records safely
+                string query = "INSERT INTO AssetMediaUploadedFiles (FileName, ContentType, FileData) VALUES (@FileName, @ContentType, @FileData)";
+
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@FileName", fileName);
+                        command.Parameters.AddWithValue("@ContentType", contentType);
+                        command.Parameters.AddWithValue("@FileData", fileData); // Maps directly to VARBINARY(MAX)
+
+                        await connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
+                    }
+                }
+
+                return Json(new { message = "File successfully uploaded!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = $"Server error processing file: {ex.Message}" });
+            }
+        }
+
+
         public ContentTreeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService) :base(logger, viewRenderService, controllerRenderService)
         {
             _logger = logger;

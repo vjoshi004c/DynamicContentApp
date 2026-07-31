@@ -1,6 +1,76 @@
 ﻿
 
 $(document).ready(function () {
+    //$('#btnUploadMedia').click(function () {
+    //   // alert("btnUploadMedia");
+    //    $("#lblModelMediaTitle").html('');
+    //    $("#lblModelMediaTitle").html('To Upload Media File');
+    //    $("#customModalMedia").show();
+    //    return false;
+
+    //});
+    $("#closeMediaModalBtn").on("click", function () {
+        $("#customModalMedia").hide();
+    });
+    $("#uploadBtn").click(function () {
+       // alert("uploadBtn");
+        
+        var fileInput = $("#fileInput")[0].files[0];
+
+        var fileName = "UploadMediaFile";
+        //var fileInput = $('#fileInput')[0].files[0];
+
+        if (fileInput) {
+            fileName = fileInput.name;
+        }
+
+        if (!fileInput) {
+            $("#statusMessage").text("Please select a file first.");
+           
+            
+            return;
+        }
+
+        // Build the multi-part form payload
+        var formData = new FormData();
+        formData.append("uploadedFile", fileInput);
+
+        //alert(formData);
+
+        $.ajax({
+            url: '/ContentTree/UploadAndSave', // Your C# Controller Endpoint
+            type: 'POST',
+            data: formData,
+            contentType: false, // Required: Tells jQuery not to set headers
+            processData: false, // Required: Tells jQuery not to convert data
+            success: function (response) {
+                $("#statusMessage").text(response.message).css("color", "green");
+            },
+            error: function () {
+                $("#statusMessage").text("An error occurred during upload.").css("color", "red");
+            }
+        });
+
+        const parentitemid = $("#hdnParentId").val();
+        //const parentitemPath = $("#hdnParentPath").val();
+
+        alert(parentitemid);
+        const selectedItemPath = fileName;
+        alert(fileName);
+
+        alert(selectedItemPath);
+        //const selectedItemID = $("#txtSelectedItemID").val();
+        //$("#" + parentitemid).val(selectedItemID);
+        $("#" + parentitemid).val(selectedItemPath);
+        //alert($("#" + parentitem).val(selectedItemPath));
+        //alert(parentitemid + parentitemPath + selectedItemPath + selectedItemID);
+        $("#hdnParentId").val('');
+       //$("#hdnParentPath").val('');
+       // $("#customModal").hide();
+        
+
+
+    });
     $('#openPopupBtn').click(function () {
         //alert("inside open popup button");
         //e.preventDefault(); // This stops the form from submitting and redirecting
@@ -31,7 +101,6 @@ $(document).ready(function () {
         
         // alert($("#" + parentitem).val());
         const parentitemvalue = $("#" + parentitem).val();
-        
         $("#txtSelectedItemPath").val(parentitemvalue);
 
         //const parentitemID = this.getAttribute('parentitemID');
