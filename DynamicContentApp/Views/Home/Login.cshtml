@@ -117,14 +117,20 @@
         font-size: 48px;
     }
 
+    .curly-text {
+        font-family: "Brush Script MT", cursive; /* Try Brush Script first, fallback to generic cursive */
+        font-family: 'Dancing Script', cursive;
+        font-size: 20px;
+        color: #8B008B; /* Dark magenta */
+    }
 </style>
 <!-- Desktop area -->
 <div class="desktop">
 
 
     <div id="login-form" style="text-align: center;">
-        <span id="spanLoginForm"> VJAAP CMS </span>
-        <form>
+        <span id="spanLoginForm" class="curly-text"> Universal CMS</span>
+        <form style="padding-top:20px;padding-bottom:20px;background-color: #292828;">
            @*  <div style="padding:0.2em;text-align: center;">
                 <span id="spanFormHeader"> Login</span>
 
@@ -142,16 +148,17 @@
                 <button type="button" id="login-btn" style="width:35%;" >Login</button>
                @*  <button type="button" id="login-btn" style="width:55%;" >Change Password</button> *@
             </div>
-            <div style="padding-top:2em; text-align: center;width:80%;">
-                <a href="">Change Password</a>
-                <span style="padding-left:2em;">
-                <a href="">Forget Password</a>
-
-                </span>
-
-            </div>
+           
 
         </form>
+        <div style="padding-top:2em; text-align: center;width:80%;">
+            <a href="">Change Password</a>
+            <span style="padding-left:2em;">
+                <a href="">Forget Password</a>
+
+            </span>
+
+        </div>
     </div>
     <div id="welcome-message" style="display: none;">
         <p>Welcome, <span id="user-name"></span>!</p>
