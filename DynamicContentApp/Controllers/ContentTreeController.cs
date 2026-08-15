@@ -29,7 +29,16 @@ namespace DynamicContentApp.Controllers
         private readonly ICMSService _cmsService;
 
         private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
-
+        private readonly IConfiguration _configuration;
+        public ContentTreeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService, IConfiguration configuration) : base(logger, viewRenderService, controllerRenderService)
+        {
+            _logger = logger;
+            _viewRenderService = viewRenderService;
+            _controllerRenderService = controllerRenderService;
+            _options = options.Value;
+            _cmsService = cmsService;
+            _configuration = configuration;
+        }
         [HttpPost]
         public async Task<IActionResult> UploadAndSave(IFormFile uploadedFile)
         {
@@ -76,18 +85,11 @@ namespace DynamicContentApp.Controllers
         }
 
 
-        public ContentTreeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService) :base(logger, viewRenderService, controllerRenderService)
-        {
-            _logger = logger;
-            _viewRenderService = viewRenderService;
-            _controllerRenderService = controllerRenderService;
-            _options = options.Value;
-            _cmsService = cmsService;
-        }
+       
 
         private void GetAssetData(string AssetItemPath, StringBuilder JsonDataSB, string Area)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
             if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
             {
@@ -113,7 +115,7 @@ namespace DynamicContentApp.Controllers
         {
 
             string AssetItemPath = "/UniversalCMS/Content/ArticleSite";
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             StringBuilder JsonDataSB = new StringBuilder();
             JsonDataSB.Append("{");
 
@@ -220,7 +222,7 @@ namespace DynamicContentApp.Controllers
         public IActionResult GetAssetComponentDetails(string AssetItemComponentID, string AssetItemID)
         {
 
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<AssetComponentModel> ContentTreeModellist = dynamicContentDAL.GetAssetComponentDetails( AssetItemComponentID,  AssetItemID);
             if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             {
@@ -233,7 +235,7 @@ namespace DynamicContentApp.Controllers
             ;
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             //AssetItemComponentID = string.Empty;
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             bool isInsertSuccess = dynamicContentDAL.SaveAssetComponentDetails(AssetItemComponentID,  AssetItemID,  ComponentPath,  LinkedAssetItem,  PlaceholderPath);
             if (isInsertSuccess) { return Ok(true);  }
             else { return Ok(false); }
@@ -242,7 +244,7 @@ namespace DynamicContentApp.Controllers
         public IActionResult DeleteAssetComponentDetails(string AssetItemComponentID )
         {
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             SchemaDeleteModel SchemaDeleteModel = dynamicContentDAL.DeleteAssetComponentDetails(AssetItemComponentID);
             return Ok(SchemaDeleteModel);
           
@@ -252,7 +254,7 @@ namespace DynamicContentApp.Controllers
         public IActionResult GetAssetMasterLayoutDetails( string AssetItemID)
         {
 
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<AssetMasterLayoutModel> ContentTreeModellist = dynamicContentDAL.GetAssetMasterLayoutDetails( AssetItemID);
             if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             {
@@ -264,7 +266,7 @@ namespace DynamicContentApp.Controllers
         {
             ;
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             bool isInsertSuccess = dynamicContentDAL.SaveAssetMasterLayoutDetails( AssetItemID,  IsItemPageType,  MasterpagePath);
 
             if (isInsertSuccess) { return Ok(true); }
@@ -289,7 +291,7 @@ namespace DynamicContentApp.Controllers
                     string SchemaFieldID = AssetFieldsItem.SchemaFieldID;
                     string AssetFieldID = AssetFieldsItem.AssetFieldID;
                     string AssetFieldValue = AssetFieldsItem.AssetFieldValue;
-                    DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+                    DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
                      isInsertSuccess = dynamicContentDAL.SaveAssetFields(AssetItemID, AssetItemSchemaID, "", SchemaFieldID, AssetFieldID, AssetFieldValue);
                 }
                 return Ok(true);
@@ -321,7 +323,7 @@ namespace DynamicContentApp.Controllers
             {
                 SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             }
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<ContentTreeModel> ContentTreeModellist = dynamicContentDAL.GetContentTreeItems(SchemaID);
             if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             {
@@ -334,7 +336,7 @@ namespace DynamicContentApp.Controllers
         public IActionResult GetAssetItemDetails(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID, string SchemaFieldID, string AssetFieldID, string AssetFieldValue)
         {
             
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<AssertFieldsModel> ContentTreeModellist = dynamicContentDAL.GetAssetItemDetails(AssetItemID,  AssetItemSchemaID,  AssetItemTreeeID,  SchemaFieldID,  AssetFieldID,  AssetFieldValue);
             if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             {
@@ -353,7 +355,7 @@ namespace DynamicContentApp.Controllers
             //{
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
            string  isInsertSuccess = dynamicContentDAL.InsertSchema( SchemaName,  SchemaPath,  SchemaParent, AssetTypeID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
@@ -383,7 +385,7 @@ namespace DynamicContentApp.Controllers
             //{
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             bool isInsertSuccess = dynamicContentDAL.InsertSchemaField(SchemaID, SchemaName, SchemaFieldType);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
@@ -409,7 +411,7 @@ namespace DynamicContentApp.Controllers
             //{
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             bool isInsertSuccess = dynamicContentDAL.UpdateSchema(SchemaID ,SchemaName, SchemaPath, SchemaParent,  AssetTypeID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
@@ -434,7 +436,7 @@ namespace DynamicContentApp.Controllers
             //{
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             bool isInsertSuccess = dynamicContentDAL.UpdateAssetItemSchema(SchemaID, SchemaName, SchemaPath, SchemaParent, AssetTypeID, AssetItemSchema, AssetItemSchemaMapped);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
@@ -457,7 +459,7 @@ namespace DynamicContentApp.Controllers
             //{
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             bool isInsertSuccess = dynamicContentDAL.InsertAssetItemSchema(SchemaName, SchemaPath, SchemaParent, AssetTypeID,  AssetItemSchema, AssetItemSchemaMapped);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
@@ -482,7 +484,7 @@ namespace DynamicContentApp.Controllers
             //{
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             //bool isInsertSuccess = dynamicContentDAL.DeleteSchema(SchemaID);
 
             SchemaDeleteModel SchemaDeleteModel  = dynamicContentDAL.DeleteSchema(SchemaID);
@@ -511,7 +513,7 @@ namespace DynamicContentApp.Controllers
 
            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
 
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID);
             string AssetItemPath = string.Empty;
             string AssetItemID = string.Empty;
@@ -539,7 +541,7 @@ namespace DynamicContentApp.Controllers
 
             // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
 
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<SchemaFieldType> SchemaFieldTypeList = dynamicContentDAL.GetFieldType();
             if (SchemaFieldTypeList != null && SchemaFieldTypeList.Count == 0)
             {
@@ -557,7 +559,7 @@ namespace DynamicContentApp.Controllers
 
             string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
 
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<ContentTreeModel> ContentTreeModellist = dynamicContentDAL.GetContentTreeItems(SchemaID);
             if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             {
@@ -574,7 +576,7 @@ namespace DynamicContentApp.Controllers
             {
                 SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             }
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<ContentTreeModel> ContentTreeModellist = dynamicContentDAL.GetContentTreeItems(SchemaID);
             if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             {

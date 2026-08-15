@@ -10,11 +10,13 @@ namespace DynamicContentApp.Service
         private readonly IControllerRenderService _controllerRenderService;
         private readonly ILogger<HomeController> _logger;
         private readonly IViewRenderService _viewRenderService;
-        public CMSService(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService)
+        private readonly IConfiguration _configuration;
+        public CMSService(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IConfiguration configuration)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
+            _configuration = configuration;
         }
         public async Task IfModeIsContentManagement(HomeViewModel HomeViewModel, bool isContentDeliveryError, int PageItemID)
         {
@@ -83,7 +85,7 @@ namespace DynamicContentApp.Service
         }
         public void IfModeIsContentDelivery(HomeViewModel HomeViewModel)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
 
             List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserUrl) ? HomeViewModel.BrowserUrl : string.Empty);
             if (DynamicContentlist != null && DynamicContentlist.Count > 0)
@@ -93,7 +95,7 @@ namespace DynamicContentApp.Service
         }
         public void SavePageEntireHtmlInDatabase(HomeViewModel HomeViewModel)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserUrl);
             if (DynamicContentlist != null && DynamicContentlist.Count == 0)
             {

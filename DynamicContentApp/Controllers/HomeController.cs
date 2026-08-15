@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -18,11 +19,13 @@ namespace DynamicContentApp.Controllers
         private readonly ILogger<BaseController> _logger;
         private readonly IViewRenderService _viewRenderService;
         private readonly IControllerRenderService _controllerRenderService;
-        public HomeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService):base(logger, viewRenderService, controllerRenderService)
+        private readonly SystemConfigOptions _options;
+        public HomeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options) :base(logger, viewRenderService, controllerRenderService)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
+            _options = options.Value;
         }
         public IActionResult Error()
         {
@@ -31,17 +34,20 @@ namespace DynamicContentApp.Controllers
 
         public IActionResult Login()
         {
+            ViewData["CurrnetDomainUrl"] = _options.CurrnetDomainUrl; //"http://localhost:5287";
             ViewData["SelectedLayout"] = "_MasterLoginDesktop";
             return View("~/Views/Home/Login.cshtml");
         }
         public IActionResult Desktop()
         {
+            ViewData["CurrnetDomainUrl"] = _options.CurrnetDomainUrl; //"http://localhost:5287";
             ViewData["SelectedLayout"] = "_MasterLoginDesktop";
             return View("~/Views/Home/Desktop.cshtml");
         }
 
         public IActionResult DesktopMain()
         {
+            ViewData["CurrnetDomainUrl"] = _options.CurrnetDomainUrl; //"http://localhost:5287";
             ViewData["SelectedLayout"] = "_MasterLoginDesktop";
             return View("~/Views/Home/DesktopMain.cshtml");
         }

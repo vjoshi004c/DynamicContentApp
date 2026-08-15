@@ -1,27 +1,40 @@
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
-using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
-using Microsoft.Data.SqlClient;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace DynamicContentApp.Controllers
 {
     public class FileController : Controller
     {
+        private readonly ILogger<BaseController> _logger;
+        private readonly IViewRenderService _viewRenderService;
+        private readonly IControllerRenderService _controllerRenderService;
+        private readonly SystemConfigOptions _options;
+        private readonly ICMSService _cmsService;
+        private readonly IConfiguration _configuration;
         // Update this string with your actual application database connection parameters
         //private readonly string _connectionString = "Server=YOUR_SERVER;Database=YOUR_DB;Trusted_Connection=True;";
-        private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
-
+        //private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        private string _connectionString = string.Empty;
+        public FileController(ILogger<BaseController> logger, IOptions<SystemConfigOptions> options, IConfiguration configuration) 
+        {
+            _logger = logger;
+            _configuration = configuration;
+            _connectionString= _configuration["ConnectionStrings:DefaultConnection"];
+        }
         [HttpPost]
         public async Task<IActionResult> UploadAndSave(IFormFile uploadedFile)
         {

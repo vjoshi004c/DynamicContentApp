@@ -1,3 +1,4 @@
+using DynamicContentApp.DataLayer;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
 using Microsoft.AspNetCore.Rewrite;
@@ -8,6 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.Configure<SystemConfigOptions>(builder.Configuration.GetSection(SystemConfigOptions.SystemConfig));
+
+//builder.Services.AddScoped<DynamicContentDAL>(sp =>
+//{
+//    //var config = sp.GetRequiredService<IConfiguration>();
+//   // string connStr = config.GetConnectionString("DefaultConnection");
+//    return new DynamicContentDAL(connectionString);
+//});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

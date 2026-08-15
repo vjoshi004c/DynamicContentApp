@@ -113,7 +113,7 @@
         </div>
     </div>
     <div class="window-content">
-        This is a draggable, resizable window with taskbar integration.
+        <!-- This is a draggable, resizable window with taskbar integration. -->
     </div>
 </div>
 
@@ -130,6 +130,7 @@
         You can move, resize, minimize, maximize, and close me.
     </div>
 </div>
+<input type="hidden" id="hdn_CurrnetDomainUrl" value="@ViewData["CurrnetDomainUrl"]" />
 
 <script>
     $(function () {
@@ -167,9 +168,10 @@
                     if ($(this).attr('data-win') == $("#win1").attr('id')) {
                         //alert($(this).attr('data-win'));
                         $(this).css("display", "block");
-
-                       $("#win1 .window-content").html("testing Content manager manager page");
-                       $("#win1 .window-content").load('/Contenttree');
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                       //$("#win1 .window-content").html("testing Content manager manager page");
+                       //$("#win1 .window-content").load('/Contenttree');
+                        $("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree");
                         $("#win1").css({
                         top: 0,
                         left: 0,

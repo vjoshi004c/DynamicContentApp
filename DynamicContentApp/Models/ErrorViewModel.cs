@@ -83,7 +83,8 @@ namespace DynamicContentApp.Models
     {
         public const string SystemConfig = "SystemConfig";
         public string ApplicationMode { get; set; } = "";
-       
+        public string CurrnetDomainUrl { get; set; } = "";
+
     }
 
 }

@@ -165,9 +165,9 @@
         <button id="logout-btn">Logout</button>
     </div>
 
-
-
 </div>
+<input type="hidden" id="hdn_CurrnetDomainUrl" value="@ViewData["CurrnetDomainUrl"]" />
+
 
 <script>
     $(function() {
@@ -204,7 +204,10 @@
     const username = $("#username").val();
     const password = $("#password").val();
     //alert('user name '+ ' ' +username+ ' '  + 'password' + ' '+ password);
-    window.location.href = "http://localhost:5287/desktopmain";
+    //window.location.href = "http://localhost:5287/desktopmain";
+    var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+            window.location.href =  CurrnetDomainUrl+ "/desktopmain";
+
     return;
 
     $.ajax({

@@ -33,15 +33,19 @@ namespace DynamicContentApp.Service
         private readonly IControllerRenderService _controllerRenderService;
         private readonly ILogger<HomeController> _logger;
         private readonly IViewRenderService _viewRenderService;
-        public CMSServiceDynamic(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService)
+        private readonly SystemConfigOptions _options;
+        private readonly IConfiguration _configuration;
+        public CMSServiceDynamic(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, SystemConfigOptions options, IConfiguration configuration)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
+            _options = options;
+            _configuration = configuration;
         }
         private void GetAssetData(string AssetItemPath, StringBuilder JsonDataSB, string Area)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
             if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
             {
@@ -63,7 +67,7 @@ namespace DynamicContentApp.Service
         {
 
             //string AssetItemPath = "/UniversalCMS/Content/ArticleSite";
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             StringBuilder JsonDataSB = new StringBuilder();
             JsonDataSB.Append("{");
 
@@ -209,7 +213,11 @@ namespace DynamicContentApp.Service
             // PageItemModel PageItemModel = MockData.GeneratePageItemModel(1);
 
 
-            dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace("http://localhost:5287", ""));
+           // dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace("http://localhost:5287", ""));
+            //dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace("https://vjoshi-001-site1.dtempurl.com", ""));
+            dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace(_options.CurrnetDomainUrl, ""));
+
+            
 
 
             string assetItemId = dynamicObject.AssetItemID;
@@ -271,7 +279,7 @@ namespace DynamicContentApp.Service
         }
         public void IfModeIsContentDelivery(HomeViewModel HomeViewModel)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
 
             List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserUrl) ? HomeViewModel.BrowserUrl : string.Empty);
             if (DynamicContentlist != null && DynamicContentlist.Count > 0)
@@ -281,7 +289,7 @@ namespace DynamicContentApp.Service
         }
         public void SavePageEntireHtmlInDatabase(HomeViewModel HomeViewModel)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserUrl);
             if (DynamicContentlist != null && DynamicContentlist.Count == 0)
             {

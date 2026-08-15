@@ -1,6 +1,9 @@
-﻿using DynamicContentApp.Models;
+﻿using DynamicContentApp.Controllers;
+using DynamicContentApp.Models;
+using DynamicContentApp.Service;
 using Microsoft.Data;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,13 +18,41 @@ namespace DynamicContentApp.DataLayer
  
      public class DynamicContentDAL
     {
+        private readonly ILogger<BaseController> _logger;
+        private readonly IConfiguration _configuration;
+        //private string ConnenctionString;
+        private  string ConnenctionString= string.Empty ;
+        
+        public DynamicContentDAL(ILogger<BaseController> logger,  IConfiguration configuration)
+        {
+            _logger = logger;
+            _configuration = configuration;
+            ConnenctionString =  _configuration["ConnectionStrings:DefaultConnection"];
+
+        }
+
+        //public DynamicContentDAL(ILogger<BaseController> logger, IOptions<SystemConfigOptions> options) 
+        //{
+        //    _logger = logger;
+        //    _options = options.Value;
+        //    ConnenctionString= _options.
+
+        //}
+        //public DynamicContentDAL(string connectionString)
+        //{
+        //    if (string.IsNullOrWhiteSpace(connectionString))
+        //        throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
+
+        //    ConnenctionString = connectionString;
+
+        //}
 
         //private string ConnenctionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
 
-         private string ConnenctionString = "Data Source=manyapc;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
+       // private string ConnenctionString = "Data Source=manyapc;Initial Catalog=TestDCA_V1;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         //private string ConnenctionString = "Data Source=manyapc;Initial Catalog=DynamicContentThird;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
 
-
+       // private string ConnenctionString = "Data Source=sql1001.site4now.net;Initial Catalog=db_acd562_vpmuniversal;User Id=db_acd562_vpmuniversal_admin;Password=Vpm@031207;Encrypt=True;TrustServerCertificate=True;";
         public List<PageItemMasterDetailsModel> GetPageItemMasterDetails(string AssetItemPath)
         {
 
