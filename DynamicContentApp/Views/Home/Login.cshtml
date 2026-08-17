@@ -137,7 +137,7 @@
             </div> *@
 
             <div style="padding:0.2em;text-align: center;">
-                <input type="text" id="username" placeholder="Username" style="width:60%;"  required />
+                <input type="text" id="username" placeholder="Username" style="width:60%;"  value= "ADMIN" required />
             </div>
             <div style="padding:0.2em;text-align: center;">
 
@@ -203,12 +203,21 @@
     $("#login-btn").click(function () {
     const username = $("#username").val();
     const password = $("#password").val();
+                             if (username === "ADMIN" && password === "vpm031207")
+    //if(username='ADMIN' & password='vpm031207')
+    {
     //alert('user name '+ ' ' +username+ ' '  + 'password' + ' '+ password);
     //window.location.href = "http://localhost:5287/desktopmain";
     var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
             window.location.href =  CurrnetDomainUrl+ "/desktopmain";
 
     return;
+    }
+     else {
+    alert("Invalid credentials. Please verify username or password and try again.");
+     return;
+    }
+    
 
     $.ajax({
     url: "/validate-login", // Replace with your server endpoint

@@ -1,5 +1,10 @@
-﻿<!-- Desktop area -->
-<div class="desktop">
+﻿
+<!-- Desktop area -->
+<div class="desktop" style="padding:40px;">
+    <div class="taskbar" id="taskbarTop" style="top:0">
+        <div class="SignOff-btn" style="position: absolute;right: 0;padding-right: 30px;">SignOff</div>
+    
+        </div>
     <div class="icon" data-app="Content Manager">
         <img src="/images/contentmanager.png" alt="Notepad">
         <div>Content Manager</div>
@@ -138,7 +143,11 @@
         $(".start-btn").click(function () {
             $(".start-menu").toggle();
         });
-
+        $(".SignOff-btn").click(function () {
+           var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+           //alert(CurrnetDomainUrl);
+            window.location.href =  CurrnetDomainUrl+ "/login";
+        });
         // Close start menu when clicking outside
         $(document).click(function (e) {
             if (!$(e.target).closest('.start-btn, .start-menu').length) {
