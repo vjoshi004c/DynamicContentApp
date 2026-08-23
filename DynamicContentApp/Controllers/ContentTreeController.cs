@@ -28,7 +28,8 @@ namespace DynamicContentApp.Controllers
         private readonly SystemConfigOptions _options;
         private readonly ICMSService _cmsService;
 
-        private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        //private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
+        private string _connectionString = "";//"Data Source=manyapc;Initial Catalog=TestDCA_V1;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         private readonly IConfiguration _configuration;
         public ContentTreeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService, IConfiguration configuration) : base(logger, viewRenderService, controllerRenderService)
         {
@@ -38,9 +39,10 @@ namespace DynamicContentApp.Controllers
             _options = options.Value;
             _cmsService = cmsService;
             _configuration = configuration;
+            _connectionString = _configuration["ConnectionStrings:DefaultConnection"];
         }
         [HttpPost]
-        public async Task<IActionResult> UploadAndSave(IFormFile uploadedFile)
+        public async Task<IActionResult> UploadAndSave(IFormFile uploadedFile, string assetFieldID , string assetSchemaID, string assetItemID, string schemaPath)
         {
             if (uploadedFile == null || uploadedFile.Length == 0)
             {
@@ -61,22 +63,27 @@ namespace DynamicContentApp.Controllers
                 }
 
                 // 2. Perform parameterized SQL command execution to save records safely
-                string query = "INSERT INTO AssetMediaUploadedFiles (FileName, ContentType, FileData) VALUES (@FileName, @ContentType, @FileData)";
-
+                string query = "INSERT INTO AssetMediaUploadedFiles (FileName, ContentType, FileData, AssetItemID, AssetItemFieldID, SchemaFieldID) VALUES (@FileName, @ContentType, @FileData,@AssetItemID, @AssetItemFieldID, @SchemaFieldID)";
+                string fileurl  = schemaPath + "/" + fileName + "?assetItemID=" + assetItemID + "&assetItemFieldID=" + assetFieldID + "&schemaFieldID=" + assetSchemaID;
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@FileName", fileName);
+                        //command.Parameters.AddWithValue("@FileName", schemaPath +"/" + fileName+ "? assetItemID= " + assetItemID + "&assetItemFieldID= "+assetFieldID + "&schemaFieldID= " + assetSchemaID);
+                        command.Parameters.AddWithValue("@FileName", fileurl);
+
                         command.Parameters.AddWithValue("@ContentType", contentType);
                         command.Parameters.AddWithValue("@FileData", fileData); // Maps directly to VARBINARY(MAX)
+                        command.Parameters.AddWithValue("@AssetItemID", assetItemID);
+                        command.Parameters.AddWithValue("@AssetItemFieldID", assetFieldID);
+                        command.Parameters.AddWithValue("@SchemaFieldID", assetSchemaID);
 
                         await connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                     }
                 }
 
-                return Json(new { message = "File successfully uploaded!" });
+                return Json(new { message = "File successfully uploaded!", fileurl = fileurl });
             }
             catch (Exception ex)
             {

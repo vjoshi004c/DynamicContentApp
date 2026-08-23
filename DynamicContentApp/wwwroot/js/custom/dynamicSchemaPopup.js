@@ -31,10 +31,29 @@ $(document).ready(function () {
             return;
         }
 
+        const parentitemid = $("#hdnMediaParentId").val();
+        // $("#" + parentitemid).val(selectedItemPath);
+        //alert(parentitemid);
+        var parentitemvalue = $("#" + parentitemid);
+        //alert($("#" + parentitemid).val());
+        var assetItemID = parentitemvalue.attr("assetitemid");
+        //alert(assetItemID);
+        var assetSchemaID = parentitemvalue.attr("schemafieldid");
+        //alert(assetSchemaID);
+        var assetFieldID = parentitemvalue.attr("assetfieldid");
+        var schemaPath = parentitemvalue.attr("schemaPath");
+        //alert(schemaPath);
         // Build the multi-part form payload
         var formData = new FormData();
         formData.append("uploadedFile", fileInput);
-
+        formData.append("assetFieldID", assetFieldID);
+        formData.append("assetSchemaID", assetSchemaID);
+        formData.append("assetItemID", assetItemID);
+        formData.append("schemaPath", schemaPath);
+        
+        
+        
+        
         //alert(formData);
 
         $.ajax({
@@ -45,31 +64,28 @@ $(document).ready(function () {
             processData: false, // Required: Tells jQuery not to convert data
             success: function (response) {
                 $("#statusMessage").text(response.message).css("color", "green");
+               // response.fileurl;
+
+                //const selectedItemPath = schemaPath + "/" + fileName;
+                //alert(fileName);
+                alert(response.fileurl);
+                //const selectedItemID = $("#txtSelectedItemID").val();
+                //$("#" + parentitemid).val(selectedItemID);
+                $("#" + parentitemid).val(response.fileurl);
+                //alert($("#" + parentitem).val(selectedItemPath));
+                //alert(parentitemid + parentitemPath + selectedItemPath + selectedItemID);
+                $("#hdnMediaParentId").val('');
             },
             error: function () {
                 $("#statusMessage").text("An error occurred during upload.").css("color", "red");
+                $("#hdnMediaParentId").val('');
             }
         });
 
-        const parentitemid = $("#hdnParentId").val();
+       
         //const parentitemPath = $("#hdnParentPath").val();
 
-        alert(parentitemid);
-        const selectedItemPath = fileName;
-        alert(fileName);
-
-        alert(selectedItemPath);
-        //const selectedItemID = $("#txtSelectedItemID").val();
-        //$("#" + parentitemid).val(selectedItemID);
-        $("#" + parentitemid).val(selectedItemPath);
-        //alert($("#" + parentitem).val(selectedItemPath));
-        //alert(parentitemid + parentitemPath + selectedItemPath + selectedItemID);
-        $("#hdnParentId").val('');
-       //$("#hdnParentPath").val('');
-       // $("#customModal").hide();
         
-
-
     });
     $('#openPopupBtn').click(function () {
         //alert("inside open popup button");

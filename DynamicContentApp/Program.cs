@@ -42,13 +42,19 @@ options.Add(context =>
     bool isLoginFile = !string.IsNullOrEmpty(path) && path.Contains("LOGIN");
     bool isDesktopFile = !string.IsNullOrEmpty(path) && path.Contains("DESKTOPMAIN");
 
+    bool isMediaFile = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/MEDIA/");
+
+    if (isMediaFile)
+    {
+        context.HttpContext.Request.Path = "/home/RenderMedia";
+    }
     if (isLoginFile )
     {
-        context.HttpContext.Request.Path = "/home/login";
+        context.HttpContext.Request.Path = "/home/Login";
     }
     if (isDesktopFile)
     {
-        context.HttpContext.Request.Path = "/home/DESKTOPMAIN";
+        context.HttpContext.Request.Path = "/home/Desktopmain";
     }
     bool isJasonToModel = !string.IsNullOrEmpty(path) && path.Contains("JSONTOMODEL");
     if (isJasonToModel)
@@ -56,7 +62,7 @@ options.Add(context =>
         context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
     }
     // If it's not a static file, rewrite internally to your generic endpoint
-    if (!isStaticFile && !isDynamicController&& !isLookupController && !isLoginFile && !isDesktopFile)
+    if (!isStaticFile && !isDynamicController&& !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile)
     {
         bool isSitePage = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/");
         if (isSitePage==false)

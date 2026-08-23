@@ -813,11 +813,17 @@ body {font-family: Arial;}
 
     <div id="customModalMedia" class="modal-overlay" >
         <!-- Modal Box Content -->
-        <div class="modal-content" style="height:15dvh">
+        <div class="modal-content" style="height:30dvh">
             <span id="closeMediaModalBtn" class="close-x">&times;</span>
             <h2><span id="lblModelMediaTitle"></span></h2>
+            <input type="hidden" id="hdnMediaParentId" />
             <div style="border:2px solid #d9d9d9;padding:10px;">
+                <span>Existed Media file</span>
+                    <input type="input" id="fileInputText" name="fileInputText" value="" required style="width:80%" class="modern-file-input" />
             <form id="uploadForm" enctype="multipart/form-data">
+                  
+                    <span>To upload media file </span>
+                    <br>
                     <input type="file" id="fileInput" name="uploadedFile" required style="width:60%" class="modern-file-input" />
                     <button type="button" style="height: 2em;width: 10em;background-color:red;color:white;border-color:red;" id="uploadBtn">Upload</button>
             </form>
@@ -1691,6 +1697,7 @@ body {font-family: Arial;}
                                                                 $("#txtAssetItemSchema").css("background-color", "white");
 
                                      }
+                                     
                                        ViewContentDetailItem( AssetItemID, AssetItemSchemaID,AssetItemTreeeID);
 
          }
@@ -1744,6 +1751,12 @@ body {font-family: Arial;}
             }
        function RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID) {
                   //alert(optionsData.length)
+                  //alert(assetItemID);
+                 // alert(assetItemSchemaID);
+
+                  var SchemaPath= $("#editSchemaForm #txtSchemaPath").val();
+                  alert(SchemaPath);
+
                   $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "block");
                  $("#dynamicFormContainer_Edit_AssetFieldDetails").empty();
                 
@@ -1915,14 +1928,14 @@ body {font-family: Arial;}
 
                     if(item.schemaFieldType =='FILE')
                         {
-                                     const htmlid = 'MEDIAFILE_'+schemaFieldID
+                                     const htmlid = 'MEDIAFILE_'+assetItemID +"_"+schemaFieldID
                                      SchemaSpan2.append(AssetFieldNameLabel);
                                                         form.append(SchemaSpan2);
                                                                  const AssetFieldHtmlb_MediaUploadInsert = $('<input>').attr({title:"Upload Media File" ,type: 'button', text:"Upload File",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:'Upload Media File', name: 'AssetFieldSingleValue',placeholder: 'Enter Media File Value1' , style:'background-color:Gray;color:white;width:10%;margin-left:15px;padding:3px;font-size:12px;'});
                                     SchemaSpan2.append(AssetFieldHtmlb_MediaUploadInsert);
 
                                          const SchemaSpanMediaDiv_Media = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                                    const AssetFieldHtmlb_Media = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
+                                    const AssetFieldHtmlb_Media = $('<input>').attr({ type: 'text', schemaPath:SchemaPath,assetItemID:assetItemID,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
                                 SchemaSpanMediaDiv_Media.append(AssetFieldHtmlb_Media);
                                 form.append(SchemaSpanMediaDiv_Media);
 
@@ -1934,15 +1947,19 @@ body {font-family: Arial;}
                                                                                      $("#lblModelTitle").html('');
                                                                                     const currenttitle = this.getAttribute('title');
                                                                                     $("#lblModelTitle").html(currenttitle);
-                                                                                    $("#hdnParentId").val(htmlid);
+                                                                                    $("#hdnMediaParentId").val(htmlid);
                                                                                     $("#btnSelectedItemPath").css("display", "none");
                                                                                     $("#btnSelectedItemPathSchema").css("display", "none");
-                                                                                        if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
-                                                                                    // $("#btnSelectedItemPath").css("visibility", "visible");
-                                                                                    $("#btnSelectedItemPath").css("display", "block");
-                                                                                    $("#txtSelectedItemPath").val(mediaPath);
-                                                                                    $("#txtSelectedItemID").val('');
-                                                                                                    }
+                                                                                        if (htmlid.indexOf('txtAssetItemSchema') <= -1)
+                                                                                        {
+                                                                                            // $("#btnSelectedItemPath").css("visibility", "visible");
+                                                                                            $("#btnSelectedItemPath").css("display", "block");
+                                                                                           // $("#txtSelectedItemPath").val(mediaPath);
+                                                                                            $("#txtSelectedItemID").val('');
+                                                                                            $("#fileInputText").val(mediaPath);
+                                                                                             //alert($("#fileInputText").val());
+                                                                                    
+                                                                                         }
                                                                                     $("#lblModelMediaTitle").html('');
                                                                                     $("#lblModelMediaTitle").html('To Upload Media File');
                                                                                     $("#customModalMedia").show();
