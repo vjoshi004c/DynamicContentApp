@@ -68,7 +68,7 @@ $(document).ready(function () {
 
                 //const selectedItemPath = schemaPath + "/" + fileName;
                 //alert(fileName);
-                alert(response.fileurl);
+                //alert(response.fileurl);
                 //const selectedItemID = $("#txtSelectedItemID").val();
                 //$("#" + parentitemid).val(selectedItemID);
                 $("#" + parentitemid).val(response.fileurl);

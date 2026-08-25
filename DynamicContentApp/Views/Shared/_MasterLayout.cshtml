@@ -33,11 +33,16 @@
             </p>
             <p>
                 <small>
-                    @Html.Raw(Model.ArticleImage)
+                    @* @Html.Raw(Model.ArticleImage)
+                    @Html.Raw(Model.ArticleImage.File)*@
+                    
                 </small>
             </p>
             
-            <span> <img  width="100%" height="200px" src="http://localhost:5287/UniversalCMS/Media/System/ImageForTestSix.jpg?assetItemID=F2359B6D-4DED-4F9E-BEBA-009E66395901&assetItemFieldID=A7DFB421-F6C6-44FD-A1DA-19B2594CAD73&schemaFieldID=BB07F1FC-8F63-47BA-83FE-C60E60D115E4" /></span>
+             @* <span> <img  width="100%" height="200px" src="http://localhost:5287/UniversalCMS/Media/System/ImageForTestSix.jpg?assetItemID=F2359B6D-4DED-4F9E-BEBA-009E66395901&assetItemFieldID=A7DFB421-F6C6-44FD-A1DA-19B2594CAD73&schemaFieldID=BB07F1FC-8F63-47BA-83FE-C60E60D115E4" /></span>
+             *@
+            <span> <img width="100%" height="200px" src="@Html.Raw(Model.ArticleImage.File)" /></span>
+
             
           
             [[PLACEHOLDER_HEADER]]

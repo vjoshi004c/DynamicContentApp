@@ -63,6 +63,26 @@ namespace DynamicContentApp.Service
 
             }
         }
+        private void GetAssetDataMedia(string AssetItemPath, StringBuilder JsonDataSB, string Area)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
+            //if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
+           // {
+
+                List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetItemFieldDetails(AssetItemPath);
+                if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
+                {
+                    JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                    foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                    {
+                        JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                    }
+                    JsonDataSB.Append("\"field\":\"none\"},");
+                }
+
+           // }
+        }
         public dynamic JsonToModel(string AssetItemPath)
         {
 
@@ -102,10 +122,15 @@ namespace DynamicContentApp.Service
                     // string newvalue = AssetItemFieldDetail.AssetFieldValue.Replace('"', '\"');
                     //string newvalue = AssetItemFieldDetail.AssetFieldValue.ToString();
                     //AssetItemFieldDetail.AssetFieldValue=newvalue.Replace("\"", "\\\"")
-
+                    string AssetFieldValue = AssetItemFieldDetail.AssetFieldValue;
                         string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                     AssetItemFieldDetail.AssetFieldValue = result;
                     JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                    if (AssetFieldValue.ToUpper().Contains("/MEDIA/") ==true)
+                    {
+                        GetAssetDataMedia(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                    }
+                   
                 }
                 JsonDataSB.Append("\"field\":\"none\"},");
             }
