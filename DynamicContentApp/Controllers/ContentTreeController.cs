@@ -354,7 +354,7 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult SaveSchema( string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
+        public IActionResult SaveSchema( string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string FieldDataSourcePath)
         {
             SchemaInsertModel SchemaInsertModel = new SchemaInsertModel();
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
@@ -363,7 +363,7 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-           string  isInsertSuccess = dynamicContentDAL.InsertSchema( SchemaName,  SchemaPath,  SchemaParent, AssetTypeID);
+           string  isInsertSuccess = dynamicContentDAL.InsertSchema( SchemaName,  SchemaPath,  SchemaParent, AssetTypeID, FieldDataSourcePath);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 
@@ -411,7 +411,7 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult UpdateSchema(string SchemaID,  string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
+        public IActionResult UpdateSchema(string SchemaID,  string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string FieldDataSourcePath)
         {
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             //if (String.IsNullOrEmpty(SchemaID))
@@ -419,7 +419,7 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            bool isInsertSuccess = dynamicContentDAL.UpdateSchema(SchemaID ,SchemaName, SchemaPath, SchemaParent,  AssetTypeID);
+            bool isInsertSuccess = dynamicContentDAL.UpdateSchema(SchemaID ,SchemaName, SchemaPath, SchemaParent,  AssetTypeID, FieldDataSourcePath);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 

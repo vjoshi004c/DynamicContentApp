@@ -441,7 +441,7 @@ namespace DynamicContentApp.DataLayer
             }
         }
         
-        public string InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
+        public string InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string FieldDataSourcePath)
         {
             SqlConnection con = null;
             //string result = "";
@@ -457,6 +457,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaPath", SchemaPath);
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
                 cmd.Parameters.AddWithValue("@AssetTypeID", AssetTypeID);
+                cmd.Parameters.AddWithValue("@FieldDataSourcePath", FieldDataSourcePath);
                 cmd.Parameters.AddWithValue("@Query", 1);
 
                 con.Open();
@@ -512,7 +513,7 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-        public bool UpdateSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID)
+        public bool UpdateSchema(string SchemaID, string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string FieldDataSourcePath)
         {
             SqlConnection con = null;
             //string result = "";
@@ -527,6 +528,8 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaPath", SchemaPath);
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
                 cmd.Parameters.AddWithValue("@AssetTypeID", AssetTypeID);
+                cmd.Parameters.AddWithValue("@FieldDataSourcePath", FieldDataSourcePath);
+                
                 cmd.Parameters.AddWithValue("@Query", 2);
 
                 con.Open();
@@ -816,6 +819,7 @@ namespace DynamicContentApp.DataLayer
                     cobj.AssetItemSchema = ds.Tables[0].Rows[i]["AssetItemSchema"].ToString();
                     cobj.AssetItemTreeeID = ds.Tables[0].Rows[i]["AssetItemSchemaMapped"].ToString();
                     cobj.AssetItemSchemaPath = ds.Tables[0].Rows[i]["AssetItemSchemaPath"].ToString();
+                    cobj.FieldDataSourcePath = ds.Tables[0].Rows[i]["FieldDataSourcePath"].ToString();
 
                     custlist.Add(cobj);
                 }

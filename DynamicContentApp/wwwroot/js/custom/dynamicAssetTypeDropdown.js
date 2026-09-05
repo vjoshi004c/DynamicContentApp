@@ -42,7 +42,8 @@
     });
 
     $select1.on("change", function () {
-
+        var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
+        $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
         var selectedID = $(this).val();
         var selectedText = $(this).find("option:selected").text();
         //alert("You selected: " + selectedID);
@@ -52,8 +53,13 @@
             //alert("You selected: " + selectedText);
             $("#spanAssetItemSchema_Add").css("display", "block");
         }
+        if (selectedText.toUpperCase() === "DROPDOWN" || selectedText.toUpperCase() === "MULTILIST") {
+            var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
+        }
     });
     $select2.on("change", function () {
+        var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
+        $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
         var selectedID = $(this).val();
         var selectedText = $(this).find("option:selected").text();
         //alert(selectedText);
@@ -61,6 +67,11 @@
             //alert("You selected: " + selectedID);
             //alert("You selected: " + selectedText);
             $("#spanAssetItemSchema_Edit").css("display", "block");
+            //var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
+        }
+
+        if (selectedText.toUpperCase() === "DROPDOWN" || selectedText.toUpperCase() === "MULTILIST") {
+            var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
         }
        
     });
