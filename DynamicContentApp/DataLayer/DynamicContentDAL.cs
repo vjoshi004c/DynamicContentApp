@@ -715,7 +715,52 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-        
+        public List<SchemaFieldType> GetDropdownData(string SchemaFieldID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<SchemaFieldType> custlist = null;
+            try
+            {
+                custlist = new List<SchemaFieldType>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_fields_type", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", SchemaFieldID);
+                cmd.Parameters.AddWithValue("@FieldName", "");
+                cmd.Parameters.AddWithValue("@FieldType", "");
+                cmd.Parameters.AddWithValue("@Query", 6);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    SchemaFieldType cobj = new SchemaFieldType();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.FieldName = ds.Tables[0].Rows[i]["FieldName"].ToString();
+                    cobj.FieldType = ds.Tables[0].Rows[i]["FieldType"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public List<ContentItemModel> GetAssetItemSchema(string SchemaID)
         {
 

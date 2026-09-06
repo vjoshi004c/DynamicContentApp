@@ -717,11 +717,11 @@ body {font-family: Arial;}
                         <h2>To delete selected item -  <span></span></h2>
                         <h4>Are you sure you want to delete this item?  <span></span></h4>
                         <p>
-                            <label for="schemaID">Schema ID:</label>
+                            <label for="schemaID">Asset ID:</label>
                             <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
                         </p>
                             <p>
-                                <label for="schemaName">Schema Name:</label>
+                                <label for="schemaName">Asset Name:</label>
                                 <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
                             </p>
                         <p>
@@ -1950,13 +1950,25 @@ body {font-family: Arial;}
                      }
                       if(item.schemaFieldType =='DROPDOWN')
                      {
-                          const optionsData = [
-                                        { value: "", text: "-Select Field Type -" },
-                                        { value: "1", text: "Text" },
-                                        { value: "2", text: "Multiline" },
-                                        { value: "3", text: "HtmlText" }
-                                    ];
 
+                          const optionsData = [
+                                        { value: "0", text: "-Select Item -" , path:""}
+                                        // { value: "1", text: "Text" },
+                                        // { value: "2", text: "Multiline" },
+                                        // { value: "3", text: "HtmlText" }
+                                    ];
+                                     getDropdownData(optionsData, schemaFieldID);
+
+
+                                   // alert("getDropdownData1" + assetFieldID);
+                                   
+                                    //alert("getDropdownData2" + assetFieldID);
+
+                                    // $.each(optionsData, function (index, item) {
+                                    //    // Validate that both value and text exist
+                                    //     alert(item.value + "  " + item.text);
+
+                                    // });
                                 //     const $select = $("<select>", {
                                 //     id: "FieldTypeSelect",
                                 //     name: "FieldTypeSelect"
@@ -1992,7 +2004,9 @@ body {font-family: Arial;}
                                             $option.appendTo(AssetFieldNameDROPDOWN);
                                             if (item.value == assetFieldValue) {
                                               $option.attr('selected', 'selected');
+                                             
                                             }
+                                             $option.attr('path', item.path);
                                             // $("<option>", {
                                             //     value: item.value,
                                             //     text: item.text
@@ -2326,6 +2340,38 @@ body {font-family: Arial;}
    
 
       }
+
+      function getDropdownData(optionsData, schemaFieldID) {
+        //alert("getDropdownData" + assetFieldID);
+
+        $.ajax({
+            type: "GET",
+            url: "/ContentTree/GetDropdownData", // PageName/MethodName
+            //data: JSON.stringify(requestData),
+            data: { SchemaFieldID: schemaFieldID },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                //alert(response.message + " Status is: " + response.status);
+                //alert("Total records received: " + response.length);
+                $.each(response, function (index, record) {
+                    const newElement = "{ value:\"" + record.id + "\", text: \"" + record.fieldName + "\"}";
+                    let newItem = { value: record.id, text: record.fieldName , path:record.fieldType};
+                   // alert(newItem);
+                    optionsData.push(newItem);
+
+                });
+
+            },
+            error: function (xhr, status, error) {
+
+                console.error("Error occurred:", error);
+                alert("Error occurred:" + error);
+            }
+        });
+    }
+
       function IsAssetItemSchemaType( IDSchema, RecordCount ) {
 
                             // var MessageSucess=  $("#lblEditMessageSucess");
