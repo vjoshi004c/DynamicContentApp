@@ -1,0 +1,226 @@
+
+
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="dynamicFormContainer_Edit_AssetFieldDetails"></div>
+
+<input id="btnshowselectedvaluetype" class="showselectedvaluetype"  button" value="show selected value" />
+<div id="my-dual-listbox-selectedvalue"></div>
+
+</body>
+<script>
+$(document).ready(function() {
+
+
+const optionsData = [
+                                 
+                                   { value: "1", text: "SingleLineText" },
+                                  { value: "2", text: "Multiline Text" },
+                                   { value: "3", text: "HtmlText" },
+				{ value: "4", text: "MiltiList" },
+                                   { value: "5", text: "Dropdown" },
+				{ value: "6", text: "Image" },
+                                   { value: "7", text: "Link" },
+				 { value: "8", text: "Date" }
+
+
+                            ];
+
+optionsData, assetItemID, assetItemSchemaID
+var assetItemID= "1";
+var assetItemSchemaID= "2";
+
+
+RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID);
+
+
+
+   
+});
+
+function getSelectedItems() {
+
+
+    let result = [];
+    $('#right-list option').each(function() {
+        result.push({
+            id: $(this).val(),
+            name: $(this).text()
+        });
+    });
+$('my-dual-listbox-selectedvalue').val(result);
+   // return result;
+}
+
+function  GetSelectedListValues() {
+//alert('GetSelectedListValues');
+let resultnew = [];
+    	$('#right-list option').each(function() {
+ 		// alert($(this).text());
+        	resultnew.push({
+            	value: $(this).val(),
+            	text: $(this).text()
+        	});
+    	});
+	var selectedListValue= 'MULTILIST::'
+	$.each(resultnew, function(index, item) {
+		if(selectedListValue ==="MULTILIST::")
+		{
+			selectedListValue=  selectedListValue + item.value;
+		}
+		else 
+		{
+			selectedListValue= selectedListValue + ','  + item.value;
+
+		}
+});
+
+$('#my-dual-listbox-selectedvalue').text(selectedListValue);
+$('#111').val(selectedListValue);
+
+}
+$(".showselectedvaluetype").on("click", function() {
+    	//alert("One of the buttons was clicked!");
+ 	let result = [];
+    	$('#right-list option').each(function() {
+ 		// alert($(this).text());
+        	result.push({
+            	value: $(this).val(),
+            	text: $(this).text()
+        	});
+    	});
+	var selectedListValue= 'MULTILIST::'
+	$.each(result, function(index, item) {
+		if(selectedListValue ==="MULTILIST::")
+		{
+			selectedListValue=  selectedListValue + item.value;
+		}
+		else 
+		{
+			selectedListValue= selectedListValue + ','  + item.value;
+
+		}
+
+    });
+
+$('#my-dual-listbox-selectedvalue').text(selectedListValue);
+
+
+$('#111').val(selectedListValue);
+
+alert($('#111').val());
+//$('#my-dual-listbox-selectedvalue').text(result[0].name);
+
+});
+
+function  RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID) {
+
+var schemaFieldID= "111";
+var assetFieldValue= "";
+var assetFieldID= "3"
+ 
+//alert('RenderAssetItemDetail');
+$("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "block");
+$("#dynamicFormContainer_Edit_AssetFieldDetails").empty();
+
+ // 2. Programmatically build the HTML skeleton
+    const $controlWrapper = $('<div class="dual-listbox"></div>');
+
+    const $leftSection = $(`
+        <div class="list-section">
+            <label>Available Items</label>
+            <select id="left-list" multiple size="10"></select>
+        </div>
+    `);
+
+    const $buttonSection = $(`
+        <div class="button-section">
+            <button id="btn-add"> &gt; </button>
+            <button id="btn-add-all"> &gt;&gt; </button>
+            <button id="btn-remove"> &lt; </button>
+            <button id="btn-remove-all"> &lt;&lt; </button>
+        </div>
+    `);
+
+    const $rightSection = $(`
+        <div class="list-section">
+            <label>Selected Items</label>
+            <select id="right-list" multiple size="10"></select>
+        </div>
+    `);
+
+    // 3. Assemble components and target the container
+    $controlWrapper.append($leftSection, $buttonSection, $rightSection);
+   // $('#my-dual-listbox-container').append($controlWrapper);
+$('#dynamicFormContainer_Edit_AssetFieldDetails').append($controlWrapper);
+		const SchemaSpanMultilistFull = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                      const AssetFieldMultiListFullValue = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'All selected items' , style:'width:100%;'});
+                    SchemaSpanMultilistFull.append(AssetFieldMultiListFullValue);
+                    // $controlWrapper.append(SchemaSpanMultilistFull);
+$('#dynamicFormContainer_Edit_AssetFieldDetails').append(SchemaSpanMultilistFull);
+
+
+ const $controlWrapper1 = $('<div class="dual-listbox"></div>');
+$('#dynamicFormContainer_Edit_AssetFieldDetails').append($controlWrapper1);
+    // 4. Populate the left list dynamically from the data array
+    const $leftList = $('#left-list');
+    const $rightList = $('#right-list');
+
+    $.each(optionsData, function(index, item) {
+
+        $leftList.append($('<option>', {
+            value: item.value,
+            text: item.text
+        }));
+    });
+
+    // 5. Inject styles dynamically directly into the document
+    $('<style>').text(`
+        .dual-listbox { display: flex; align-items: center; gap: 20px; font-family: Arial, sans-serif; margin-top: 15px; }
+        .list-section { display: flex; flex-direction: column; }
+        .list-section label { font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .list-section select { width: 220px; height: 250px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .button-section { display: flex; flex-direction: column; gap: 8px; }
+        .button-section button { width: 45px; padding: 6px; font-weight: bold; cursor: pointer; border: 1px solid #ccc; background: #f9f9f9; border-radius: 4px; }
+        .button-section button:hover { background: #e0e0e0; }
+    `).appendTo('head');
+
+    // 6. Bind functionality to elements
+    $('#btn-add').click(function() {
+        $('#left-list option:selected').appendTo($rightList);
+ GetSelectedListValues();
+    });
+
+    $('#btn-add-all').click(function() {
+        $('#left-list option').appendTo($rightList);
+ GetSelectedListValues();
+    });
+
+    $('#btn-remove').click(function() {
+        $('#right-list option:selected').appendTo($leftList);
+ GetSelectedListValues();
+    });
+
+    $('#btn-remove-all').click(function() {
+        $('#right-list option').appendTo($leftList);
+ GetSelectedListValues();
+    });
+
+    // Enable instant moving via double-click
+    $leftList.on('dblclick', 'option', function() {
+        $(this).appendTo($rightList);
+ GetSelectedListValues();
+    });
+
+    $rightList.on('dblclick', 'option', function() {
+        $(this).appendTo($leftList);
+       GetSelectedListValues();
+    });
+
+}
+
+</script>
