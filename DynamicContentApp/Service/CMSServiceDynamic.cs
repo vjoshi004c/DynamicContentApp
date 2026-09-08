@@ -83,6 +83,46 @@ namespace DynamicContentApp.Service
 
            // }
         }
+        private void GetAssetDataById(string AssetItemPath, StringBuilder JsonDataSB, string Area)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            //List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
+            //if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
+            // {
+
+            List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetDataById(AssetItemPath);
+            if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
+            {
+                JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                {
+                    JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                }
+                JsonDataSB.Append("\"field\":\"none\"},");
+            }
+
+            // }
+        }
+        private void GetAssetDataByList(string AssetItemPath, StringBuilder JsonDataSB, string Area)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            //List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
+            //if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
+            // {
+
+            List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetDataById(AssetItemPath);
+            if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
+            {
+                JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                {
+                    JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                }
+                JsonDataSB.Append("\"field\":\"none\"},");
+            }
+
+            // }
+        }
         public dynamic JsonToModel(string AssetItemPath)
         {
 
@@ -130,7 +170,44 @@ namespace DynamicContentApp.Service
                     {
                         GetAssetDataMedia(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
                     }
-                   
+                    // bool isValid = System.Text.RegularExpressions.Regex.IsMatch(AssetFieldValue, @"^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$");
+
+
+                    if (AssetFieldValue.ToUpper().Contains("DROPDOWN::") == true)
+                    {
+                        JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                        AssetFieldValue = AssetFieldValue.Replace("DROPDOWN::", "");
+                        //GetAssetDataById(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                        GetAssetDataById(AssetFieldValue, JsonDataSB, "Data");
+                        JsonDataSB.Append("\"field\":\"none\"},");
+                    }
+                   // AssetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
+                    if (AssetFieldValue.ToUpper().Contains("MILTILIST::") == true)
+                    {
+                        
+                        AssetFieldValue = AssetFieldValue.Replace("MILTILIST::", "");
+                        string[] AssetFieldValueArray = AssetFieldValue.Split(',');
+                        if (AssetFieldValueArray.Length > 0)
+                        {
+                            //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue  + "\",");
+                          //  JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\",");
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+
+                            for (int i = 0; i < AssetFieldValueArray.Length; i++)
+                            {
+                                //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                                //if (AssetFieldValueArray[i].ToUpper().Contains("MILTILIST::") == true)
+                                //{
+                                //GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, AssetItemFieldDetail.AssetFieldName + i.ToString());
+                                GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, "Data");
+                                // }
+                            }
+                            JsonDataSB.Append("\"field\":\"none\"},");
+                        }
+                    }
+                    
+
+
                 }
                 JsonDataSB.Append("\"field\":\"none\"},");
             }

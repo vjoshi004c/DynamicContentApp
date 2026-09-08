@@ -1,6 +1,6 @@
 USE [TestDCA_V1]
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_fields_type]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_fields_type]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,7 +92,7 @@ if(@Query=4)
 END;
 --exec dca_curd_asset_fields_type @ID = '0E6A14C7-B8EB-4042-AC5A-450DCE5B3FFA',     @FieldName='', 	@FieldType ='',  	    @Query =4
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_components]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_components]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +180,7 @@ BEGIN
         
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_field_details]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_field_details]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -321,7 +321,7 @@ END;
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_master]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_master]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -435,7 +435,7 @@ END
         
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_masterlayout]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_item_masterlayout]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -471,7 +471,7 @@ BEGIN
         
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -682,7 +682,7 @@ END;
 
 --         WHERE  id ='42E0C3D6-2DFE-4B26-A4F2-2EFA988E37CC'
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema_fields]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_asset_schema_fields]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -753,7 +753,7 @@ END;
 --select * from AssetSchemaFields where schemaid = '710FBE40-8EBD-4FDE-BA99-282501FA809A'
 --select * from AssetSchemaFields where id = '0183C8A4-A2A0-4F34-A180-C245C03771CA'
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_AssetFields]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_AssetFields]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -816,13 +816,14 @@ END;
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_curd_page_render]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_curd_page_render]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE  PROCEDURE [dbo].[dca_curd_page_render]
     @AssetItemPath varchar(500) ='',
+    @AssetID varchar(500) ='',
      @Query int
 	
 AS
@@ -849,13 +850,22 @@ if(@Query=3)
     begin
         select cp.id as ComponentID, cp.AssetItemID, cp.ComponentPath, cp.LinkedAssetItem, cp.PlaceholderPath from ComponentPresentation cp where cp.AssetItemID= @AssetItemId
      end 
+
+     if(@Query=4)
+    begin
+        select aif.AssetItemID, aif.AssetSchemaID , ass.SchemaName as AssetFieldName,aif.AssetFieldID, aif.AssetFieldValue
+        from  AssetItemFields aif
+        inner join AssetSchema ass
+        on aif.AssetFieldID= ass.ID
+        where  aif.AssetItemID=@AssetID
+    end
    
 END;
 --exec dca_curd_page_render @AssetItemPath = '/UniversalCMS/Content/Article First',@Query =1
 --exec dca_curd_page_render @AssetItemPath = '/UniversalCMS/Content/Article First',@Query =2
 --exec dca_curd_page_render @AssetItemPath = '/UniversalCMS/Content/Article First',@Query =3
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_contenttree_item]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_contenttree_item]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -909,7 +919,7 @@ ELSE
 --'D1B2BE76-C76B-447A-A30A-DDDF4959A8FC',
 --'DC30B818-0EF8-4BF9-84E2-812EC508A483')
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_page_content]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_page_content]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -930,7 +940,7 @@ BEGIN
 					 WHERE   PageUrl = @PageUrl	
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_get_schema]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_get_schema]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -965,7 +975,7 @@ END
 -- EXEC dca_get_schema @SchemaID ='74826E3E-C2EA-45DC-A328-43F115F45161'
 --EXEC dca_get_schema 
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1037,7 +1047,7 @@ select * from AssetItem
 
 */
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item_fields]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_asset_item_fields]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1067,7 +1077,7 @@ BEGIN
         
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_insert_page_content]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_insert_page_content]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1095,7 +1105,7 @@ BEGIN
         ); 
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dca_update_page_content]    Script Date: 9/6/2026 10:27:43 AM ******/
+/****** Object:  StoredProcedure [dbo].[dca_update_page_content]    Script Date: 9/8/2026 5:09:51 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
