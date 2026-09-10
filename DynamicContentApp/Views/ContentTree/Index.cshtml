@@ -2037,14 +2037,202 @@ body {font-family: Arial;}
                      }
                      if(item.schemaFieldType =='MULTILIST')
                      {
-                          assetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
+
+                           const optionsData = [
+                                        //{ value: "0", text: "-Select Item -" , path:""}
+                                        // { value: "1", text: "Text" },
+                                        // { value: "2", text: "Multiline" },
+                                        // { value: "3", text: "HtmlText" }
+                                    ];
+                                     getDropdownData(optionsData, schemaFieldID);
+                                      const $controlWrapper = $('<div class="dual-listbox"></div>');
+                                     
+                                        var $left_list_id = "left-list" + schemaFieldID;
+                                        var $right_list_id = "right-list" + schemaFieldID ;
+                                        var $btn_add_id = "btn-add-list" + schemaFieldID;
+                                        var $btn_add_all_id = "btn-add-all-list" + schemaFieldID;
+                                        var $btn_remove_id = "btn-remove-list" + schemaFieldID ;
+                                        var $btn_remove_all_id = "btn-remove-all-list" +schemaFieldID ;
+
+                                        const $leftSection = $(`
+                                            <div class="list-section">
+                                                <label>Available Items</label>
+                                                <select id="left-list" multiple size="100"></select>
+                                            </div>
+                                        `);
+
+                                        const $buttonSection = $(`
+                                            <div class="button-section">
+                                                <button id="btn-add"> &gt; </button>
+                                                <button id="btn-add-all"> &gt;&gt; </button>
+                                                <button id="btn-remove"> &lt; </button>
+                                                <button id="btn-remove-all"> &lt;&lt; </button>
+                                            </div>
+                                        `);
+
+                                        const $rightSection = $(`
+                                            <div class="list-section">
+                                                <label>Selected Items</label>
+                                                <select id="right-list" multiple size="100"></select>
+                                            </div>
+                                        `);
+
+                                        // if(!assetFieldValue.includes("MULTILIST::"))
+                                        //     {
+                                        //         assetFieldValue= "MULTILIST::" +assetFieldValue
+                                        //     }
+
+                                        // 3. Assemble components and target the container
+                                        $controlWrapper.append($leftSection, $buttonSection, $rightSection);
+                                       // $('#my-dual-listbox-container').append($controlWrapper);
+                                    $('#dynamicFormContainer_Edit_AssetFieldDetails').append($controlWrapper);
+		                                    const SchemaSpanMultilistFull = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                                                          const AssetFieldMultiListFullValue = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+ schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'All selected items' , style:'width:100%;'});
+                                                        SchemaSpanMultilistFull.append(AssetFieldMultiListFullValue);
+                                                        // $controlWrapper.append(SchemaSpanMultilistFull);
+                                    //$('#dynamicFormContainer_Edit_AssetFieldDetails').append(SchemaSpanMultilistFull);
+                                        const $leftList = $('#left-list');
+    const $rightList = $('#right-list');
+
+    $.each(optionsData, function(index, item) {
+
+        // $leftList.append($('<option>', {
+        //     value: item.value,
+        //     text: item.text
+        // }));
+        //$leftList.empty();
+		//$rightList.empty();
+       //alert(assetFieldValue);
+        //alert(item.value);
+
+         if(!assetFieldValue.includes(item.value))
+            {
+                //alert("left");
+                
+                    // $leftList.append($('<option>', {
+                    //     value: item.value,
+                    //     text: item.text
+                    // }));
+                    if ($("#left-list option[value='" + item.value + "']").length === 0) {
+                        $("#left-list").append($("<option>", { value: item.value, text: item.text }));
+                     }
+            }
+            else
+            {
+                 //alert("right");
+                
+                  if ($("#right-list option[value='" + item.value + "']").length === 0) {
+                    $("#right-list").append($("<option>", { value: item.value, text: item.text }));
+                     }
+                      
+
+                    // $rightList.append($('<option>', {
+                    //     value: item.value,
+                    //     text: item.text
+                    // }));
+                    //  $leftList.remove($('<option>', {
+                    //     value: item.value,
+                    //     text: item.text
+                    // }));
+            }
+
+
+    });
+
+    // 5. Inject styles dynamically directly into the document
+    $('<style>').text(`
+        .dual-listbox { display: flex; align-items: center; gap: 20px; font-family: Arial, sans-serif; margin-top: 15px; }
+        .list-section { display: flex; flex-direction: column; }
+        .list-section label { font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .list-section select { width: 220px; height: 250px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .button-section { display: flex; flex-direction: column; gap: 8px; }
+        .button-section button { width: 45px; padding: 6px; font-weight: bold; cursor: pointer; border: 1px solid #ccc; background: #f9f9f9; border-radius: 4px; }
+        .button-section button:hover { background: #e0e0e0; }
+    `).appendTo('head');
+
+    // 6. Bind functionality to elements
+    $('#btn-add').click(function() {
+        $('#left-list option:selected').appendTo($rightList);
+ GetSelectedListValues();
+    });
+
+    $('#btn-add-all').click(function() {
+        $('#left-list option').appendTo($rightList);
+ GetSelectedListValues();
+    });
+
+    $('#btn-remove').click(function() {
+        $('#right-list option:selected').appendTo($leftList);
+ GetSelectedListValues();
+    });
+
+    $('#btn-remove-all').click(function() {
+        $('#right-list option').appendTo($leftList);
+ GetSelectedListValues();
+    });
+
+    // Enable instant moving via double-click
+    $leftList.on('dblclick', 'option', function() {
+        $(this).appendTo($rightList);
+ GetSelectedListValues();
+    });
+
+    $rightList.on('dblclick', 'option', function() {
+        $(this).appendTo($leftList);
+       GetSelectedListValues();
+    });
+
+    AssetFieldMultiListFullValue.on("change", function () {
+							$('#left-list').empty();
+							$('#right-list').empty();
+					//alert("on text change");
+                                        var selectedIDs = $(this).val();
+					selectedIDs= selectedIDs.replace("MULTILIST::","");
+					alert(selectedIDs);
+
+					var myArray = selectedIDs.split(',');
+					//$.each(myArray, function(index, value){
+						//alert("Index: " + index + " | Value: " + value.trim());
+						$.each(optionsData, function(index, item) {
+							if(selectedIDs.trim().includes(item.value))
+							{
+								//alert("Option value "+ item.value + " | Value: " + value.trim());
+
+        							$('#right-list').append($('<option>', {
+           								 value: item.value,
+           								 text: item.text
+        								}));
+
+
+								
+							}
+							else
+							{
+									$('#left-list').append($('<option>', {
+           								 value: item.value,
+           								 text: item.text
+        								}));
+
+							}
+						});
+
+					//});
+
+					
+
+});
+
+
+
+                    //************************************************ */
+                          //assetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
                              SchemaSpan2.append(AssetFieldNameLabel);
                         form.append(SchemaSpan2);
                         const SchemaSpan3Multilist = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                      const AssetFieldMultilist = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;'});
+                      const AssetFieldMultilist = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;'});
                         SchemaSpan3Multilist.append(AssetFieldMultilist);
-                        form.append(SchemaSpan3Multilist);  
-
+                        form.append(SchemaSpan3Multilist);
+                    //************* */
                      }
                      if(item.schemaFieldType =='LINK')
                      {
@@ -2356,6 +2544,36 @@ body {font-family: Arial;}
    
 
       }
+
+function  GetSelectedListValues() {
+alert('GetSelectedListValues');
+let resultnew = [];
+    	$('#right-list option').each(function() {
+ 		// alert($(this).text());
+        	resultnew.push({
+            	value: $(this).val(),
+            	text: $(this).text()
+        	});
+    	});
+        
+	var selectedListValue= 'MULTILIST::'
+        $('#MULTILIST_INPUT_FFEA8C39-0272-4734-AEEF-251DF73CA36E').val('');
+	$.each(resultnew, function(index, item) {
+		    if(selectedListValue ==="MULTILIST::")
+		    {
+			    selectedListValue=  selectedListValue + item.value;
+		    }
+		    else 
+		    {
+			    selectedListValue= selectedListValue + ','  + item.value;
+
+		    }
+        
+           
+               //alert( $('#MULTILIST_INPUT_FFEA8C39-0272-4734-AEEF-251DF73CA36E').val());
+            $('#MULTILIST_INPUT_FFEA8C39-0272-4734-AEEF-251DF73CA36E').val(selectedListValue);
+        });
+    }
 
       function getDropdownData(optionsData, schemaFieldID) {
         //alert("getDropdownData" + assetFieldID);

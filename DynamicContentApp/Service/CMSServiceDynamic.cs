@@ -184,10 +184,10 @@ namespace DynamicContentApp.Service
                        // JsonDataSB.Append("\"field\":\"none\"},");
                     }
                    // AssetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
-                    else if (AssetFieldValue.ToUpper().Contains("MILTILIST::") == true)
+                    else if (AssetFieldValue.ToUpper().Contains("MULTILIST::") == true)
                     {
                         
-                        AssetFieldValue = AssetFieldValue.Replace("MILTILIST::", "");
+                        AssetFieldValue = AssetFieldValue.Replace("MULTILIST::", "");
                         string[] AssetFieldValueArray = AssetFieldValue.Split(',');
                         if (AssetFieldValueArray.Length > 0)
                         {
