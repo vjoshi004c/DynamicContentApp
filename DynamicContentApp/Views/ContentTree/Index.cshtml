@@ -1906,12 +1906,10 @@ body {font-family: Arial;}
                         // alert("Date");
                          SchemaSpan2.append(AssetFieldNameLabel);
                          form.append(SchemaSpan2);
-                          const SchemaSpanDate= $('<div>').attr({ style: 'padding:0em;width:100%', });
-                          AssetFieldNameDate = $('<input>').attr({ checked:true, type: 'text',  class:"datetime", schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Date' , style:'width:25%;'});
-                  
-                              
-                                SchemaSpanDate.append(AssetFieldNameDate);
-                                form.append(SchemaSpanDate);
+                         const SchemaSpanDate= $('<div>').attr({ style: 'padding:0em;width:100%', });
+                         AssetFieldNameDate = $('<input>').attr({ checked:true, type: 'text',  class:"datetime", schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Date' , style:'width:25%;'});
+                         SchemaSpanDate.append(AssetFieldNameDate);
+                         form.append(SchemaSpanDate);
 
                                 // AssetFieldNameDate.on("onSelect", function () {
                                 //         var selectedID = $(this).val();
@@ -2037,45 +2035,87 @@ body {font-family: Arial;}
                      }
                      if(item.schemaFieldType =='MULTILIST')
                      {
-
-                           const optionsData = [
-                                        //{ value: "0", text: "-Select Item -" , path:""}
-                                        // { value: "1", text: "Text" },
-                                        // { value: "2", text: "Multiline" },
-                                        // { value: "3", text: "HtmlText" }
-                                    ];
-                                     getDropdownData(optionsData, schemaFieldID);
-                                      const $controlWrapper = $('<div class="dual-listbox"></div>');
-                                     
-                                        var $left_list_id = "left-list" + schemaFieldID;
+                         var $left_list_id = "left-list" + schemaFieldID;
                                         var $right_list_id = "right-list" + schemaFieldID ;
                                         var $btn_add_id = "btn-add-list" + schemaFieldID;
                                         var $btn_add_all_id = "btn-add-all-list" + schemaFieldID;
                                         var $btn_remove_id = "btn-remove-list" + schemaFieldID ;
                                         var $btn_remove_all_id = "btn-remove-all-list" +schemaFieldID ;
+                           const optionsData = [
+                                        // { value: "0", text: "-Select Item -" , path:""},
+                                        // { value: "1", text: "Text" },
+                                        // { value: "2", text: "Multiline" },
+                                        // { value: "3", text: "HtmlText" }
+                                    ];
+                                     getDropdownData(optionsData, schemaFieldID);
+                                     // const $controlWrapper = $('<div class="dual-listbox"></div>');
+                                       const $controlWrapper= $('<div>').attr({ class: 'dual-listbox' });
+                                      const $controlWrapperLeftDiv= $('<div>').attr({ class: 'list-section'});
+                                       const $controlWrapperLeftLabel = $("<label>", {   for: $left_list_id,  class: "form-label",  text: "Available Items", style:'width:100%;background-color:#f2f2f2;border-color:none' });
+                                       const  $controlWrapperLeftList = $('<select>').attr({  schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:$left_list_id,  name: $left_list_id,placeholder: 'Select Available item', multiple: true, size: 100 });
+                                     
+                                       // const  $controlWrapperLeftList1 = $('<select>').attr({   id:'multilist_text', tag:'component', name: 'multilist_text', multiple: true, size: 100 });
+                                       $controlWrapperLeftDiv.append($controlWrapperLeftLabel);
+                                      $controlWrapperLeftDiv.append($controlWrapperLeftList);
+                                      // $controlWrapperLeftDiv.append($controlWrapperLeftList1);
+                                      $controlWrapper.append($controlWrapperLeftDiv);
 
-                                        const $leftSection = $(`
-                                            <div class="list-section">
-                                                <label>Available Items</label>
-                                                <select id="left-list" multiple size="100"></select>
-                                            </div>
-                                        `);
+                                     //    SchemaSpan2.append(AssetFieldNameLabel);
+                                     // form.append(SchemaSpan2);
+                                     // const SchemaSpanDate= $('<div>').attr({ style: 'padding:0em;width:100%', });
+                                     // AssetFieldNameDate = $('<input>').attr({ checked:true, type: 'text',  class:"datetime", schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldCheckbox',placeholder: 'Select Date' , style:'width:25%;'});
+                                     // SchemaSpanDate.append(AssetFieldNameDate);
+                                     // form.append(SchemaSpanDate);
 
-                                        const $buttonSection = $(`
-                                            <div class="button-section">
-                                                <button id="btn-add"> &gt; </button>
-                                                <button id="btn-add-all"> &gt;&gt; </button>
-                                                <button id="btn-remove"> &lt; </button>
-                                                <button id="btn-remove-all"> &lt;&lt; </button>
-                                            </div>
-                                        `);
 
-                                        const $rightSection = $(`
-                                            <div class="list-section">
-                                                <label>Selected Items</label>
-                                                <select id="right-list" multiple size="100"></select>
-                                            </div>
-                                        `);
+
+
+                                        //  const $leftSection = $(`
+                                        //      <div class="list-section">
+                                        //          <label>Available Items</label>
+                                        //         <select id="left-list" multiple size="100"></select>
+                                        //      </div>
+                                        //  `);
+
+                                        // const $buttonSection = $(`
+                                        //     <div class="button-section">
+                                        //         <button id="btn-add"> &gt; </button>
+                                        //         <button id="btn-add-all"> &gt;&gt; </button>
+                                        //         <button id="btn-remove"> &lt; </button>
+                                        //         <button id="btn-remove-all"> &lt;&lt; </button>
+                                        //     </div>
+                                        // `);
+
+                                       
+                                   
+                                       //$controlWrapperRightDiv.append($controlWrapperRightLabel);
+                                      
+
+                                        const $controlWrapperButtonDiv= $('<div>').attr({ class: 'button-section'});
+                                       const $controlWrapperButtonAdd = $('<input>').attr({title:">" ,type: 'button', text:">",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:$btn_add_id,  value:'>', name: 'AssetFieldSingleValue',placeholder: 'Enter Media File Value1' , style:'background-color:Gray;color:white;width:50px;margin-left:15px;padding:3px;font-size:12px;'});
+                                       $controlWrapperButtonDiv.append($controlWrapperButtonAdd);
+                                        const $controlWrapperButtonAddAll = $('<input>').attr({title:">>" ,type: 'button', text:">>",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:$btn_add_all_id,  value:'>>', name: 'AssetFieldSingleValue',placeholder: 'Enter Media File Value1' , style:'background-color:Gray;color:white;width:50px;margin-left:15px;padding:3px;font-size:12px;'});
+                                       $controlWrapperButtonDiv.append($controlWrapperButtonAddAll);
+                                       const $controlWrapperButtonRemove = $('<input>').attr({title:">>" ,type: 'button', text:"<",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:$btn_remove_id,  value:'<', name: 'AssetFieldSingleValue',placeholder: 'Enter Media File Value1' , style:'background-color:Gray;color:white;width:50px;margin-left:15px;padding:3px;font-size:12px;'});
+                                       $controlWrapperButtonDiv.append($controlWrapperButtonRemove);
+                                       const $controlWrapperButtonRemoveAll = $('<input>').attr({title:">>" ,type: 'button', text:"<<",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:$btn_remove_all_id,  value:'<<', name: 'AssetFieldSingleValue',placeholder: 'Enter Media File Value1' , style:'background-color:Gray;color:white;width:50px;margin-left:15px;padding:3px;font-size:12px;'});
+                                       $controlWrapperButtonDiv.append($controlWrapperButtonRemoveAll);
+                                        $controlWrapper.append($controlWrapperButtonDiv);
+
+
+                                       // const $rightSection = $(`
+                                        //    <div class="list-section">
+                                         //       <label>Selected Items</label>
+                                          //      <select id="right-list" multiple size="100"></select>
+                                         //   </div>
+                                        //`);
+
+                                         const $controlWrapperRightDiv= $('<div>').attr({ class: 'list-section'});
+                                       const $controlWrapperRightLabel = $("<label>", {   for: $right_list_id,  class: "form-label",  text: "Selected Items", style:'width:100%;background-color:#f2f2f2;border-color:none' });
+                                       const  $controlWrapperRightList = $('<select>').attr({  schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:$right_list_id,  name: $left_list_id,placeholder: 'Select Available item', multiple: true, size: 100 });
+                                     $controlWrapperRightDiv.append($controlWrapperRightLabel);
+                                      $controlWrapperRightDiv.append($controlWrapperRightList);
+                                      $controlWrapper.append($controlWrapperRightDiv);
 
                                         // if(!assetFieldValue.includes("MULTILIST::"))
                                         //     {
@@ -2083,17 +2123,44 @@ body {font-family: Arial;}
                                         //     }
 
                                         // 3. Assemble components and target the container
-                                        $controlWrapper.append($leftSection, $buttonSection, $rightSection);
+                                       // $controlWrapper.append($leftSection, $buttonSection, $rightSection);
+                                       // $controlWrapper.append(  $buttonSection);
                                        // $('#my-dual-listbox-container').append($controlWrapper);
-                                    $('#dynamicFormContainer_Edit_AssetFieldDetails').append($controlWrapper);
-		                                    const SchemaSpanMultilistFull = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                                                          const AssetFieldMultiListFullValue = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+ schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'All selected items' , style:'width:100%;'});
-                                                        SchemaSpanMultilistFull.append(AssetFieldMultiListFullValue);
+                                    //$('#dynamicFormContainer_Edit_AssetFieldDetails').append($controlWrapper);
+                                  
+                                  
+		                                    //const SchemaSpanMultilistFull = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                                                          //const AssetFieldMultiListFullValue = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_1'+ schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'All selected items' , style:'width:100%;'});
+                                                       // SchemaSpanMultilistFull.append(AssetFieldMultiListFullValue);
+
+                                                          //************************************************ */
+                          //assetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
+                             SchemaSpan2.append(AssetFieldNameLabel);
+                        form.append(SchemaSpan2);
+                        const SchemaSpan3Multilist = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                      const AssetFieldMultilist = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+schemaFieldID, tag:'component', value:assetFieldValue, readonly:'readonly',name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
+                        SchemaSpan3Multilist.append(AssetFieldMultilist);
+                          //$controlWrapper.append(SchemaSpan3Multilist);
+                            form.append($controlWrapper);
+                          form.append(SchemaSpan3Multilist);
+                        
+                         
+                    //************* */
+
+
+
+                                                         
                                                         // $controlWrapper.append(SchemaSpanMultilistFull);
                                     //$('#dynamicFormContainer_Edit_AssetFieldDetails').append(SchemaSpanMultilistFull);
-                                        const $leftList = $('#left-list');
-    const $rightList = $('#right-list');
+                                        const $leftList = $($left_list_id);
+                                        const $multilist_input = 'MULTILIST_INPUT_'+ schemaFieldID
+                                        //const $leftListold = $("#left-list");
+                                        const $rightList = $($right_list_id);
 
+            // $(document).on('DOMNodeInserted', '#frmAssetFieldDetailsContainer', function () {
+            //     // $("#mySelect").append(new Option("Dynamic Option", "3"));
+            //     alert("inside frmAssetFieldDetailsContainer");
+            // });
     $.each(optionsData, function(index, item) {
 
         // $leftList.append($('<option>', {
@@ -2104,40 +2171,61 @@ body {font-family: Arial;}
 		//$rightList.empty();
        //alert(assetFieldValue);
         //alert(item.value);
-
+        
          if(!assetFieldValue.includes(item.value))
             {
-                //alert("left");
-                
-                    // $leftList.append($('<option>', {
-                    //     value: item.value,
-                    //     text: item.text
-                    // }));
-                    if ($("#left-list option[value='" + item.value + "']").length === 0) {
-                        $("#left-list").append($("<option>", { value: item.value, text: item.text }));
-                     }
+                        const $option = $('<option value="' +  item.value + '">' + item.text + '</option>');                 
+                        $option.appendTo($controlWrapperLeftList);
+
+                     //    if ($("#"+$left_list_id +" option[value='" + item.value + "']").length === 0) {
+                     //    //alert($("#"+$left_list_id).id);
+                     //    $("#"+$left_list_id).append($("<option>", { value: item.value, text: item.text }));
+
+                     // }
             }
             else
             {
-                 //alert("right");
-                
-                  if ($("#right-list option[value='" + item.value + "']").length === 0) {
-                    $("#right-list").append($("<option>", { value: item.value, text: item.text }));
-                     }
-                      
+                        const $option = $('<option value="' +  item.value + '">' + item.text + '</option>');                 
+                        $option.appendTo($controlWrapperRightList);
 
-                    // $rightList.append($('<option>', {
-                    //     value: item.value,
-                    //     text: item.text
-                    // }));
-                    //  $leftList.remove($('<option>', {
-                    //     value: item.value,
-                    //     text: item.text
-                    // }));
+                  // if ($("#"+$right_list_id +" option[value='" + item.value + "']").length === 0) {
+                  //     alert($right_list_id);
+                  //   $("#"+$right_list_id).append($("<option>", { value: item.value, text: item.text }));
+                  //    }
+       
             }
 
 
     });
+
+   
+     $controlWrapperButtonAdd.on("click", function () {
+        // alert("$controlWrapperButtonAdd" +$left_list_id );
+         //$('#left-list option:selected').appendTo($rightList);
+          $('#' + $left_list_id  + '  option:selected').appendTo($('#' + $right_list_id ));
+        GetSelectedListValues($multilist_input , $right_list_id );
+        });
+      $controlWrapperButtonAddAll.on("click", function () {
+         //alert("$controlWrapperButtonAdd" +$left_list_id );
+         //$('#left-list option:selected').appendTo($rightList);
+          //$('#' + $left_list_id  + '  option:selected').appendTo($('#' + $right_list_id ));
+          $('#' + $left_list_id  + ' option').appendTo($('#' + $right_list_id ));
+
+         GetSelectedListValues($multilist_input , $right_list_id );
+        });
+        $controlWrapperButtonRemove.on("click", function () {
+        // alert("$controlWrapperButtonAdd" +$left_list_id );
+         //$('#left-list option:selected').appendTo($rightList);
+          $('#' + $right_list_id  + '  option:selected').appendTo($('#' + $left_list_id ));
+         GetSelectedListValues($multilist_input , $right_list_id );
+        });
+        $controlWrapperButtonRemoveAll.on("click", function () {
+         //alert("$controlWrapperButtonAdd" +$left_list_id );
+         //$('#left-list option:selected').appendTo($rightList);
+          //$('#' + $right_list_id  + '  option:selected').appendTo($('#' + $left_list_id ));
+          $('#' + $right_list_id  + ' option').appendTo($('#' + $left_list_id ));
+         GetSelectedListValues($multilist_input , $right_list_id );
+        });
 
     // 5. Inject styles dynamically directly into the document
     $('<style>').text(`
@@ -2151,7 +2239,7 @@ body {font-family: Arial;}
     `).appendTo('head');
 
     // 6. Bind functionality to elements
-    $('#btn-add').click(function() {
+  /*  $('#btn-add').click(function() {
         $('#left-list option:selected').appendTo($rightList);
  GetSelectedListValues();
     });
@@ -2180,12 +2268,12 @@ body {font-family: Arial;}
     $rightList.on('dblclick', 'option', function() {
         $(this).appendTo($leftList);
        GetSelectedListValues();
-    });
-
+    }); */
+    /*
     AssetFieldMultiListFullValue.on("change", function () {
 							$('#left-list').empty();
 							$('#right-list').empty();
-					//alert("on text change");
+					alert("AssetFieldMultiListFullValue");
                                         var selectedIDs = $(this).val();
 					selectedIDs= selectedIDs.replace("MULTILIST::","");
 					alert(selectedIDs);
@@ -2220,19 +2308,11 @@ body {font-family: Arial;}
 
 					
 
-});
+}); */
 
 
 
-                    //************************************************ */
-                          //assetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
-                             SchemaSpan2.append(AssetFieldNameLabel);
-                        form.append(SchemaSpan2);
-                        const SchemaSpan3Multilist = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                      const AssetFieldMultilist = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+schemaFieldID, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;'});
-                        SchemaSpan3Multilist.append(AssetFieldMultilist);
-                        form.append(SchemaSpan3Multilist);
-                    //************* */
+                  
                      }
                      if(item.schemaFieldType =='LINK')
                      {
@@ -2545,10 +2625,10 @@ body {font-family: Arial;}
 
       }
 
-function  GetSelectedListValues() {
-alert('GetSelectedListValues');
+function  GetSelectedListValues($multilist_input , $right_list_id) {
+//alert('GetSelectedListValues');
 let resultnew = [];
-    	$('#right-list option').each(function() {
+    	$('#'+$right_list_id +' option').each(function() {
  		// alert($(this).text());
         	resultnew.push({
             	value: $(this).val(),
@@ -2557,7 +2637,7 @@ let resultnew = [];
     	});
         
 	var selectedListValue= 'MULTILIST::'
-        $('#MULTILIST_INPUT_FFEA8C39-0272-4734-AEEF-251DF73CA36E').val('');
+        $('#'+ $multilist_input).val('');
 	$.each(resultnew, function(index, item) {
 		    if(selectedListValue ==="MULTILIST::")
 		    {
@@ -2571,7 +2651,7 @@ let resultnew = [];
         
            
                //alert( $('#MULTILIST_INPUT_FFEA8C39-0272-4734-AEEF-251DF73CA36E').val());
-            $('#MULTILIST_INPUT_FFEA8C39-0272-4734-AEEF-251DF73CA36E').val(selectedListValue);
+            $('#'+$multilist_input).val(selectedListValue);
         });
     }
 
