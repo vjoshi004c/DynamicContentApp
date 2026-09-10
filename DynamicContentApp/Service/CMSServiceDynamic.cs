@@ -63,7 +63,7 @@ namespace DynamicContentApp.Service
 
             }
         }
-        private void GetAssetDataMedia(string AssetItemPath, StringBuilder JsonDataSB, string Area)
+        private void GetAssetDataMedia(string AssetItemPath, StringBuilder JsonDataSB, string Area, string result)
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
             List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
@@ -74,7 +74,9 @@ namespace DynamicContentApp.Service
                 if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
                 {
                     JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
-                    foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                    JsonDataSB.Append("\"" + "Value" + "\"" + ":" + "\"" + result + "\",");
+
+                foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                     {
                         JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                     }
@@ -93,7 +95,9 @@ namespace DynamicContentApp.Service
             List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetDataById(AssetItemPath);
             if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
             {
+                
                 JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                JsonDataSB.Append("\"" + "Value" + "\"" + ":" + "\"" + AssetItemPath + "\",");
                 foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                 {
                     JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
@@ -113,12 +117,13 @@ namespace DynamicContentApp.Service
             List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetDataById(AssetItemPath);
             if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
             {
-                JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                //JsonDataSB.Append("\"" + "Item" + "\"" + ":" + "{");
+                JsonDataSB.Append("\"" + "Value" + "\"" + ":" + "\"" + AssetItemPath + "\",");
                 foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                 {
                     JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                 }
-                JsonDataSB.Append("\"field\":\"none\"},");
+               // JsonDataSB.Append("\"field\":\"none\"},");
             }
 
             // }
@@ -158,31 +163,28 @@ namespace DynamicContentApp.Service
                 JsonDataSB.Append("\"" + "AssetFields" + "\"" + ":" + "{");
                 foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                 {
-                    // string newvalue =  AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"");
-                    // string newvalue = AssetItemFieldDetail.AssetFieldValue.Replace('"', '\"');
-                    //string newvalue = AssetItemFieldDetail.AssetFieldValue.ToString();
-                    //AssetItemFieldDetail.AssetFieldValue=newvalue.Replace("\"", "\\\"")
+
                     string AssetFieldValue = AssetItemFieldDetail.AssetFieldValue;
                         string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                     AssetItemFieldDetail.AssetFieldValue = result;
-                    JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                   // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                   // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + result + "\",");
                     if (AssetFieldValue.ToUpper().Contains("/MEDIA/") ==true)
                     {
-                        GetAssetDataMedia(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                        GetAssetDataMedia(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
                     }
                     // bool isValid = System.Text.RegularExpressions.Regex.IsMatch(AssetFieldValue, @"^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$");
-
-
-                    if (AssetFieldValue.ToUpper().Contains("DROPDOWN::") == true)
+                    else if (AssetFieldValue.ToUpper().Contains("DROPDOWN::") == true)
                     {
-                        JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                        //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                       // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName  + "\"" + ":" + "{");
                         AssetFieldValue = AssetFieldValue.Replace("DROPDOWN::", "");
                         //GetAssetDataById(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
-                        GetAssetDataById(AssetFieldValue, JsonDataSB, "Data");
-                        JsonDataSB.Append("\"field\":\"none\"},");
+                        GetAssetDataById(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                       // JsonDataSB.Append("\"field\":\"none\"},");
                     }
                    // AssetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
-                    if (AssetFieldValue.ToUpper().Contains("MILTILIST::") == true)
+                    else if (AssetFieldValue.ToUpper().Contains("MILTILIST::") == true)
                     {
                         
                         AssetFieldValue = AssetFieldValue.Replace("MILTILIST::", "");
@@ -191,19 +193,38 @@ namespace DynamicContentApp.Service
                         {
                             //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue  + "\",");
                           //  JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\",");
-                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                           // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "[");
+                           
+                            //JsonDataSB.Append("\"" + "Value" + "\"" + ":" + "\"" + AssetItemPath + "\",");
 
                             for (int i = 0; i < AssetFieldValueArray.Length; i++)
                             {
+                                JsonDataSB.Append("{");
                                 //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                                 //if (AssetFieldValueArray[i].ToUpper().Contains("MILTILIST::") == true)
                                 //{
                                 //GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, AssetItemFieldDetail.AssetFieldName + i.ToString());
-                                GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, "Data");
+                                GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                                if (i == AssetFieldValueArray.Length - 1)
+                                {
+                                    JsonDataSB.Append("\"field\":\"none\"}");
+                                }
+                                else
+                                {
+                                    JsonDataSB.Append("\"field\":\"none\"},");
+                                }
+
+                                //JsonDataSB.Append("\"field\":\"none\"},");
                                 // }
                             }
-                            JsonDataSB.Append("\"field\":\"none\"},");
+                           // JsonDataSB.Append("\"field\":\"none\"},");
+                            JsonDataSB.Append("],");
                         }
+                    }
+                    else
+                    {
+                        JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                     }
                     
 

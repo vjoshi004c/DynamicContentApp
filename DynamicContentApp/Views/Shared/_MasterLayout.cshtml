@@ -35,11 +35,51 @@
             <p>
                 <small>
                     
-                    @* ArticleCategory  @Html.Raw(Model.ArticleCategory) *@
-                    ArticleCategory.CategoryID  @Html.Raw(Model.ArticleCategory.CategoryID)
-                    ArticleCategory.CategoryName  @Html.Raw(Model.ArticleCategory.CategoryName)
-                    ArticleCategory.CategoryDescription  @Html.Raw(Model.ArticleCategory.CategoryDescription)
+                    @* ArticleCategory  </b>@Html.Raw(Model.ArticleCategory) *@
+                    <b>
+                        ArticleCategory.CategoryID
+                    </b> @Html.Raw(Model.ArticleCategory.CategoryID)
+                        <b>
+                            ArticleCategory.CategoryName
+                        </b> @Html.Raw(Model.ArticleCategory.CategoryName)
+                            <b>
+                                ArticleCategory.CategoryDescription
+                            </b> @Html.Raw(Model.ArticleCategory.CategoryDescription)
                     @*@Model.ArticleDescription1*@
+                </small>
+            </p>
+            <p>
+                <small>
+
+                    @* ArticleCategory  @Html.Raw(Model.ArticleCategory) *@
+                    @*ArticleCategory.SubArticles.Value ---  @Html.Raw(Model.SubArticles.Value)*@
+                    <p> <b>List of multilist selected data</b></p>
+                    
+                    @*@Model.ArticleDescription1*@
+                   @*  <table>
+                        @foreach (var item in Model.SubArticles)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td>Item id -@item.Value</td>
+                                    <td>Category name -@item.CategoryName</td>
+                                    <td>Category description-@item.CategoryDescription</td>
+                                </tr>
+                            }
+                        }
+                    </table> *@
+                    <div style="width:100%" >
+                         @foreach (var item in Model.SubArticles)
+                                            {
+                            <div style="width:100%;border-style:solid;background-color:lightgrey;" >
+                                @item.CategoryName
+                                                </div>
+                            <div style="width:100%" >
+                                @item.CategoryDescription
+                                                </div>
+                                            }
+                    </div>
                 </small>
             </p>
             <p>
