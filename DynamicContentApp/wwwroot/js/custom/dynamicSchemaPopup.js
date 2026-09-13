@@ -252,6 +252,42 @@ $(document).ready(function () {
         $("#hdnParentId").val('');
         $("#customModal").hide();
     });
+
+    $("#closeModalBtnExternalLInk").on("click", function () {
+        $("#customModalExternalLInk").hide();
+    });
+    $("#closeModalBtnSecondExternalLInk").on("click", function () {
+        $("#customModalExternalLInk").hide();
+    });
+    $("#btnSelectedItemPathSchemaExternalLInk").on("click", function () {
+        const parentitemid = $("#hdnParentIdExternalLInk").val();
+        const parentitemPath = $("#hdnParentPathExternalLInk").val();
+        const selectedItemPath = $("#txtSelectedItemPathExternalLInk").val();
+        const selectedItemID = $("#txtSelectedItemIDExternalLInk").val();
+        $("#" + parentitemid).val(selectedItemID);
+        $("#" + parentitemPath).val(selectedItemPath);
+        //alert($("#" + parentitem).val(selectedItemPath));
+        //alert(parentitemid + parentitemPath + selectedItemPath + selectedItemID);
+        
+
+        $("#hdnParentIdExternalLInk").val('');
+        $("#hdnParentPathExternalLInk").val('');
+        $("#customModalExternalLInk").hide();
+    });
+
+
+    $("#btnSelectedItemPathExternalLInk").on("click", function () {
+        const parentitemid = $("#hdnParentIdExternalLInk").val();
+        const selectedItemPath = $("#txtSelectedItemPathExternalLInk").val();
+        $("#" + parentitemid).val(selectedItemPath);
+        //alert($("#" + parentitem).val(selectedItemPath));
+        if (!selectedItemPath.includes("http")) {
+            alert("Please enter a valid external link starting with http or https.");
+            return;
+        }
+        $("#hdnParentIdExternalLInk").val('');
+        $("#customModalExternalLInk").hide();
+    });
    
     $('#btnSaveMasterLayout').click(function (e) {
         e.preventDefault(); // This stops the form from submitting and redirecting
