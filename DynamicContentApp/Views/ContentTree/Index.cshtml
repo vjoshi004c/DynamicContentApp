@@ -1193,7 +1193,7 @@ body {font-family: Arial;}
                                                                 }
 
                                  var  txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').val();
-                                  alert(txtFieldDatasource);
+                                  //alert(txtFieldDatasource);
                                 // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
                                       //alert( $("#AssetTypeDropdown_Edit").val());
                                    //alert(ddlAssetTypeValue);
@@ -1207,11 +1207,14 @@ body {font-family: Arial;}
                                       alert("Asset Type is mising. Please select AssetType.");
                                       return;
                                  }
-                                 //  if(txtAssetItemSchemaPath == "")
-                                 // {
-                                 //      alert("Asset Schema Path is mising. Please select schema path.");
-                                 //      return;
-                                 // }
+
+                                // alert(txtAssetItemSchemaPath);
+
+                                  if(txtAssetItemSchemaPath == "")
+                                 {
+                                      alert("Schema linked with Asset Item is mising. Please select schema path.");
+                                      return;
+                                 }
                                    var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaAdd"]').val();
                                      //alert("InsertAssetItemSchema" +txtAssetItemSchema);
                                       // alert("SaveSchema");
