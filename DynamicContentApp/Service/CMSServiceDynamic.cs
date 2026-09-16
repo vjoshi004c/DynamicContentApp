@@ -138,6 +138,13 @@ namespace DynamicContentApp.Service
 
 
             List<PageItemMasterDetailsModel> PageItemMasterDetails = dynamicContentDAL.GetPageItemMasterDetails(AssetItemPath);
+            if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0 && PageItemMasterDetails[0].IsPageItem==false)
+            {
+              
+                JsonDataSB.Append("}");
+
+                return JObject.Parse(JsonDataSB.ToString());
+            }
             if (PageItemMasterDetails != null && PageItemMasterDetails.Count > 0)
             {
 
@@ -153,11 +160,24 @@ namespace DynamicContentApp.Service
 
                     JsonDataSB.Append("\"SchemaID\"" + ":" + "\"" + PageItemMasterDetail.SchemaID + "\",");
                     JsonDataSB.Append("\"ItemName\"" + ":" + "\"" + PageItemMasterDetail.ItemName + "\",");
-                    JsonDataSB.Append("\"ItemPath\"" + ":" + "\"" + PageItemMasterDetail.ItemPath + "\",");
+                   // JsonDataSB.Append("\"ItemPath\"" + ":" + "\"" + PageItemMasterDetail.ItemPath + "\",");
+                    JsonDataSB.Append("\"ItemPath\"" + ":" + "\"" + PageItemMasterDetail.ItemPath );
                 }
 
             }
+
+           
             List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetItemFieldDetails(AssetItemPath);
+            if (AssetItemFieldDetails.Count > 0)
+            {
+                JsonDataSB.Append("\",");
+            }
+            else
+            {
+                JsonDataSB.Append("}");
+                return JObject.Parse(JsonDataSB.ToString());
+            }
+
             if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
             {
                 JsonDataSB.Append("\"" + "AssetFields" + "\"" + ":" + "{");
@@ -230,12 +250,27 @@ namespace DynamicContentApp.Service
 
 
                 }
-                JsonDataSB.Append("\"field\":\"none\"},");
+                //JsonDataSB.Append("\"field\":\"none\"},");
             }
 
+          
+
+
             List<AssetItemComponentDetailsModel> AssetItemComponentDetails = dynamicContentDAL.GetAssetItemComponentDetails(AssetItemPath);
+            if (AssetItemComponentDetails.Count > 0)
+            {
+                JsonDataSB.Append("\"field\":\"none\"},");
+            }
+            else
+            {
+                JsonDataSB.Append("\"field\":\"none\"}");
+               // return;
+            }
             if (AssetItemComponentDetails != null && AssetItemComponentDetails.Count > 0)
             {
+               
+
+
                 JsonDataSB.Append("\"" + "ComponentPresentations" + "\"" + ":" + "[");
                 foreach (var AssetItemComponentDetail in AssetItemComponentDetails)
                 {
@@ -259,9 +294,11 @@ namespace DynamicContentApp.Service
                 }
                 JsonDataSB.Append("{}]");
 
-
             }
+           
+
             JsonDataSB.Append("}");
+
 
             string JsonData = JsonDataSB.ToString();
 
@@ -340,59 +377,88 @@ namespace DynamicContentApp.Service
             //dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace("https://vjoshi-001-site1.dtempurl.com", ""));
             dynamic dynamicObject = JsonToModel(HomeViewModel.BrowserUrl.Replace(_options.CurrnetDomainUrl, ""));
 
-            
 
+            dynamic AssetFieldsModel = null;
+            string MasterPageLayout = string.Empty;
 
             string assetItemId = dynamicObject.AssetItemID;
             // string AssetItemID = dynamicObject.GetProperty("AssetItemID").GetString();
-            dynamic AssetFieldsModel = dynamicObject.AssetFields;
-            string Title = AssetFieldsModel.Title;
-            string ArticleShortDescription = AssetFieldsModel.ArticleShortDescription;
-            string assetID = dynamicObject.AssetItemID;
-            // string Title = AssetFieldsElement.GetProperty("Title").GetString();
-            string masterlayoutpath = dynamicObject.MasterPageLayoutPath;
-            string MasterPageLayout = dynamicObject.MasterLayout;
-            
-            string IsPageItem = dynamicObject.IsPageItem;
-            foreach ( var node in dynamicObject.ComponentPresentations)
-                {
-                string ComponentPath = node.ComponentPath;
-                }
+            if (dynamicObject.AssetFields != null)
+            {
+                 AssetFieldsModel = dynamicObject.AssetFields;
 
-            StringBuilder htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(MasterPageLayout, AssetFieldsModel));
+
+
+                string Title = AssetFieldsModel.Title;
+                string ArticleShortDescription = AssetFieldsModel.ArticleShortDescription;
+                string assetID = dynamicObject.AssetItemID;
+                // string Title = AssetFieldsElement.GetProperty("Title").GetString();
+                string masterlayoutpath = dynamicObject.MasterPageLayoutPath;
+                 MasterPageLayout = dynamicObject.MasterLayout;
+
+                string IsPageItem = dynamicObject.IsPageItem;
+            }
+
+            if (dynamicObject.ComponentPresentations != null)
+            {
+
+                foreach (var node in dynamicObject.ComponentPresentations)
+                {
+                    string ComponentPath = node.ComponentPath;
+                }
+            }
+
+            StringBuilder htmlContentMaster = new StringBuilder();
+
+            if (AssetFieldsModel != null)
+            {
+
+                 htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(MasterPageLayout, AssetFieldsModel));
+            }
+            else
+            {
+                 htmlContentMaster = new StringBuilder("This Asset Item  is not Page Type. No MASTER Rendering is associated with it.Please check on page section of page.");
+            }
+
 
             //List<ComponenetDetailsModel> ComponenetDetailsModel = PageItemModel.ComponenetDetails;
 
             List<PageSectionContent> PageSectionContent = new List<PageSectionContent>();
-
-            foreach (var node in dynamicObject.ComponentPresentations)
+            if (dynamicObject.ComponentPresentations != null)
             {
-                if (node.ViewPath !=  null && node.ViewPath!= string.Empty)
+                foreach (var node in dynamicObject.ComponentPresentations)
                 {
-                    string viewpath = node.ViewPath;
-                    string htmlContent = await _viewRenderService.RenderToStringAsync(viewpath, node);
-                   // Utility.AddOnPlaceholderCollection(PageSectionContent, item, htmlContent);
-                    Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, htmlContent);
-                    
+                    if (node.ViewPath != null && node.ViewPath != string.Empty)
+                    {
+                        string viewpath = node.ViewPath;
+                        string htmlContent = await _viewRenderService.RenderToStringAsync(viewpath, node);
+                        // Utility.AddOnPlaceholderCollection(PageSectionContent, item, htmlContent);
+                        Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, htmlContent);
 
+
+                    }
+                    if (node.ControllerName != null && node.ControllerName != string.Empty)
+                    {
+
+                        string controllername = node.ControllerName;
+                        string controlleraction = node.ControllerAction;
+
+                        Task<String> htmlContent = _controllerRenderService.InvokeDynamicController(controllername, controlleraction, null);
+                        string resulthtml = await htmlContent;
+                        // Utility.AddOnPlaceholderCollection(PageSectionContent, item, resulthtml);
+                        Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, resulthtml);
+
+                    }
                 }
-                if (node.ControllerName !=  null && node.ControllerName!= string.Empty)
+                if (PageSectionContent != null && htmlContentMaster.ToString() != string.Empty)
                 {
-
-                    string controllername = node.ControllerName;
-                    string controlleraction = node.ControllerAction;
-
-                    Task<String> htmlContent = _controllerRenderService.InvokeDynamicController(controllername, controlleraction, null);
-                    string resulthtml = await htmlContent;
-                   // Utility.AddOnPlaceholderCollection(PageSectionContent, item, resulthtml);
-                    Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, resulthtml);
-                    
+                    foreach (var itempsc in PageSectionContent)
+                    {
+                        htmlContentMaster.Replace(itempsc.PlaceholderName, itempsc.HtmlContent);
+                    }
                 }
             }
-            foreach (var itempsc in PageSectionContent)
-            {
-                htmlContentMaster.Replace(itempsc.PlaceholderName, itempsc.HtmlContent);
-            }
+            
             HomeViewModel.ViewContent = htmlContentMaster.ToString();
             if (!isContentDeliveryError)
             {
