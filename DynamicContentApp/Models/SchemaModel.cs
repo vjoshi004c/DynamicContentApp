@@ -1,5 +1,19 @@
 ﻿namespace DynamicContentApp.Models
 {
+
+    public class WebSiteModel
+    {
+        public string? ID { get; set; }
+        public string? HostName { get; set; }
+
+        public string? RootItem { get; set; }
+
+        public string? StartItem { get; set; }
+
+        public string? Language { get; set; }
+      
+
+    }
     public class ContentItemModel
     {
         public string? ID { get; set; }

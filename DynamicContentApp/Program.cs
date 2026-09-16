@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+var applicationMode = builder.Configuration["SystemConfig:ApplicationMode"];
+
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -29,56 +31,71 @@ var app = builder.Build();
 // 1. Create a rewrite options object
 var options = new RewriteOptions();
 
+
+
 // 2. Add a custom rule to exclude static files and rewrite the rest
 options.Add(context =>
 {
-    var request = context.HttpContext.Request;
-    var path = request.Path.Value;
-    path =path?.ToUpper();
-    bool isDynamicController = !string.IsNullOrEmpty(path) && path.Contains("/CONTENTTREE");
-    bool isLookupController = !string.IsNullOrEmpty(path) && path.Contains("/LOOKUPTREE");
-    // Check if the path looks like a static file (contains a file extension)
-    bool isStaticFile = !string.IsNullOrEmpty(path) && path.Contains('.');
-    bool isLoginFile = !string.IsNullOrEmpty(path) && path.Contains("LOGIN");
-    bool isDesktopFile = !string.IsNullOrEmpty(path) && path.Contains("DESKTOPMAIN");
 
-    bool isMediaFile = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/MEDIA/");
+    if (applicationMode == "CONTENT_MANAGEMENT")
+    {
+        var request = context.HttpContext.Request;
+        var path = request.Path.Value;
+        path = path?.ToUpper();
+        bool isDynamicController = !string.IsNullOrEmpty(path) && path.Contains("/CONTENTTREE");
+        bool isLookupController = !string.IsNullOrEmpty(path) && path.Contains("/LOOKUPTREE");
+        // Check if the path looks like a static file (contains a file extension)
+        bool isStaticFile = !string.IsNullOrEmpty(path) && path.Contains('.');
+        bool isLoginFile = !string.IsNullOrEmpty(path) && path.Contains("LOGIN");
+        bool isDesktopFile = !string.IsNullOrEmpty(path) && path.Contains("DESKTOPMAIN");
 
-    if (isMediaFile)
-    {
-        context.HttpContext.Request.Path = "/home/RenderMedia";
-    }
-    if (isLoginFile )
-    {
-        context.HttpContext.Request.Path = "/home/Login";
-    }
-    if (isDesktopFile)
-    {
-        context.HttpContext.Request.Path = "/home/Desktopmain";
-    }
-    bool isJasonToModel = !string.IsNullOrEmpty(path) && path.Contains("JSONTOMODEL");
-    if (isJasonToModel)
-    {
-        context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
-    }
-    // If it's not a static file, rewrite internally to your generic endpoint
-    if (!isStaticFile && !isDynamicController&& !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile)
-    {
-        bool isSitePage = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/");
-        if (isSitePage==false)
+        bool isMediaFile = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/MEDIA/");
+
+        if (isMediaFile)
         {
-            context.HttpContext.Request.Path = "/home/login";
+            context.HttpContext.Request.Path = "/home/RenderMedia";
         }
-        else
+        if (isLoginFile)
         {
-            context.HttpContext.Request.Path = "/Generic/Start";
+            context.HttpContext.Request.Path = "/home/Login";
         }
+        if (isDesktopFile)
+        {
+            context.HttpContext.Request.Path = "/home/Desktopmain";
+        }
+        bool isJasonToModel = !string.IsNullOrEmpty(path) && path.Contains("JSONTOMODEL");
+        if (isJasonToModel)
+        {
+            context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
+        }
+        // If it's not a static file, rewrite internally to your generic endpoint
+        if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile)
+        {
+            bool isSitePage = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/");
+            if (isSitePage == false)
+            {
+                context.HttpContext.Request.Path = "/home/login";
+            }
+            else
+            {
+                context.HttpContext.Request.Path = "/Generic/Start";
+            }
 
-        //context.HttpContext.Request.Path = "/Generic/Start";
-        // context.HttpContext.Request.Path = "/home/login";
+            //context.HttpContext.Request.Path = "/Generic/Start";
+            // context.HttpContext.Request.Path = "/home/login";
+        }
+        context.Result = RuleResult.SkipRemainingRules;
+    }
+    else
+    {
+        context.HttpContext.Request.Path = "/Generic/Start";
+        context.Result = RuleResult.SkipRemainingRules;
     }
 
-    context.Result = RuleResult.SkipRemainingRules;
+  
+
+
+    
 });
 
 // 3. Register the rewriting middleware

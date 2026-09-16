@@ -39,6 +39,23 @@ namespace DynamicContentApp.Controllers
         public async Task<IActionResult> Start()
         {
 
+            List<WebSiteModel> WebSiteModels = new List<WebSiteModel>();
+            WebSiteModel websiteModel1 = new WebSiteModel();
+            websiteModel1.ID = "1";
+            websiteModel1.HostName = "http://localhost:5287";
+            websiteModel1.RootItem = "/UniversalCMS/Content/ArticleSite";
+            websiteModel1.StartItem = "";
+            websiteModel1.Language = "en-US";
+            WebSiteModels.Add(websiteModel1);
+
+            WebSiteModel websiteModel2 = new WebSiteModel();
+            websiteModel2.ID = "1";
+            websiteModel2.HostName = "http://localhost:5287";
+            websiteModel2.RootItem = "/UniversalCMS/Content/ArticleSite";
+            websiteModel2.StartItem = "";
+            websiteModel2.Language = "en-US";
+            WebSiteModels.Add(websiteModel2);
+
             string fullBrowserUrl, fullUrl;
             GetBrowserAndInternalPageUrl(out fullBrowserUrl, out fullUrl);
             HomeViewModel HomeViewModel = new HomeViewModel();
@@ -53,8 +70,52 @@ namespace DynamicContentApp.Controllers
 
             //ViewData["SelectedLayout"] = "_MasterLayout";
 
+
+            string urlString = HomeViewModel.BrowserUrl;
+            Uri uri = new Uri(urlString);
+
+            string protocol = uri.Scheme;       // "https"
+            string hostname = uri.Host;         // "api.example.com"
+            string restPath = uri.AbsolutePath; // "/v1/users/profile"
+            string query = uri.Query;
+            int port = uri.Port;
+            string fullhostname = string.Empty;
+            if (port > 0)
+            {
+                fullhostname = protocol + "://" + hostname + ":" + port.ToString();
+            }
+
+
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_DELIVERY.ToString())
             {
+                string newUrl = string.Empty;
+                foreach (var item in WebSiteModels)
+                {
+                    if (fullhostname.ToLower() == item.HostName.ToLower())
+                    {
+                        if (restPath != string.Empty)
+                        {
+                            newUrl =  item.HostName.ToLower() + item.RootItem + restPath;
+                        }
+                        else
+                        {
+                            newUrl =  item.HostName.ToLower() + item.StartItem;
+                        }
+
+                        if (query != string.Empty)
+                        {
+                            newUrl = newUrl + query;
+                        }
+                        
+
+                    }
+                    HomeViewModel.BrowserUrl = newUrl;
+                }
+
+                
+
+
+
                 _cmsService.IfModeIsContentDelivery(HomeViewModel);
             }
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_MANAGEMENT.ToString())
