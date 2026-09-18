@@ -143,7 +143,7 @@ namespace DynamicContentApp.Controllers
             List<WebSiteModel>  WebSiteModels = new List<WebSiteModel>();
             WebSiteModel websiteModel1 = new WebSiteModel();
             websiteModel1.ID = "1";
-            websiteModel1.HostName = "http://localhost:5287_1";
+            websiteModel1.HostName = "http://localhost:5287";
             websiteModel1.RootItem = "/UniversalCMS/Content/ArticleSite";
             websiteModel1.StartItem = "";
             websiteModel1.Language = "en-US";
@@ -151,7 +151,7 @@ namespace DynamicContentApp.Controllers
 
             WebSiteModel websiteModel2 = new WebSiteModel();
             websiteModel2.ID = "1";
-            websiteModel2.HostName = "http://localhost:5287";
+            websiteModel2.HostName = "http://localhost:5287_1";
             websiteModel2.RootItem = "/UniversalCMS/Content/ProductSite";
             websiteModel2.StartItem = "";
             websiteModel2.Language = "en-US";

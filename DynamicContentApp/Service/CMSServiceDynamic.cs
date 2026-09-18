@@ -417,7 +417,7 @@ namespace DynamicContentApp.Service
             }
             else
             {
-                 htmlContentMaster = new StringBuilder("This Asset Item  is not Page Type. No MASTER Rendering is associated with it.Please check on page section of page.");
+                 htmlContentMaster = new StringBuilder("<h1>the web server reached the correct site, but it cannot locate the specific page you requested.<h1> <h3>It might be due to  MASTER rendering has not been associated with it.Please check on page section of page under content management.<h3>");
             }
 
 

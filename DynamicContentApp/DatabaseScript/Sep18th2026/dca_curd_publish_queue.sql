@@ -8,7 +8,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE  PROCEDURE [dbo].[dca_curd_publish_queue]
+ALTER  PROCEDURE [dbo].[dca_curd_publish_queue]
     @ID varchar(100)='', 
     @PublishAssetID varchar(100)='',  
 	@PublishAssetPath varchar(500)='',
@@ -20,6 +20,20 @@ BEGIN
   --select * from AssetSchemaFields
 if(@Query=1)
 BEGIN
+
+IF NOT EXISTS (Select Top 1 ID  from PublishQueue where PublishAssetID=@PublishAssetID)
+BEGIN 
+  Declare @PublishAssetPathData as Varchar(500)
+   set @PublishAssetPathData=(Select Top 1 itempath from assetitem where ID=@PublishAssetID)
+
+   if(@PublishAssetPathData !='')
+   begin
+   Declare @PublishAssetPageIDData as Varchar(500) 
+   set @PublishAssetPageIDData=( Select Top 1 id from assetitem where itempath = @PublishAssetPathData and masterpagelayoutpath != '')
+   Declare @PublishAssetPagePathData as Varchar(500)
+   set @PublishAssetPagePathData=( Select Top 1 itempath from assetitem where id = @PublishAssetPageIDData )
+
+
     INSERT INTO [dbo].[PublishQueue]
            (
            [PublishAssetID]
@@ -31,11 +45,14 @@ BEGIN
      VALUES
            (
            @PublishAssetID, 
-           @PublishAssetPath,
+           @PublishAssetPathData,
             @PublishAssetID, 
-           @PublishAssetPath,
-             @PublishAssetID
+          @PublishAssetPagePathData,
+             GETDATE()
            )
+
+           end 
+    end 
 END
 if(@Query=2)
     BEGIN

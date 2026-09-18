@@ -115,11 +115,14 @@ namespace DynamicContentApp.Service
             else
             {
                string PublishAssetPagePath= PublishQueuelist[0].PublishAssetPagePath;
+                string ID = PublishQueuelist[0].ID;
                 HomeViewModel.BrowserUrl = PublishAssetPagePath;
 
                 CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
 
                  CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
+
+                SchemaDeleteModel schemaDeleteModel=  dynamicContentDAL.DeleteAssetInPublishQueue(ID);
 
             }
 

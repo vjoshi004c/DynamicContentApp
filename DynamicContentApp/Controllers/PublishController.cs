@@ -40,7 +40,7 @@ namespace DynamicContentApp.Controllers
             _configuration = configuration;
             _connectionString = _configuration["ConnectionStrings:DefaultConnection"];
         }
-
+        [HttpGet]
         public IActionResult PublisAssetInPublishQueue(string AssetItemId)
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
