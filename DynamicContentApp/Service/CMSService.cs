@@ -1,6 +1,7 @@
 ﻿using DynamicContentApp.Controllers;
 using DynamicContentApp.DataLayer;
 using DynamicContentApp.Models;
+using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace DynamicContentApp.Service
@@ -11,11 +12,14 @@ namespace DynamicContentApp.Service
         private readonly ILogger<HomeController> _logger;
         private readonly IViewRenderService _viewRenderService;
         private readonly IConfiguration _configuration;
-        public CMSService(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IConfiguration configuration)
+
+        private readonly SystemConfigOptions _options;
+        public CMSService(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options,  IConfiguration configuration)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
+            _options = options.Value;
             _configuration = configuration;
         }
         public async Task IfModeIsContentManagement(HomeViewModel HomeViewModel, bool isContentDeliveryError, int PageItemID)
@@ -87,16 +91,45 @@ namespace DynamicContentApp.Service
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
 
-            List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserUrl) ? HomeViewModel.BrowserUrl : string.Empty);
-            if (DynamicContentlist != null && DynamicContentlist.Count > 0)
+           
+            List<PublishQueue> PublishQueuelist = dynamicContentDAL.GetAssetInPublishQueue(HomeViewModel.BrowserInternalAssetPath);
+            if (PublishQueuelist != null && PublishQueuelist.Count == 0)
             {
-                HomeViewModel.ViewContent = DynamicContentlist[0].PageContent;
+
+                List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserInternalAssetPath) ? HomeViewModel.BrowserInternalAssetPath : string.Empty);
+
+                if (DynamicContentlist != null && DynamicContentlist.Count== 0)
+                {
+                    //string PublishAssetPagePath = PublishQueuelist[0].PublishAssetPagePath;
+                    HomeViewModel.BrowserUrl = HomeViewModel.BrowserInternalAssetPath;
+                    CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
+                    CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
+                }
+                List<DynamicContentModel> DynamicContentlistNew = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserInternalAssetPath) ? HomeViewModel.BrowserInternalAssetPath : string.Empty);
+                if (DynamicContentlistNew != null && DynamicContentlistNew.Count > 0)
+                {
+                    HomeViewModel.ViewContent = DynamicContentlistNew[0].PageContent;
+                }
+
             }
+            else
+            {
+               string PublishAssetPagePath= PublishQueuelist[0].PublishAssetPagePath;
+                HomeViewModel.BrowserUrl = PublishAssetPagePath;
+
+                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
+
+                 CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
+
+            }
+
+
         }
         public void SavePageEntireHtmlInDatabase(HomeViewModel HomeViewModel)
         {
+
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserUrl);
+            List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserInternalAssetPath);
             if (DynamicContentlist != null && DynamicContentlist.Count == 0)
             {
                 dynamicContentDAL.InsertPageContent(HomeViewModel.BrowserUrl, HomeViewModel.ViewContent);

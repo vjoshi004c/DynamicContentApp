@@ -15,6 +15,15 @@
         public string? ChildSchemaID { get; set; }
     }
 
+    public class PublishQueue
+    {
+        public string? ID { get; set; }
+        public string? PublishAssetID { get; set; }
+        public string? PublishAssetPath { get; set; }
+        public string? PublishAssetPageID { get; set; }
+        public string? PublishAssetPagePath { get; set; }
+    }
+
     public class AssertFieldsModel
     {
         public string? SchemaFieldID { get; set; }

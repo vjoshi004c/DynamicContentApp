@@ -479,14 +479,14 @@ namespace DynamicContentApp.Service
         public void SavePageEntireHtmlInDatabase(HomeViewModel HomeViewModel)
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserUrl);
+            List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(HomeViewModel.BrowserInternalAssetPath);
             if (DynamicContentlist != null && DynamicContentlist.Count == 0)
             {
-                dynamicContentDAL.InsertPageContent(HomeViewModel.BrowserUrl, HomeViewModel.ViewContent);
+                dynamicContentDAL.InsertPageContent(HomeViewModel.BrowserInternalAssetPath, HomeViewModel.ViewContent);
             }
             else
             {
-                dynamicContentDAL.UpdatePageContent(HomeViewModel.BrowserUrl, HomeViewModel.ViewContent);
+                dynamicContentDAL.UpdatePageContent(HomeViewModel.BrowserInternalAssetPath, HomeViewModel.ViewContent);
             }
         }
     }

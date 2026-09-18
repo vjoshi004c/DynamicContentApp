@@ -15,6 +15,7 @@ namespace DynamicContentApp.Models
         public string? ViewContent { get; set; }
 
         public string?ErrorContent { get; set; }
+        public string? BrowserInternalAssetPath { get; set; }
 
 
     }

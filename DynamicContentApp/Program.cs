@@ -36,12 +36,12 @@ var options = new RewriteOptions();
 // 2. Add a custom rule to exclude static files and rewrite the rest
 options.Add(context =>
 {
-
+    var request = context.HttpContext.Request;
+    var path = request.Path.Value;
+    path = path?.ToUpper();
     if (applicationMode == "CONTENT_MANAGEMENT")
     {
-        var request = context.HttpContext.Request;
-        var path = request.Path.Value;
-        path = path?.ToUpper();
+     
         bool isDynamicController = !string.IsNullOrEmpty(path) && path.Contains("/CONTENTTREE");
         bool isLookupController = !string.IsNullOrEmpty(path) && path.Contains("/LOOKUPTREE");
         // Check if the path looks like a static file (contains a file extension)
@@ -88,7 +88,17 @@ options.Add(context =>
     }
     else
     {
-        context.HttpContext.Request.Path = "/Generic/Start";
+        bool isMediaFile = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/MEDIA/");
+
+        if (isMediaFile)
+        {
+            context.HttpContext.Request.Path = "/home/RenderMedia";
+        }
+        else
+        {
+            context.HttpContext.Request.Path = "/Generic/Start";
+        }
+       // context.HttpContext.Request.Path = "/Generic/Start";
         context.Result = RuleResult.SkipRemainingRules;
     }
 

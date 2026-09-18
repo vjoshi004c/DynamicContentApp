@@ -38,42 +38,20 @@ namespace DynamicContentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Start()
         {
-
-            List<WebSiteModel> WebSiteModels = new List<WebSiteModel>();
-            WebSiteModel websiteModel1 = new WebSiteModel();
-            websiteModel1.ID = "1";
-            websiteModel1.HostName = "http://localhost:5287";
-            websiteModel1.RootItem = "/UniversalCMS/Content/ArticleSite";
-            websiteModel1.StartItem = "";
-            websiteModel1.Language = "en-US";
-            WebSiteModels.Add(websiteModel1);
-
-            WebSiteModel websiteModel2 = new WebSiteModel();
-            websiteModel2.ID = "1";
-            websiteModel2.HostName = "http://localhost:5287";
-            websiteModel2.RootItem = "/UniversalCMS/Content/ArticleSite";
-            websiteModel2.StartItem = "";
-            websiteModel2.Language = "en-US";
-            WebSiteModels.Add(websiteModel2);
+            List<WebSiteModel> WebSiteModels;
+            HomeViewModel HomeViewModel;
 
             string fullBrowserUrl, fullUrl;
             GetBrowserAndInternalPageUrl(out fullBrowserUrl, out fullUrl);
-            HomeViewModel HomeViewModel = new HomeViewModel();
+            HomeViewModel = new HomeViewModel();
             HomeViewModel.BrowserUrl = fullBrowserUrl;
             HomeViewModel.ReWriteUrl = fullUrl;
 
-            //if (HomeViewModel.BrowserUrl == "http://localhost:5287/content")
-            //{
-
-            //}
-
-
+             WebSiteModels =GetWebsiteCollection();
             //ViewData["SelectedLayout"] = "_MasterLayout";
-
 
             string urlString = HomeViewModel.BrowserUrl;
             Uri uri = new Uri(urlString);
-
             string protocol = uri.Scheme;       // "https"
             string hostname = uri.Host;         // "api.example.com"
             string restPath = uri.AbsolutePath; // "/v1/users/profile"
@@ -85,41 +63,52 @@ namespace DynamicContentApp.Controllers
                 fullhostname = protocol + "://" + hostname + ":" + port.ToString();
             }
 
-
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_DELIVERY.ToString())
             {
                 string newUrl = string.Empty;
+                string newInternalAssetPath = string.Empty;
                 foreach (var item in WebSiteModels)
                 {
                     if (fullhostname.ToLower() == item.HostName.ToLower())
                     {
-                        if (restPath != string.Empty)
+                        if (restPath != string.Empty  )
                         {
-                            newUrl =  item.HostName.ToLower() + item.RootItem + restPath;
+                            if (restPath != "/")
+                            {
+                                newUrl = item.HostName.ToLower() + item.RootItem + restPath;
+                                newInternalAssetPath= item.RootItem + restPath;
+                            }
+                            else
+                            {
+                                newUrl = item.HostName.ToLower() + item.RootItem + item.StartItem;
+                                newInternalAssetPath = item.RootItem + item.StartItem;
+                            }
                         }
                         else
                         {
-                            newUrl =  item.HostName.ToLower() + item.StartItem;
+                            newUrl = item.HostName.ToLower() +item.RootItem+ item.StartItem;
+                            newInternalAssetPath = item.RootItem + item.StartItem;
                         }
 
                         if (query != string.Empty)
                         {
                             newUrl = newUrl + query;
                         }
-                        
-
                     }
                     HomeViewModel.BrowserUrl = newUrl;
+                    HomeViewModel.BrowserInternalAssetPath = newInternalAssetPath;
                 }
-
-                
-
-
 
                 _cmsService.IfModeIsContentDelivery(HomeViewModel);
             }
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_MANAGEMENT.ToString())
             {
+
+                urlString=  urlString.Replace(fullhostname, "");
+                HomeViewModel.BrowserUrl = urlString;
+
+                HomeViewModel.BrowserInternalAssetPath = urlString;
+
                 int PageItemID = 0;
                 if (!String.IsNullOrEmpty(HttpContext.Request.Query["ID"]))
                 {
@@ -133,9 +122,9 @@ namespace DynamicContentApp.Controllers
                 {
                     PageItemID = 1;
                 }
-               // await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
+                // await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
                 CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
-              
+
                 await CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, PageItemID);
             }
 
@@ -147,6 +136,30 @@ namespace DynamicContentApp.Controllers
             }
 
             return View(HomeViewModel);
+        }
+
+        private List<WebSiteModel> GetWebsiteCollection()
+        {
+            List<WebSiteModel>  WebSiteModels = new List<WebSiteModel>();
+            WebSiteModel websiteModel1 = new WebSiteModel();
+            websiteModel1.ID = "1";
+            websiteModel1.HostName = "http://localhost:5287_1";
+            websiteModel1.RootItem = "/UniversalCMS/Content/ArticleSite";
+            websiteModel1.StartItem = "";
+            websiteModel1.Language = "en-US";
+            WebSiteModels.Add(websiteModel1);
+
+            WebSiteModel websiteModel2 = new WebSiteModel();
+            websiteModel2.ID = "1";
+            websiteModel2.HostName = "http://localhost:5287";
+            websiteModel2.RootItem = "/UniversalCMS/Content/ProductSite";
+            websiteModel2.StartItem = "";
+            websiteModel2.Language = "en-US";
+            WebSiteModels.Add(websiteModel2);
+
+            
+
+            return WebSiteModels;
         }
 
         private void GetBrowserAndInternalPageUrl(out string fullBrowserUrl, out string fullUrl)

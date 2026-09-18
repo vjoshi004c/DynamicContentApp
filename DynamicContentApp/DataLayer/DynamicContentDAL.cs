@@ -1261,6 +1261,127 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
+        public bool InsertAssetInPublishQueue(string AssetItemId)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_publish_queue", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@ID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetID", AssetItemId);
+                cmd.Parameters.AddWithValue("@PublishAssetPath", string.Empty );
+                cmd.Parameters.AddWithValue("@PublishAssetPageID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPagePath", string.Empty);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public List<PublishQueue> GetAssetInPublishQueue(string PublishAssetPagePath)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<PublishQueue> custlist = null;
+            try
+            {
+                custlist = new List<PublishQueue>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_publish_queue", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPath", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPageID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPagePath", PublishAssetPagePath);
+                cmd.Parameters.AddWithValue("@Query",4);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    PublishQueue cobj = new PublishQueue();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.PublishAssetID = ds.Tables[0].Rows[i]["PublishAssetID"].ToString();
+                    cobj.PublishAssetPath = ds.Tables[0].Rows[i]["PublishAssetPath"].ToString();
+                    cobj.PublishAssetPageID = ds.Tables[0].Rows[i]["PublishAssetPageID"].ToString();
+                    cobj.PublishAssetPagePath = ds.Tables[0].Rows[i]["PublishAssetPagePath"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public SchemaDeleteModel DeleteAssetInPublishQueue(string ID)
+        {
+            SqlConnection con = null;
+            SchemaDeleteModel SchemaDeleteModel = new SchemaDeleteModel();
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_publish_queue", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@PublishAssetID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPath", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPageID", string.Empty);
+                cmd.Parameters.AddWithValue("@PublishAssetPagePath", string.Empty);
+                cmd.Parameters.AddWithValue("@Query", 3);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                SchemaDeleteModel.Error = string.Empty;
+                SchemaDeleteModel.Status = true;
+                SchemaDeleteModel.Message = "Schema has been deleted successfully";
+                return SchemaDeleteModel;
+            }
+            catch (Exception ex)
+            {
+                SchemaDeleteModel.Error = ex.Message.ToString();
+                SchemaDeleteModel.Status = false;
+                SchemaDeleteModel.Message = "Opps! Error while deleting schema.";
+                return SchemaDeleteModel;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }

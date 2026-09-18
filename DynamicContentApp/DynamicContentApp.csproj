@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="DatabaseScript\August1st2026\" />
+    <Folder Include="DatabaseScript\Sep18th2026\" />
     <Folder Include="MockData\" />
     <Folder Include="Treeview\" />
     <Folder Include="Views\Components\" />
