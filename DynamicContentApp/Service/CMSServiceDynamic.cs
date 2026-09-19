@@ -417,7 +417,7 @@ namespace DynamicContentApp.Service
             }
             else
             {
-                 htmlContentMaster = new StringBuilder("<h1>the web server reached the correct site, but it cannot locate the specific page you requested.<h1> <h3>It might be due to  MASTER rendering has not been associated with it.Please check on page section of page under content management.<h3>");
+                 htmlContentMaster = new StringBuilder("<h1>The web server reached the correct site, but it cannot locate the specific page you requested.<h1> <h3>It might be due to  MASTER rendering has not been associated with it.Please check on page section of page under content management.<h3>");
             }
 
 
