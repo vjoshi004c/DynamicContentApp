@@ -96,12 +96,15 @@ options.Add(context =>
     else
     {
         bool isMediaFile = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/MEDIA/");
+        bool isPublish = !string.IsNullOrEmpty(path) && path.ToUpper().Contains("/PUBLISH");
+        bool isStaticFile = !string.IsNullOrEmpty(path) && path.Contains('.');
 
-        if (isMediaFile)
+        if (isMediaFile )
         {
             context.HttpContext.Request.Path = "/home/RenderMedia";
         }
-        else
+
+        if (!isMediaFile && !isStaticFile && !isPublish)
         {
             context.HttpContext.Request.Path = "/Generic/Start";
         }

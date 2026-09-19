@@ -96,19 +96,23 @@ namespace DynamicContentApp.Service
             if (PublishQueuelist != null && PublishQueuelist.Count == 0)
             {
 
-                List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserInternalAssetPath) ? HomeViewModel.BrowserInternalAssetPath : string.Empty);
+                //List<DynamicContentModel> DynamicContentlist = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserInternalAssetPath) ? HomeViewModel.BrowserInternalAssetPath : string.Empty);
 
-                if (DynamicContentlist != null && DynamicContentlist.Count== 0)
-                {
-                    //string PublishAssetPagePath = PublishQueuelist[0].PublishAssetPagePath;
-                    HomeViewModel.BrowserUrl = HomeViewModel.BrowserInternalAssetPath;
-                    CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
-                    CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
-                }
+                //if (DynamicContentlist != null && DynamicContentlist.Count== 0)
+                //{
+                //    //string PublishAssetPagePath = PublishQueuelist[0].PublishAssetPagePath;
+                //    HomeViewModel.BrowserUrl = HomeViewModel.BrowserInternalAssetPath;
+                //    CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
+                //    CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
+                //}
                 List<DynamicContentModel> DynamicContentlistNew = dynamicContentDAL.GetPageContent(!String.IsNullOrEmpty(HomeViewModel.BrowserInternalAssetPath) ? HomeViewModel.BrowserInternalAssetPath : string.Empty);
                 if (DynamicContentlistNew != null && DynamicContentlistNew.Count > 0)
                 {
                     HomeViewModel.ViewContent = DynamicContentlistNew[0].PageContent;
+                }
+                else
+                {
+                    HomeViewModel.ViewContent = "<h1>Page not found</h1>";
                 }
 
             }
