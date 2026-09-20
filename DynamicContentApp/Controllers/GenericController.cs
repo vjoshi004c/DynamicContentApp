@@ -38,7 +38,7 @@ namespace DynamicContentApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Start()
         {
-            List<WebSiteModel> WebSiteModels;
+            List<WebSiteFinalModel> WebSiteModels;
             HomeViewModel HomeViewModel;
 
             string fullBrowserUrl, fullUrl;
@@ -95,10 +95,10 @@ namespace DynamicContentApp.Controllers
                             newUrl = newUrl + query;
                         }
                     }
-                    HomeViewModel.BrowserUrl = newUrl;
-                    HomeViewModel.BrowserInternalAssetPath = newInternalAssetPath;
+                    
                 }
-
+                HomeViewModel.BrowserUrl = newUrl;
+                HomeViewModel.BrowserInternalAssetPath = newInternalAssetPath;
                 _cmsService.IfModeIsContentDelivery(HomeViewModel);
             }
             if (_options.ApplicationMode.ToUpper() == ApplicationMode.CONTENT_MANAGEMENT.ToString())
@@ -138,28 +138,76 @@ namespace DynamicContentApp.Controllers
             return View(HomeViewModel);
         }
 
-        private List<WebSiteModel> GetWebsiteCollection()
+        private List<WebSiteFinalModel> GetWebsiteCollection()
         {
-            List<WebSiteModel>  WebSiteModels = new List<WebSiteModel>();
-            WebSiteModel websiteModel1 = new WebSiteModel();
-            websiteModel1.ID = "1";
-            websiteModel1.HostName = "http://localhost:5287_1";
-            websiteModel1.RootItem = "/UniversalCMS/Content/ArticleSite";
-            websiteModel1.StartItem = "";
-            websiteModel1.Language = "en-US";
-            WebSiteModels.Add(websiteModel1);
+            List<WebSiteFinalModel> webSiteFinalModelList = new List<WebSiteFinalModel>();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            string AssetItemID = _options.WebsitesParentID;
+            List<WebsiteModel> WebsiteModelList = dynamicContentDAL.GetAllWebsites(AssetItemID);
 
-            WebSiteModel websiteModel2 = new WebSiteModel();
-            websiteModel2.ID = "1";
-            websiteModel2.HostName = "http://localhost:5287";
-            websiteModel2.RootItem = "/UniversalCMS/Content/ProductSite";
-            websiteModel2.StartItem = "";
-            websiteModel2.Language = "en-US";
-            WebSiteModels.Add(websiteModel2);
+            if (WebsiteModelList != null && WebsiteModelList.Count > 0)
+            {
 
-            
+                foreach (WebsiteModel item in WebsiteModelList)
+                {
+                    string ID = item.ID;
+                    string ItemPath = item.ItemPath;
+                    string ItemName = item.ItemName;
+                    List<WebSiteFieldModel> WebSiteFieldModelList = dynamicContentDAL.GetWebsiteFieldData(ID);
+                    WebSiteFinalModel websiteModel1 = new WebSiteFinalModel();
+                    foreach (WebSiteFieldModel fieldItem in WebSiteFieldModelList)
+                    {
+                        
+                        if(fieldItem.FieldName == "HostName")
+                        {
+                            websiteModel1.HostName = fieldItem.AssetFieldValue;
+                        }
+                        if (fieldItem.FieldName == "RootItem")
+                        {
+                            websiteModel1.RootItem = fieldItem.AssetFieldValue;
+                        }
+                        if (fieldItem.FieldName == "StartItem")
+                        {
+                            websiteModel1.StartItem = fieldItem.AssetFieldValue;
+                        }
+                        if (fieldItem.FieldName == "Language")
+                        {
+                            websiteModel1.Language = fieldItem.AssetFieldValue;
+                        }
+                        if (fieldItem.FieldName == "SiteName")
+                        {
+                            websiteModel1.Language = fieldItem.AssetFieldValue;
+                        }
 
-            return WebSiteModels;
+                        
+                        //websiteModel1.ID = fieldItem.ID;
+                        //websiteModel1.HostName = fieldItem.HostName;
+                        //websiteModel1.RootItem = fieldItem.RootItem;
+                        //websiteModel1.StartItem = fieldItem.StartItem;
+                        //websiteModel1.Language = fieldItem.Language;
+                      
+                    }
+                    webSiteFinalModelList.Add(websiteModel1);
+                }
+            }
+            //
+            //WebSiteFinalModel websiteModel1 = new WebSiteFinalModel();
+            //websiteModel1.ID = "1";
+            //websiteModel1.HostName = "http://localhost:5287_1";
+            //websiteModel1.RootItem = "/UniversalCMS/Content/ArticleSite";
+            //websiteModel1.StartItem = "";
+            //websiteModel1.Language = "en-US";
+            //WebSiteModels.Add(websiteModel1);
+
+            //WebSiteFinalModel websiteModel2 = new WebSiteFinalModel();
+            //websiteModel2.ID = "1";
+            //websiteModel2.HostName = "http://localhost:5287";
+            //websiteModel2.RootItem = "/UniversalCMS/Content/ProductSite";
+            //websiteModel2.StartItem = "";
+            //websiteModel2.Language = "en-US";
+            //WebSiteModels.Add(websiteModel2);
+
+            return webSiteFinalModelList;
         }
 
         private void GetBrowserAndInternalPageUrl(out string fullBrowserUrl, out string fullUrl)

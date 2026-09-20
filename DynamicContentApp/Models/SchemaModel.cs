@@ -1,7 +1,7 @@
 ﻿namespace DynamicContentApp.Models
 {
 
-    public class WebSiteModel
+    public class WebSiteFinalModel
     {
         public string? ID { get; set; }
         public string? HostName { get; set; }
@@ -11,7 +11,11 @@
         public string? StartItem { get; set; }
 
         public string? Language { get; set; }
-      
+
+        public string? SiteName { get; set; }
+
+        
+
 
     }
     public class ContentItemModel
@@ -78,6 +82,39 @@
         public string? FieldName { get; set; }
 
         public string? FieldType { get; set; }
+
+
+
+    }
+
+    public class WebsiteModel
+    {
+        public string? ID { get; set; }
+        public string? ItemName { get; set; }
+
+        public string? ItemPath { get; set; }
+
+        public bool? IsPageItem { get; set; }
+        public string? MasterPageLayoutPath { get; set; }
+
+        public string? ParentID { get; set; }
+        public string? AssetType { get; set; }
+
+        public string? AssetItemSchemaMapped { get; set; }
+
+    }
+
+    public class WebSiteFieldModel
+    {
+        public string? ID { get; set; }
+        public string? AssetFieldID { get; set; }
+
+        public string? AssetFieldValue { get; set; }
+        public string? AssetSchemaID { get; set; }
+
+        public string? AssetItemID { get; set; }
+
+        public string? FieldName { get; set; }
 
 
 

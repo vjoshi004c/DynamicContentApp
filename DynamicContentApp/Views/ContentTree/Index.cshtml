@@ -1242,11 +1242,11 @@ body {font-family: Arial;}
 
                                 // alert(txtAssetItemSchemaPath);
 
-                                  if(txtAssetItemSchemaPath == "")
-                                 {
-                                      alert("Schema linked with Asset Item is mising. Please select schema path.");
-                                      return;
-                                 }
+                                 //  if(txtAssetItemSchemaPath == "")
+                                 // {
+                                 //      alert("Schema linked with Asset Item is mising. Please select schema path.");
+                                 //      return;
+                                 // }
                                    var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaAdd"]').val();
                                      //alert("InsertAssetItemSchema" +txtAssetItemSchema);
                                       // alert("SaveSchema");
@@ -1378,7 +1378,7 @@ body {font-family: Arial;}
                             var isPublishSubitems =$("#publishdiv #chkPublishSubitems").is(':checked'); 
                                // alert("isPublishSubitems - "+ isPublishSubitems);
 
-                               alert('txtSchemaID_'+ txtSchemaID );
+                               //alert('txtSchemaID_'+ txtSchemaID );
                                    $.ajax({
                                           type: "GET",
                                            url: "/publish/PublisAssetInPublishQueue", // PageName/MethodName

@@ -574,6 +574,36 @@ namespace DynamicContentApp.Controllers
             return Ok(SchemaFieldTypeList);
         }
 
+        //[HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public List<WebsiteModel> GetAllWebsites(string AssetItemID)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<WebsiteModel> WebsiteModelList = dynamicContentDAL.GetAllWebsites(AssetItemID);
+            
+            
+            if (WebsiteModelList != null && WebsiteModelList.Count == 0)
+            {
+
+            }
+            return WebsiteModelList;
+        }
+
+        //[HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public List<WebSiteFieldModel> GetWebsiteFieldData(string AssetItemID)
+        {
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<WebSiteFieldModel> WebSiteFieldModelList = dynamicContentDAL.GetWebsiteFieldData(AssetItemID);
+
+
+            if (WebSiteFieldModelList != null && WebSiteFieldModelList.Count == 0)
+            {
+
+            }
+            return WebSiteFieldModelList;
+        }
+
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetRootNode()

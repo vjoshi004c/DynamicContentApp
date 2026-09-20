@@ -863,6 +863,103 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
+        public List<WebSiteFieldModel> GetWebsiteFieldData(string AssetItemID)
+        {
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<WebSiteFieldModel> custlist = null;
+            try
+            {
+                custlist = new List<WebSiteFieldModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_websites", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
+                cmd.Parameters.AddWithValue("@Query", 2);
+
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    WebSiteFieldModel cobj = new WebSiteFieldModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.AssetFieldID = ds.Tables[0].Rows[i]["AssetFieldID"].ToString();
+                    cobj.AssetFieldValue = ds.Tables[0].Rows[i]["AssetFieldValue"].ToString();
+                    cobj.AssetSchemaID = ds.Tables[0].Rows[i]["AssetSchemaID"].ToString();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.FieldName = ds.Tables[0].Rows[i]["FieldName"].ToString();
+                    
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public List<WebsiteModel> GetAllWebsites(string AssetItemID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<WebsiteModel> custlist = null;
+            try
+            {
+                custlist = new List<WebsiteModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_websites", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemID", AssetItemID);
+                cmd.Parameters.AddWithValue("@Query", 1);
+
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    WebsiteModel cobj = new WebsiteModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.ItemName = ds.Tables[0].Rows[i]["ItemName"].ToString();
+                    cobj.ItemPath = ds.Tables[0].Rows[i]["ItemPath"].ToString();
+                    cobj.IsPageItem = Convert.ToBoolean(ds.Tables[0].Rows[i]["IsPageItem"].ToString());
+                    cobj.MasterPageLayoutPath = ds.Tables[0].Rows[i]["MasterPageLayoutPath"].ToString();
+                    cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    cobj.AssetType = ds.Tables[0].Rows[i]["AssetType"].ToString();
+                    cobj.AssetItemSchemaMapped = ds.Tables[0].Rows[i]["AssetItemSchemaMapped"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public List<ContentItemModel> GetAssetItemSchema(string SchemaID)
         {
 
