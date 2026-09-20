@@ -1261,7 +1261,7 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
-        public bool InsertAssetInPublishQueue(string AssetItemId)
+        public bool InsertAssetInPublishQueue(string AssetItemId, bool IsPublishSubitems)
         {
             SqlConnection con = null;
             //string result = "";
@@ -1276,6 +1276,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@PublishAssetPath", string.Empty );
                 cmd.Parameters.AddWithValue("@PublishAssetPageID", string.Empty);
                 cmd.Parameters.AddWithValue("@PublishAssetPagePath", string.Empty);
+                cmd.Parameters.AddWithValue("@IsPublishSubitems", IsPublishSubitems);
                 cmd.Parameters.AddWithValue("@Query", 1);
 
                 con.Open();

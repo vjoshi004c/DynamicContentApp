@@ -738,6 +738,37 @@ body {font-family: Arial;}
                     </p>
             </div>
 
+             <div id="publishdiv" style="display:none; border-style:solid; border-color:#f4f4f4;background-color:#E6E6E6;padding:2em;">
+
+                    <form action="/schema/publish" method="POST" id="publishSchemaForm">
+                        <h2>To publish selected item -  <span></span></h2>
+                        <h4>Are you sure you want to publish the item?  <span></span></h4>
+                        <p>
+                            <label for="schemaID">Asset ID:</label>
+                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
+                        </p>
+                            <p>
+                                <label for="schemaName">Asset Name:</label>
+                                <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
+                            </p>
+                        <p>
+                            <p>
+                                <label for="chkIsItemPublishSubitems">Included subitems :</label>
+                                <input type="checkbox" id="chkPublishSubitems" class="unfake-disabled-input" name="PublishSubitems" style="width:100px">
+                            </p>
+                            @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+                            <button id="btnCancelPublish" class="unfake-disabled-button" >Cancel</button>
+                            <button id="btnPublish" class="unfake-disabled-button" >Publsh</button>
+                        </p>
+                        @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                        <p> <button type="submit">Submit</button></p> *@
+                    </form>
+                    <p>
+                        <span id="lblPublishMessageSucess" style="width:1000px;display:none;font-size:2em; color:green">Schema published successfully.</span>
+                        <span id="lblPublishMessageError" style="width:1000px;display:none;font-size:2em;color:red"> Opps! Error while publishing.</span>
+                    </p>
+            </div>
+
             <div id="duplicatediv" style="display: none; border-style: solid; border-color:#d9d9d9;background-color: #E6E6E6;padding:2em;">
                     <h2>Duplicate selected item - <span></span></h2>
                     <p>This form is to remove existed item</p>
@@ -876,6 +907,7 @@ body {font-family: Arial;}
                      <li id="duplicate_li" onclick="alert('Option 3 clicked')">Duplicate</li>-->
                     <li id="add_li">Create</li>
                     <li id="edit_li">Edit</li>
+                    <li id="publish_li">Publish</li>
                     <li id="remove_li">Remove</li>
                     <li id="duplicate_li">Duplicate</li>
                     <li id="refresh_li">Refresh</li>
@@ -1310,6 +1342,91 @@ body {font-family: Arial;}
                              }
 
                 });
+                $('#btnCancelPublish').on('click', function(e) {
+                        e.preventDefault();
+                         e.stopPropagation();
+                             //alert('btnCancelDelete' );
+                           var MessageSucess=  $("#lblPublishMessageSucess");
+                           var MessageError=  $("#lblPublishMessageError");
+                           var deleteSchemaForm=  $("#publishSchemaForm");
+                             MessageError.css('display', 'none');
+                              deleteSchemaForm.css('display', 'none');
+                               MessageSucess.css('display', 'block');
+                                   MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
+                                      MessageSucess.html("<strong>Cancellation successful. The Item has not been published.</strong>");
+                                         //MessageSucess.html("Action canceled. The item was not deleted.");
+                                           // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
+
+
+                                 //$("#mySpan").html("<strong>New HTML Content</strong>");
+
+                         });
+
+                          $('#btnPublish').on('click', function(e) {
+                        e.preventDefault(); 
+                        e.stopPropagation();
+                //alert('btnPublish' );
+                  // $("#btnEditSchemaFields").removeClass("fake-disabled-button");
+                               var MessageSucess=  $("#publishdiv #lblPublishMessageSucess");
+                               var MessageError=  $("#publishdiv #lblPublishMessageError");
+                               var publishSchemaForm=  $("#publishSchemaForm");
+                               MessageSucess.css('display', 'none');
+                               MessageError.css('display', 'none');
+                                MessageSucess.html("");
+
+                            var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+                            var isPublishSubitems =$("#publishdiv #chkPublishSubitems").is(':checked'); 
+                               // alert("isPublishSubitems - "+ isPublishSubitems);
+
+                               alert('txtSchemaID_'+ txtSchemaID );
+                                   $.ajax({
+                                          type: "GET",
+                                           url: "/publish/PublisAssetInPublishQueue", // PageName/MethodName
+                                          //data: JSON.stringify(requestData),
+                                                   data: { AssetItemId: txtSchemaID, IsPublishSubitems:isPublishSubitems},
+                                          contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                          success: function (response) {
+                                                 //alert(response);
+                                                    //alert(response.error);
+                                                     // alert(response.message);
+                                                publishSchemaForm.css('display', 'none');
+                                                if (response == true) {
+                                                    //alert("sucess"+ response + MessageSucess);
+                                                      MessageSucess.css('display', 'block');
+                                                            MessageError.css('display', 'none');
+                                                               MessageSucess.html("<strong>Schema published successfully.</strong>");
+                                                 }
+                                                 else {
+                                                    // alert("Error: " + response + MessageSucess);
+                                                     MessageSucess.css('display', 'none');
+                                                            MessageError.css('display', 'block');
+                                                                 MessageError.html("<strong>Opps! Error while publishing.</strong>");
+                                                 }
+                                               // if (response.status == true) {
+                                                    
+                                                            
+                                               //              MessageSucess.css('display', 'block');
+                                               //              MessageError.css('display', 'none');
+                                               //                 MessageSucess.html(response.message);
+                                               //      } 
+                                               //      else {
+                                                        
+                                               //              MessageSucess.css('display', 'none');
+                                               //              MessageError.css('display', 'block');
+                                               //                    MessageError.html(response.message + " [ " + response.error +" ]");
+       
+                                               //      }                                          
+                                       },
+                                    error: function (xhr, status, error) {
+                                           MessageSucess.css('display', 'none');
+                                              MessageError.css('display', 'block');
+                                                  MessageError.val("Opps! Error while deleting schema.");
+                                           console.error("Error occurred:", error);
+                                       }
+                               });
+
+                  });
 
                    $('#btnCancelDelete').on('click', function(e) {
                         e.preventDefault();
@@ -3379,6 +3496,7 @@ let resultnew = [];
         {
                         editdiv.style.display = "none";
                             removediv.style.display = "none";
+                             publishdiv.style.display = "none";
                             duplicatediv.style.display = "none";
                             refreshdiv.style.display = "none";
                             adddiv.style.display = "none";
@@ -3511,6 +3629,50 @@ let resultnew = [];
                             // duplicatediv.style.display = "none";
 
                             //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+                        }
+                        if (currentid == 'publish_li') {
+                              $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
+                             publishdiv.style.display = "block";
+                            // editdiv.style.display = "none";
+                            // duplicatediv.style.display = "none";
+                            
+                              // $("#deleteSchemaForm #txtSchemaName").val('');
+                              //      $("#deleteSchemaForm #txtSchemaPath").val('');
+                              //          $("#deleteSchemaForm #lblEditMessageSucess").val('');
+                              //           $("#deleteSchemaForm #lblEditMessageError").val('');
+                                     $("#publishSchemaForm #txtSchemaID").val(currentitemid);
+                               //alert($("#addSchemaForm #lblEditMessageSucess").val());
+
+
+                                             var MessageSucess=  $("#lblPublishMessageSucess");
+                                             var MessageError=  $("#lblPublishMessageError");
+                                             
+                                              // alert("inside delete");
+                                             var deleteSchemaForm=  $("#publishSchemaForm");
+                                             deleteSchemaForm.css('display', 'block');
+                                              MessageSucess.css('display', 'none');
+                                              MessageError.css('display', 'none');
+                                              MessageSucess.html("");
+                                                MessageError.html("");
+                                                 // MessageSucess.text('');
+                                                 //  MessageError.text('');
+
+                                                 //    MessageSucess.empty();
+                                                 //     MessageError.empty();
+
+                                             var content=$("#" +currentitemid).html();
+                                             $("#publishSchemaForm #txtSchemaName").val(content);
+                                              const innerElement = publishdiv.querySelector('h2 span');
+                                             //innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                             
+                               
+
+                             //alert(innerElement.innerHTML);
+                            //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+
                         }
                         if (currentid == 'remove_li') {
                               $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");

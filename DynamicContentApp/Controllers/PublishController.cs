@@ -41,10 +41,10 @@ namespace DynamicContentApp.Controllers
             _connectionString = _configuration["ConnectionStrings:DefaultConnection"];
         }
         [HttpGet]
-        public IActionResult PublisAssetInPublishQueue(string AssetItemId)
+        public IActionResult PublisAssetInPublishQueue(string AssetItemId, bool IsPublishSubitems)
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueue(AssetItemId);
+            bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueue(AssetItemId, IsPublishSubitems);
             if (isInsertSuccess)
             {
                 return Ok(true);
