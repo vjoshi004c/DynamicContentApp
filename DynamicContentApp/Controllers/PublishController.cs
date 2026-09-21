@@ -44,7 +44,11 @@ namespace DynamicContentApp.Controllers
         public IActionResult PublisAssetInPublishQueue(string AssetItemId, bool IsPublishSubitems)
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueue(AssetItemId, IsPublishSubitems);
+            //bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueue(AssetItemId, IsPublishSubitems);
+
+            bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueueBuild(AssetItemId, IsPublishSubitems);
+
+            
             if (isInsertSuccess)
             {
                 return Ok(true);

@@ -1391,7 +1391,32 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+        public bool InsertAssetInPublishQueueBuild(string AssetItemId, bool IsPublishSubitems)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_publish_queue_build", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@PublishAssetID", AssetItemId);
+                cmd.Parameters.AddWithValue("@IsPublishSubitems", IsPublishSubitems);
+                con.Open();
 
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public List<PublishQueue> GetAssetInPublishQueue(string PublishAssetPagePath)
         {
 
