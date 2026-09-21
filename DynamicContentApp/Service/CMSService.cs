@@ -125,8 +125,12 @@ namespace DynamicContentApp.Service
                 CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
 
                  CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
+                foreach (var itempsc in PublishQueuelist)
+                {
+                    SchemaDeleteModel schemaDeleteModel = dynamicContentDAL.DeleteAssetInPublishQueue(itempsc.ID);
+                }
 
-                SchemaDeleteModel schemaDeleteModel=  dynamicContentDAL.DeleteAssetInPublishQueue(ID);
+               // SchemaDeleteModel schemaDeleteModel=  dynamicContentDAL.DeleteAssetInPublishQueue(ID);
 
             }
 
