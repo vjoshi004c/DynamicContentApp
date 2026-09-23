@@ -23,7 +23,14 @@
         public string? PublishAssetPageID { get; set; }
         public string? PublishAssetPagePath { get; set; }
     }
-
+    public class PublishChildrenItem
+    {
+        public string? ID { get; set; }
+        public string? ParentID { get; set; }
+        public string? ItemPath { get; set; }
+        public string? HierarchyLevel { get; set; }
+       
+    }
     public class AssertFieldsModel
     {
         public string? SchemaFieldID { get; set; }

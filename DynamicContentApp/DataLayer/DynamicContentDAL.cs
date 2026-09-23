@@ -1358,6 +1358,50 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
+        public List<PublishChildrenItem> GetChildrenItemsToPubish(string AssetItemId)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<PublishChildrenItem> custlist = null;
+            try
+            {
+                custlist = new List<PublishChildrenItem>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_publish_subitem_get_all_children_items", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@PublishAssetID", AssetItemId);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    PublishChildrenItem cobj = new PublishChildrenItem();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    cobj.ItemPath = ds.Tables[0].Rows[i]["ItemPath"].ToString();
+                    cobj.HierarchyLevel = ds.Tables[0].Rows[i]["HierarchyLevel"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public bool InsertAssetInPublishQueue(string AssetItemId, bool IsPublishSubitems)
         {
             SqlConnection con = null;

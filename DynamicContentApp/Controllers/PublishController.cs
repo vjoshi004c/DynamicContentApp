@@ -43,20 +43,62 @@ namespace DynamicContentApp.Controllers
         [HttpGet]
         public IActionResult PublisAssetInPublishQueue(string AssetItemId, bool IsPublishSubitems)
         {
-            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            //bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueue(AssetItemId, IsPublishSubitems);
 
-            bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueueBuild(AssetItemId, IsPublishSubitems);
-
-            
-            if (isInsertSuccess)
+            try
             {
+                DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+
+                bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueueBuild(AssetItemId, IsPublishSubitems);
+
+                if (IsPublishSubitems == true)
+                {
+                    List<PublishChildrenItem> publishChildrenItem = dynamicContentDAL.GetChildrenItemsToPubish(AssetItemId);
+
+                    //bool isInsertSuccess = false;
+
+                    if (publishChildrenItem != null && publishChildrenItem.Count > 0)
+                    {
+                        foreach (PublishChildrenItem item in publishChildrenItem)
+                        {
+
+                            string AssetChildItemID = item.ID;
+                            isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueueBuild(AssetChildItemID, IsPublishSubitems);
+                        }
+
+                    }
+                    //if (isInsertSuccess)
+                    //{
+                    //    return Ok(true);
+                    //}
+                    //else
+                    //{
+                    //    return Ok(false);
+                    //}
+                }
                 return Ok(true);
             }
-            else
+            catch (Exception ex)
             {
                 return Ok(false);
             }
+
+
+            //else 
+            //{
+            //    bool isInsertSuccess = dynamicContentDAL.InsertAssetInPublishQueueBuild(AssetItemId, IsPublishSubitems);
+
+
+            //    if (isInsertSuccess)
+            //    {
+            //        return Ok(true);
+            //    }
+            //    else
+            //    {
+            //        return Ok(false);
+            //    }
+            //}
+
+
         }
 
 
@@ -64,4 +106,4 @@ namespace DynamicContentApp.Controllers
 
 
     }
-    }
+}
