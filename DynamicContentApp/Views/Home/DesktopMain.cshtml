@@ -13,7 +13,7 @@
         <img src="/images/schemamanager.png" alt="Browser">
         <div>Schema Manager</div>
     </div>
-    <div class="icon" data-app="Media Manage">
+    <div class="icon" data-app="Media Manager">
         <img src="/images/mediamanager.webp" alt="Browser">
         <div>Media Manager</div>
     </div>
@@ -135,6 +135,32 @@
         You can move, resize, minimize, maximize, and close me.
     </div>
 </div>
+<div class="window" id="win3" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Media Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win4" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Layout Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
 <input type="hidden" id="hdn_CurrnetDomainUrl" value="@ViewData["CurrnetDomainUrl"]" />
 
 <script>
@@ -163,13 +189,18 @@
         });
 
         function openApp(app) {
+           
+            $('#win1 .window-content').empty();
+                          $('#win2.window-content').empty();
+                           $("#win3 .window-content").empty();
+                           $('#win4.window-content').empty();
             if (app === 'Content Manager') {
                 //var winToOpen = $("#win1").css(";
                 $("#win1").css("display", "block");
                 $("#win1").css("width", "1000px");
                 $("#win1").css("height", "700px");
 
-
+                 
 
                 var allChildren = $('#taskbar').find('.taskbar-button');
                 allChildren.each(function () {
@@ -177,6 +208,7 @@
                     if ($(this).attr('data-win') == $("#win1").attr('id')) {
                         //alert($(this).attr('data-win'));
                         $(this).css("display", "block");
+                         
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                        //$("#win1 .window-content").html("testing Content manager manager page");
                        //$("#win1 .window-content").load('/Contenttree');
@@ -191,24 +223,24 @@
                     }
 
                 });
-
-
-                //alert("Opening " + app + "...");
-                //window.location.href = "http://localhost:5287/contenttree";
                 return false;
             }
             if (app === 'Schema Manager') {
+               
                 //$("#win2").show("slow");
                 $("#win2").css("display", "block");
-                $("#win1").css("width", "1000px");
-                $("#win1").css("height", "700px");
-
+                $("#win2").css("width", "1000px");
+                $("#win2").css("height", "700px");
                 var allChildren = $('#taskbar').find('.taskbar-button');
                 allChildren.each(function () {
                     //alert($(this).text());
                     if ($(this).attr('data-win') == $("#win2").attr('id')) {
-                        //alert($(this).attr('data-win'));
+                         //alert('start schema manager');
+                       // alert($(this).attr('data-win'));
+                       
                         $(this).css("display", "block");
+                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                          $("#win2 .window-content").load(CurrnetDomainUrl + "/Contenttree/SchemaManagerIndex");
                         $("#win2").css({
                         top: 0,
                         left: 0,
@@ -219,9 +251,68 @@
                     }
 
                 });
+                return false;
+            }
 
-                //alert("Opening " + app + "...");
-                //window.location.href = "http://localhost:5287/contenttree";
+             if (app === 'Layout Manager') {
+
+                //$("#win2").show("slow");
+                $("#win4").css("display", "block");
+                $("#win4").css("width", "1000px");
+                $("#win4").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function () {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win4").attr('id')) {
+                         //alert('start schema manager');
+                       // alert($(this).attr('data-win'));
+                        
+                          
+                        $(this).css("display", "block");
+                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                          $("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        $("#win4").css({
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "calc(100% - 40px)"
+                    });
+
+                    }
+
+                });
+                return false;
+            }
+
+             if (app === 'Media Manager') {
+
+                //$("#win2").show("slow");
+                $("#win3").css("display", "block");
+                $("#win3").css("width", "1000px");
+                $("#win3").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function () {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win3").attr('id')) {
+                         //alert('start schema manager');
+                       // alert($(this).attr('data-win'));
+                  
+                        $(this).css("display", "block");
+                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                         
+                         
+                          $("#win3 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                          
+                        $("#win3").css({
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "calc(100% - 40px)"
+                    });
+
+                    }
+
+                });
                 return false;
             }
 

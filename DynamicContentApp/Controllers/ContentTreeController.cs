@@ -226,6 +226,23 @@ namespace DynamicContentApp.Controllers
             return View();
         }
         [HttpGet]
+        public IActionResult SchemaManagerIndex()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult MediaManagerIndex()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult LayoutMangerIndex()
+        {
+            return View();
+        }
+        
+
+        [HttpGet]
         public IActionResult GetAssetComponentDetails(string AssetItemComponentID, string AssetItemID)
         {
 
