@@ -183,6 +183,9 @@
 
         // Open app from desktop icon or start menu
         $(".icon, .start-menu li").click(function () {
+
+             
+
             let app = $(this).data("app");
             openApp(app);
             $(".start-menu").hide();
@@ -190,10 +193,7 @@
 
         function openApp(app) {
            
-            $('#win1 .window-content').empty();
-                          $('#win2.window-content').empty();
-                           $("#win3 .window-content").empty();
-                           $('#win4.window-content').empty();
+           
             if (app === 'Content Manager') {
                 //var winToOpen = $("#win1").css(";
                 $("#win1").css("display", "block");
@@ -212,6 +212,11 @@
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                        //$("#win1 .window-content").html("testing Content manager manager page");
                        //$("#win1 .window-content").load('/Contenttree');
+
+                       $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                           $("#win3 .window-content").html('');
+                           $('#win4 .window-content').html('');
                         $("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree");
                         $("#win1").css({
                         top: 0,
@@ -219,6 +224,8 @@
                         width: "100%",
                         height: "calc(100% - 40px)"
                     });
+                    
+                         
 
                     }
 
@@ -239,6 +246,10 @@
                        // alert($(this).attr('data-win'));
                        
                         $(this).css("display", "block");
+                        $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                           $("#win3 .window-content").html('');
+                           $('#win4 .window-content').html('');
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                           $("#win2 .window-content").load(CurrnetDomainUrl + "/Contenttree/SchemaManagerIndex");
                         $("#win2").css({
@@ -247,6 +258,7 @@
                         width: "100%",
                         height: "calc(100% - 40px)"
                     });
+                    
 
                     }
 
@@ -269,6 +281,10 @@
                         
                           
                         $(this).css("display", "block");
+                        $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                           $("#win3 .window-content").html('');
+                           $('#win4 .window-content').html('');
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                           $("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
                         $("#win4").css({
@@ -277,7 +293,7 @@
                         width: "100%",
                         height: "calc(100% - 40px)"
                     });
-
+                    
                     }
 
                 });
@@ -298,6 +314,10 @@
                        // alert($(this).attr('data-win'));
                   
                         $(this).css("display", "block");
+                        $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                           $("#win3 .window-content").html('');
+                           $('#win4 .window-content').html('');
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                          
                          
@@ -309,7 +329,7 @@
                         width: "100%",
                         height: "calc(100% - 40px)"
                     });
-
+                    
                     }
 
                 });
