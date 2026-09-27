@@ -48,7 +48,7 @@
     </div>
 
     <div class="icon" data-app="Publish Manager">
-        <img src="/images/publishmanager.webp" alt="Browser">
+        <img src="/images/managerp.webp" alt="Browser">
         <div>Publish Manager</div>
     </div>
 
@@ -537,7 +537,7 @@
             });
 
             // Create taskbar button
-            let btn = $("<div class='taskbar-button'></div>").text(title).attr("data-win", id);
+            let btn = $("<div class='taskbar-button' style='display:none;'></div>").text(title).attr("data-win", id);
             $("#taskbar").append(btn);
 
             // Taskbar button click
