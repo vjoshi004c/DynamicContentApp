@@ -848,6 +848,7 @@ body {font-family: Arial;}
                             </div>
                         </div>
                         <input type="hidden" id="hdnChildCount1" runat="server" value="0" />
+                       
                     </div>
                 </div>
 
@@ -915,7 +916,7 @@ body {font-family: Arial;}
             </div>
             <input type="hidden" id="hdnChildCount" runat="server" value="0"  />
              <input type="hidden" id="hdnAssetPath" runat="server" value=""  />
-
+              <input type="hidden" id="hdn_CurrnetSelectedManagerUrlChild" value="abc" />
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery/dist/jquery-ui.min.js"></script>
     <script src="/lib/jquery/dist/jquery-ui-timepicker-addon.min.js"></script>
@@ -926,15 +927,93 @@ body {font-family: Arial;}
 </html>
 
     <script>
+        var hdnCurrnetSelectedManagerUrlChildValue="";
+        $(document).ready(function () {
+          //  alert("start calling controller"); 
+        hdnCurrnetSelectedManagerUrlChildValue = document.getElementById("hdn_CurrnetSelectedManagerUrlChild").value;
+       //alert("on doucment load hdnCurrnetSelectedManagerUrlChildValue" + hdnCurrnetSelectedManagerUrlChildValue);
+      
 
+    
+        
+       // document.addEventListener("DOMContentLoaded", function () {
+        //      hdnCurrnetSelectedManagerUrlChildValue = document.getElementById("hdn_CurrnetSelectedManagerUrlChild").value;
+        // alert("hdnCurrnetSelectedManagerUrlChildValue" + hdnCurrnetSelectedManagerUrlChildValue);
+        //     //document.getElementById("displayValue").textContent = hiddenValue || "(none)";
+        // });
+       // alert("start calling controller");
                 var IDSchema = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+                //$("#myUL").empty();
+                // var IDSchema = "";
                 var childChildCountarr = [];
+            //getDbData(IDSchema);
+           // getDbDataManager( IDSchema, Manager)
+           //ViewContentItem(IDSchema) ;
+            var CurrnetSelectedManagerUrl = document.getElementById("hdn_CurrnetSelectedManagerUrlChild").value;
+            //alert("hdn_CurrnetSelectedManagerUrlChild" + CurrnetSelectedManagerUrl);
+          // var CurrnetSelectedManagerUrl = hdnCurrnetSelectedManagerUrlChildValue;
+            //alert(CurrnetSelectedManagerUrl);
+           // var urlParams = new URLSearchParams(window.location);
+           // var managerValue = urlParams.get('manager');
+             managerValue=hdnCurrnetSelectedManagerUrlChildValue;
+             // alert("hdnCurrnetSelectedManagerUrlChildValue" + hdnCurrnetSelectedManagerUrlChildValue);
+             // $("#myUL").empty();
+           // alert("managerValue" + managerValue);
+             // getDbDataManager( IDSchema, managerValue);
+            //ViewContentItem(IDSchema) ;
 
-            getDbData(IDSchema);
-            ViewContentItem(IDSchema) ;
-
+                    if(managerValue=="content1")
+                    {
+                        // alert("inside managerValue" + managerValue);
+                        IDSchemaManager = "D1B2BE76-C76B-447A-A30A-DDDF4959A8FC";
+                        //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                       // getDbDataManager( IDSchema, IDSchemaManager);
+                       // ViewContentItem(IDSchema);
+                    }
+                     if(managerValue=="schema")
+                    {
+                         
+                        IDSchemaManager = "1049D17E-6C1C-45A9-9B75-5F779B61023E";
+                          //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                        getDbDataManager( IDSchema, IDSchemaManager);
+                        ViewContentItem(IDSchema);
+                    }
+                     if(managerValue=="layout")
+                    {
+                         //alert("inside managerValue" + managerValue + "id-" + IDSchema);
+                        IDSchemaManager = "111035FA-612A-4EB5-9CBC-8DF91E9152A3";
+                        //alert("layout inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                       getDbDataManager( IDSchema, IDSchemaManager);
+                       ViewContentItem(IDSchema);
+                    }
+                     if(managerValue=="media")
+                    {
+                         //alert("inside managerValue" + managerValue + "id-" + IDSchema);
+                        IDSchemaManager = "B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9";
+                        //alert("inside media managerValue" + managerValue + "id-" + IDSchemaManager);
+                        getDbDataManager( IDSchema, IDSchemaManager);
+                        ViewContentItem(IDSchema);
+                    }
+                     if(managerValue=="website")
+                    {
+                        // alert("inside managerValue" + managerValue + "id-" + IDSchema);
+                        IDSchemaManager = "78610893-8DF7-41DF-BD14-C458BE7F3038";
+                       // alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                       getDbDataManager( IDSchema, IDSchemaManager);
+                       ViewContentItem(IDSchema);
+                    }
+                    if(managerValue=="setting")
+                    {
+                        // alert("inside managerValue" + managerValue);
+                        IDSchemaManager = "DC30B818-0EF8-4BF9-84E2-812EC508A483";
+                        //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                        getDbDataManager( IDSchema, IDSchemaManager);
+                        ViewContentItem(IDSchema);
+                    }
+                   // alert("ViewContentItem" + "id-" + IDSchema);
+                    
            
-
+});
              //alert("child cound"+childChildCountarr.length);
             // $(childChildCountarr).each(function (index, value) {
           // alert("childChildCountarr" );
@@ -943,6 +1022,117 @@ body {font-family: Arial;}
               //checkChildCountNew(IDSchema);
 
         //alert('start calling controller');
+
+         function getDbDataManager( IDSchema, Manager) {
+
+                         var requestData = {
+                                SchemaID: IDSchema
+                         };
+                //alert(requestData);
+                 // var myUl = $("#myUL ul").find("ul
+
+                  $("#myUL ul li").remove();
+               
+            $.ajax({
+                type: "GET",
+                url: "/ContentTree/GetChildSchema", // PageName/MethodName
+                //data: JSON.stringify(requestData),
+                 data: { SchemaID: IDSchema },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                     //alert("success");
+                     console.log("Success:", response);
+                     
+                     if(response.length>0)
+                     {
+                       
+                       //alert("Total records received: " + response.length);
+                               
+                      $.each(response, function(index, record) {
+                                // Access specific fields belonging to each record row
+                                console.log("Record ParentSchemaName: " + record.parentSchemaName);
+                                 console.log("Record ParentSchemaID: " + record.parentSchemaID);
+                                console.log("Record ChildSchemaName: " + record.childSchemaName);
+                                console.log("Record ChildSchemaID: " + record.childSchemaID);
+                                //childChildCountarr.push(record.childSchemaID);
+                                //alert("childSchemaID" + record.childSchemaID);
+                               //alert(childChildCountarr.length);
+                               
+                                     checkChildCount(record.childSchemaID);
+                                     //alert("After checkchildcount call hiddend" + $("#hdnChildCount").val());
+
+                                 var childhiddenCount = $("#hdnChildCount").val();
+                                 //alert("hiddend" + $("#hdnChildCount").val());
+                                  // var myUl = $("#myUL").find("#" + IDSchema);
+                                    var myUl = $("#myUL").find("ul[id='" + IDSchema+"']");
+                                    
+                                    //myUl.remove();
+                                    //const ul = document.getElementById('my-list');
+                                   // myUl.innerHTML = '';
+                                    // myUl.empty();
+                                       // const ul = document.getElementById('my-list');
+                                        // while (myUl.firstChild) {
+                                        // ul.removeChild(ul.firstChild);
+                                        // }
+                                if (parseInt(childhiddenCount) > 0) {
+                             
+                                   //alert("inside hidden count greater");
+                              
+                                   if (record.childSchemaID ===Manager)
+                                   {
+                                        // var myUl2 = $("#myUL").find("ul[id='" + Manager+"']");
+                                        // myUl2.empty();
+                                      // myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "' class='nested'><li><span tag='202' class='caretli'>Not Available</span></li></ul></li>");
+                                        // myUl.append("<li><span  onclick=GetChildOfSelectedUL('" + record.childSchemaID + "'); tag='"+record.childSchemaID+ "' id='"+record.childSchemaID+  "' class='caret default-color'>"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "' onclick=GetChildOfSelectedUL('" + record.childSchemaID + "');  tag='"+record.childSchemaID+ "' class='nested'><li></li></ul></li>");
+                                           // if (myUl.length < 0)
+                                            //{
+                                                    myUl.append("<li><span  onclick=GetChildOfSelectedUL('" + record.childSchemaID + "'); tag='"+record.childSchemaID+ "' id='"+record.childSchemaID+  "' class='caret default-color'>"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "'  tag='"+record.childSchemaID+ "' class='nested'><li></li></ul></li>");
+                                        
+                                               // }
+//myUl.append("");
+                                       //addEventListener_caret();
+                                     }
+                                
+                               }
+                               else
+                               {
+                                   //alert("inside hidden count smaller");
+                                     myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelectedLI('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                               //addEventListener_caretli()
+                               }
+
+                              
+
+                                //************************* */
+                               // var myUl = $("#myUL").find("#" + IDSchema);
+                               // myUl.append("<li><span id='"+record.childSchemaID+ "' tag='"+record.childSchemaID+ "' onclick=GetChildOfSelected('" + record.childSchemaID + "'); class='caretli'>"+record.childSchemaName+"</span></li>");
+                              
+                                //****************** 
+                                 //  let specificUl = $('ul#myList');
+                               // var myUl = $("#myUL").find("#" + IDSchema);
+                               
+                               //myUl.append("<li><span tag='100' class='caret default-color'>"+record.childSchemaName+"</span>");
+                               // myUl.append("<ul id='"+record.childSchemaID+ "' class='nested'>");
+                              
+                              
+
+                         });
+                           //myUl.append("</li></ul");
+                         }
+                // Code to handle successful server response
+                //console.log("Success:", response);
+                       // alert(response.message + " Status is: " + response.currentStatus);
+                     },
+                 error: function (xhr, status, error) {
+                // Code to handle execution errors
+                        console.error("Error occurred:", error);
+                        // alert("Error occurred:" + error);
+                    }
+            });
+        }
+
              function getDbData( IDSchema ) {
 
                          var requestData = {
@@ -3741,7 +3931,15 @@ let resultnew = [];
 
 
 
-    </script>
+    // </script>
+
+    // <script>
+    //             document.addEventListener("DOMContentLoaded", function () {
+    //      hdnCurrnetSelectedManagerUrlChildValue = document.getElementById("hdn_CurrnetSelectedManagerUrlChild").value;
+    // alert("hdnCurrnetSelectedManagerUrlChildValue" + hdnCurrnetSelectedManagerUrlChildValue);
+    //     //document.getElementById("displayValue").textContent = hiddenValue || "(none)";
+    // });
+    // </script>
   @*   <script>
 
 
@@ -3899,7 +4097,7 @@ function openCity(evt, cityName) {
             $("#btnContent").trigger("click");
         }
     }
-
+    
 </script>
 
 <!-- end html editor related-->

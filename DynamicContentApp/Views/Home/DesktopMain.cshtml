@@ -161,7 +161,34 @@
         You can move, resize, minimize, maximize, and close me.
     </div>
 </div>
+<div class="window" id="win5" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Setting Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win6" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">WebSite Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
 <input type="hidden" id="hdn_CurrnetDomainUrl" value="@ViewData["CurrnetDomainUrl"]" />
+<input type="hidden" id="hdn_CurrnetSelectedManagerUrlParent" value="" />
 
 <script>
     $(function () {
@@ -187,12 +214,14 @@
              
 
             let app = $(this).data("app");
+            //alert("Opening " + app + "...");
             openApp(app);
             $(".start-menu").hide();
         });
 
         function openApp(app) {
-           
+
+            //var CurrnetSelectedManagerUrl = document.getElementById("CurrnetSelectedManagerUrl").value;
            
             if (app === 'Content Manager') {
                 //var winToOpen = $("#win1").css(";
@@ -212,12 +241,26 @@
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                        //$("#win1 .window-content").html("testing Content manager manager page");
                        //$("#win1 .window-content").load('/Contenttree');
-
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "content";
+                        //alert(CurrnetSelectedManagerUrlParent);
+                        //document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value = "content";
+                        //document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value = CurrnetDomainUrl + "/Contenttree?manager=content";
                        $('#win1 .window-content').html('');
                         $("#win2 .window-content").html('');
                            $("#win3 .window-content").html('');
                            $('#win4 .window-content').html('');
-                        $("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree");
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
+                        //$("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree");
+                        $("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                           // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                            //$("#myUL").empty();
+                           // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                        });
+                        //$("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=content");
                         $("#win1").css({
                         top: 0,
                         left: 0,
@@ -250,8 +293,20 @@
                         $("#win2 .window-content").html('');
                            $("#win3 .window-content").html('');
                            $('#win4 .window-content').html('');
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
-                          $("#win2 .window-content").load(CurrnetDomainUrl + "/Contenttree/SchemaManagerIndex");
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "schema";
+                         // $("#win2 .window-content").load(CurrnetDomainUrl + "/Contenttree/SchemaManagerIndex");
+                        //$("#win2 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=schema");
+                        $("#win2 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                           // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                           //$("#myUL").empty();
+                           // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                        });
                         $("#win2").css({
                         top: 0,
                         left: 0,
@@ -285,8 +340,21 @@
                         $("#win2 .window-content").html('');
                            $("#win3 .window-content").html('');
                            $('#win4 .window-content').html('');
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "layout";
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
-                          $("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                          //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                        });
                         $("#win4").css({
                         top: 0,
                         left: 0,
@@ -299,7 +367,100 @@
                 });
                 return false;
             }
+            if (app === 'Setting Manager') {
 
+                //$("#win2").show("slow");
+                $("#win5").css("display", "block");
+                $("#win5").css("width", "1000px");
+                $("#win5").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+               // alert('Setting Manager');
+                allChildren.each(function() {
+                   // alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win5").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                        $("#win3 .window-content").html('');
+                        $('#win4 .window-content').html('');
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "setting";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win5 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                        });
+                        $("#win5").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+            if (app === 'WebSite Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win6").css("display", "block");
+                $("#win6").css("width", "1000px");
+                $("#win6").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win6").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                        $("#win3 .window-content").html('');
+                        $('#win4 .window-content').html('');
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "website";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win6 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                        });
+                        $("#win6").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
              if (app === 'Media Manager') {
 
                 //$("#win2").show("slow");
@@ -318,10 +479,22 @@
                         $("#win2 .window-content").html('');
                            $("#win3 .window-content").html('');
                            $('#win4 .window-content').html('');
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "media";
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                          
                          
-                          $("#win3 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                         // $("#win3 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win3 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=media");
+                        $("#win3 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                        });
                           
                         $("#win3").css({
                         top: 0,
