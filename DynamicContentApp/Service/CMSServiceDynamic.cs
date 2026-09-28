@@ -35,13 +35,16 @@ namespace DynamicContentApp.Service
         private readonly IViewRenderService _viewRenderService;
         private readonly SystemConfigOptions _options;
         private readonly IConfiguration _configuration;
-        public CMSServiceDynamic(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, SystemConfigOptions options, IConfiguration configuration)
+
+        private readonly InMemoryFileProvider  _inMemoryProvider ;
+        public CMSServiceDynamic(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, SystemConfigOptions options, IConfiguration configuration, InMemoryFileProvider inMemoryProvider)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
             _options = options;
             _configuration = configuration;
+            _inMemoryProvider = inMemoryProvider;
         }
         private void GetAssetData(string AssetItemPath, StringBuilder JsonDataSB, string Area)
         {
@@ -244,6 +247,10 @@ namespace DynamicContentApp.Service
                     }
                     else
                     {
+                       
+
+
+
                         JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
                     }
                     
@@ -380,8 +387,10 @@ namespace DynamicContentApp.Service
 
             dynamic AssetFieldsModel = null;
             string MasterPageLayout = string.Empty;
+            string dynamicContent = string.Empty;
 
-            string assetItemId = dynamicObject.AssetItemID;
+           string assetItemId = dynamicObject.AssetItemID;
+            string isRenderDynamic = "false";
             // string AssetItemID = dynamicObject.GetProperty("AssetItemID").GetString();
             if (dynamicObject.AssetFields != null)
             {
@@ -390,11 +399,14 @@ namespace DynamicContentApp.Service
 
 
                 string Title = AssetFieldsModel.Title;
+                
                 string ArticleShortDescription = AssetFieldsModel.ArticleShortDescription;
                 string assetID = dynamicObject.AssetItemID;
                 // string Title = AssetFieldsElement.GetProperty("Title").GetString();
+                isRenderDynamic = dynamicObject.IsRenderDynamic;
                 string masterlayoutpath = dynamicObject.MasterPageLayoutPath;
                  MasterPageLayout = dynamicObject.MasterLayout;
+                dynamicContent= dynamicObject.DynamicContent;
 
                 string IsPageItem = dynamicObject.IsPageItem;
             }
@@ -412,8 +424,24 @@ namespace DynamicContentApp.Service
 
             if (AssetFieldsModel != null)
             {
+                if (isRenderDynamic =="true")
+                {
+                    //var inMemoryProvider = new InMemoryFileProvider();
+                    //_inMemoryProvider.AddTemplate("/Views/Dynamic/CustomTemplate.cshtml", "<h1>Dynamically call view -- Hello @Model.Title</h1>");
+                 
+                    _inMemoryProvider.AddTemplate("/Views/Dynamic/CustomTemplate.cshtml", dynamicContent);
+                    htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync("/Views/Dynamic/CustomTemplate.cshtml", AssetFieldsModel));
+                }
+                else
+                {
+                    htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(MasterPageLayout, AssetFieldsModel));
+                }
 
-                 htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(MasterPageLayout, AssetFieldsModel));
+                
+                // 2. You can now pass this virtual path to your normal IRazorViewEngine renderer
+               
+               
+               // htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(MasterPageLayout, AssetFieldsModel));
             }
             else
             {

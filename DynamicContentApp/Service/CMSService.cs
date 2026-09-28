@@ -14,13 +14,15 @@ namespace DynamicContentApp.Service
         private readonly IConfiguration _configuration;
 
         private readonly SystemConfigOptions _options;
-        public CMSService(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options,  IConfiguration configuration)
+        private readonly InMemoryFileProvider _inMemoryProvider;
+        public CMSService(ILogger<HomeController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options,  IConfiguration configuration, InMemoryFileProvider inMemoryProvider)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
             _controllerRenderService = controllerRenderService;
             _options = options.Value;
             _configuration = configuration;
+            _inMemoryProvider = inMemoryProvider;
         }
         public async Task IfModeIsContentManagement(HomeViewModel HomeViewModel, bool isContentDeliveryError, int PageItemID)
         {
@@ -122,7 +124,7 @@ namespace DynamicContentApp.Service
                 string ID = PublishQueuelist[0].ID;
                 HomeViewModel.BrowserUrl = PublishAssetPagePath;
 
-                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
+                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration, _inMemoryProvider);
 
                  CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, 3);
                 foreach (var itempsc in PublishQueuelist)

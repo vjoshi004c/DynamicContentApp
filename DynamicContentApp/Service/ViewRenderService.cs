@@ -35,6 +35,9 @@ namespace DynamicContentApp.Service
 
             if (!viewResult.Success)
             {
+
+                // 1. Register your template content dynamically at runtime
+
                 // Try searching by path if explicit name fails
                 viewResult = _viewEngine.GetView(executingFilePath: null, viewPath: viewName, isMainPage: false);
 

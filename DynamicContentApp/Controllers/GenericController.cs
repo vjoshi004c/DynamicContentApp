@@ -25,7 +25,8 @@ namespace DynamicContentApp.Controllers
         private readonly SystemConfigOptions _options;
         private readonly ICMSService _cmsService;
         private readonly IConfiguration _configuration;
-        public GenericController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService, IConfiguration configuration) :base(logger, viewRenderService, controllerRenderService)
+        private readonly InMemoryFileProvider _inMemoryProvider;
+        public GenericController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService, IConfiguration configuration, InMemoryFileProvider inMemoryProvider) :base(logger, viewRenderService, controllerRenderService)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
@@ -33,6 +34,7 @@ namespace DynamicContentApp.Controllers
             _options = options.Value;
             _cmsService = cmsService;
             _configuration = configuration;
+            _inMemoryProvider = inMemoryProvider;
         }
 
         [HttpGet]
@@ -123,7 +125,7 @@ namespace DynamicContentApp.Controllers
                     PageItemID = 1;
                 }
                 // await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
-                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration);
+                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration, _inMemoryProvider);
 
                 await CMSServiceDynamic.IfModeIsContentManagement(HomeViewModel, false, PageItemID);
             }

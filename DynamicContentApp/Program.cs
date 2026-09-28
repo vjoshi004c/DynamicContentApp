@@ -11,7 +11,8 @@ var applicationMode = builder.Configuration["SystemConfig:ApplicationMode"];
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.Configure<SystemConfigOptions>(builder.Configuration.GetSection(SystemConfigOptions.SystemConfig));
-
+var inMemoryProvider = new InMemoryFileProvider();
+builder.Services.AddSingleton(inMemoryProvider);
 //builder.Services.AddScoped<DynamicContentDAL>(sp =>
 //{
 //    //var config = sp.GetRequiredService<IConfiguration>();
@@ -20,7 +21,11 @@ builder.Services.Configure<SystemConfigOptions>(builder.Configuration.GetSection
 //});
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(options =>
+    {
+        options.FileProviders.Add(inMemoryProvider);
+    });
 builder.Services.AddScoped<IViewRenderService, ViewRenderService>();
 builder.Services.AddScoped<IControllerRenderService, ControllerRenderService>();
 builder.Services.AddScoped<ICMSService, CMSService>();

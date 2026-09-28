@@ -2794,7 +2794,18 @@ body {font-family: Arial;}
 
                                             var schemaFieldID1= control.attr('schemaFieldID');
                                             var assetFieldID1= control.attr('assetFieldID');
-                                             var assetFieldValue1= control.val();
+                                           // var assetFieldValue1= "";
+                                            // if (control.is('textarea')) {
+                                            //     alert("textarea");
+                                            //     assetFieldValue1= control.html();
+                                            //      alert(assetFieldValue1);
+                                            // }
+                                            // else 
+                                            // {
+                                            //     assetFieldValue1= control.val();
+                                            // }
+
+                                            var assetFieldValue1= control.val();
                                             // alert(assetFieldValue1);
                                                 let newElement2= { assetItemID:  assetItemID  , assetItemSchemaID:  assetItemSchemaID ,schemaFieldID: schemaFieldID1  ,assetFieldID: assetFieldID1 ,assetFieldValue: assetFieldValue1 };
                                                  assetFieldsData.push(newElement2);
