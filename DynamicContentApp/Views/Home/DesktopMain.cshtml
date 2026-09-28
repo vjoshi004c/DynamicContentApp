@@ -191,6 +191,113 @@
         You can move, resize, minimize, maximize, and close me.
     </div>
 </div>
+<div class="window" id="win7" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">User Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+
+<div class="window" id="win8" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Role Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win9" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Access Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win10" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Publish Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win11" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Workflow Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win12" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">Version Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win13" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">MultiLanguage Manager</span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
+<div class="window" id="win14" style="top:120px; left:400px;display:none;">
+    <div class="window-header">
+        <span class="window-title">
+            Form Builder Manager
+        </span>
+        <div class="window-buttons">
+            <button class="min-btn">_</button>
+            <button class="max-btn">□</button>
+            <button class="close-btn">×</button>
+        </div>
+    </div>
+    <div class="window-content">
+        You can move, resize, minimize, maximize, and close me.
+    </div>
+</div>
 <input type="hidden" id="hdn_CurrnetDomainUrl" value="@ViewData["CurrnetDomainUrl"]" />
 <input type="hidden" id="hdn_CurrnetSelectedManagerUrlParent" value="" />
 
@@ -223,6 +330,22 @@
             $(".start-menu").hide();
         });
 
+         function clearContent() {
+              $('#win1 .window-content').html('');
+                        $("#win2 .window-content").html('');
+                        $("#win3 .window-content").html('');
+                        $('#win4 .window-content').html('');
+                        $("#win5 .window-content").html('');
+                        $('#win6 .window-content').html('');
+                        $('#win7 .window-content').html('');
+                        $('#win8 .window-content').html('');
+                         $('#win9 .window-content').html('');
+                          $('#win10 .window-content').html('');
+                           $('#win11 .window-content').html('');
+                           $('#win12 .window-content').html('');
+                            $('#win13 .window-content').html('');
+                             $('#win14 .window-content').html('');
+         }
         function openApp(app) {
 
             //var CurrnetSelectedManagerUrl = document.getElementById("CurrnetSelectedManagerUrl").value;
@@ -250,12 +373,13 @@
                         //alert(CurrnetSelectedManagerUrlParent);
                         //document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value = "content";
                         //document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value = CurrnetDomainUrl + "/Contenttree?manager=content";
-                       $('#win1 .window-content').html('');
-                        $("#win2 .window-content").html('');
-                           $("#win3 .window-content").html('');
-                           $('#win4 .window-content').html('');
-                        $("#win5 .window-content").html('');
-                        $('#win6 .window-content').html('');
+                       // $('#win1 .window-content').html('');
+                       //  $("#win2 .window-content").html('');
+                       //     $("#win3 .window-content").html('');
+                       //     $('#win4 .window-content').html('');
+                       //  $("#win5 .window-content").html('');
+                       //  $('#win6 .window-content').html('');
+                       clearContent();
                         //$("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree");
                         $("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
                            // alert("callback"+CurrnetSelectedManagerUrlParent);
@@ -293,12 +417,13 @@
                        // alert($(this).attr('data-win'));
                        
                         $(this).css("display", "block");
-                        $('#win1 .window-content').html('');
-                        $("#win2 .window-content").html('');
-                           $("#win3 .window-content").html('');
-                           $('#win4 .window-content').html('');
-                        $("#win5 .window-content").html('');
-                        $('#win6 .window-content').html('');
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        //    $("#win3 .window-content").html('');
+                        //    $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        clearContent();
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
                         CurrnetSelectedManagerUrlParent = "schema";
@@ -340,12 +465,13 @@
                         
                           
                         $(this).css("display", "block");
-                        $('#win1 .window-content').html('');
-                        $("#win2 .window-content").html('');
-                           $("#win3 .window-content").html('');
-                           $('#win4 .window-content').html('');
-                        $("#win5 .window-content").html('');
-                        $('#win6 .window-content').html('');
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        //    $("#win3 .window-content").html('');
+                        //    $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        clearContent();
 
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
                         CurrnetSelectedManagerUrlParent = "layout";
@@ -386,14 +512,15 @@
                         // alert($(this).attr('data-win'));
 
                         
-                        $(this).css("display", "block");
-                        $('#win1 .window-content').html('');
-                        $("#win2 .window-content").html('');
-                        $("#win3 .window-content").html('');
-                        $('#win4 .window-content').html('');
-                        $("#win5 .window-content").html('');
-                        $('#win6 .window-content').html('');
+                        // $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
 
+                        clearContent();
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
                         CurrnetSelectedManagerUrlParent = "setting";
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
@@ -434,12 +561,13 @@
 
                         
                         $(this).css("display", "block");
-                        $('#win1 .window-content').html('');
-                        $("#win2 .window-content").html('');
-                        $("#win3 .window-content").html('');
-                        $('#win4 .window-content').html('');
-                        $("#win5 .window-content").html('');
-                        $('#win6 .window-content').html('');
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        clearContent();
 
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
                         CurrnetSelectedManagerUrlParent = "website";
@@ -465,6 +593,445 @@
                 });
                 return false;
             }
+            if (app === 'User Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win7").css("display", "block");
+                $("#win7").css("width", "1000px");
+                $("#win7").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win7").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        clearContent();
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "user";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win7 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win7 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win7").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+             if (app === 'Role Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win8").css("display", "block");
+                $("#win8").css("width", "1000px");
+                $("#win8").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win8").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        clearContent();
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "role";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win8 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win8 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win8").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+            if (app === 'Access Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win9").css("display", "block");
+                $("#win9").css("width", "1000px");
+                $("#win9").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win9").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        //  $('#win9 .window-content').html('');
+                        clearContent();
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "access";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win9 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win9 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win9").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+            if (app === 'Publish Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win10").css("display", "block");
+                $("#win10").css("width", "1000px");
+                $("#win10").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win10").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        //  $('#win9 .window-content').html('');
+                        //   $('#win10 .window-content').html('');
+                        clearContent();
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "publish";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win10 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win10 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win10").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+             if (app === 'Workflow Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win11").css("display", "block");
+                $("#win11").css("width", "1000px");
+                $("#win11").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win11").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        //  $('#win9 .window-content').html('');
+                        //   $('#win10 .window-content').html('');
+                        //    $('#win11 .window-content').html('');
+                        clearContent();
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "publish";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win11 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win11 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win11").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+             if (app === 'Version Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win12").css("display", "block");
+                $("#win12").css("width", "1000px");
+                $("#win12").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win12").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        //  $('#win9 .window-content').html('');
+                        //   $('#win10 .window-content').html('');
+                        //    $('#win11 .window-content').html('');
+                        //    $('#win12 .window-content').html('');
+                        clearContent();
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "publish";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win12 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win12 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win12").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+            if (app === 'MultiLanguage Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win13").css("display", "block");
+                $("#win13").css("width", "1000px");
+                $("#win13").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win13").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        //  $('#win9 .window-content').html('');
+                        //   $('#win10 .window-content').html('');
+                        //    $('#win11 .window-content').html('');
+                        //    $('#win12 .window-content').html('');
+                        //     $('#win13 .window-content').html('');
+                        clearContent();
+
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "publish";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win13 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win13 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win13").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
+             if (app === 'Form Builder Manager') {
+
+               // alert('Website Manager');
+                //$("#win2").show("slow");
+                $("#win14").css("display", "block");
+                $("#win14").css("width", "1000px");
+                $("#win14").css("height", "700px");
+                var allChildren = $('#taskbar').find('.taskbar-button');
+                allChildren.each(function() {
+                    //alert($(this).text());
+                    if ($(this).attr('data-win') == $("#win14").attr('id')) {
+                        //alert('start schema manager');
+                        // alert($(this).attr('data-win'));
+
+                        
+                        $(this).css("display", "block");
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        // $("#win3 .window-content").html('');
+                        // $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        // $('#win7 .window-content').html('');
+                        // $('#win8 .window-content').html('');
+                        //  $('#win9 .window-content').html('');
+                        //   $('#win10 .window-content').html('');
+                        //    $('#win11 .window-content').html('');
+                        //    $('#win12 .window-content').html('');
+                        //     $('#win13 .window-content').html('');
+                        //      $('#win14 .window-content').html('');
+                        clearContent();
+
+
+                        var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
+                        CurrnetSelectedManagerUrlParent = "publish";
+                        var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
+                        //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
+                        $("#win14 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
+                            // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            // Once loaded, set hidden field value
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val("...coming soon -user manager");
+                            //alert("Comming soon " + app + "...");
+                            //$("#myUL").empty();
+                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            $("#win14 .window-content").html("Comming soon " + app + "...");
+                        });
+                        $("#win14").css({
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "calc(100% - 40px)"
+                        });
+
+                    }
+
+                });
+                return false;
+            }
              if (app === 'Media Manager') {
 
                 //$("#win2").show("slow");
@@ -479,12 +1046,13 @@
                        // alert($(this).attr('data-win'));
                   
                         $(this).css("display", "block");
-                        $('#win1 .window-content').html('');
-                        $("#win2 .window-content").html('');
-                           $("#win3 .window-content").html('');
-                           $('#win4 .window-content').html('');
-                        $("#win5 .window-content").html('');
-                        $('#win6 .window-content').html('');
+                        // $('#win1 .window-content').html('');
+                        // $("#win2 .window-content").html('');
+                        //    $("#win3 .window-content").html('');
+                        //    $('#win4 .window-content').html('');
+                        // $("#win5 .window-content").html('');
+                        // $('#win6 .window-content').html('');
+                        clearContent();
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
                         CurrnetSelectedManagerUrlParent = "media";
                          var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
@@ -513,7 +1081,7 @@
                 return false;
             }
 
-            alert("Opening " + app + "...");
+            alert("Comming soon " + app + "...");
             // Here you can load an iframe, modal, or custom app window
         }
     });
@@ -599,6 +1167,7 @@
             $(".window").css("z-index", 100);
             win.css("z-index", ++zIndexCounter);
         }
+
     });
 </script>
 
