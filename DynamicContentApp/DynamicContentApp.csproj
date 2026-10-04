@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="DatabaseScript\August1st2026\" />
+    <Folder Include="DatabaseScript\Oct3rd2026\" />
     <Folder Include="DatabaseScript\SCRIPT_TO_DROP\" />
     <Folder Include="DatabaseScript\Sept27th2026\" />
     <Folder Include="DatabaseScript\Sep18th2026\" />

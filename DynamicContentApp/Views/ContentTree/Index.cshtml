@@ -927,8 +927,27 @@ body {font-family: Arial;}
 </html>
 
     <script>
+        $(document).on('click', function(e) {
+                // alert("document click");
+                const contextMenu1 = document.getElementById("contextMenu");
+
+                if (!$(e.target).closest('#contextMenu').length) {
+                    //contextMenu.fadeOut(150);
+                    contextMenu1.style.display = "none";
+                }
+                });
+
+        $(document).on('keydown', function(e) {
+                const contextMenu1 = document.getElementById("contextMenu");
+            if (e.key === 'Escape') {
+                contextMenu1.style.display = "none";
+            }
+            });
+
+
         var hdnCurrnetSelectedManagerUrlChildValue="";
         $(document).ready(function () {
+
           //  alert("start calling controller"); 
         hdnCurrnetSelectedManagerUrlChildValue = document.getElementById("hdn_CurrnetSelectedManagerUrlChild").value;
        //alert("on doucment load hdnCurrnetSelectedManagerUrlChildValue" + hdnCurrnetSelectedManagerUrlChildValue);
@@ -3718,9 +3737,14 @@ let resultnew = [];
                             refreshdiv.style.display = "none";
                             adddiv.style.display = "none";
         }
-
+         
         function setupcontextmenu(element) {
+                       
+
+
+            // contextMenu.style.display = "none";
                 if (!element.dataset.hasClickListener) {
+                   
             // alert("inside hasClickListener");
             //element.on("contextmenu", function (e) {
             element.addEventListener("contextmenu", function (e) {
@@ -3731,6 +3755,7 @@ let resultnew = [];
                 //alert(currenttag);
                  const curid = e.target.getAttribute('id');
                 // Position menu at mouse location
+  
                 contextMenu.style.top = `${e.clientY}px`;
                 contextMenu.style.left = `${e.clientX}px`;
                 contextMenu.style.display = "block";
