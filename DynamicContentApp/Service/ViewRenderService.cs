@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace DynamicContentApp.Service
 {
@@ -14,16 +16,25 @@ namespace DynamicContentApp.Service
         private readonly ITempDataProvider _tempDataProvider;
         private readonly IServiceProvider _serviceProvider;
 
+        private readonly IMemoryCache _memoryCache;
+
         public ViewRenderService(
             IRazorViewEngine viewEngine,
             ITempDataProvider tempDataProvider,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            IMemoryCache memoryCache)
         {
             _viewEngine = viewEngine;
             _tempDataProvider = tempDataProvider;
             _serviceProvider = serviceProvider;
+            _memoryCache = memoryCache;
         }
-
+        public void ClearViewCache()
+        {
+            // This clears all cached compiled views
+           // _memoryCache.Remove();
+           // _memoryCache.Compact(1.0);
+        }
         public async Task<string> RenderToStringAsync(string viewName, object model)
         {
             // 1. Create a dummy ActionContext

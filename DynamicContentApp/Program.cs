@@ -24,6 +24,7 @@ builder.Services.AddSingleton(inMemoryProvider);
 //builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(options =>
     {
+        //options.FileProviders.Clear();
         options.FileProviders.Add(inMemoryProvider);
     });
 builder.Services.AddScoped<IViewRenderService, ViewRenderService>();

@@ -9,14 +9,19 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Dynamic;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text;
@@ -59,11 +64,42 @@ namespace DynamicContentApp.Service
                     // JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
                     foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                     {
-                        JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                        if ( AssetItemFieldDetail.AssetFieldName == "DynamicContent")
+                        {
+                          string  decodeHtmlData=   WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
+                            //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":"  + JsonConvert.SerializeObject(decodeHtmlData) + ",");
+                        }
+                        else
+                        {
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                        }
                     }
                     //JsonDataSB.Append("\"field\":\"none\"},");
                 }
 
+            }
+            else
+            {
+                List<AssetItemFieldDetailsModel> AssetItemFieldDetails = dynamicContentDAL.GetAssetItemFieldDetails(AssetItemPath);
+                if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
+                {
+                    // JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                    foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
+                    {
+                        if (AssetItemFieldDetail.AssetFieldName == "DynamicContent")
+                        {
+                            string decodeHtmlData = WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
+                            //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + JsonConvert.SerializeObject(decodeHtmlData) + ",");
+                        }
+                        else
+                        {
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                        }
+                    }
+                    //JsonDataSB.Append("\"field\":\"none\"},");
+                }
             }
         }
         private void GetAssetDataMedia(string AssetItemPath, StringBuilder JsonDataSB, string Area, string result)
@@ -304,18 +340,24 @@ namespace DynamicContentApp.Service
             }
            
 
-            JsonDataSB.Append("}");
+                JsonDataSB.Append("}");
 
 
             string JsonData = JsonDataSB.ToString();
+            string JsonDataS = JsonConvert.SerializeObject(JsonData);
+           // string JsonDataD = JsonConvert.DeserializeObject(JsonData);
+            //string JsonDataD = JsonConvert.DeserializeObject<string>(JsonData);
+
 
             //JSON.stringify(JsonData);
+            //dynamic dynamicObjectN = JsonData;
+            //dynamic dynamicObjectN = JObject.Parse(JsonDataD);
 
             dynamic dynamicObjectN = JObject.Parse(JsonData);
 
-            dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(JsonData);
+           // dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(JsonData);
 
-            dynamic dynamicObject1 = JsonSerializer.Deserialize<dynamic>(JsonData);
+           // dynamic dynamicObject1 = JsonSerializer.Deserialize<dynamic>(JsonData);
 
             // string json = "{ 'Name': 'John Doe', 'Age': 30, 'Address': { 'City': 'New York' } }";
             string SquidGame = @"
@@ -428,9 +470,17 @@ namespace DynamicContentApp.Service
                 {
                     //var inMemoryProvider = new InMemoryFileProvider();
                     //_inMemoryProvider.AddTemplate("/Views/Dynamic/CustomTemplate.cshtml", "<h1>Dynamically call view -- Hello @Model.Title</h1>");
-                 
-                    _inMemoryProvider.AddTemplate("/Views/Dynamic/CustomTemplate.cshtml", dynamicContent);
-                    htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync("/Views/Dynamic/CustomTemplate.cshtml", AssetFieldsModel));
+                    var uniqueKey = $"MyMasterView_{Guid.NewGuid()}";
+                    uniqueKey = "/" + uniqueKey + ".cshtml";
+                    _inMemoryProvider.AddTemplate(uniqueKey, dynamicContent);
+                    htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync(uniqueKey, AssetFieldsModel));
+                  
+                    _inMemoryProvider.RemoveTemplate(uniqueKey);
+                    //_inMemoryProvider.AddTemplate("/Views/Dynamic/CustomTemplateMaster.cshtml", dynamicContent);
+                    //htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync("/Views/Dynamic/CustomTemplateMaster.cshtml", AssetFieldsModel));
+                    //_inMemoryProvider.RemoveTemplate("/Views/Dynamic/CustomTemplateMaster.cshtml");
+                
+
                 }
                 else
                 {
@@ -458,10 +508,32 @@ namespace DynamicContentApp.Service
                 {
                     if (node.ViewPath != null && node.ViewPath != string.Empty)
                     {
-                        string viewpath = node.ViewPath;
-                        string htmlContent = await _viewRenderService.RenderToStringAsync(viewpath, node);
-                        // Utility.AddOnPlaceholderCollection(PageSectionContent, item, htmlContent);
-                        Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, htmlContent);
+                        if (node.IsRenderDynamic == "true")
+                        {
+                            //var inMemoryProvider = new InMemoryFileProvider();
+                            //_inMemoryProvider.AddTemplate("/Views/Dynamic/CustomTemplate.cshtml", "<h1>Dynamically call view -- Hello @Model.Title</h1>");
+                           string dynamicSubContent= node.DynamicContent;
+
+
+                            var uniqueKey = $"MyView_{Guid.NewGuid()}";
+                            uniqueKey = "/"+ uniqueKey + ".cshtml";
+                            _inMemoryProvider.AddTemplate(uniqueKey, dynamicSubContent);
+                            string htmlContent = await _viewRenderService.RenderToStringAsync(uniqueKey, node);
+                            // _inMemoryProvider.RemoveTemplate("/Views/Dynamic/CustomViewTemplateDetails.cshtml");
+                            //_inMemoryProvider.AddTemplate("/Dynamic" + node.ViewPath, dynamicSubContent);
+                            // htmlContentMaster = new StringBuilder(await _viewRenderService.RenderToStringAsync("/Views/Dynamic/CustomViewTemplate.cshtml", node));
+                            // string htmlContent = await _viewRenderService.RenderToStringAsync("/Dynamic" + node.ViewPath, node);
+                            _inMemoryProvider.RemoveTemplate(uniqueKey);
+                         
+                            Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, htmlContent);
+                        }
+                        else
+                        {
+                            string viewpath = node.ViewPath;
+                            string htmlContent = await _viewRenderService.RenderToStringAsync(viewpath, node);
+                            // Utility.AddOnPlaceholderCollection(PageSectionContent, item, htmlContent);
+                            Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, htmlContent);
+                        }
 
 
                     }

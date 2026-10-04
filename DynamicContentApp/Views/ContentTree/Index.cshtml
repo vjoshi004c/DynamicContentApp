@@ -2830,6 +2830,8 @@ body {font-family: Arial;}
                                                      form.append(SchemaSpanHtmlDiv);
 
                                                   // alert("HTML_TEXT - " +assetFieldValue);
+                                                  // assetFieldValue =htmlDecode(assetFieldValue)
+                                                  // alert(" decoded HTML_TEXT - " +assetFieldValue);
 
 
                                                     const SchemaSpanHtmlDiv_HTML = $('<div>').attr({ id:htmlid, class:"pane tabcontenteditor", style:"height:500px;display:block;"});
@@ -2984,18 +2986,19 @@ body {font-family: Arial;}
 
                                             var schemaFieldID1= control.attr('schemaFieldID');
                                             var assetFieldID1= control.attr('assetFieldID');
-                                           // var assetFieldValue1= "";
-                                            // if (control.is('textarea')) {
-                                            //     alert("textarea");
-                                            //     assetFieldValue1= control.html();
-                                            //      alert(assetFieldValue1);
-                                            // }
-                                            // else 
-                                            // {
-                                            //     assetFieldValue1= control.val();
-                                            // }
+                                           var assetFieldValue1= "";
+                                            if (control.is('textarea')) {
+                                                //alert("textarea");
+                                                //assetFieldValue1= control.html();
+                                                assetFieldValue1 =htmlEncode(control.val())
+                                                 //alert(assetFieldValue1);
+                                            }
+                                            else 
+                                            {
+                                                assetFieldValue1= control.val();
+                                            }
 
-                                            var assetFieldValue1= control.val();
+                                            //var assetFieldValue1= control.val();
                                             // alert(assetFieldValue1);
                                                 let newElement2= { assetItemID:  assetItemID  , assetItemSchemaID:  assetItemSchemaID ,schemaFieldID: schemaFieldID1  ,assetFieldID: assetFieldID1 ,assetFieldValue: assetFieldValue1 };
                                                  assetFieldsData.push(newElement2);
@@ -3049,6 +3052,19 @@ body {font-family: Arial;}
    
 
       }
+
+      function htmlEncode(str) {
+    if (typeof str !== "string") return "";
+    //alert("htmlEncode" + str);
+    return $('<div/>').text(str).html();
+}
+
+// Decode HTML entities back to normal text
+function htmlDecode(str) {
+    if (typeof str !== "string") return "";
+     //alert("htmlDecode" + str);
+    return $('<div/>').html(str).text();
+}
 
 function  GetSelectedListValues($multilist_input , $right_list_id) {
 //alert('GetSelectedListValues');

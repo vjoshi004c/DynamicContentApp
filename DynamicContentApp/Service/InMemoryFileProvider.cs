@@ -9,6 +9,8 @@ namespace DynamicContentApp.Service
         private readonly ConcurrentDictionary<string, string> _templates = new();
 
         public void AddTemplate(string path, string content) => _templates[path] = content;
+        public void RemoveTemplate(string path) => _templates.TryRemove(path, out _);
+
 
         public IFileInfo GetFileInfo(string subpath)
         {
