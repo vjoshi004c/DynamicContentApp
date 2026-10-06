@@ -985,9 +985,11 @@ body {font-family: Arial;}
                     {
                         // alert("inside managerValue" + managerValue);
                         IDSchemaManager = "D1B2BE76-C76B-447A-A30A-DDDF4959A8FC";
-                        //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
-                       // getDbDataManager( IDSchema, IDSchemaManager);
-                       // ViewContentItem(IDSchema);
+                          // getDbData( IDSchema);
+                          //  ViewContentItem(IDSchema);
+                       // alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                       getDbDataManager( IDSchema, IDSchemaManager);
+                       ViewContentItem(IDSchema);
                     }
                      if(managerValue=="schema")
                     {
@@ -1016,8 +1018,8 @@ body {font-family: Arial;}
                      if(managerValue=="website")
                     {
                         // alert("inside managerValue" + managerValue + "id-" + IDSchema);
-                        IDSchemaManager = "78610893-8DF7-41DF-BD14-C458BE7F3038";
-                       // alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                        IDSchemaManager = "78481633-210C-4ACE-9429-03C0A34F7E67";
+                      //  alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                        getDbDataManager( IDSchema, IDSchemaManager);
                        ViewContentItem(IDSchema);
                     }
@@ -1029,6 +1031,15 @@ body {font-family: Arial;}
                         getDbDataManager( IDSchema, IDSchemaManager);
                         ViewContentItem(IDSchema);
                     }
+                     if(managerValue=="form")
+                    {
+                        // alert("inside managerValue" + managerValue);
+                        IDSchemaManager = "AD5D7169-3E6D-49C8-8EAC-EB563C4160B1";
+                        //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                        getDbDataManager( IDSchema, IDSchemaManager);
+                        ViewContentItem(IDSchema);
+                    }
+                    
                    // alert("ViewContentItem" + "id-" + IDSchema);
                     
            
@@ -3673,8 +3684,9 @@ let resultnew = [];
 
                 var toggler = document.getElementsByClassName("caret");
                 var i;
+
                 for (i = 0; i < toggler.length; i++) {
-                    //toggler[i].addEventListener("click", function (e) {
+                   // toggler[i].addEventListener("click", function (e) {
                         toggler[i].parentElement.querySelector(".nested").classList.toggle("active");
                         toggler[i].classList.toggle("caret-down");
                         const idSchema = toggler[i].getAttribute('id');
@@ -3682,23 +3694,58 @@ let resultnew = [];
                        const allchildLi = toggler[i].parentElement.querySelectorAll('ul li');
               
                        allchildLi.forEach(span => {
+                           // alert("ALL CHILDLI");
                              span.remove();
                         });
+                        //alert(idSchema);
                          getDbData(idSchema);
                         const spans = document.querySelectorAll('span.highlight');
                         spans.forEach(span => {
+                           // alert("ALL SPAN");
                             span.classList.remove('highlight');
                         });
                         toggler[i].classList.toggle("highlight");
                         const spans1 = document.querySelectorAll('span.highlight');
                         spans1.forEach(span => {
+                            //alert(this.id);
                             setupcontextmenu(this);
 
-                       // });
+                        });
                         ViewContentItem(idSchema) ;
 
-                    });
+                    //});
                 }
+                //when wish to add root elment with contenxt menu
+                //************************* */
+                // for (i = 0; i < toggler.length; i++) {
+                //           toggler[i].addEventListener("click", function (e) {
+                //               this.parentElement.querySelector(".nested").classList.toggle("active");
+                //               this.classList.toggle("caret-down");
+                //               const idSchema = this.getAttribute('id');
+
+                //              const allchildLi = this.parentElement.querySelectorAll('ul li');
+
+                //              allchildLi.forEach(span => {
+                //                   //alert("ALL CHILDLI");
+                //                    span.remove();
+                //               });
+                //                getDbData(idSchema);
+                //               const spans = document.querySelectorAll('span.highlight');
+                //               spans.forEach(span => {
+                //                     //alert("ALL CHILDLI");
+                //                   span.classList.remove('highlight');
+                //               });
+                //               this.classList.toggle("highlight");
+                //               const spans1 = document.querySelectorAll('span.highlight');
+                //               spans1.forEach(span => {
+                //                   setupcontextmenu(this);
+
+                //               });
+                //               ViewContentItem(idSchema) ;
+
+                //           });
+                // }
+
                   
         }
 

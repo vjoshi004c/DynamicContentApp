@@ -890,7 +890,7 @@
                         clearContent();
 
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
-                        CurrnetSelectedManagerUrlParent = "publish";
+                        CurrnetSelectedManagerUrlParent = "version";
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                         //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
                         //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
@@ -948,7 +948,7 @@
 
 
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
-                        CurrnetSelectedManagerUrlParent = "publish";
+                        CurrnetSelectedManagerUrlParent = "multilanguage";
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                         //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
                         //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
@@ -1007,7 +1007,7 @@
 
 
                         var CurrnetSelectedManagerUrlParent = document.getElementById("hdn_CurrnetSelectedManagerUrlParent").value;
-                        CurrnetSelectedManagerUrlParent = "publish";
+                        CurrnetSelectedManagerUrlParent = "form";
                         var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
                         //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree/MediaManagerIndex");
                         //$("#win4 .window-content").load(CurrnetDomainUrl + "/Contenttree?manager=layout");
@@ -1018,7 +1018,8 @@
                             //alert("Comming soon " + app + "...");
                             //$("#myUL").empty();
                             // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
-                            $("#win14 .window-content").html("Comming soon " + app + "...");
+                           // $("#win14 .window-content").html("Comming soon " + app + "...");
+                              $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
                         });
                         $("#win14").css({
                             top: 0,
