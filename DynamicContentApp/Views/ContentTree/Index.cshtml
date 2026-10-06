@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -458,6 +461,12 @@ body {font-family: Arial;}
     </style>
 </head>
 <body>
+    @{
+     string dbConnectionString =Configuration.GetSection("SystemConfig")["ApplicationMode"];
+     string EnabledContextMenuAtUniversalCmsNode=Configuration.GetSection("SystemConfig")["EnabledContextMenuAtUniversalCmsNode"]; 
+    }
+  @*   <p>Environment: @dbConnectionString</p> *@
+       <input type="hidden" id="hdnEnabledContextMenuAtUniversalCmsNode"  value="@EnabledContextMenuAtUniversalCmsNode"/>
     @* <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#news">Nagivation</a>
@@ -3675,6 +3684,11 @@ let resultnew = [];
          if(IDSchema ="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE")
             {
            
+               
+                 var hiddenValue = $('#hdnEnabledContextMenuAtUniversalCmsNode').val();
+                
+                // alert(hiddenValue);
+
                 const contextMenu = document.getElementById("contextMenu");
                 const editdiv = document.getElementById("editdiv");
 
@@ -3684,67 +3698,74 @@ let resultnew = [];
 
                 var toggler = document.getElementsByClassName("caret");
                 var i;
+                 if(hiddenValue.toUpperCase()  ===  "FALSE")
+                 {
+                    // alert(hiddenValue.toUpperCase() );
+                    for (i = 0; i < toggler.length; i++) {
+                       // toggler[i].addEventListener("click", function (e) {
+                            toggler[i].parentElement.querySelector(".nested").classList.toggle("active");
+                            toggler[i].classList.toggle("caret-down");
+                            const idSchema = toggler[i].getAttribute('id');
 
-                for (i = 0; i < toggler.length; i++) {
-                   // toggler[i].addEventListener("click", function (e) {
-                        toggler[i].parentElement.querySelector(".nested").classList.toggle("active");
-                        toggler[i].classList.toggle("caret-down");
-                        const idSchema = toggler[i].getAttribute('id');
-
-                       const allchildLi = toggler[i].parentElement.querySelectorAll('ul li');
+                           const allchildLi = toggler[i].parentElement.querySelectorAll('ul li');
               
-                       allchildLi.forEach(span => {
-                           // alert("ALL CHILDLI");
-                             span.remove();
-                        });
-                        //alert(idSchema);
-                         getDbData(idSchema);
-                        const spans = document.querySelectorAll('span.highlight');
-                        spans.forEach(span => {
-                           // alert("ALL SPAN");
-                            span.classList.remove('highlight');
-                        });
-                        toggler[i].classList.toggle("highlight");
-                        const spans1 = document.querySelectorAll('span.highlight');
-                        spans1.forEach(span => {
-                            //alert(this.id);
-                            setupcontextmenu(this);
+                           allchildLi.forEach(span => {
+                               // alert("ALL CHILDLI");
+                                 span.remove();
+                            });
+                            //alert(idSchema);
+                             getDbData(idSchema);
+                            const spans = document.querySelectorAll('span.highlight');
+                            spans.forEach(span => {
+                               // alert("ALL SPAN");
+                                span.classList.remove('highlight');
+                            });
+                            toggler[i].classList.toggle("highlight");
+                            const spans1 = document.querySelectorAll('span.highlight');
+                            spans1.forEach(span => {
+                                //alert(this.id);
+                                setupcontextmenu(this);
 
-                        });
-                        ViewContentItem(idSchema) ;
+                            });
+                            ViewContentItem(idSchema) ;
 
-                    //});
+                        //});
+                    }
                 }
+
+                else 
+                {
                 //when wish to add root elment with contenxt menu
                 //************************* */
-                // for (i = 0; i < toggler.length; i++) {
-                //           toggler[i].addEventListener("click", function (e) {
-                //               this.parentElement.querySelector(".nested").classList.toggle("active");
-                //               this.classList.toggle("caret-down");
-                //               const idSchema = this.getAttribute('id');
+                for (i = 0; i < toggler.length; i++) {
+                          toggler[i].addEventListener("click", function (e) {
+                              this.parentElement.querySelector(".nested").classList.toggle("active");
+                              this.classList.toggle("caret-down");
+                              const idSchema = this.getAttribute('id');
 
-                //              const allchildLi = this.parentElement.querySelectorAll('ul li');
+                             const allchildLi = this.parentElement.querySelectorAll('ul li');
 
-                //              allchildLi.forEach(span => {
-                //                   //alert("ALL CHILDLI");
-                //                    span.remove();
-                //               });
-                //                getDbData(idSchema);
-                //               const spans = document.querySelectorAll('span.highlight');
-                //               spans.forEach(span => {
-                //                     //alert("ALL CHILDLI");
-                //                   span.classList.remove('highlight');
-                //               });
-                //               this.classList.toggle("highlight");
-                //               const spans1 = document.querySelectorAll('span.highlight');
-                //               spans1.forEach(span => {
-                //                   setupcontextmenu(this);
+                             allchildLi.forEach(span => {
+                                  //alert("ALL CHILDLI");
+                                   span.remove();
+                              });
+                               getDbData(idSchema);
+                              const spans = document.querySelectorAll('span.highlight');
+                              spans.forEach(span => {
+                                    //alert("ALL CHILDLI");
+                                  span.classList.remove('highlight');
+                              });
+                              this.classList.toggle("highlight");
+                              const spans1 = document.querySelectorAll('span.highlight');
+                              spans1.forEach(span => {
+                                  setupcontextmenu(this);
 
-                //               });
-                //               ViewContentItem(idSchema) ;
+                              });
+                              ViewContentItem(idSchema) ;
 
-                //           });
-                // }
+                          });
+                }
+                }
 
                   
         }
