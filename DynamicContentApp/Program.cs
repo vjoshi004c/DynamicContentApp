@@ -1,3 +1,4 @@
+using DynamicContentApp.Controllers;
 using DynamicContentApp.DataLayer;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
@@ -19,6 +20,14 @@ builder.Services.AddSingleton(inMemoryProvider);
 //   // string connStr = config.GetConnectionString("DefaultConnection");
 //    return new DynamicContentDAL(connectionString);
 //});
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true;                // Security: prevent client-side script access
+    options.Cookie.IsEssential = true;             // Required for GDPR compliance
+});
+builder.Services.AddHttpContextAccessor();
+
 
 // Add services to the container.
 //builder.Services.AddControllersWithViews();
@@ -47,7 +56,8 @@ options.Add(context =>
     path = path?.ToUpper();
     if (applicationMode == "CONTENT_MANAGEMENT")
     {
-     
+        bool isLoginController = !string.IsNullOrEmpty(path) && path.Contains("/LOGIN/");
+
         bool isDynamicController = !string.IsNullOrEmpty(path) && path.Contains("/CONTENTTREE");
         bool isLookupController = !string.IsNullOrEmpty(path) && path.Contains("/LOOKUPTREE");
         // Check if the path looks like a static file (contains a file extension)
@@ -56,6 +66,10 @@ options.Add(context =>
         bool isDesktopFile = !string.IsNullOrEmpty(path) && path.Contains("DESKTOPMAIN");
 
         bool isMediaFile = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/MEDIA/");
+
+
+      
+
 
         if (isMediaFile)
         {
@@ -68,7 +82,8 @@ options.Add(context =>
         {
             context.HttpContext.Request.Path = "/publish/PublisAssetInPublishQueue";
         }
-        if (isLoginFile)
+       // if (isLoginFile == true )
+            if (isLoginFile ==true && isLoginController == false)
         {
             context.HttpContext.Request.Path = "/home/Login";
         }
@@ -82,8 +97,9 @@ options.Add(context =>
             context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
         }
         // If it's not a static file, rewrite internally to your generic endpoint
-        if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile && !isPublish)
-        {
+        if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile && !isPublish && !isLoginController)
+            //if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile && !isPublish )
+            {
             bool isSitePage = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/");
             if (isSitePage == false)
             {
@@ -151,6 +167,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession(); //Enable session middleware (must be after UseRouting and before UseAuthorization)
 
 
 app.UseAuthorization();

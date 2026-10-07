@@ -1,4 +1,21 @@
-﻿<style>
+﻿ @model UserModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var sessionJson = HttpContextAccessor.HttpContext?.Session.GetString("CurrentUser");
+    var entity = sessionJson != null ? System.Text.Json.JsonSerializer.Deserialize<UserModel>(sessionJson) : null;
+}
+@* @if (entity != null) {
+    <p>Name: @entity.Username</p>
+     <p>Name: @entity.Password</p>
+      <p>Name: @entity.IsAdmin</p>
+       <p>Name: @entity.IsAuthorized</p>
+}
+ *@
+ <input type="hidden" id="hdn_IsUserAdmin" value="@entity.IsAdmin.ToString()" />
+
+<style>
     .desktop .icon div {
         color: #333333;
     }
@@ -6,7 +23,8 @@
 <!-- Desktop area -->
 <div class="desktop" style="padding:40px;">
     <div class="taskbar" id="taskbarTop" style="top:0">
-        <div class="SignOff-btn" style="position: absolute;right: 0;padding-right: 30px;">SignOff</div>
+        <div class="Welcome-btn" style="position: absolute;right: 0;padding-right: 100px;"> Welcome User : @entity.Username</div>
+        <div class="SignOff-btn" style="position: absolute;right: 0;padding-right: 30px;"><u>SignOff</u></div>
     
         </div>
     <div class="icon" data-app="Content Manager">
@@ -305,6 +323,8 @@
 <input type="hidden" id="hdn_CurrnetDomainUrl" value="@ViewData["CurrnetDomainUrl"]" />
 <input type="hidden" id="hdn_CurrnetSelectedManagerUrlParent" value="" />
 
+
+
 <script>
     $(function () {
         // Toggle Start menu
@@ -384,11 +404,17 @@
                        //  $("#win5 .window-content").html('');
                        //  $('#win6 .window-content').html('');
                        clearContent();
+                       // alert($("#hdn_IsUserAdmin").val());
                         //$("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree");
                         $("#win1 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
-                           // alert("callback"+CurrnetSelectedManagerUrlParent);
+                            //  alert("callback"+CurrnetSelectedManagerUrlParent);
+                            //$("#win7 .window-content").html("Comming soon " + app + "...");
+                          
                             // Once loaded, set hidden field value
-                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                             $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                           
+                           
+
                             //$("#myUL").empty();
                            // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
                         });
@@ -533,9 +559,20 @@
                         $("#win5 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
                             // alert("callback"+CurrnetSelectedManagerUrlParent);
                             // Once loaded, set hidden field value
-                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                            //$("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
                             //$("#myUL").empty();
                             // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+                            // $("#win7 .window-content").html("Comming soon " + app + "...");
+                             if($("#hdn_IsUserAdmin").val().toUpperCase()==="TRUE")
+                            {
+                                $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                               // $("#win5 .window-content").html("Comming soon " + app + "...");
+                            }
+                            else 
+                            {
+                                $("#win5 .window-content").html("<H1>User is not authorized to access  " + app + ". Admin access is required</H1>");
+                            }
+
                         });
                         $("#win5").css({
                             top: 0,
@@ -581,9 +618,20 @@
                         $("#win6 .window-content").load(CurrnetDomainUrl + "/Contenttree", function() {
                             // alert("callback"+CurrnetSelectedManagerUrlParent);
                             // Once loaded, set hidden field value
-                            $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                           // $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
                             //$("#myUL").empty();
                             // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
+
+                            // $("#win6 .window-content").html("Comming soon " + app + "...");
+                             if($("#hdn_IsUserAdmin").val().toUpperCase()==="TRUE")
+                            {
+                               $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                               // $("#win6 .window-content").html("Comming soon " + app + "...");
+                            }
+                            else 
+                            {
+                                $("#win6 .window-content").html("<H1>User is not authorized to access  " + app + ". Admin access is required</H1>");
+                            }
                         });
                         $("#win6").css({
                             top: 0,
@@ -635,7 +683,16 @@
                             //alert("Comming soon " + app + "...");
                             //$("#myUL").empty();
                             // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
-                            $("#win7 .window-content").html("Comming soon " + app + "...");
+                           // $("#win7 .window-content").html("Comming soon " + app + "...");
+                             if($("#hdn_IsUserAdmin").val().toUpperCase()==="TRUE")
+                            {
+                               // $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                                $("#win7 .window-content").html("Comming soon " + app + "...");
+                            }
+                            else 
+                            {
+                                $("#win7 .window-content").html("<H1>User is not authorized to access  " + app + ". Admin access is required</H1>");
+                            }
                         });
                         $("#win7").css({
                             top: 0,
@@ -687,7 +744,17 @@
                             //alert("Comming soon " + app + "...");
                             //$("#myUL").empty();
                             // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
-                            $("#win8 .window-content").html("Comming soon " + app + "...");
+                            //$("#win8 .window-content").html("Comming soon " + app + "...");
+                            // $("#win7 .window-content").html("Comming soon " + app + "...");
+                             if($("#hdn_IsUserAdmin").val().toUpperCase()==="TRUE")
+                            {
+                               // $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                                $("#win8 .window-content").html("Comming soon " + app + "...");
+                            }
+                            else 
+                            {
+                                $("#win8 .window-content").html("<H1>User is not authorized to access  " + app + ". Admin access is required</H1>");
+                            }
                         });
                         $("#win8").css({
                             top: 0,
@@ -740,7 +807,17 @@
                             //alert("Comming soon " + app + "...");
                             //$("#myUL").empty();
                             // alert( $("#hdn_CurrnetSelectedManagerUrlChild").val());
-                            $("#win9 .window-content").html("Comming soon " + app + "...");
+                            //$("#win9 .window-content").html("Comming soon " + app + "...");
+                            //$("#win7 .window-content").html("Comming soon " + app + "...");
+                             if($("#hdn_IsUserAdmin").val().toUpperCase()==="TRUE")
+                            {
+                               // $("#hdn_CurrnetSelectedManagerUrlChild").val(CurrnetSelectedManagerUrlParent);
+                                $("#win9 .window-content").html("Comming soon " + app + "...");
+                            }
+                            else 
+                            {
+                                $("#win9 .window-content").html("<H1>User is not authorized to access  " + app + ". Admin access is required</H1>");
+                            }
                         });
                         $("#win9").css({
                             top: 0,

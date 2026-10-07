@@ -201,41 +201,44 @@
     $(document).ready(function () {
     // Handle login
     $("#login-btn").click(function () {
-    const username = $("#username").val();
-    const password = $("#password").val();
-                             if (username === "ADMIN" && password === "vpm031207")
-    //if(username='ADMIN' & password='vpm031207')
-    {
-    //alert('user name '+ ' ' +username+ ' '  + 'password' + ' '+ password);
-    //window.location.href = "http://localhost:5287/desktopmain";
-    var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
-            window.location.href =  CurrnetDomainUrl+ "/desktopmain";
+                var  username = $("#username").val();
+                var password = $("#password").val();
+                       //alert(username+ password);  
+                       var  usermodel = {
+                        Username: username,
+                       Password: password
+                    };
+               $.ajax({
+                   url: "/Login/Validate", // PageName/MethodName
+                //url: "/ContentTree/Validate", // PageName/MethodName
+                type: "POST",
+                    // data: JSON.stringify(usermodel),
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                    contentType: 'application/json; charset=utf-8', // Tells the server you are sending JSON
+                data: JSON.stringify(usermodel),              // Converts JS object to JSON string
+                    //data: { 'Username': username, 'Password': password};
+                dataType: 'json', 
 
-    return;
-    }
-     else {
-    alert("Invalid credentials. Please verify username or password and try again.");
-     return;
-    }
-    
+                success: function (response) {
+                        if (response === true) {
+                            // alert("Successfully saved!");
+                                var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
+                                window.location.href =  CurrnetDomainUrl+ "/desktopmain";
+                                return;
+                            }
+                            else {
+                                    alert("Invalid credentials. Please verify username or password and try again.");
+                                    return;
+                            }
+                                         
+                    },
+                error: function (xhr, status, error) {
+                        console.error("Error occurred:", error);
+                        alert("Error occurred:" + error);
+                    }
+            });
 
-    $.ajax({
-    url: "/validate-login", // Replace with your server endpoint
-    method: "POST",
-    data: { username: username, password: password },
-    success: function (response) {
-    if (response.status === "success") {
-    $("#login-form").hide();
-    $("#welcome-message").show();
-    $("#user-name").text(response.username);
-    } else {
-    alert("Invalid credentials. Please try again.");
-    }
-    },
-    error: function () {
-    alert("An error occurred. Please try again later.");
-    },
-    });
     });
 
     // Handle logout
@@ -244,7 +247,15 @@
     $("#login-form").show();
     $("form")[0].reset();
     });
-    });</script>
+    });
+
+
+    
+              
+    
+    
+    
+    </script>
 
 
     

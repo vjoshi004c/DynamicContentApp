@@ -1,6 +1,7 @@
 using DynamicContentApp.JSON;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
+using DynamicContentApp.Session;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -8,14 +9,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
-using System;
-using System.Data.SqlClient;
 
 
 namespace DynamicContentApp.Controllers
@@ -101,6 +102,14 @@ namespace DynamicContentApp.Controllers
         {
             ViewData["CurrnetDomainUrl"] = _options.CurrnetDomainUrl; //"http://localhost:5287";
             ViewData["SelectedLayout"] = "_MasterLoginDesktop";
+
+            var user = HttpContext.Session.GetObject<UserModel>("CurrentUser");
+
+            if (user == null)
+            {
+                // Session expired or user not logged in
+                return RedirectToAction("Login");
+            }
             return View("~/Views/Home/Desktop.cshtml");
         }
 
