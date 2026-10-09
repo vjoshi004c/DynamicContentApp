@@ -1196,8 +1196,14 @@
 
             // Taskbar button click
             btn.on("click", function () {
+                //clearContent();
+                
+                 alert("button clilck");
+                   
                 if (win.is(":visible")) {
+                   
                     win.hide();
+                    
                 } else {
                     bringToFront(win);
                     win.show();
@@ -1206,7 +1212,10 @@
 
             // Minimize
             win.find(".min-btn").on("click", function () {
+               // alert("hide");
+                  let wincontent = win.find(".window-content").html('');
                 win.hide();
+                 
             });
 
             // Maximize / Restore
@@ -1232,6 +1241,8 @@
 
             // Close
             win.find(".close-btn").on("click", function () {
+                  //alert("close button clilck");
+                  let wincontent = win.find(".window-content").html('');
                 //win.remove();
                 win.hide("slow");
                 //btn.remove();
