@@ -288,6 +288,14 @@ $(document).ready(function () {
         $("#hdnParentIdExternalLInk").val('');
         $("#customModalExternalLInk").hide();
     });
+     $("#SuccessFailureModalBtn1").on("click", function () {
+        $("#lblModelTitle").html("");    
+        $("#customSuccessFailureModal").hide();
+    });
+     $("#SuccessFailureModalBtn2").on("click", function () {
+        $("#lblModelTitle").html("");
+        $("#customSuccessFailureModal").hide();
+    });
    
     $('#btnSaveMasterLayout').click(function (e) {
         e.preventDefault(); // This stops the form from submitting and redirecting
@@ -310,7 +318,11 @@ $(document).ready(function () {
         //    return false;
         //}
         if (masterpagePath == '') {
-            alert("Masterpage Path  should not be blank. Please enter Masterpage Path");
+             // $("#lblModelSuccessFailure").html("");
+             //   $("#lblModelSuccessFailure").html("Alert! Master rendering path should not be blank. Please enter path.");
+             // $("#customSuccessFailureModal").show();
+             showAlert("Alert! Master rendering path should not be blank. Please enter path.");
+            //alert("Masterpage Path  should not be blank. Please enter Masterpage Path");
             return false;
         }
         saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePath);
@@ -321,6 +333,12 @@ $(document).ready(function () {
     });
    
 });
+function showAlert(finalmessage) {
+
+             $("#lblModelSuccessFailure").html("");
+               $("#lblModelSuccessFailure").html(finalmessage);
+             $("#customSuccessFailureModal").show();
+    }
 function saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePath) {
   //alert(assetItemID + ' ' + isItemPageType + ' ' + masterpagePath );
 
@@ -333,10 +351,12 @@ function saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePat
         dataType: "json",
         success: function (response) {
             if (response == true) {
-                alert("Successfully saved:" );
+                showAlert("Alert! Successfully saved");
+                //alert("Successfully saved:" );
             }
             else {
-                alert("Failed while saving");
+                showAlert("Alert! Oops! Failed while saving");
+                //alert("Failed while saving");
             }
          
         },

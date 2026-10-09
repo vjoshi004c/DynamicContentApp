@@ -827,6 +827,32 @@ body {font-family: Arial;}
     </div>
 </div>
 
+<div id="customSuccessFailureModal" class="modal-overlay">
+                    <!-- Modal Box Content -->
+                    <div class="modal-content" style="height:20dvh;width:35dvh">
+                        <span id="SuccessFailureModalBtn1" class="close-x">&times;</span>
+                        <div style="height:10dvh;">
+                       <h3><strong><span id="lblModelSuccessFailure" ></span> </strong> </h3>
+                        </div>
+                        @* <input type="hidden" id="hdnTitle" />
+                         <input type="hidden" id="hdnParentId" />
+                         <input type="hidden" id="hdnParentPath" />
+                        <input type="hidden" id="hdnAssetId" />
+                        <input type="hidden" id="hdnTitle" />
+                        <span>Select internal path of site page</span>
+                        <input type="text" id="txtSelectedItemPath" value="" style="width:90%;" />
+                        <input type="text" id="txtSelectedItemID" value="" style="width:90%;" /> *@
+                        <div style="padding-top:10px;text-align:center;">
+                @*              <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" style="float:left;"/>
+                        <input type="button" id="btnSelectedItemPathSchema" value="Select" class="unfake-disabled-button" style="float:left;" /> *@
+                        <input type="button" id="SuccessFailureModalBtn2" value="Ok" class="unfake-disabled-button" style="margin-left:5px" />
+                        </div>
+                
+                     @*    <input type="hidden" id="hdnChildCount1" runat="server" value="0" /> *@
+                       
+                    </div>
+                </div>
+
                 <div id="customModal" class="modal-overlay">
                     <!-- Modal Box Content -->
                     <div class="modal-content">
