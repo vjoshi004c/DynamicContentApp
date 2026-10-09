@@ -15,7 +15,6 @@
     <Folder Include="MockData\" />
     <Folder Include="Treeview\" />
     <Folder Include="Views\Components\" />
-    <Folder Include="Views\ContentTree\" />
     <Folder Include="Views\LookupTree\" />
     <Folder Include="Views\NewFolder\" />
     <Folder Include="wwwroot\js\custom\" />

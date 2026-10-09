@@ -1,0 +1,201 @@
+﻿@* 
+@model IEnumerable<Product>
+
+<div class="product-list">
+    @foreach (var product in Model)
+    {
+        <div class="product-item">
+            <h3>@product.Name</h3>
+            <p>Price: @product.Price</p>
+        </div>
+    }
+</div> *@
+
+<style>
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: white;
+    padding: 20px;
+} */
+
+.navigation-container {
+    width: 100%;
+    /* max-width: 800px; */
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 0px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* Horizontal Main Menu */
+.main-menu {
+    display: flex;
+    list-style: none;
+    background-color: #1e293b;
+    padding: 0px;
+    margin: 0px;
+}
+
+.menu-item {
+    flex: 0;
+    text-align: center;
+    padding: 6px 20px 6px 35px;
+    color: #94a3b8;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.menu-item i {
+    margin-right: 8px;
+}
+
+.menu-item:hover {
+    color: #fff;
+    background-color: #334155;
+}
+
+.menu-item.active {
+    color: white;
+    background-color: #0f172a;
+    border-bottom-color: red;
+}
+
+/* Below Tray Section */
+.tray-container {
+    background-color:white;
+ /*    border-top: 1px solid #e2e8f0; */
+    display: none; /* Controlled by jQuery slideDown/slideUp */
+}
+
+.tray-content {
+    display: none; /* Controlled by jQuery show/hide */
+    padding: 20px;
+   /*  justify-content: center; */
+    gap: 30px;
+}
+
+/* Icon Options inside Tray */
+.icon-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #475569;
+    font-size: 15px;
+    font-weight: 400;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon-option i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #64748b;
+    transition: color 0.2s ease;
+}
+
+.icon-option:hover {
+    color: #0f172a;
+    transform: translateY(-2px);
+    font-weight: bold;
+}
+
+.icon-option:hover i {
+    color: #38bdf8;
+}
+
+
+
+</style>
+
+
+    <!-- Main Navigation Bar -->
+    <nav class="navigation-container">
+        <ul class="main-menu">
+            <li class="menu-item active" data-target="tray-dashboard">
+                <i class="fa-solid fa-gauge"></i> File
+            </li>
+            <li class="menu-item" data-target="tray-settings">
+                <i class="fa-solid fa-gear"></i> Publish
+            </li>
+            <li class="menu-item" data-target="tray-profile">
+                <i class="fa-solid fa-user"></i> Help
+            </li>
+        </ul>
+
+        <!-- Below Tray Section Container -->
+        <div class="tray-container" style="display: block;">
+            <!-- Dashboard Tray -->
+            <div id="tray-dashboard" class="tray-content" style="display: flex;">
+                <a href="#" class="icon-option"><i class="fa-solid fa-chart-line"></i><img src="/images/icon/createicon.png" alt="create itenm" style="width:30px;height:30px"><span>Create </span></a>
+                <a href="#" class="icon-option"><i class="fa-solid fa-chart-pie"></i><img src="/images/icon/removeicon.png" alt="create itenm" style="width:30px;height:30px"><span>Remove</span></a>
+               <a href="#" class="icon-option"><i class="fa-solid fa-bell"></i> <img src="/images/icon/duplicateicon.png" alt="create"" itenm" style="width:30px;height:30px"><span>Duplicate</span></a>
+		   <a href="#" class="icon-option"><i class="fa-solid fa-bell"></i><img src="/images/icon/refreshicon.png" alt="create itenm" style="width:30px;height:30px"><span>Refresh</span></a>
+
+            </div>
+            
+            <!-- Settings Tray -->
+            <div id="tray-settings" class="tray-content">
+                <a href="#" class="icon-option"><i class="fa-solid fa-lock"></i><img src="/images/icon/pIcon.png" alt="create itenm" style="width:30px;height:30px"><span>Publish </span></a>
+               <a href="#" class="icon-option"><i class="fa-solid fa-wallet"></i><img src="/images/icon/previewIcon.png" icon.png" alt="create itenm" style="width:30px;height:30px"> <span>Preview</span></a>
+               
+            </div>
+
+            <!-- Profile Tray -->
+            <div id="tray-profile" class="tray-content">
+              <a href="#" class="icon-option"><i class="fa-solid fa-id-card"></i> <img src="/images/icon/walkthroughIcon.png" alt="create itenm" style="width:30px;height:30px"> <span>Tours/Guided Walkthroughs</span></a>
+                <a href="#" class="icon-option"><i class="fa-solid fa-id-card"></i> <img src="/images/icon/documentationIcon.png" alt="create itenm" style="width:30px;height:30px"><span>Documentation</span></a>
+                <a href="#" class="icon-option"><i class="fa-solid fa-id-card"></i><img src="/images/icon/aboutIcon.png" alt="create itenm" style="width:30px;height:30px"><span>About Universal CMS</span></a>
+              
+            </div>
+        </div>
+        <div class="tray-container2" style="display: block;height:5px;background-color:lightgray">
+            <!-- Dashboard Tray -->
+           
+              
+            </div>
+        </div>
+    </nav>
+
+<script>
+$(document).ready(function() {
+    $('.menu-item').on('click', function() {
+        const $this = $(this);
+        const targetTrayId = $this.data('target');
+        const $targetTrayContent = $('#' + targetTrayId);
+        const $trayContainer = $('.tray-container');
+
+        // Case 1: Clicking an already active tab - Close the tray
+        if ($this.hasClass('active')) {
+            $this.removeClass('active');
+            $trayContainer.slideUp(300, function() {
+                $('.tray-content').hide();
+            });
+            return;
+        }
+
+        // Case 2: Switching tabs or opening for the first time
+        $('.menu-item').removeClass('active');
+        $this.addClass('active');
+
+        if ($trayContainer.is(':visible')) {
+            // Smoothly crossfade tray content if container is already open
+            $('.tray-content').fadeOut(150, function() {
+                $targetTrayContent.css('display', 'flex').fadeIn(150);
+            });
+        } else {
+            // Open container and display tray content using flexbox
+            $targetTrayContent.css('display', 'flex');
+            $trayContainer.slideDown(300);
+        }
+    });
+});
+</script>
