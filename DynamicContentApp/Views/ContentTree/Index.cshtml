@@ -816,7 +816,7 @@ body {font-family: Arial;}
                             @* <button id="btnAddComponents" class="unfake-disabled-button unfake-disabled-button">Add Component</button> *@
                         </p>
                         <p>
-                            <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+                            <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;background-color: #D4CDCD;"></div>
                         </p>
                         <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails"  style="border-style:none; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
            
@@ -1489,22 +1489,25 @@ body {font-family: Arial;}
                                    //alert(ddlAssetTypeValue);
                                    if(txtSchemaName == "")
                                  {
-                                      alert("Asset Name is mising. Please select Asset Name.");
+                                     // alert("Asset Name is mising. Please select Asset Name.");
+                                       showAlert("Asset Name is mising. Please select Asset Name.");
                                       return;
                                  }
                                    if(ddlAssetTypeValue == "0")
                                  {
-                                      alert("Asset Type is mising. Please select AssetType.");
+                                     // alert("Asset Type is mising. Please select AssetType.");
+                                       showAlert("Asset Type is mising. Please select AssetType.");
                                       return;
                                  }
 
                                 // alert(txtAssetItemSchemaPath);
 
-                                 //  if(txtAssetItemSchemaPath == "")
-                                 // {
-                                 //      alert("Schema linked with Asset Item is mising. Please select schema path.");
-                                 //      return;
-                                 // }
+                                  if(txtAssetItemSchemaPath == "")
+                                 {
+                                     showAlert("Schema linked with Asset Item is mising. Please select schema path.");
+                                      //alert("Schema linked with Asset Item is mising. Please select schema path.");
+                                      return;
+                                 }
                                    var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaAdd"]').val();
                                      //alert("InsertAssetItemSchema" +txtAssetItemSchema);
                                       // alert("SaveSchema");
@@ -1527,8 +1530,8 @@ body {font-family: Arial;}
                                               NewSchemaId=response.newSchemaId;
                                               //alert("SaveSchema"+response.newSchemaId);
                                          console.log("Success:", response);
-
-                                            MessageSucess.css('display', 'block');
+                                         // showAlert("Asset successfully created.");
+                                            MessageSucess.css('display', 'none');
                                            MessageError.css('display', 'none');
                                                    //MessageSucess.style.display = "block";
                                                // MessageErrir.style.display= "none";
@@ -1545,8 +1548,9 @@ body {font-family: Arial;}
                 
                                      },
                                   error: function (xhr, status, error) {
+                                       showAlert("Oops! Error while creating new asset.");
                                          MessageSucess.css('display', 'none');
-                                            MessageError.css('display', 'block');
+                                            MessageError.css('display', 'none');
 
                                          // MessageSucess.style.display = "none";
                                                //  MessageErrir.style.display= "block";
@@ -1569,8 +1573,8 @@ body {font-family: Arial;}
                                          success: function (response) {
                                             // alert("success");
                                           console.log("Success:", response);
-
-                                             MessageSucess.css('display', 'block');
+                                           showAlert("Asset successfully created.");
+                                             MessageSucess.css('display', 'none');
                                             MessageError.css('display', 'none');
                                                     //MessageSucess.style.display = "block";
                                                 // MessageErrir.style.display= "none";
@@ -1587,7 +1591,8 @@ body {font-family: Arial;}
 
                                       },
                                    error: function (xhr, status, error) {
-                                          MessageSucess.css('display', 'none');
+                                        showAlert("Oops! Error while creating new asset.");
+                                          MessageSucess.css('display', 'block');
                                              MessageError.css('display', 'block');
 
                                           // MessageSucess.style.display = "none";
@@ -1841,24 +1846,28 @@ body {font-family: Arial;}
                                   //alert(ddlAssetTypeValue);
                                    if(txtSchemaName == "")
                                  {
-                                      alert("Asset Name is mising. Please select Asset Name.");
+                                    // alert("Asset Name ");
+                                      showAlert("Asset Name is mising. Please select Asset Name.");
+                                      //alert("Asset Name is mising. Please select Asset Name.");
                                       return;
                                  }
                                  //alert(ddlAssetTypeValue);
                                   if(ddlAssetTypeValue == "0")
                                 {
-                                     alert("Asset Type is mising. Please select AssetType.");
+                                     showAlert("Asset Type is mising. Please select AssetType.");
+                                     //alert("Asset Type is mising. Please select AssetType.");
                                      return;
                                 }
                                   var  txtAssetItemSchema = $(this).closest('form').find('input[id="txtAssetItemSchemaEdit"]').val();
                                   var  txtAssetItemSchemaPath = $(this).closest('form').find('input[id="txtAssetItemSchemaPathEdit"]').val();
                                    //alert("txtAssetItemSchema"+txtAssetItemSchema +txtAssetItemSchemaPath);
                                     
-                                 //    if(txtAssetItemSchemaPath == "" )
-                                 // {
-                                 //      alert("Asset Schema Path is mising. Please select schema path.");
-                                 //      return;
-                                 // }
+                                    if(txtAssetItemSchemaPath == "" )
+                                 {
+                                       showAlert("Asset Schema Path is mising. Please select schema path.");
+                                      //alert("Asset Schema Path is mising. Please select schema path.");
+                                      return;
+                                 }
                              
                                       //alert("UpdateSchema");
                                   $.ajax({
@@ -1872,8 +1881,8 @@ body {font-family: Arial;}
                                          success: function (response) {
                                              //alert("success");
                                          // alert("Success:", response);
-                                         
-                                             MessageSucess.css('display', 'block');
+                                        // showAlert("Asset successfully updated.");
+                                             MessageSucess.css('display', 'none');
                                             MessageError.css('display', 'none');
                                                     //MessageSucess.style.display = "block";
                                                 // MessageErrir.style.display= "none";
@@ -1890,8 +1899,9 @@ body {font-family: Arial;}
 
                                       },
                                    error: function (xhr, status, error) {
+                                       showAlert("Oops! Error while updating new asset.");
                                           MessageSucess.css('display', 'none');
-                                             MessageError.css('display', 'block');
+                                             MessageError.css('display', 'none');
 
                                           // MessageSucess.style.display = "none";
                                                 //  MessageErrir.style.display= "block";
@@ -1915,8 +1925,8 @@ body {font-family: Arial;}
                                           success: function (response) {
                                               //alert("success");
                                           // alert("Success:", response);
-
-                                              MessageSucess.css('display', 'block');
+                                            showAlert("Asset successfully updated.");
+                                              MessageSucess.css('display', 'none');
                                              MessageError.css('display', 'none');
                                                      //MessageSucess.style.display = "block";
                                                  // MessageErrir.style.display= "none";
@@ -1933,8 +1943,9 @@ body {font-family: Arial;}
 
                                        },
                                     error: function (xhr, status, error) {
+                                        showAlert("Oops! Error while updating new asset.");
                                            MessageSucess.css('display', 'none');
-                                              MessageError.css('display', 'block');
+                                              MessageError.css('display', 'none');
 
                                            // MessageSucess.style.display = "none";
                                                  //  MessageErrir.style.display= "block";
@@ -3096,10 +3107,12 @@ body {font-family: Arial;}
                                        success: function (response) {
                                             //alert("success");
                                              if (response === true) {
-                                                     alert("Successfully saved!");
+                                                showAlert("Asset contnet successfully updated.");
+                                                     //alert("Successfully saved!");
                                                  }
                                                   else {
-                                                          alert("Failed while saving");
+                                                     showAlert("Oops! Error while updaging asset content.");
+                                                          //alert("Failed while saving");
                                                     }
                                              //alert("Success:", response);
                                              // RecordCount= response.length;
@@ -3109,8 +3122,9 @@ body {font-family: Arial;}
                                              //    });
                                             },
                                         error: function (xhr, status, error) {
+                                        showAlert("Oops! Error while updaging asset content.");
                                                console.error("Error occurred:", error);
-                                                alert("Error occurred:" + error);
+                                                //alert("Error occurred:" + error);
                                            }
                                    });
 
@@ -3645,7 +3659,7 @@ let resultnew = [];
 
 
      function DeleteAssetFieldComponent(assetItemComponentID) {
-             alert("DeleteAssetFieldComponent" + assetItemComponentID );
+            // alert("DeleteAssetFieldComponent" + assetItemComponentID );
            
              //    e.preventDefault();
              // e.stopPropagation();
@@ -3660,16 +3674,19 @@ let resultnew = [];
                                success: function (response) {
                                       //alert(response.status);
                                     if (response.status == true) {
-                                                 alert("Component has been removed from page item successfully");     
+                                                showAlert("Component has been removed from page item successfully.");
+                                                 //alert("Component has been removed from page item successfully");     
                                          }
                                          else {
-                                                   alert("Error while removing component from page item.");
+                                                showAlert("Oops! Error while removing component from page item.");
+                                                  // alert("Error while removing component from page item.");
                                          }
                                          return true;
                             },
                          error: function (xhr, status, error) {
                                 console.error("Error occurred:", error);
-                                 alert("Error occurred:" + error);
+                                    showAlert("Oops! Error while removing component from page item.");
+                                // alert("Error occurred:" + error);
                                  return false;
                             }
                     });

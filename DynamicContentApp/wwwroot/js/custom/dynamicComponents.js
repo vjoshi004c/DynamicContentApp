@@ -208,15 +208,18 @@
                 });
             //alert(fieldSchemaIDComponent +' ' +componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
                 if (componentPath == '') {
-                    alert("Component field  should not be blank.Please enter component path");
+                    showAlert("Component field  should not be blank.Please enter component path.");
+                   // alert("Component field  should not be blank.Please enter component path");
                     return false;
                 }
                 if (linkedAssetItem == '') {
-                    alert("Linked asset item should not be blank. Please enter asset item path");
+                    showAlert("Linked asset item should not be blank. Please enter asset item path.");
+                   // alert("Linked asset item should not be blank. Please enter asset item path");
                     return false;
                 }
                 if (placeholderPath == '') {
-                    alert("Placeholder should not be blank.Please enter placeholder name");
+                    showAlert("Placeholder should not be blank.Please enter placeholder name.");
+                    //alert("Placeholder should not be blank.Please enter placeholder name");
                     return false;
                 }
             //alert(schemaFieldid + ": " + schemaFieldName + ": " + schemaFieldType);
@@ -314,14 +317,16 @@ function saveAssetItemComponent(fieldSchemaIDComponent, assetItemID, componentPa
         success: function (response) {
             if (response == true) {
                 getAssetComponentDetails('', assetItemID)
-                alert("Successfully saved:");
+                showAlert("Asset successfully updated page component settings.");
+               // alert("Successfully saved:");
             }
             else {
-                alert("Failed while saving");
+                showAlert("Oops! Error while updating page component settings.");
+                //alert("Failed while saving");
             }
         },
         error: function (xhr, status, error) {
-
+            showAlert("Oops! Error while updating page component settings.");
             console.error("Error occurred:", error);
             //alert("Error occurred:" + error);
         }
@@ -498,15 +503,18 @@ function EditAssetFieldComponentDetails(fieldSchemaIDComponent, componentPath, l
         });
         //alert(fieldSchemaIDComponent +' ' +componentPath + ' ' + linkedAssetItem + ' ' + placeholderPath);
         if (componentPath == '') {
-            alert("Component field  should not be blank.Please enter component path");
+            showAlert("Component field  should not be blank.Please enter component pat.");
+            //alert("Component field  should not be blank.Please enter component path");
             return false;
         }
         if (linkedAssetItem == '') {
-            alert("Linked asset item should not be blank. Please enter asset item path");
+            showAlert("Linked asset item should not be blank. Please enter asset item path.");
+            //alert("Linked asset item should not be blank. Please enter asset item path");
             return false;
         }
         if (placeholderPath == '') {
-            alert("Placeholder should not be blank.Please enter placeholder name");
+            showAlert("Placeholder should not be blank.Please enter placeholder name.");
+           // alert("Placeholder should not be blank.Please enter placeholder name");
             return false;
         }
        // alert(fieldSchemaIDComponent + ": " + componentPath + ": " + linkedAssetItem, placeholderPath);

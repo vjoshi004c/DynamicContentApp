@@ -309,7 +309,8 @@ $(document).ready(function () {
         var assetItemID = $('[id="txtSchemaID"]').val();
 
         if (assetItemID == '') {
-            alert("AssetItemID   should not be blank.Please select AssetItemID");
+             showAlert("Alert! AssetItemID   should not be blank.Please select AssetItemID");
+           // alert("AssetItemID   should not be blank.Please select AssetItemID");
             return false;
         }
         //alert(txtSchemaID+ ' '+masterpagePath + ' ' + isItemPageType);
@@ -351,11 +352,11 @@ function saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePat
         dataType: "json",
         success: function (response) {
             if (response == true) {
-                showAlert("Alert! Successfully saved");
+                showAlert("Alert! Successfully updated master layout settings");
                 //alert("Successfully saved:" );
             }
             else {
-                showAlert("Alert! Oops! Failed while saving");
+                showAlert("Alert! Oops! Failed while updating master layout settings");
                 //alert("Failed while saving");
             }
          
