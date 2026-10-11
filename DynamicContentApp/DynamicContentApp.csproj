@@ -17,6 +17,7 @@
     <Folder Include="Views\Components\" />
     <Folder Include="Views\LookupTree\" />
     <Folder Include="Views\NewFolder\" />
+    <Folder Include="Views\Shared\Article\" />
     <Folder Include="wwwroot\js\custom\" />
   </ItemGroup>
 
