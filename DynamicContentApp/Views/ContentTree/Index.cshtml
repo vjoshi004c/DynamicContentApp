@@ -1614,9 +1614,10 @@ body {font-family: Arial;}
                            var deleteSchemaForm=  $("#publishSchemaForm");
                              MessageError.css('display', 'none');
                               deleteSchemaForm.css('display', 'none');
-                               MessageSucess.css('display', 'block');
+                               MessageSucess.css('display', 'none');
                                    MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
                                       MessageSucess.html("<strong>Cancellation successful. The Item has not been published.</strong>");
+                                      showAlert("Alert: Cancellation successful. The Item has not been published.");
                                          //MessageSucess.html("Action canceled. The item was not deleted.");
                                            // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
 
@@ -1656,15 +1657,17 @@ body {font-family: Arial;}
                                                 publishSchemaForm.css('display', 'none');
                                                 if (response == true) {
                                                     //alert("sucess"+ response + MessageSucess);
-                                                      MessageSucess.css('display', 'block');
+                                                      MessageSucess.css('display', 'none');
                                                             MessageError.css('display', 'none');
                                                                MessageSucess.html("<strong>Schema published successfully.</strong>");
+                                                               showAlert("Alert: Selected asset item  published successfully.");
                                                  }
                                                  else {
                                                     // alert("Error: " + response + MessageSucess);
                                                      MessageSucess.css('display', 'none');
-                                                            MessageError.css('display', 'block');
+                                                            MessageError.css('display', 'none');
                                                                  MessageError.html("<strong>Opps! Error while publishing.</strong>");
+                                                                showAlert("Oops! Error while creating new asset.");
                                                  }
                                                // if (response.status == true) {
                                                     
@@ -1682,8 +1685,9 @@ body {font-family: Arial;}
                                                //      }                                          
                                        },
                                     error: function (xhr, status, error) {
+                                        showAlert("Alert:Oops! Error while publishing selected asset item.");
                                            MessageSucess.css('display', 'none');
-                                              MessageError.css('display', 'block');
+                                              MessageError.css('display', 'none');
                                                   MessageError.val("Opps! Error while deleting schema.");
                                            console.error("Error occurred:", error);
                                        }
@@ -1700,9 +1704,10 @@ body {font-family: Arial;}
                            var deleteSchemaForm=  $("#deleteSchemaForm");
                              MessageError.css('display', 'none');
                               deleteSchemaForm.css('display', 'none');
-                               MessageSucess.css('display', 'block');
+                               MessageSucess.css('display', 'none');
                                    MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
                                       MessageSucess.html("<strong>Cancellation successful. The Item has not been deleted.</strong>");
+                                       showAlert("Alert: Cancellation successful. The Item has not been deleted.");
                                          //MessageSucess.html("Action canceled. The item was not deleted.");
                                            // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
 
@@ -1758,16 +1763,17 @@ body {font-family: Arial;}
                                                 deleteSchemaForm.css('display', 'none');
                                                if (response.status == true) {
                                                     
-                                                            
-                                                            MessageSucess.css('display', 'block');
+                                                            showAlert("Alert: Select asset item  has been deleted successfully.");
+                                                            MessageSucess.css('display', 'none');
                                                             MessageError.css('display', 'none');
                                                             // MessageSucess.html("Schema has been deleted successfully");
                                                                MessageSucess.html(response.message);
                                                     } 
                                                     else {
-                                                        
+                                                          showAlert("Alert: Oops! Error while deletig selected asset item.");
+
                                                             MessageSucess.css('display', 'none');
-                                                            MessageError.css('display', 'block');
+                                                            MessageError.css('display', 'none');
                                                             // MessageError.val("Opps! Error while deleting schema. " + response.error);
                                                                //MessageError.html(response.error);
                                                                   MessageError.html(response.message + " [ " + response.error +" ]");
@@ -1782,8 +1788,9 @@ body {font-family: Arial;}
 
                                        },
                                     error: function (xhr, status, error) {
+                                           showAlert("Alert: Oops! Error while deletig selected asset item.");
                                            MessageSucess.css('display', 'none');
-                                              MessageError.css('display', 'block');
+                                              MessageError.css('display', 'none');
                                                   MessageError.val("Opps! Error while deleting schema.");
 
                                            // MessageSucess.style.display = "none";
