@@ -136,25 +136,25 @@ body {
         <div class="tray-container" style="display: block;">
             <!-- Dashboard Tray -->
             <div id="tray-dashboard" class="tray-content" style="display: flex;">
-                <a href="#" class="icon-option"><i class="fa-solid fa-chart-line"></i><img src="/images/icon/createicon.png" alt="create itenm" style="width:30px;height:30px"><span>Create </span></a>
-                <a href="#" class="icon-option"><i class="fa-solid fa-chart-pie"></i><img src="/images/icon/removeicon.png" alt="create itenm" style="width:30px;height:30px"><span>Remove</span></a>
-               <a href="#" class="icon-option"><i class="fa-solid fa-bell"></i> <img src="/images/icon/duplicateicon.png" alt="create"" itenm" style="width:30px;height:30px"><span>Duplicate</span></a>
-		   <a href="#" class="icon-option"><i class="fa-solid fa-bell"></i><img src="/images/icon/refreshicon.png" alt="create itenm" style="width:30px;height:30px"><span>Refresh</span></a>
+                <a href="#" class="icon-option" tag="Create" ><i class="fa-solid fa-chart-line"></i><img src="/images/icon/createicon.png" alt="create itenm" style="width:30px;height:30px"><span>Create </span></a>
+                <a href="#" class="icon-option" tag="Remove"  ><i class="fa-solid fa-chart-pie"></i><img src="/images/icon/removeicon.png" alt="create itenm" style="width:30px;height:30px"><span>Remove</span></a>
+               <a href="#" class="icon-option" tag="Duplicate"  ><i class="fa-solid fa-bell"></i> <img src="/images/icon/duplicateicon.png" alt="create"" itenm" style="width:30px;height:30px"><span>Duplicate</span></a>
+		   <a href="#" class="icon-option" tag="Refresh"  ><i class="fa-solid fa-bell"></i><img src="/images/icon/refreshicon.png" alt="create itenm" style="width:30px;height:30px"><span>Refresh</span></a>
 
             </div>
             
             <!-- Settings Tray -->
             <div id="tray-settings" class="tray-content">
-                <a href="#" class="icon-option"><i class="fa-solid fa-lock"></i><img src="/images/icon/pIcon.png" alt="create itenm" style="width:30px;height:30px"><span>Publish </span></a>
-               <a href="#" class="icon-option"><i class="fa-solid fa-wallet"></i><img src="/images/icon/previewIcon.png" icon.png" alt="create itenm" style="width:30px;height:30px"> <span>Preview</span></a>
+                <a href="#" class="icon-option" tag="Publish"  ><i class="fa-solid fa-lock"></i><img src="/images/icon/pIcon.png" alt="create itenm" style="width:30px;height:30px"><span>Publish </span></a>
+               <a href="#" class="icon-option" tag="Preview"  ><i class="fa-solid fa-wallet"></i><img src="/images/icon/previewIcon.png" icon.png" alt="create itenm" style="width:30px;height:30px"> <span>Preview</span></a>
                
             </div>
 
             <!-- Profile Tray -->
             <div id="tray-profile" class="tray-content">
-              <a href="#" class="icon-option"><i class="fa-solid fa-id-card"></i> <img src="/images/icon/walkthroughIcon.png" alt="create itenm" style="width:30px;height:30px"> <span>Tours/Guided Walkthroughs</span></a>
-                <a href="#" class="icon-option"><i class="fa-solid fa-id-card"></i> <img src="/images/icon/documentationIcon.png" alt="create itenm" style="width:30px;height:30px"><span>Documentation</span></a>
-                <a href="#" class="icon-option"><i class="fa-solid fa-id-card"></i><img src="/images/icon/aboutIcon.png" alt="create itenm" style="width:30px;height:30px"><span>About Universal CMS</span></a>
+              <a href="#" class="icon-option" tag="ToursGuidedWalkthroughs"  ><i class="fa-solid fa-id-card"></i> <img src="/images/icon/walkthroughIcon.png" alt="create itenm" style="width:30px;height:30px"> <span>Tours/Guided Walkthroughs</span></a>
+                <a href="#" class="icon-option" tag="Documentation"  ><i class="fa-solid fa-id-card"></i> <img src="/images/icon/documentationIcon.png" alt="create itenm" style="width:30px;height:30px"><span>Documentation</span></a>
+                <a href="#" class="icon-option" tag="AboutUniversalCMS"  ><i class="fa-solid fa-id-card"></i><img src="/images/icon/aboutIcon.png" alt="create itenm" style="width:30px;height:30px"><span>About Universal CMS</span></a>
               
             </div>
         </div>
@@ -168,6 +168,69 @@ body {
 
 <script>
 $(document).ready(function() {
+
+    
+      $('.icon-option').on('click', function() {
+         // alert("select file menu option");
+          var hiddenValue = $('#hdnCurrentSelectAssetItem').val();
+         // alert(hiddenValue);
+          if(hiddenValue==="")
+          {
+              showAlert("No asset has been selected. Please select asset item.");
+              return;
+          }
+
+          var tagvalue = $(this).attr('tag');
+          if(tagvalue.toUpperCase()==="CREATE")
+            {
+                  //alert(tagvalue);
+                  setupnagivationmenu(hiddenValue, "add_li") ;
+            }
+            if(tagvalue.toUpperCase()==="REMOVE")
+            {
+                  //alert(tagvalue);
+                  setupnagivationmenu(hiddenValue, "remove_li") ;
+            }
+            if(tagvalue.toUpperCase()==="DUPLICATE")
+            {
+                  //alert(tagvalue);
+                  setupnagivationmenu(hiddenValue, "duplicate_li") ;
+            }
+            if(tagvalue.toUpperCase()==="REFRESH")
+            {
+                  //alert(tagvalue);
+                  setupnagivationmenu(hiddenValue, "refresh_li") ;  
+            }
+            if(tagvalue.toUpperCase()==="PUBLISH")
+            {
+                //alert(tagvalue);
+                 setupnagivationmenu(hiddenValue, "publish_li") ;  
+                  
+            }
+            if(tagvalue.toUpperCase()==="PREVIEW")
+            {
+                  //alert(tagvalue);
+                  fullpreview();
+                    //setupnagivationmenu(hiddenValue, "publish_li") ; 
+            }
+            if(tagvalue==="ToursGuidedWalkthroughs")
+            {
+                   showAlert("TOURS GUIDED WALKTHROUGHTS COMMING SOON.....");
+              return;
+            }
+            if(tagvalue.toUpperCase()==="DOCUMENTATION")
+            {
+                   showAlert("DOCUMENTATION COMMING SOON.....");
+              return;
+            }
+            if(tagvalue.toUpperCase()==="ABOUTUNIVERSALCMS")
+            { 
+                showAlert("ABOUT UNIVERSAL CMS COMMING SOON....."); 
+              return;
+            }
+
+           });
+
     $('.menu-item').on('click', function() {
         const $this = $(this);
         const targetTrayId = $this.data('target');

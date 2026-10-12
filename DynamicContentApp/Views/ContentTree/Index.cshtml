@@ -468,6 +468,7 @@ body {font-family: Arial;}
     }
   @*   <p>Environment: @dbConnectionString</p> *@
        <input type="hidden" id="hdnEnabledContextMenuAtUniversalCmsNode"  value="@EnabledContextMenuAtUniversalCmsNode"/>
+       <input type="hidden" id="hdnCurrentSelectAssetItem"  value=""/>
    @*  <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#contact">Publish</a>
@@ -653,8 +654,8 @@ body {font-family: Arial;}
 
             <div id="refreshdiv" style="display: none;  border-color:#E6E6E6;background-color:#f2f2f2;padding:2em;padding:2em;">
                             <h2>Refresh existed item - <span></span></h2>
-                            <p>This form is to add informaiton on existed item</p>
-                            <p>Click on the arrow(s) to open or close the tree branches.</p>
+                            <p>Comming soon...</p>
+                           
             </div>
              <div id="editdiv" style="display: none;  background-color: #E6E6E6;border:solid;border-width:thin;padding:2em;border-color:#d9d9d9">
                          <form action="/schema/edit" method="POST" id="editSchemaForm">
@@ -783,8 +784,8 @@ body {font-family: Arial;}
 
             <div id="duplicatediv" style="display: none; border-style: solid; border-color:#d9d9d9;background-color: #E6E6E6;padding:2em;">
                     <h2>Duplicate selected item - <span></span></h2>
-                    <p>This form is to remove existed item</p>
-                    <p>Click on the arrow(s) to open or close the tree branches.</p>
+                    <p>Comming soon...</p>
+                    
             </div>
 
             </div>
@@ -1432,6 +1433,7 @@ body {font-family: Arial;}
         }
    
     function  GetChildOfSelectedLI(childSchemaID) {
+        $('#hdnCurrentSelectAssetItem').val(childSchemaID);
        // alert('GetChildOfSelectedLI event' +childSchemaID);
        // getDbData( childSchemaID );
         //var toggler = document.getElementById(childSchemaID);
@@ -3270,6 +3272,8 @@ let resultnew = [];
     
 
      function  GetChildOfSelectedUL(childSchemaID) {
+         $('#hdnCurrentSelectAssetItem').val(childSchemaID);
+
         //alert('GetChildOfSelectedUL event' +childSchemaID);
         //var toggler = document.getElementById(childSchemaID);
       // toggler.removeEventListener("contextmenu");
@@ -4101,7 +4105,120 @@ let resultnew = [];
            element.dataset.hasClickListener = "true"; //end of !element.dataset.hasClickListener
         }
 
+          function setupnagivationmenu(itemid, currentsection) {
+             // alert(itemid +" "+currentsection);
+               
+                closeAllViewPanels();
 
+                
+                           $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                                $("#masterPageDiv").css("display", "none");
+                                                   $("#ComponentPageDiv").css("display", "none");
+                       const currentitemid = itemid;
+                        const currentid = currentsection;
+
+                        if (currentid == 'add_li') {
+                            adddiv.style.display = "block";
+                            const innerElement = adddiv.querySelector('h2 span');
+                              var content=$("#" +currentitemid).html();
+                                 innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{Content Tree ID - " +currentitemid +"}</span>";
+                              var innerSchemaPathElement = adddiv.querySelector('#txtSchemaParent');
+                                $('#addSchemaForm').find('button[id="btnAddSchemaFields"]').addClass("fake-disabled-button");
+                                  $('#addSchemaForm').find('input[id="txtSchemaName"]').val('');
+                                       $('#addSchemaForm').find('label[id="txtSchemaPath"]').val('');
+                                           $('#addSchemaForm').find('input[id="txtSchemaParent"]').val(currentitemid);
+
+                                             $('#addSchemaForm').find('select[id="AssetTypeDropdown_Add"]').val('0');
+                                                $('#addSchemaForm').find('input[id="txtAssetItemSchemaAdd"]').val('');
+                                           var MessageSucess=  $("#lblAddMessageSucess");
+                                           var MessageError=  $("#lblAddMessageError");
+                                           MessageSucess.css('display', 'none');
+                                           MessageError.css('display', 'none');
+
+                        }
+                        if (currentid == 'refresh_li') {
+                            refreshdiv.style.display = "block";
+                            const innerElement = refreshdiv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+
+                        }
+                        if (currentid == 'edit_li') {
+                            editdiv.style.display = "block";
+                            
+                               $("#editSchemaForm #txtSchemaName").val('');
+                                  $("#editSchemaForm #txtSchemaPath").val('');
+                                      $("#editSchemaForm #lblEditMessageSucess").val('');
+                                       $("#editSchemaForm #lblEditMessageError").val('');
+                                         $('#editSchemaForm').find('select[id="AssetTypeDropdown_Add"]').val('0');
+                                         $('#editSchemaForm').find('input[id="txtAssetItemSchemaEdit"]').val('');
+                                   $("#editSchemaForm #txtSchemaParent").val(currentitemid);
+                                                                         var MessageSucess=  $("#lblEditMessageSucess");
+                                            var MessageError=  $("#lblEditMessageError");
+                                            MessageSucess.css('display', 'none');
+                                            MessageError.css('display', 'none');
+                                            getSchema( currentitemid );
+                                       
+                                            var content=$("#" +currentitemid).html();
+                                             
+                                                 const innerElement = editdiv.querySelector('h2 span');
+                                              innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                                 innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" > {ContentTree ID -" +currentitemid +"}</span>";
+
+                        }
+                        if (currentid == 'publish_li') {
+                              $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
+                             publishdiv.style.display = "block";
+                            
+                                     $("#publishSchemaForm #txtSchemaID").val(currentitemid);
+                                             var MessageSucess=  $("#lblPublishMessageSucess");
+                                             var MessageError=  $("#lblPublishMessageError");
+                                             var deleteSchemaForm=  $("#publishSchemaForm");
+                                             deleteSchemaForm.css('display', 'block');
+                                              MessageSucess.css('display', 'none');
+                                              MessageError.css('display', 'none');
+                                              MessageSucess.html("");
+                                                MessageError.html("");                                              
+                                             var content=$("#" +currentitemid).html();
+                                             $("#publishSchemaForm #txtSchemaName").val(content);
+                                              const innerElement = publishdiv.querySelector('h2 span');
+                                             //innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                             
+
+                        }
+                        if (currentid == 'remove_li') {
+                              $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
+                             removediv.style.display = "block";
+                            
+                                     $("#deleteSchemaForm #txtSchemaID").val(currentitemid);
+
+                                             var MessageSucess=  $("#lblDeleteMessageSucess");
+                                             var MessageError=  $("#lblDeleteMessageError");
+                                             var deleteSchemaForm=  $("#deleteSchemaForm");
+                                             deleteSchemaForm.css('display', 'block');
+                                              MessageSucess.css('display', 'none');
+                                              MessageError.css('display', 'none');
+                                              MessageSucess.html("");
+                                                MessageError.html("");
+
+                                             var content=$("#" +currentitemid).html();
+                                             $("#deleteSchemaForm #txtSchemaName").val(content);
+                                              const innerElement = removediv.querySelector('h2 span');
+                                             //innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+
+                        }
+                        if (currentid == 'duplicate_li') {
+                             duplicatediv.style.display = "block";
+                            const innerElement = duplicatediv.querySelector('h2 span');
+                            innerElement.innerHTML = currentitemid;
+                        }
+                       
+        }
 
 
     // </script>
@@ -4195,6 +4312,17 @@ function openCity(evt, cityName) {
        });
 
 }
+function fullpreview() {
+        var txtSchemaPath = $("#hdnAssetPath").val();
+        var protocol = window.location.protocol; // e.g., "https:"
+        var host = window.location.host; // e.g., "www.example.com"
+        var pathname = window.location.pathname; // e.g., "/current-page"
+         // e.g., "?query=exam
+       // alert(txtSchemaPath);
+        var urlOfPreviewPage= protocol+'//'+ host+ txtSchemaPath;
+     
+            window.open(urlOfPreviewPage, '_blank');
+ }
 
 </script>
 
