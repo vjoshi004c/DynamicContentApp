@@ -1749,7 +1749,7 @@ body {font-family: Arial;}
                                //  var txtSchemaPath = $(this).closest('form').find('input[id="txtSchemaPath"]').val();
                                //  var  txtSchemaParent = $(this).closest('form').find('input[id="txtSchemaParent"]').val();
 
-                                // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
+                               // alert(txtSchemaName +''+txtSchemaPath+""+txtSchemaParent  );
 
                                    $.ajax({
                                           type: "GET",
@@ -1758,13 +1758,17 @@ body {font-family: Arial;}
                                                    data: { SchemaID: txtSchemaID},
                                           contentType: "application/json; charset=utf-8",
                                            dataType: "json",
+                                           async: false,
                                           success: function (response) {
                                                  //alert(response.status);
-                                                    //alert(response.error);
+                                                   // alert(response.error);
                                                      // alert(response.message);
-                                                deleteSchemaForm.css('display', 'none');
+                                                //deleteSchemaForm.css('display', 'none');
+                                              //  alert('btnEditSchema' );
+                                               
                                                if (response.status == true) {
-                                                    
+
+                                                           
                                                             showAlert("Alert: Select asset item  has been deleted successfully.");
                                                             MessageSucess.css('display', 'none');
                                                             MessageError.css('display', 'none');
@@ -1772,7 +1776,9 @@ body {font-family: Arial;}
                                                                MessageSucess.html(response.message);
                                                     } 
                                                     else {
-                                                          showAlert("Alert: Oops! Error while deletig selected asset item.");
+
+                                                             
+                                                          showAlert("Alert: Oops! Error while deleting selected asset item.");
 
                                                             MessageSucess.css('display', 'none');
                                                             MessageError.css('display', 'none');
@@ -1790,16 +1796,37 @@ body {font-family: Arial;}
 
                                        },
                                     error: function (xhr, status, error) {
-                                           showAlert("Alert: Oops! Error while deletig selected asset item.");
-                                           MessageSucess.css('display', 'none');
-                                              MessageError.css('display', 'none');
-                                                  MessageError.val("Opps! Error while deleting schema.");
+                                                    //alert(status);
+                                                     // alert(error);
 
-                                           // MessageSucess.style.display = "none";
-                                                 //  MessageErrir.style.display= "block";
-                                   // Code to handle execution errors
-                                           console.error("Error occurred:", error);
-                                           // alert("Error occurred:" + error);
+                                        if (xhr.status === 401)
+                                                    {
+                                                        try 
+                                                            {
+                                                                // 2. Parse the JSON response sent by UnauthorizedObjectResult
+                                                                var response = JSON.parse(xhr.responseText);
+                                                                // 3. Access your custom message property
+                                                                var message = response.message; 
+                                                               // console.log("Error Message from Server:", message);
+                                                                showAlert("Alert: "+message);
+                                                            } 
+                                                        catch (e) 
+                                                            {
+                                                                console.log("Could not parse JSON response:", xhr.responseText);
+                                                            }
+                                                            } 
+                                                    else 
+                                                    {
+                                                            showAlert("Alert: Oops! Error while deleting selected asset item." + xhr.status);
+                                                            console.log("Other error occurred: " + xhr.status);
+                                                    }
+                                                    MessageSucess.css('display', 'none');
+                                                    MessageError.css('display', 'none');
+                                                    MessageError.val("Opps! Error while deleting schema.");
+                                                    // MessageSucess.style.display = "none";
+                                                    //  MessageErrir.style.display= "block";
+                                                     // Code to handle execution errors
+                                                    console.error("Error occurred:", error);
                                        }
                                });
 

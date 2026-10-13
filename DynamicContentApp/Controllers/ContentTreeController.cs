@@ -17,6 +17,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using  DynamicContentApp.Filters;
 
 namespace DynamicContentApp.Controllers
 {
@@ -500,6 +501,8 @@ namespace DynamicContentApp.Controllers
         }
 
         [HttpGet]
+        //[AuthenticationCheckFilter]
+        [TypeFilter(typeof(AuthenticationCheckFilter))] //Because the filter requires dependency injection, apply it using [TypeFilter].
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult DeleteSchema(string SchemaID)
         {
