@@ -1994,6 +1994,81 @@ body {font-family: Arial;}
 
                  });
 
+            function populateAssetTypeDropdown( schemaPath ) 
+		    {
+             //alert("inside populateAssetTypeDropdown" + schemaPath);
+
+                         const optionsData = [
+                    { value: "0", text: "-Select Field Type -" }
+                    //{ value: "1", text: "Text" },
+                    //{ value: "2", text: "Multiline" },
+                    //{ value: "3", text: "HtmlText" }
+                ]; 
+                const $select = $("<select>", {
+                    id: "FieldTypeSelect",
+                    name: "FieldTypeSelect"
+                });
+            const $select1 = $('#AssetTypeDropdown_Add');
+            const $select2 = $('#AssetTypeDropdown_Edit');
+
+            $select1.empty();
+           $select2.empty();
+             getFieldTypeBasedOnPath(optionsData, schemaPath);
+
+
+            $.each(optionsData, function (index, item) {
+                 // Validate that both value and text exist
+                if (typeof item.value === "string" && typeof item.text === "string") {
+
+                    //if (schemaPath.toUpperCase().includes("/SCHEMA/")) {
+                         // alert("/SCHEMA/" );
+                        $("<option>", {
+                            value: item.value,
+                            text: item.text
+                        }).appendTo($select1);
+                        $("<option>", {
+                            value: item.value,
+                            text: item.text
+                        }).appendTo($select2);
+                        
+                    //}
+                }
+             });
+
+           
+            }
+
+            function getFieldTypeBasedOnPath(optionsData, schemaPath) {
+               // alert("getFieldTypeBasedOnPathBasedOnPath");
+
+                $.ajax({
+                    type: "GET",
+            url: "/ContentTree/GetFieldTypeBasedOnPath", // PageName/MethodName
+                    //data: JSON.stringify(requestData),
+                    data: { SchemaPath: schemaPath },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (response) {
+                        //alert(response.message + " Status is: " + response.status);
+                        //alert("Total records received: " + response.length);
+                        $.each(response, function (index, record) {
+                            const newElement = "{ value:\"" + record.id + "\", text: \"" + record.fieldType + "\"}";
+                            let newItem = { value: record.id, text: record.fieldType };
+                            optionsData.push(newItem);
+
+                        });
+
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error("Error occurred:", error);
+                        alert("Error occurred:" + error);
+                    }
+                });
+            }
+
+
                   function getSchema( IDSchema ) {
                       //alert(IDSchema);
 
@@ -2026,6 +2101,7 @@ body {font-family: Arial;}
                       //alert("Success:", response);
                         // alert("Total records received: " + response.length);
                        $.each(response, function(index, record) {
+                            populateAssetTypeDropdown(record.schemaPath);
                                  // Access specific fields belonging to each record row
                                    //alert("Record ID: " + record.id);
                                     //alert("Record SchemaName: " + record.schemaName);

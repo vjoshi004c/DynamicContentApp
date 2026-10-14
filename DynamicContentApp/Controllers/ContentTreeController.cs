@@ -577,6 +577,21 @@ namespace DynamicContentApp.Controllers
             return Ok(SchemaFieldTypeList);
         }
 
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetFieldTypeBasedOnPath(string SchemaPath)
+        {
+
+            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<SchemaFieldType> SchemaFieldTypeList = dynamicContentDAL.GetFieldTypeBasedOnPath(SchemaPath);
+            if (SchemaFieldTypeList != null && SchemaFieldTypeList.Count == 0)
+            {
+
+            }
+            return Ok(SchemaFieldTypeList);
+        }
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
