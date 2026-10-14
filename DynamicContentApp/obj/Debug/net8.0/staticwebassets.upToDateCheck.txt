@@ -1,5 +1,83 @@
+wwwroot\assets\brand\bootstrap-logo-white.svg
+wwwroot\assets\brand\bootstrap-logo.svg
+wwwroot\assets\dist\css\bootstrap.min.css
+wwwroot\assets\dist\css\bootstrap.min.css.map
+wwwroot\assets\dist\css\bootstrap.rtl.min.css
+wwwroot\assets\dist\css\bootstrap.rtl.min.css.map
+wwwroot\assets\dist\js\bootstrap.bundle.min.js
+wwwroot\assets\dist\js\bootstrap.bundle.min.js.map
+wwwroot\assets\js\color-modes.js
+wwwroot\css\jquery-ui-timepicker-addon.min.css
+wwwroot\css\jquery-ui.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\accessmanager.png
+wwwroot\images\accessmanager.webp
+wwwroot\images\accessmanager2.jpg
+wwwroot\images\AccessManager2.webp
+wwwroot\images\Accessmanager3.webp
+wwwroot\images\AccessManager4.webp
+wwwroot\images\accessmanager5 - Copy.jpg
+wwwroot\images\accessmanager5.jpg
+wwwroot\images\accessmanagger.jpg
+wwwroot\images\AccessManger.webp
+wwwroot\images\contentmanager.jpg
+wwwroot\images\contentmanager.png
+wwwroot\images\desktopimage - Copy.jpeg
+wwwroot\images\desktopimage.jpeg
+wwwroot\images\formmanager - Copy.png
+wwwroot\images\formmanager.png
+wwwroot\images\Google Chrome.lnk
+wwwroot\images\icon\aboutIcon.png
+wwwroot\images\icon\createIcon.png
+wwwroot\images\icon\documentationIcon.png
+wwwroot\images\icon\duplicateIcon.png
+wwwroot\images\icon\pIcon.png
+wwwroot\images\icon\previewIcon.png
+wwwroot\images\icon\previewImage.png
+wwwroot\images\icon\publishIcon.png
+wwwroot\images\icon\refreshIcon.png
+wwwroot\images\icon\remove.png
+wwwroot\images\icon\removeIcon.png
+wwwroot\images\icon\walkthroughIcon.png
+wwwroot\images\layoutmanager.png
+wwwroot\images\managerp.webp
+wwwroot\images\mediamanager.jpg
+wwwroot\images\mediamanager.webp
+wwwroot\images\Microsoft Edge.lnk
+wwwroot\images\multilanguagemanager - Copy.png
+wwwroot\images\multilanguagemanager.png
+wwwroot\images\publishmanager.jpg
+wwwroot\images\publishmanager.png
+wwwroot\images\publishmanager.webp
+wwwroot\images\RoleManager.png
+wwwroot\images\schemamanager - Copy.png
+wwwroot\images\schemamanager.png
+wwwroot\images\settingmanager.jpg
+wwwroot\images\settingmanger.png
+wwwroot\images\settingmanger1.png
+wwwroot\images\universalelement imagefinal - Copy.jpeg
+wwwroot\images\universalelement imagefinal - second - Copy.jpeg
+wwwroot\images\universalelement imagefinal - second.jpeg
+wwwroot\images\universalelement imagefinalbw - Copy.jpeg
+wwwroot\images\universalelementimagefinal.jpeg
+wwwroot\images\universalelementimagefinalbw.jpeg
+wwwroot\images\UnivesalElementInc - Copy.png
+wwwroot\images\UnivesalElementInc.png
+wwwroot\images\usermanager2.webp
+wwwroot\images\versionmanager.jpg
+wwwroot\images\vesionmanager.jpg
+wwwroot\images\vesionmanager.png
+wwwroot\images\vesionmanager1.jpg
+wwwroot\images\websitemanager.png
+wwwroot\images\workflowmanager - Copy.png
+wwwroot\images\workflowmanager.png
+wwwroot\js\custom\dynamicAssetTypeDropdown.js
+wwwroot\js\custom\dynamicComponents.js
+wwwroot\js\custom\dynamicSchemaFields.js
+wwwroot\js\custom\dynamicSchemaPopup.js
+wwwroot\js\custom\multilistcontrol_dynamic - Copy.html
+wwwroot\js\custom\multilistcontrol_dynamic - Final.html
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -54,6 +132,8 @@ wwwroot\lib\jquery-validation\dist\additional-methods.min.js
 wwwroot\lib\jquery-validation\dist\jquery.validate.js
 wwwroot\lib\jquery-validation\dist\jquery.validate.min.js
 wwwroot\lib\jquery-validation\LICENSE.md
+wwwroot\lib\jquery\dist\jquery-ui-timepicker-addon.min.js
+wwwroot\lib\jquery\dist\jquery-ui.min.js
 wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map

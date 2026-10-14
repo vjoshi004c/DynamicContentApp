@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vqj3\\source\\repos\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj": {}
+    "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vqj3\\source\\repos\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj": {
+    "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vqj3\\source\\repos\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj",
+        "projectUniqueName": "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj",
         "projectName": "DynamicContentApp",
-        "projectPath": "C:\\Users\\vqj3\\source\\repos\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj",
+        "projectPath": "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj",
         "packagesPath": "C:\\Users\\vqj3\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vqj3\\source\\repos\\DynamicContentApp\\DynamicContentApp\\obj\\",
+        "outputPath": "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -30,6 +30,7 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -44,11 +45,26 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[8.0.31, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -68,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
