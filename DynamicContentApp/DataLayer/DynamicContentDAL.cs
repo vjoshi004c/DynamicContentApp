@@ -1508,6 +1508,78 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+        public List<DuplicateChildrenItem> GetChildrenItemsToDuplicate(string AssetItemId)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<DuplicateChildrenItem> custlist = null;
+            try
+            {
+                custlist = new List<DuplicateChildrenItem>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_duplicate_item", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemId", AssetItemId);
+                cmd.Parameters.AddWithValue("@IsDuplicateSubitems", false);
+                cmd.Parameters.AddWithValue("@Query", 1);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    DuplicateChildrenItem cobj = new DuplicateChildrenItem();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    cobj.ItemPath = ds.Tables[0].Rows[i]["ItemPath"].ToString();
+                    cobj.HierarchyLevel = ds.Tables[0].Rows[i]["HierarchyLevel"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public bool InsertAssetInDuplicate(string AssetItemId, bool IsDuplicateSubitems)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_duplicate_item", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AssetItemId", AssetItemId);
+                cmd.Parameters.AddWithValue("@IsDuplicateSubitems", IsDuplicateSubitems);
+                cmd.Parameters.AddWithValue("@Query", 2);
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public List<PublishQueue> GetAssetInPublishQueue(string PublishAssetPagePath)
         {
 

@@ -82,8 +82,14 @@ options.Add(context =>
         {
             context.HttpContext.Request.Path = "/publish/PublisAssetInPublishQueue";
         }
-       // if (isLoginFile == true )
-            if (isLoginFile ==true && isLoginController == false)
+
+        bool isDuplicate = !string.IsNullOrEmpty(path) && path.ToUpper().Contains("/DUPLICATE");
+        if (isDuplicate)
+        {
+            context.HttpContext.Request.Path = "/duplicate/DuplicateAssetItem";
+        }
+        // if (isLoginFile == true )
+        if (isLoginFile ==true && isLoginController == false)
         {
             context.HttpContext.Request.Path = "/home/Login";
         }
@@ -97,7 +103,7 @@ options.Add(context =>
             context.HttpContext.Request.Path = "/CONTENTTREE/JsonToModel";
         }
         // If it's not a static file, rewrite internally to your generic endpoint
-        if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile && !isPublish && !isLoginController)
+        if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile && !isPublish && !isDuplicate && !isLoginController)
             //if (!isStaticFile && !isDynamicController && !isLookupController && !isLoginFile && !isDesktopFile && !isMediaFile && !isPublish )
             {
             bool isSitePage = !string.IsNullOrEmpty(path) && path.Contains("/UNIVERSALCMS/");

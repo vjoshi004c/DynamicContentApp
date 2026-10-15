@@ -783,8 +783,30 @@ body {font-family: Arial;}
             </div>
 
             <div id="duplicatediv" style="display: none; border-style: solid; border-color:#d9d9d9;background-color: #E6E6E6;padding:2em;">
-                    <h2>Duplicate selected item - <span></span></h2>
-                    <p>Comming soon...</p>
+                    @* <h2>Duplicate selected item - <span></span></h2> *@
+                    <form action="/schema/publish" method="POST" id="duplicateSchemaForm">
+                        <h2>To Duplicate selected item -  <span></span></h2>
+                        <h4>Are you sure you want to duplicate the item?  <span></span></h4>
+                        <p>
+                            <label for="schemaID">Asset ID:</label>
+                            <input type="text" id="txtSchemaID" name="schemaID" class="fake-disabled-input" style="width:500px">
+                        </p>
+                            <p>
+                                <label for="schemaName">Asset Name:</label>
+                                <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
+                            </p>
+                        <p>
+                            <p>
+                                <label for="chkIsItemDuplicateSubitems">Included subitems :</label>
+                                <input type="checkbox" id="chkDuplicateSubitems" class="unfake-disabled-input" name="PublishSubitems" style="width:100px">
+                            </p>
+                            @*  <button  id ="btnAddSchemaFields" onclick="addFieldsSchema()" class="fake-disabled-button" >Add Fields</button> *@
+                            <button id="btnCancelDuplicate" class="unfake-disabled-button" >Cancel</button>
+                            <button id="btnDuplicate" class="unfake-disabled-button" >Duplicate</button>
+                        </p>
+                        @*  <p>Click on the arrow(s) to open or close the tree branches.</p>
+                        <p> <button type="submit">Submit</button></p> *@
+                    </form>
                     
             </div>
 
@@ -1607,6 +1629,92 @@ body {font-family: Arial;}
                              }
 
                 });
+
+                   $('#btnCancelDuplicate').on('click', function(e) {
+        //alert("btnCancelDuplicate click");
+                        e.preventDefault();
+                         e.stopPropagation();
+                             //alert('btnCancelDelete' );
+                          // var MessageSucess=  $("#lblPublishMessageSucess");
+                          // var MessageError=  $("#lblPublishMessageError");
+        showAlert("Alert: Cancellation successful. The Item has not been duplicated.");
+                           var duplicateSchemaForm=  $("#duplicateSchemaForm");
+                            // MessageError.css('display', 'none');
+                              duplicateSchemaForm.css('display', 'none');
+                             //  MessageSucess.css('display', 'none');
+                                 //  MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
+                                  //    MessageSucess.html("<strong>Cancellation successful. The Item has not been published.</strong>");
+                                     
+                                         //MessageSucess.html("Action canceled. The item was not deleted.");
+                                           // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
+
+
+                                 //$("#mySpan").html("<strong>New HTML Content</strong>");
+
+                         });
+
+                $('#btnDuplicate').on('click', function(e) {
+                        e.preventDefault(); 
+                        e.stopPropagation();
+                        var duplicateSchemaForm=  $("#duplicateSchemaForm");
+                    alert("duplicate click");
+
+                        var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+                        var isDuplicateSubitems =$("#duplicatediv #chkDuplicateSubitems").is(':checked'); 
+                               // alert("isPublishSubitems - "+ isPublishSubitems);
+                               //alert('txtSchemaID_'+ txtSchemaID );
+                                   $.ajax({
+                                          type: "GET",
+            url: "/Duplicate/DuplicateAssetItem", // PageName/MethodName
+                                          //data: JSON.stringify(requestData),
+                                                   data: { AssetItemId: txtSchemaID, IsDuplicateSubitems:isDuplicateSubitems},
+                                          contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                          success: function (response) {
+                                                 //alert(response);
+                                                    //alert(response.error);
+                                                     // alert(response.message);
+                                                duplicateSchemaForm.css('display', 'none');
+                                                if (response == true) {
+                                                    //alert("sucess"+ response + MessageSucess);
+                                                     // MessageSucess.css('display', 'none');
+                                                            //MessageError.css('display', 'none');
+                                                             //  MessageSucess.html("<strong>Schema published successfully.</strong>");
+                                                               showAlert("Alert: Selected asset item  duplicated successfully.");
+                                                 }
+                                                 else {
+                                                    // alert("Error: " + response + MessageSucess);
+                                                     MessageSucess.css('display', 'none');
+                                                            MessageError.css('display', 'none');
+                                                                 MessageError.html("<strong>Opps! Error while duplicating.</strong>");
+                                                                showAlert("Oops! Error while duplicating selected item.");
+                                                 }
+                                               // if (response.status == true) {
+                                                    
+                                                            
+                                               //              MessageSucess.css('display', 'block');
+                                               //              MessageError.css('display', 'none');
+                                               //                 MessageSucess.html(response.message);
+                                               //      } 
+                                               //      else {
+                                                        
+                                               //              MessageSucess.css('display', 'none');
+                                               //              MessageError.css('display', 'block');
+                                               //                    MessageError.html(response.message + " [ " + response.error +" ]");
+       
+                                               //      }                                          
+                                       },
+                                    error: function (xhr, status, error) {
+                                        showAlert("Alert:Oops! Error while duplicating selected  item.");
+                                          // MessageSucess.css('display', 'none');
+                                             // MessageError.css('display', 'none');
+                                               //   MessageError.val("Opps! Error while deleting schema.");
+                                           console.error("Error occurred:", error);
+                                       }
+                               });
+
+                  });
+
                 $('#btnCancelPublish').on('click', function(e) {
                         e.preventDefault();
                          e.stopPropagation();
@@ -1628,7 +1736,7 @@ body {font-family: Arial;}
 
                          });
 
-                          $('#btnPublish').on('click', function(e) {
+                $('#btnPublish').on('click', function(e) {
                         e.preventDefault(); 
                         e.stopPropagation();
                 //alert('btnPublish' );
@@ -4189,14 +4297,45 @@ let resultnew = [];
 
                         }
                         if (currentid == 'duplicate_li') {
+                             $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
                              duplicatediv.style.display = "block";
                             // editdiv.style.display = "none";
-                            // removediv.style.display = "none";
-                           
-                            const innerElement = duplicatediv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
-                             //alert(innerElement.innerHTML);
-                            //alert('inside div -' + currentid +' and item id -'+ currentitemid);
+                            // duplicatediv.style.display = "none";
+                            
+                              // $("#deleteSchemaForm #txtSchemaName").val('');
+                              //      $("#deleteSchemaForm #txtSchemaPath").val('');
+                              //          $("#deleteSchemaForm #lblEditMessageSucess").val('');
+                              //           $("#deleteSchemaForm #lblEditMessageError").val('');
+                            //alert($("#duplicateSchemaForm #txtSchemaID").val());
+                           // alert(currentitemid);
+                                     $("#duplicateSchemaForm #txtSchemaID").val(currentitemid);
+                               //alert($("#addSchemaForm #lblEditMessageSucess").val());
+
+
+                                             ///var MessageSucess=  $("#lblDeleteMessageSucess");
+                                            // var MessageError=  $("#lblDeleteMessageError");
+                                             
+                                              // alert("inside delete");
+                                             var duplicateSchemaForm=  $("#duplicateSchemaForm");
+                                             duplicateSchemaForm.css('display', 'block');
+                                             // MessageSucess.css('display', 'none');
+                                             // MessageError.css('display', 'none');
+                                             // MessageSucess.html("");
+                                              //  MessageError.html("");
+                                                 // MessageSucess.text('');
+                                                 //  MessageError.text('');
+
+                                                 //    MessageSucess.empty();
+                                                 //     MessageError.empty();
+
+                                             var content=$("#" +currentitemid).html();
+                                $("#duplicateSchemaForm #txtSchemaName").val(content);
+                                              const innerElement = removediv.querySelector('h2 span');
+                                             //innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
+                             
                         }
                          contextMenu.style.display = "none";
                     });
@@ -4316,9 +4455,19 @@ let resultnew = [];
 
                         }
                         if (currentid == 'duplicate_li') {
+                             $("#dynamicFormContainer_Edit_AssetFieldDetails").css("display", "none");
+                                               $("#masterPageDiv").css("display", "none");
+                                                  $("#ComponentPageDiv").css("display", "none");
                              duplicatediv.style.display = "block";
-                            const innerElement = duplicatediv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+
+                                     $("#duplicateSchemaForm #txtSchemaID").val(currentitemid);
+                                             var duplicateSchemaForm=  $("#duplicateSchemaForm");
+                                             duplicateSchemaForm.css('display', 'block');
+                                             var content=$("#" +currentitemid).html();
+                                $("#duplicateSchemaForm #txtSchemaName").val(content);
+                                              const innerElement = removediv.querySelector('h2 span');
+                                             //innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
                         }
                        
         }
