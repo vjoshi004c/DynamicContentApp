@@ -2016,23 +2016,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vqj3\\.nuget\\packages\\": {},
+    "C:\\Users\\vivek\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj",
+      "projectUniqueName": "C:\\Project\\DynamicContentApp_Second\\DynamicContentApp\\DynamicContentApp.csproj",
       "projectName": "DynamicContentApp",
-      "projectPath": "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp.csproj",
-      "packagesPath": "C:\\Users\\vqj3\\.nuget\\packages\\",
-      "outputPath": "C:\\Vivek\\DynamicContentApp\\DynamicContentApp\\DynamicContentApp\\obj\\",
+      "projectPath": "C:\\Project\\DynamicContentApp_Second\\DynamicContentApp\\DynamicContentApp.csproj",
+      "packagesPath": "C:\\Users\\vivek\\.nuget\\packages\\",
+      "outputPath": "C:\\Project\\DynamicContentApp_Second\\DynamicContentApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\vqj3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vivek\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2091,6 +2091,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.31, 8.0.31]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.31, 8.0.31]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.31, 8.0.31]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.31, 8.0.31]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"

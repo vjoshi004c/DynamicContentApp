@@ -12,185 +12,185 @@ build_property.EntryPointFilePath =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DynamicContentApp
 build_property.RootNamespace = DynamicContentApp
-build_property.ProjectDir = C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\
+build_property.ProjectDir = C:\Project\DynamicContentApp_Second\DynamicContentApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
-build_property.MSBuildProjectDirectory = C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp
+build_property.MSBuildProjectDirectory = C:\Project\DynamicContentApp_Second\DynamicContentApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/TreeviewIndexFinalWorking.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/TreeviewIndexFinalWorking.cshtml]
 build_metadata.AdditionalFiles.TargetPath = VHJlZXZpZXdJbmRleEZpbmFsV29ya2luZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/ArticleContent.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/ArticleContent.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xBcnRpY2xlQ29udGVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/ArticleFooter.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/ArticleFooter.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xBcnRpY2xlRm9vdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/ArticleHeader.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/ArticleHeader.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xBcnRpY2xlSGVhZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/ContentBody.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/ContentBody.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xDb250ZW50Qm9keS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/Error.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/Footer.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xGb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Components/Header.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Components/Header.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9uZW50c1xIZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/Index.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/IndexOldWithoutTabs22thJuly.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/IndexOldWithoutTabs22thJuly.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcSW5kZXhPbGRXaXRob3V0VGFiczIydGhKdWx5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/IndexWithTabs.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/IndexWithTabs.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcSW5kZXhXaXRoVGFicy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/IndexWorkingOld.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/IndexWorkingOld.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcSW5kZXhXb3JraW5nT2xkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/JsonToModel.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/JsonToModel.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcSnNvblRvTW9kZWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/LayoutMangerIndex.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/LayoutMangerIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcTGF5b3V0TWFuZ2VySW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/MediaManagerIndex.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/MediaManagerIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcTWVkaWFNYW5hZ2VySW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/SchemaManagerIndex.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/SchemaManagerIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcU2NoZW1hTWFuYWdlckluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/ContentTree/TopNagivationBar.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/ContentTree/TopNagivationBar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGVudFRyZWVcVG9wTmFnaXZhdGlvbkJhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Generic/Start.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Generic/Start.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJpY1xTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/AboutUs.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/AboutUs.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dFVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/ContactUs.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/ContactUs.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0VXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/Desktop.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/Desktop.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXNrdG9wLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/DesktopMain.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/DesktopMain.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXNrdG9wTWFpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/Index.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/Login.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/Privacy.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Home/RenderMedia.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Home/RenderMedia.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZW5kZXJNZWRpYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/LookupTree/Index.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/LookupTree/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9va3VwVHJlZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Product/Catalog.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Product/Catalog.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxDYXRhbG9nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Product/ContentBody.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Product/ContentBody.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxDb250ZW50Qm9keS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Product/Footer.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Product/Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxGb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Product/Header.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Product/Header.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxIZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Product/Index.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Product/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Product/Privacy.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Product/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/Article/ArticleHomeMasterLayout.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/Article/ArticleHomeMasterLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEFydGljbGVcQXJ0aWNsZUhvbWVNYXN0ZXJMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/Error.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/_MasterLayout.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/_MasterLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYXN0ZXJMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/_MasterLoginDesktop.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/_MasterLoginDesktop.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYXN0ZXJMb2dpbkRlc2t0b3AuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/_MasterpMediaLayout.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/_MasterpMediaLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYXN0ZXJwTWVkaWFMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/_MasterpProductLayout.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/_MasterpProductLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NYXN0ZXJwUHJvZHVjdExheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/_ViewImports.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/_ViewStart.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Vivek/DynamicContentApp/DynamicContentApp/DynamicContentApp/Views/Shared/_Layout.cshtml]
+[C:/Project/DynamicContentApp_Second/DynamicContentApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-bw5im9dbpe

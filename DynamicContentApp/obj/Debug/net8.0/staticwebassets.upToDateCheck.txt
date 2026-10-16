@@ -31,7 +31,7 @@ wwwroot\images\Google Chrome.lnk
 wwwroot\images\icon\aboutIcon.png
 wwwroot\images\icon\createIcon.png
 wwwroot\images\icon\documentationIcon.png
-wwwroot\images\icon\duplicateIcon.png
+wwwroot\images\icon\dupIcon.png
 wwwroot\images\icon\pIcon.png
 wwwroot\images\icon\previewIcon.png
 wwwroot\images\icon\previewImage.png

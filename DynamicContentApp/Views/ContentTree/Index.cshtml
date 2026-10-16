@@ -1634,6 +1634,9 @@ body {font-family: Arial;}
                                             // alert("success");
                                           console.log("Success:", response);
                                            showAlert("Asset successfully created.");
+                                           addEventListener_caret_refresh($('#hdnCurrentSelectAssetItem').val() );
+                                           // duplicateSchemaForm.css('display', 'none');
+                                            ViewContentItem($('#hdnCurrentSelectAssetItem').val()) ;
                                              MessageSucess.css('display', 'none');
                                             MessageError.css('display', 'none');
                                                     //MessageSucess.style.display = "block";
@@ -3726,20 +3729,32 @@ let resultnew = [];
 
     var tabTag= tablinks[i].getAttribute('tag');
      //alert("openCity1 tag" +txtSchemaPath + tabTag +tabcontent[i]);
+     
      if (txtSchemaPath.indexOf("/"+ "Content" ) != -1) {
+          if (txtSchemaPath ==="/UniversalCMS/Content" )  {
 
-         $("#btnPage").css("display", "block");
-          $("#btnComponents").css("display", "block");
-           $("#btnPreview").css("display", "block");
+            $("#btnPage").css("display", "none");
+            $("#btnComponents").css("display", "none");
+            $("#btnPreview").css("display", "none");
             $("#btnSearch").css("display", "block");
              $("#btnAssetdetail").css("display", "block");
+         }
+         else
+         {
+
+             $("#btnPage").css("display", "block");
+              $("#btnComponents").css("display", "block");
+               $("#btnPreview").css("display", "block");
+                $("#btnSearch").css("display", "block");
+                 $("#btnAssetdetail").css("display", "block");
+         }
      }
      if (txtSchemaPath.indexOf("/"+ "Layout" ) != -1) {
 
          $("#btnPage").css("display", "none");
           $("#btnComponents").css("display", "none");
            $("#btnPreview").css("display", "none");
-            $("#btnSearch").css("display", "none");
+            $("#btnSearch").css("display", "block");
              $("#btnAssetdetail").css("display", "block");
      }
      if (txtSchemaPath.indexOf("/"+ "Media" ) != -1) {
@@ -3747,7 +3762,7 @@ let resultnew = [];
          $("#btnPage").css("display", "none");
           $("#btnComponents").css("display", "none");
            $("#btnPreview").css("display", "none");
-            $("#btnSearch").css("display", "none");
+            $("#btnSearch").css("display", "block");
              $("#btnAssetdetail").css("display", "block");
      }
       if (txtSchemaPath.indexOf("/"+ "Setting" ) != -1) {
@@ -3755,7 +3770,7 @@ let resultnew = [];
          $("#btnPage").css("display", "none");
           $("#btnComponents").css("display", "none");
            $("#btnPreview").css("display", "none");
-            $("#btnSearch").css("display", "none");
+            $("#btnSearch").css("display", "block");
              $("#btnAssetdetail").css("display", "block");
      }
 	if (txtSchemaPath.indexOf("/"+ "Schema" ) != -1) {
@@ -3763,7 +3778,7 @@ let resultnew = [];
          $("#btnPage").css("display", "none");
           $("#btnComponents").css("display", "none");
            $("#btnPreview").css("display", "none");
-            $("#btnSearch").css("display", "none");
+            $("#btnSearch").css("display", "block");
              $("#btnAssetdetail").css("display", "none");
           
           
