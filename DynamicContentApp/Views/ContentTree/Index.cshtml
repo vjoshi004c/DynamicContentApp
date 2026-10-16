@@ -469,6 +469,7 @@ body {font-family: Arial;}
   @*   <p>Environment: @dbConnectionString</p> *@
        <input type="hidden" id="hdnEnabledContextMenuAtUniversalCmsNode"  value="@EnabledContextMenuAtUniversalCmsNode"/>
        <input type="hidden" id="hdnCurrentSelectAssetItem"  value=""/>
+       <input type="hidden" id="hdnCurrentSelectAssetParentItem"  value=""/>
    @*  <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="#contact">Publish</a>
@@ -795,6 +796,12 @@ body {font-family: Arial;}
                                 <label for="schemaName">Asset Name:</label>
                                 <input type="text" id="txtSchemaName" class="fake-disabled-input"  name="schemaName" style="width:500px">
                             </p>
+                            @* <p>
+                               <label for="schemaParent">Asset Parent:</label>
+                                            <input type="text" id="txtSchemaParent" name="schemaParent" class="fake-disabled-input" style="width:500px;">
+                                </p>
+ *@
+                             
                         <p>
                             <p>
                                 <label for="chkIsItemDuplicateSubitems">Included subitems :</label>
@@ -1224,7 +1231,11 @@ body {font-family: Arial;}
             });
         }
 
+          
+
              function getDbData( IDSchema ) {
+
+                 //alert('getDbData' +IDSchema);
 
                          var requestData = {
                                 SchemaID: IDSchema
@@ -1313,6 +1324,29 @@ body {font-family: Arial;}
                     }
             });
         }
+
+
+         
+          function getDbDataParentID( IDSchema ) {
+                //alert(IDSchema);
+                   $.ajax({
+                    type: "GET",
+                     url: "/ContentTree/GetSchema", // PageName/MethodName
+                    //data: JSON.stringify(requestData),
+                    data: { SchemaID: IDSchema },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                      async: false,
+                    success: function (response) {
+                          $.each(response, function(index, record) {
+                                $('#hdnCurrentSelectAssetParentItem').val(record.parentID);
+                             });
+                         },
+                     error: function (xhr, status, error) {
+                            console.error("Error occurred:", error);
+                        }
+                });
+             }
 
         function checkChildCount( IDSchema ) {
             var childCount= 0;
@@ -1456,6 +1490,8 @@ body {font-family: Arial;}
    
     function  GetChildOfSelectedLI(childSchemaID) {
         $('#hdnCurrentSelectAssetItem').val(childSchemaID);
+        getDbDataParentID(childSchemaID);
+
        // alert('GetChildOfSelectedLI event' +childSchemaID);
        // getDbData( childSchemaID );
         //var toggler = document.getElementById(childSchemaID);
@@ -1634,13 +1670,18 @@ body {font-family: Arial;}
         //alert("btnCancelDuplicate click");
                         e.preventDefault();
                          e.stopPropagation();
+                          var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
                              //alert('btnCancelDelete' );
                           // var MessageSucess=  $("#lblPublishMessageSucess");
                           // var MessageError=  $("#lblPublishMessageError");
         showAlert("Alert: Cancellation successful. The Item has not been duplicated.");
                            var duplicateSchemaForm=  $("#duplicateSchemaForm");
                             // MessageError.css('display', 'none');
-                              duplicateSchemaForm.css('display', 'none');
+                             
+                             // addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                               duplicateSchemaForm.css('display', 'none');
+                              // ViewContentItem($('#hdnCurrentSelectAssetParentItem').val()) ;
+                               ViewContentItem(txtSchemaID) ;
                              //  MessageSucess.css('display', 'none');
                                  //  MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
                                   //    MessageSucess.html("<strong>Cancellation successful. The Item has not been published.</strong>");
@@ -1657,7 +1698,7 @@ body {font-family: Arial;}
                         e.preventDefault(); 
                         e.stopPropagation();
                         var duplicateSchemaForm=  $("#duplicateSchemaForm");
-                    alert("duplicate click");
+                    //alert("duplicate click");
 
                         var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
                         var isDuplicateSubitems =$("#duplicatediv #chkDuplicateSubitems").is(':checked'); 
@@ -1674,13 +1715,20 @@ body {font-family: Arial;}
                                                  //alert(response);
                                                     //alert(response.error);
                                                      // alert(response.message);
-                                                duplicateSchemaForm.css('display', 'none');
+                                               // duplicateSchemaForm.css('display', 'none');
                                                 if (response == true) {
                                                     //alert("sucess"+ response + MessageSucess);
                                                      // MessageSucess.css('display', 'none');
                                                             //MessageError.css('display', 'none');
                                                              //  MessageSucess.html("<strong>Schema published successfully.</strong>");
                                                                showAlert("Alert: Selected asset item  duplicated successfully.");
+                                                               // getDbData('784BC6D8-CB57-4726-993A-2991CEED917B');
+
+
+                                                                addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                  duplicateSchemaForm.css('display', 'none');
+                                                                ViewContentItem($('#hdnCurrentSelectAssetParentItem').val()) ;
+
                                                  }
                                                  else {
                                                     // alert("Error: " + response + MessageSucess);
@@ -1688,6 +1736,9 @@ body {font-family: Arial;}
                                                             MessageError.css('display', 'none');
                                                                  MessageError.html("<strong>Opps! Error while duplicating.</strong>");
                                                                 showAlert("Oops! Error while duplicating selected item.");
+                                                                 addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                  duplicateSchemaForm.css('display', 'none');
+                                                                   ViewContentItem($('#hdnCurrentSelectAssetParentItem').val()) ;
                                                  }
                                                // if (response.status == true) {
                                                     
@@ -1719,11 +1770,12 @@ body {font-family: Arial;}
                         e.preventDefault();
                          e.stopPropagation();
                              //alert('btnCancelDelete' );
+                               var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
                            var MessageSucess=  $("#lblPublishMessageSucess");
                            var MessageError=  $("#lblPublishMessageError");
-                           var deleteSchemaForm=  $("#publishSchemaForm");
+                           var publishSchemaForm=  $("#publishSchemaForm");
                              MessageError.css('display', 'none');
-                              deleteSchemaForm.css('display', 'none');
+                              publishSchemaForm.css('display', 'none');
                                MessageSucess.css('display', 'none');
                                    MessageSucess.html("<strong>Canceled. Your changes have been discarded.</strong>");
                                       MessageSucess.html("<strong>Cancellation successful. The Item has not been published.</strong>");
@@ -1731,6 +1783,9 @@ body {font-family: Arial;}
                                          //MessageSucess.html("Action canceled. The item was not deleted.");
                                            // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
 
+                                                                //addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                  publishSchemaForm.css('display', 'none');
+                                                                ViewContentItem(txtSchemaID) ;
 
                                  //$("#mySpan").html("<strong>New HTML Content</strong>");
 
@@ -1771,6 +1826,9 @@ body {font-family: Arial;}
                                                             MessageError.css('display', 'none');
                                                                MessageSucess.html("<strong>Schema published successfully.</strong>");
                                                                showAlert("Alert: Selected asset item  published successfully.");
+                                                               // addEventListener_caret_refresh(txtSchemaID );
+                                                                  publishSchemaForm.css('display', 'none');
+                                                                ViewContentItem(txtSchemaID) ;
                                                  }
                                                  else {
                                                     // alert("Error: " + response + MessageSucess);
@@ -1778,6 +1836,9 @@ body {font-family: Arial;}
                                                             MessageError.css('display', 'none');
                                                                  MessageError.html("<strong>Opps! Error while publishing.</strong>");
                                                                 showAlert("Oops! Error while creating new asset.");
+                                                                 //addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                  publishSchemaForm.css('display', 'none');
+                                                                 ViewContentItem(txtSchemaID) ;
                                                  }
                                                // if (response.status == true) {
                                                     
@@ -1809,6 +1870,7 @@ body {font-family: Arial;}
                         e.preventDefault();
                          e.stopPropagation();
                              //alert('btnCancelDelete' );
+                              var  txtSchemaID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
                            var MessageSucess=  $("#lblDeleteMessageSucess");
                            var MessageError=  $("#lblDeleteMessageError");
                            var deleteSchemaForm=  $("#deleteSchemaForm");
@@ -1820,7 +1882,10 @@ body {font-family: Arial;}
                                        showAlert("Alert: Cancellation successful. The Item has not been deleted.");
                                          //MessageSucess.html("Action canceled. The item was not deleted.");
                                            // MessageSucess.html("<strong>Operation canceled. No changes have been made.</strong>");
-
+                                    // addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                   deleteSchemaForm.css('display', 'none');
+                                                                    //ViewContentItem($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                    ViewContentItem(txtSchemaID);
 
                                  //$("#mySpan").html("<strong>New HTML Content</strong>");
 
@@ -1882,6 +1947,9 @@ body {font-family: Arial;}
                                                             MessageError.css('display', 'none');
                                                             // MessageSucess.html("Schema has been deleted successfully");
                                                                MessageSucess.html(response.message);
+                                                                addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                deleteSchemaForm.css('display', 'none');
+                                                                ViewContentItem($('#hdnCurrentSelectAssetParentItem').val() );
                                                     } 
                                                     else {
 
@@ -1893,6 +1961,9 @@ body {font-family: Arial;}
                                                             // MessageError.val("Opps! Error while deleting schema. " + response.error);
                                                                //MessageError.html(response.error);
                                                                   MessageError.html(response.message + " [ " + response.error +" ]");
+                                                                    addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                                                                   deleteSchemaForm.css('display', 'none');
+                                                                    ViewContentItem($('#hdnCurrentSelectAssetParentItem').val() );
        
                                                     }
 
@@ -3484,6 +3555,7 @@ let resultnew = [];
 
      function  GetChildOfSelectedUL(childSchemaID) {
          $('#hdnCurrentSelectAssetItem').val(childSchemaID);
+            getDbDataParentID(childSchemaID);
 
         //alert('GetChildOfSelectedUL event' +childSchemaID);
         //var toggler = document.getElementById(childSchemaID);
@@ -3523,7 +3595,82 @@ let resultnew = [];
                //alert("add listener" +idSchema)
 
                const allchildLi = toggler.parentElement.querySelectorAll('ul li');
-              // alert("allchildLi" +allchildLi)
+               //alert("allchildLi" +allchildLi)
+               //alert("allchildLi length" +allchildLi.length)
+
+               allchildLi.forEach(span => {
+                    //span.classList.remove('highlight');
+                     span.remove();
+                     //alert("allchildLi remove" +allchildLi)
+                });
+                 getDbData(childSchemaID);
+                const spans = document.querySelectorAll('span.highlight');
+                spans.forEach(span => {
+                    span.classList.remove('highlight');
+                });
+               // toggler.classList.toggle("highlight");
+                if (toggler) {
+                      // alert(togglerli.getAttribute("id"));
+                     toggler.classList.add('highlight');
+                      setupcontextmenu(toggler);
+                    }
+   // return;
+                //for (i = 0; i < toggler.length; i++) {
+                //    toggler[i].removeEventListener("click", function () {
+                //        alert('remove event listener');
+                //    });
+                //}
+
+
+
+                // const spans1 = document.querySelectorAll('span.highlight');
+                // spans1.forEach(span => {
+                //      //alert('inside span highlight')
+                //     //span.classList.remove('highlight');
+                //     //removefromcontextmenu(this);
+
+                //     setupcontextmenu(this);
+
+                // });
+
+           // });
+        //}
+
+     }
+     function addEventListener_caret_refresh(childSchemaID) {
+
+         //e.preventDefault();
+         //e.stopPropagation();
+           var toggler = document.getElementById(childSchemaID);
+            //alert("addEventListener_caret_refresh"+toggler.getAttribute("id"));
+
+        const contextMenu = document.getElementById("contextMenu");
+        const editdiv = document.getElementById("editdiv");
+        const removediv = document.getElementById("removediv");
+
+        //var toggler = document.getElementsByClassName("caret");
+        var i;
+       // for (i = 0; i < toggler.length; i++) {
+           // toggler[i].addEventListener("click", function (e) {
+               // toggler.parentElement.querySelector(".nested").classList.toggle("active");
+                //toggler.parentElement.querySelector(".nested").addClass("active");
+                // toggler.parentElement.find('.nested').addClass('active');
+
+                 const nestedEl = toggler.parentElement.querySelector(".nested");
+                // Check if element exists before adding class
+                if (nestedEl) {
+                    nestedEl.classList.add("active"); // Add your class
+                }
+                
+                 //toggler.parentElement.querySelector(".nested").classList.add("active");
+                // toggler.classList.toggle("active");
+                toggler.classList.toggle("caret-down");
+                //alert("add listener")
+                const idSchema = toggler.getAttribute('id');
+               //alert("add listener" +idSchema)
+
+               const allchildLi = toggler.parentElement.querySelectorAll('ul li');
+               //alert("allchildLi" +allchildLi)
                //alert("allchildLi length" +allchildLi.length)
 
                allchildLi.forEach(span => {
@@ -4311,6 +4458,8 @@ let resultnew = [];
                             //alert($("#duplicateSchemaForm #txtSchemaID").val());
                            // alert(currentitemid);
                                      $("#duplicateSchemaForm #txtSchemaID").val(currentitemid);
+                                     // $("#duplicateSchemaForm #txtSchemaParent").val(currentitemid);
+
                                //alert($("#addSchemaForm #lblEditMessageSucess").val());
 
 
@@ -4461,6 +4610,9 @@ let resultnew = [];
                              duplicatediv.style.display = "block";
 
                                      $("#duplicateSchemaForm #txtSchemaID").val(currentitemid);
+                                      $("#duplicateSchemaForm #txtSchemaParent").val(currentitemid);
+                                    
+
                                              var duplicateSchemaForm=  $("#duplicateSchemaForm");
                                              duplicateSchemaForm.css('display', 'block');
                                              var content=$("#" +currentitemid).html();
@@ -4468,7 +4620,9 @@ let resultnew = [];
                                               const innerElement = removediv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
                                                innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
-                        }
+                       
+                                          
+                                           }
                        
         }
 
