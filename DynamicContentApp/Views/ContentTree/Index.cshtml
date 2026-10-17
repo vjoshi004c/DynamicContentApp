@@ -23,6 +23,7 @@
             padding-right:1rem;
             padding:0.1rem; */
             background-color: gray;
+            background-color: gray;
             color: #ffffff;
             border: 1px solid #d9d9d9;
             border-radius: 4px;
@@ -4323,9 +4324,13 @@ let resultnew = [];
                             //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
                         }
                         if (currentid == 'refresh_li') {
-                            refreshdiv.style.display = "block";
-                            const innerElement = refreshdiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+                            // refreshdiv.style.display = "block";
+                            // const innerElement = refreshdiv.querySelector('h2 span');
+                            // innerElement.innerHTML = currentitemid;
+
+                             addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                            duplicateSchemaForm.css('display', 'none');
+                            ViewContentItem($('#hdnCurrentSelectAssetParentItem').val()) ;
 
                             //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
                             // removediv.style.display = "none";
@@ -4543,9 +4548,12 @@ let resultnew = [];
 
                         }
                         if (currentid == 'refresh_li') {
-                            refreshdiv.style.display = "block";
-                            const innerElement = refreshdiv.querySelector('h2 span');
-                            innerElement.innerHTML = currentitemid;
+                            //refreshdiv.style.display = "block";
+                            //const innerElement = refreshdiv.querySelector('h2 span');
+                           // innerElement.innerHTML = currentitemid;
+                            addEventListener_caret_refresh($('#hdnCurrentSelectAssetParentItem').val() );
+                            duplicateSchemaForm.css('display', 'none');
+                            ViewContentItem($('#hdnCurrentSelectAssetParentItem').val()) ;
 
                         }
                         if (currentid == 'edit_li') {

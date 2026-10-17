@@ -21,6 +21,8 @@
     <Folder Include="Views\LookupTree\" />
     <Folder Include="Views\NewFolder\" />
     <Folder Include="Views\Shared\Article\" />
+    <Folder Include="Views\Shared\Product\" />
+    <Folder Include="wwwroot\assets\product\" />
     <Folder Include="wwwroot\js\custom\" />
   </ItemGroup>
 
