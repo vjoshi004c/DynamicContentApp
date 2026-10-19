@@ -91,13 +91,13 @@
         display: block !important;
       }
       .card-body {
-        background-color: #D3F77C !important;
+        background-color:#FAD4C5!important;
       }
 .btn-secondary {
-            background-color: #7EA61E !important;
+            background-color: #782C11 !important;
 }
 .btn-outline-secondary{
-    background-color: #7EA61E !important;
+    background-color: #782C11 !important;
       color:#D3F77C!important;
 }
 .btn-outline-primary{
@@ -105,13 +105,13 @@
      color:#D3F77C!important;
 }
 .btn-primary {
-            background-color: #7EA61E !important;
+            background-color: #782C11 !important;
           
 }
 
     </style>
   </head>
-  <body style="background-color: #D2E50B">
+  <body style="background-color: #FAD4C5">
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
       <symbol id="check2" viewBox="0 0 16 16">
         <path
@@ -207,28 +207,28 @@
         </li>
       </ul>
     </div>
-    <header data-bs-theme="dark">
-      <div class="collapse text-bg-dark" id="navbarHeader">
+    <header data-bs-theme="dark" >
+        <div class="collapse text-bg-dark" id="navbarHeader" style="background-color: #F7E9E4 !important;">
         <div class="container">
           <div class="row">
-            <div class="col-sm-8 col-md-7 py-4">
+                    <div class="col-sm-8 col-md-7 py-4" style="color: #782C11 !important;">
               <h4>Articles</h4>
-              <p class="text-body-secondary">
+              <p class="text-body-secondary" style="color: #782C11 !important;">
                An “article” on a website is a self‑contained, independently distributable piece of content — such as a blog post, news story, or product description — that can be shared or reused without the rest of the site.
               </p>
             </div>
             <div class="col-sm-4 offset-md-1 py-4">
-              <h4>Contact</h4>
+              <h4 style="color: #782C11 !important;" >Contact</h4>
               <ul class="list-unstyled">
-                <li><a href="#" class="text-white">Twitter</a></li>
-                <li><a href="#" class="text-white">Facebook</a></li>
-                <li><a href="#" class="text-white">Email me</a></li>
+                <li><a href="#" class="text-white" style="color: #782C11 !important;" accesskey="">Twitter</a></li>
+                <li><a href="#" class="text-white" style="color: #782C11 !important;" >Facebook</a></li>
+                <li><a href="#" class="text-white" style="color: #782C11 !important;" >Email me</a></li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="navbar navbar-dark bg-dark shadow-sm" style="background-color:#A5D437!important;">
+      <div class="navbar navbar-dark bg-dark shadow-sm" style="background-color:#782C11!important;">
         <div class="container">
           <a href="#" class="navbar-brand d-flex align-items-center">
             <svg
@@ -269,18 +269,18 @@
       <section class="py-5 text-center container">
         <div class="row py-lg-5">
           <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Article</h1>
-            <p class="lead text-body-secondary">
+            <h1 class="fw-light" style="color: #782C11 !important;">Article</h1>
+            <p class="lead text-body-secondary" style="color: #782C11 !important;font-weight: bold;">
                 An “article” on a website is a self‑contained, independently distributable piece of content — such as a blog post, news story, or product description — that can be shared or reused without the rest of the site
             </p>
             <p>
-              <a href="#" class="btn btn-primary my-2">View Articles</a>
-              <a href="#" class="btn btn-secondary my-2">Back to homepage</a>
+                        <a href="/UniversalCMS/Content/ArticleWS" class="btn btn-primary my-2">View Articles</a>
+                        <a href="/UniversalCMS/Content/ArticleWS" class="btn btn-secondary my-2">Back to homepage</a>
             </p>
           </div>
         </div>
       </section>
-      <div class="album py-5 bg-body-tertiary" style="background-color: #ECFA70 !important ">
+      <div class="album py-5 bg-body-tertiary" style="background-color: #F7E9E4!important ">
         <div class="container">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
@@ -297,7 +297,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                    Information Technology
                   </text>
                 </svg>
                 <div class="card-body">
@@ -314,14 +314,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/InformationTechnology" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -342,7 +342,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                    Books
                   </text>
                 </svg>
                 <div class="card-body">
@@ -359,14 +359,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Books" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                      @* <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -387,7 +387,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                   Automobile
                   </text>
                 </svg>
                 <div class="card-body">
@@ -404,14 +404,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Automobile" class="text-decoration-none">View</a>
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -432,7 +432,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                   Careers
                   </text>
                 </svg>
                 <div class="card-body">
@@ -449,14 +449,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                       <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Careers" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -477,7 +477,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                    Education
                   </text>
                 </svg>
                 <div class="card-body">
@@ -494,14 +494,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                       <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Education" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -522,7 +522,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                   Fashion
                   </text>
                 </svg>
                 <div class="card-body">
@@ -539,14 +539,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                       <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Fashion" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -567,7 +567,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                    Nature
                   </text>
                 </svg>
                 <div class="card-body">
@@ -584,14 +584,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                       <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Nature" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -612,7 +612,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                    Sports
                   </text>
                 </svg>
                 <div class="card-body">
@@ -629,20 +629,131 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                       <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Sports" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                      @* <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
                 </div>
               </div>
             </div>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg aria-label="Placeholder: Thumbnail"
+                                 class="bd-placeholder-img card-img-top"
+                                 height="225"
+                                 preserveAspectRatio="xMidYMid slice"
+                                 role="img"
+                                 width="100%"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                                    Travel
+                                </text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit
+                                    longer.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">
+                                            <a class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Travel" class="text-decoration-none">View</a>
+                                        </button>
+                                       @*  <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </button> *@
+                                    </div>
+                                    <small class="text-body-secondary">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg aria-label="Placeholder: Thumbnail"
+                                 class="bd-placeholder-img card-img-top"
+                                 height="225"
+                                 preserveAspectRatio="xMidYMid slice"
+                                 role="img"
+                                 width="100%"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                                    Finance
+                                </text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit
+                                    longer.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">
+                                            <a class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/Finance" class="text-decoration-none">View</a>
+                                        </button>
+                                        @* <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </button> *@
+                                    </div>
+                                    <small class="text-body-secondary">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg aria-label="Placeholder: Thumbnail"
+                                 class="bd-placeholder-img card-img-top"
+                                 height="225"
+                                 preserveAspectRatio="xMidYMid slice"
+                                 role="img"
+                                 width="100%"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                                    Real Estate
+                                </text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    This is a wider card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit
+                                    longer.
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">
+                                            <a class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/RealEstate" class="text-decoration-none">View</a>
+                                        </button>
+                                        @* <button type="button"
+                                                class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </button> *@
+                                    </div>
+                                    <small class="text-body-secondary">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             <div class="col">
               <div class="card shadow-sm">
                 <svg
@@ -657,7 +768,7 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                    Thumbnail
+                                    Health & Fitness
                   </text>
                 </svg>
                 <div class="card-body">
@@ -674,14 +785,14 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
-                        View
+                        <a  class="btn btn-sm btn-outline-secondary" href="/UniversalCMS/Content/ArticleWS/HealthFitness" class="text-decoration-none">View</a> 
                       </button>
-                      <button
+                     @*  <button
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                       >
                         Edit
-                      </button>
+                      </button> *@
                     </div>
                     <small class="text-body-secondary">9 mins</small>
                   </div>
@@ -692,14 +803,14 @@
         </div>
       </div>
     </main>
-    <footer class="text-body-secondary py-5"  style="background-color: #A5D437;">
+    <footer class="text-body-secondary py-5"  style="background-color: #782C11;">
       <div class="container">
         <p class="float-end mb-1"><a href="#">Back to top</a></p>
-        <p class="mb-1">
+        <p class="mb-1" style="color: white !important;">
           Album example is &copy; Bootstrap, but please download and customize
           it for yourself!
         </p>
-        <p class="mb-0">
+        <p class="mb-0" style="color: white !important;">
           New to Bootstrap? <a href="/">Visit the homepage</a> or read our
           <a href="../getting-started/introduction">getting started guide</a>.
         </p>
