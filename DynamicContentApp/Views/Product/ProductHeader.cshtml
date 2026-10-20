@@ -43,19 +43,34 @@
                   </svg>
                 </a>
               </li>
-              
+
+
+               
+                        @if (Model.PrimaryNagivation != null || Model.PrimaryNagivation.Count>0)
+                            {
+                                @foreach (var item in Model.PrimaryNagivation)
+                                {
+                                     @if (item.MenuItemTitle != null || !string.IsNullOrEmpty(item.MenuItemTitle))
+                                     {
+                                     
+                                     <li class="nav-item"><a class="nav-link" href="@item.MenuItemLink">
+                                         @item.MenuItemTitle
+                                         </a></li>
+                                     }
+                                }
+                                    
+                              
+                            }
+                     
+             @*  
               <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS">Home</a></li>
-             
               <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductSummary">Summary</a></li>
-              <li class="nav-item">
-                <a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductFeatures#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductEnterprise">Enterprise</a>
-              </li>
+              <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductFeatures#">Features</a> </li>
+              <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductEnterprise">Enterprise</a> </li>
               <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductSupport">Support</a></li>
                <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductTour">Tour</a></li>
-              <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductPrice">Pricing</a></li>
+              <li class="nav-item"><a class="nav-link" href="/UniversalCMS/Content/ProductWS/ProductPrice">Pricing</a></li> *@
+
               @* <li class="nav-item">
                 <a class="nav-link" href="#" aria-label="Cart">
                   <svg class="bi" width="24" height="24" aria-hidden="true">

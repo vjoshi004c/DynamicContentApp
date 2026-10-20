@@ -564,7 +564,7 @@ function lookupTree(IDSchema1, rootItemText) {
            // alert('getSchema1' + ' ' + record.schemaPath + ' ' + record.id);
            // alert(record.schemaPath, record.id);
             $("#txtSelectedItemPath").val(record.schemaPath);
-            $("#txtSelectedItemID").val(record.id);
+            $("#txtSelectedItemID").val(record.assetItemTreeeID);
         });
                       },
     error: function (xhr, status, error) {

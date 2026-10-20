@@ -7,6 +7,7 @@ using DynamicContentApp.Models;
 using DynamicContentApp.Service;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -62,13 +63,68 @@ namespace DynamicContentApp.Service
                 if (AssetItemFieldDetails != null && AssetItemFieldDetails.Count > 0)
                 {
                     // JsonDataSB.Append("\"" + Area + "\"" + ":" + "{");
+                  
                     foreach (var AssetItemFieldDetail in AssetItemFieldDetails)
                     {
+                        string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                         if ( AssetItemFieldDetail.AssetFieldName == "DynamicContent")
                         {
                           string  decodeHtmlData=   WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
                             //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
                             JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":"  + JsonConvert.SerializeObject(decodeHtmlData) + ",");
+                        }
+                        else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") == true)
+                        {
+                            GetAssetDataMedia(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                        }
+                        // bool isValid = System.Text.RegularExpressions.Regex.IsMatch(AssetFieldValue, @"^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$");
+                        else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("DROPDOWN::") == true)
+                        {
+                            //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                            // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName  + "\"" + ":" + "{");
+                            AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("DROPDOWN::", "");
+                            //GetAssetDataById(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                            GetAssetDataById(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                            // JsonDataSB.Append("\"field\":\"none\"},");
+                        }
+                        // AssetFieldValue = "MILTILIST::E380EB3D-B449-4D12-8F68-5D8911C09136,B7A46571-B683-49EE-8F94-845E7DECEB7B,15EC7D57-6474-4102-9D31-2A121B82E23D,6C72D1C1-2202-46BF-8FFA-A097F40827F6";
+                        else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("MULTILIST::") == true)
+                        {
+
+                            AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MULTILIST::", "");
+                            string[] AssetFieldValueArray = AssetItemFieldDetail.AssetFieldValue.Split(',');
+                            if (AssetFieldValueArray.Length > 0)
+                            {
+                                //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue  + "\",");
+                                //  JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\",");
+                                // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "s" + "\"" + ":" + "{");
+                                JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "[");
+
+                                //JsonDataSB.Append("\"" + "Value" + "\"" + ":" + "\"" + AssetItemPath + "\",");
+
+                                for (int i = 0; i < AssetFieldValueArray.Length; i++)
+                                {
+                                    JsonDataSB.Append("{");
+                                    //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemFieldDetail.AssetFieldValue + "\",");
+                                    //if (AssetFieldValueArray[i].ToUpper().Contains("MILTILIST::") == true)
+                                    //{
+                                    //GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, AssetItemFieldDetail.AssetFieldName + i.ToString());
+                                    GetAssetDataByList(AssetFieldValueArray[i], JsonDataSB, AssetItemFieldDetail.AssetFieldName);
+                                    if (i == AssetFieldValueArray.Length - 1)
+                                    {
+                                        JsonDataSB.Append("\"field\":\"none\"}");
+                                    }
+                                    else
+                                    {
+                                        JsonDataSB.Append("\"field\":\"none\"},");
+                                    }
+
+                                    //JsonDataSB.Append("\"field\":\"none\"},");
+                                    // }
+                                }
+                                // JsonDataSB.Append("\"field\":\"none\"},");
+                                JsonDataSB.Append("],");
+                            }
                         }
                         else
                         {
