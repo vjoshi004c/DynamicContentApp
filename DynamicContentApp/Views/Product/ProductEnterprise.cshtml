@@ -10,14 +10,10 @@
         <div class="row py-lg-5" style="padding-top:0px!important;padding-bottom:0px!important">
           <div class="col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light" style="color:#05507D !important;">
-              <strong>Product Enterprise</strong>
+              <strong>@Model.HeaderTitle</strong>
             </h1>
             <p class="lead text-body-secondary" style="color:#05507D !important;font-weight: bold;">
-                Our Enterprise CMS is built for organizations 
-    that manage complex websites, digital platforms,
-    and multi-channel content operations. Designed 
-    for scalability, security, and flexibility, 
-    it empowers teams to create, collaborate, and deliver personalized experiences across web, mobile, and beyond — all from a single, intuitive hub. </p>
+              @Model.LongtDescription</p>
             <p>
               <a href="/UniversalCMS/Content/ProductWS/ProductFeatures" class="btn btn-primary my-2" style="background-color:#05507D!important;">Go to product featuress</a>
               <a href="/UniversalCMS/Content/ProductWS" class="btn btn-secondary my-2" style="background-color:#05507D!important;">Go back to homepage</a>
@@ -28,6 +24,70 @@
       <div class="album py-5 bg-body-tertiary" style="background-color: #0472B5 !important; ">
         <div class="container">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+
+                @if (Model.ProductFeatures != null || Model.ProductFeatures.Count>0)
+                            {
+                                @foreach (var item in Model.ProductFeatures)
+                                {
+                                    @*  @if (item.ProductTitle != null || !string.IsNullOrEmpty(item.ProductTitle))
+                                     { *@
+                                      
+                                                       
+                                    <div class="col">
+                                      <div class="card shadow-sm">
+                                        <svg
+                                          aria-label="Placeholder: Thumbnail"
+                                          class="bd-placeholder-img card-img-top"
+                                          height="25"
+                                          preserveAspectRatio="xMidYMid slice"
+                                          role="img"
+                                          width="100%"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                        <img src="@item.ProductImage"  style="width:50%;height:100%;" alt="Access Manager" class="img-fluid" />
+                                          <title>Placeholder</title>
+                                          <rect width="100%" height="100%" fill="#55595c"></rect>
+                                          <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                                            <strong style="color: #0472B5;">@item.ProductTitle  </strong>
+                                          </text>
+                                        </svg>
+                                        <div class="card-body">
+                                          <p class="card-text" style="color:#05507D !important;">
+                                          @item.ProductDescription
+                                          </p>
+
+                                          <div
+                                            class="d-flex justify-content-between align-items-center"
+                                          >
+                                            <div class="btn-group">
+                                                 <a href="@item.ProductLink"  class="btn btn-sm btn-outline-secondary">  View</a>
+                                           @*    <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                              >
+                                                View
+                                              </button> *@
+                                             @*  <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                              >
+                                             
+                                                Edit
+                                              </button> *@
+                                            </div>
+                                            <small class="text-body-secondary">9 mins</small>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>     
+
+                                    @*  } *@
+                                }
+                            } 
+
+
+
             <div class="col">
               <div class="card shadow-sm">
                 <svg
@@ -73,6 +133,8 @@
                 </div>
               </div>
             </div>
+
+
             <div class="col">
               <div class="card shadow-sm">
                 <svg
@@ -396,12 +458,12 @@
                   <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c"></rect>
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                     <strong style="color: #0472B5;">Setting Manager</strong>
+                     <strong style="color: #0472B5;">Version Manager</strong>
                   </text>
                 </svg>
                 <div class="card-body">
                   <p class="card-text" style="color:#05507D !important;">
-                    Setting management for content customization
+                   Version control for content updates
                   </p>
                   <div
                     class="d-flex justify-content-between align-items-center"
@@ -645,7 +707,8 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
+
           </div>
         </div>
       </div>

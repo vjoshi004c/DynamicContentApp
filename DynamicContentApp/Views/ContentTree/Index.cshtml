@@ -3144,6 +3144,8 @@ body {font-family: Arial;}
                                                                                          }
                                                                                     $("#lblModelMediaTitle").html('');
                                                                                     $("#lblModelMediaTitle").html('To Upload Media File');
+                                                                                     $("#customModalMedia #statusMessage").html('');
+                                                                                   
                                                                                     $("#customModalMedia").show();
                                                                     });
 
@@ -4360,7 +4362,8 @@ let resultnew = [];
                                             // alert(currentitemid);
                                             getSchema( currentitemid );
                                        
-                                            var content=$("#" +currentitemid).html();
+                                            //var content=$("#" +currentitemid).html();
+                                             var content=$("#" +currentitemid).text().trim();
                                               //$("#editSchemaForm #txtSchemaName").val(content);
                                                  const innerElement = editdiv.querySelector('h2 span');
                                               innerElement.innerHTML = content+ " {" +currentitemid +"}";
@@ -4408,7 +4411,8 @@ let resultnew = [];
                                                  //    MessageSucess.empty();
                                                  //     MessageError.empty();
 
-                                             var content=$("#" +currentitemid).html();
+                                             //var content=$("#" +currentitemid).html();
+                                              var content=$("#" +currentitemid).text().trim();
                                              $("#publishSchemaForm #txtSchemaName").val(content);
                                               const innerElement = publishdiv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
@@ -4452,7 +4456,8 @@ let resultnew = [];
                                                  //    MessageSucess.empty();
                                                  //     MessageError.empty();
 
-                                             var content=$("#" +currentitemid).html();
+                                            //var content=$("#" +currentitemid).html();
+                                              var content=$("#" +currentitemid).text().trim();
                                              $("#deleteSchemaForm #txtSchemaName").val(content);
                                               const innerElement = removediv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
@@ -4500,7 +4505,8 @@ let resultnew = [];
                                                  //    MessageSucess.empty();
                                                  //     MessageError.empty();
 
-                                             var content=$("#" +currentitemid).html();
+                                             //var content=$("#" +currentitemid).html();
+                                              var content=$("#" +currentitemid).text().trim();
                                 $("#duplicateSchemaForm #txtSchemaName").val(content);
                                               const innerElement = removediv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
@@ -4573,7 +4579,8 @@ let resultnew = [];
                                             MessageError.css('display', 'none');
                                             getSchema( currentitemid );
                                        
-                                            var content=$("#" +currentitemid).html();
+                                            //var content=$("#" +currentitemid).html();
+                                             var content=$("#" +currentitemid).text().trim();
                                              
                                                  const innerElement = editdiv.querySelector('h2 span');
                                               innerElement.innerHTML = content+ " {" +currentitemid +"}";
@@ -4595,8 +4602,10 @@ let resultnew = [];
                                               MessageError.css('display', 'none');
                                               MessageSucess.html("");
                                                 MessageError.html("");                                              
-                                             var content=$("#" +currentitemid).html();
+                                            // var content=$("#" +currentitemid).html();
+                                              var content=$("#" +currentitemid).text().trim();
                                              $("#publishSchemaForm #txtSchemaName").val(content);
+
                                               const innerElement = publishdiv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
                                                innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{" +currentitemid +"}</span>";
@@ -4620,7 +4629,8 @@ let resultnew = [];
                                               MessageSucess.html("");
                                                 MessageError.html("");
 
-                                             var content=$("#" +currentitemid).html();
+                                            // var content=$("#" +currentitemid).html();
+                                              var content=$("#" +currentitemid).text().trim();
                                              $("#deleteSchemaForm #txtSchemaName").val(content);
                                               const innerElement = removediv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
@@ -4639,7 +4649,10 @@ let resultnew = [];
 
                                              var duplicateSchemaForm=  $("#duplicateSchemaForm");
                                              duplicateSchemaForm.css('display', 'block');
-                                             var content=$("#" +currentitemid).html();
+                                             //var content=$("#" +currentitemid).html();
+                                              var content=$("#" +currentitemid).text().trim();
+
+                                            
                                 $("#duplicateSchemaForm #txtSchemaName").val(content);
                                               const innerElement = removediv.querySelector('h2 span');
                                              //innerElement.innerHTML = content+ " {" +currentitemid +"}";
