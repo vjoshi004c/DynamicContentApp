@@ -64,27 +64,39 @@ namespace DynamicContentApp.Controllers
                 }
 
                 // 2. Perform parameterized SQL command execution to save records safely
-                string query = "INSERT INTO AssetMediaUploadedFiles (FileName, ContentType, FileData, AssetItemID, AssetItemFieldID, SchemaFieldID) VALUES (@FileName, @ContentType, @FileData,@AssetItemID, @AssetItemFieldID, @SchemaFieldID)";
+                //string query = "INSERT INTO AssetMediaUploadedFiles (FileName, ContentType, FileData, AssetItemID, AssetItemFieldID, SchemaFieldID) VALUES (@FileName, @ContentType, @FileData,@AssetItemID, @AssetItemFieldID, @SchemaFieldID)";
                 string fileurl  = schemaPath + "/" + fileName + "?assetItemID=" + assetItemID + "&assetItemFieldID=" + assetFieldID + "&schemaFieldID=" + assetSchemaID;
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+
+                DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+                string isInsertSuccess = dynamicContentDAL.UploadAndSave(fileurl, contentType, fileData, assetItemID, assetFieldID, assetSchemaID);
+                
+                if (isInsertSuccess!= string.Empty)
                 {
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        //command.Parameters.AddWithValue("@FileName", schemaPath +"/" + fileName+ "? assetItemID= " + assetItemID + "&assetItemFieldID= "+assetFieldID + "&schemaFieldID= " + assetSchemaID);
-                        command.Parameters.AddWithValue("@FileName", fileurl);
-
-                        command.Parameters.AddWithValue("@ContentType", contentType);
-                        command.Parameters.AddWithValue("@FileData", fileData); // Maps directly to VARBINARY(MAX)
-                        command.Parameters.AddWithValue("@AssetItemID", assetItemID);
-                        command.Parameters.AddWithValue("@AssetItemFieldID", assetFieldID);
-                        command.Parameters.AddWithValue("@SchemaFieldID", assetSchemaID);
-
-                        await connection.OpenAsync();
-                        await command.ExecuteNonQueryAsync();
-                    }
+                    return Json(new { message = "File successfully uploaded!", fileurl = fileurl, assetFieldID = isInsertSuccess });
                 }
+                else
+                {
+                    return Json(new { message = $"Server error processing file" });
+                }
+                //using (SqlConnection connection = new SqlConnection(_connectionString));
+                //{
+                //    using (SqlCommand command = new SqlCommand(query, connection))
+                //    {
+                //        //command.Parameters.AddWithValue("@FileName", schemaPath +"/" + fileName+ "? assetItemID= " + assetItemID + "&assetItemFieldID= "+assetFieldID + "&schemaFieldID= " + assetSchemaID);
+                //        command.Parameters.AddWithValue("@FileName", fileurl);
 
-                return Json(new { message = "File successfully uploaded!", fileurl = fileurl });
+                //        command.Parameters.AddWithValue("@ContentType", contentType);
+                //        command.Parameters.AddWithValue("@FileData", fileData); // Maps directly to VARBINARY(MAX)
+                //        command.Parameters.AddWithValue("@AssetItemID", assetItemID);
+                //        command.Parameters.AddWithValue("@AssetItemFieldID", assetFieldID);
+                //        command.Parameters.AddWithValue("@SchemaFieldID", assetSchemaID);
+
+                //        await connection.OpenAsync();
+                //        await command.ExecuteNonQueryAsync();
+                //    }
+                //}
+
+               // return Json(new { message = "File successfully uploaded!", fileurl = fileurl });
             }
             catch (Exception ex)
             {

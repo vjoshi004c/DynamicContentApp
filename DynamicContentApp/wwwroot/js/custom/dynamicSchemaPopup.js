@@ -13,7 +13,7 @@ $(document).ready(function () {
         $("#customModalMedia").hide();
     });
     $("#uploadBtn").click(function () {
-       // alert("uploadBtn");
+        //alert("uploadBtn");
         
         var fileInput = $("#fileInput")[0].files[0];
 
@@ -41,8 +41,9 @@ $(document).ready(function () {
         var assetSchemaID = parentitemvalue.attr("schemafieldid");
         //alert(assetSchemaID);
         var assetFieldID = parentitemvalue.attr("assetfieldid");
+        //alert("assetFieldID"+assetFieldID);
         var schemaPath = parentitemvalue.attr("schemaPath");
-        //alert(schemaPath);
+        //  alert(schemaPath);
         // Build the multi-part form payload
         var formData = new FormData();
         formData.append("uploadedFile", fileInput);
@@ -71,10 +72,17 @@ $(document).ready(function () {
                 //alert(response.fileurl);
                 //const selectedItemID = $("#txtSelectedItemID").val();
                 //$("#" + parentitemid).val(selectedItemID);
+                //alert('parentitemid_'+ parentitemid);
                 $("#" + parentitemid).val(response.fileurl);
+                 var assetFieldID = parentitemvalue.attr("assetfieldid");
+                    //alert("assetFieldID"+assetFieldID);
+                parentitemvalue.attr("assetfieldid", response.assetFieldID); 
                 //alert($("#" + parentitem).val(selectedItemPath));
                 //alert(parentitemid + parentitemPath + selectedItemPath + selectedItemID);
                 $("#hdnMediaParentId").val('');
+                var mediaFileTxt = "MEDIAFILE_" +assetItemID+ "_"+ assetSchemaID;
+                // alert('mediaFileTxt'+ mediaFileTxt);
+//MEDIAFILE_70B85994-B66D-4C4E-BB0F-6EAC6D505BA2_BB07F1FC-8F63-47BA-83FE-C60E60D115E4
             },
             error: function () {
                 $("#statusMessage").text("An error occurred during upload.").css("color", "red");

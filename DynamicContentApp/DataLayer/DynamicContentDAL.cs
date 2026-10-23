@@ -1629,7 +1629,51 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+        public string UploadAndSave(string fileurl, string contentType, byte[] fileData, string assetItemID, string assetFieldID, string assetSchemaID)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            string newId = string.Empty;
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_media_upload_files", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@FileName", fileurl);
+                cmd.Parameters.AddWithValue("@ContentType", contentType);
+                cmd.Parameters.AddWithValue("@FileData", fileData);
+                cmd.Parameters.AddWithValue("@AssetItemID", assetItemID);
+                cmd.Parameters.AddWithValue("@AssetItemFieldID", assetFieldID);
+                cmd.Parameters.AddWithValue("@SchemaFieldID", assetSchemaID);
+
+                con.Open();
+
+                //cmd.ExecuteScalar();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    newId = Convert.ToString(result);
+                    //Console.WriteLine($"Newly Inserted ID: {newId}");
+                }
+                // result = cmd.ExecuteScalar().ToString();
+                return newId;
+
+
+
+                // result = cmd.ExecuteScalar().ToString();
+               // return true;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty ;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public SchemaDeleteModel DeleteAssetInPublishQueue(string ID)
         {
             SqlConnection con = null;

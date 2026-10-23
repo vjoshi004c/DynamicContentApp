@@ -4856,6 +4856,7 @@ function fullpreview() {
                 processData: false, // Required: Tells jQuery not to convert data
                 success: function (response) {
                     $("#statusMessage").text(response.message).css("color", "green");
+
                 },
                 error: function () {
                     $("#statusMessage").text("An error occurred during upload.").css("color", "red");
