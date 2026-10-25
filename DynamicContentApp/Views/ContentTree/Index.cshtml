@@ -2490,11 +2490,11 @@ body {font-family: Arial;}
                if(optionsData.length >0)
                {
 
-                RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID)
+                RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID,assetItemTreeeID)
                }
               
             }
-       function RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID) {
+       function RenderAssetItemDetail(optionsData, assetItemID, assetItemSchemaID, assetItemTreeeID) {
                   //alert(optionsData.length)
                   //alert(assetItemID);
                  // alert(assetItemSchemaID);
@@ -2508,6 +2508,7 @@ body {font-family: Arial;}
                     const form = $('<form>').attr({ method: 'post', action: 'submitFields', id: 'frmAssetFieldDetailsContainer' });
                     var hdnAssetItemID = 'hdn_' +assetItemID;
                     var hdnAssetItemSchemaID= 'hdn_' +assetItemSchemaID;
+                    var hdnAssetItemTreeeID= 'hdn_' +assetItemTreeeID;
 
                    // for hidden field to care assetid
                     const SchemaSpan1 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
@@ -2524,9 +2525,16 @@ body {font-family: Arial;}
 
 
                     const SchemaSpan11 = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
-                         const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'hidden', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:'hdnAssetItemSchemaID', placeholder: 'AssetFieldID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
+                         const AssetFieldIDIDInput2 = $('<input>').attr({ type: 'hidden', value:assetItemSchemaID ,name: 'AssetItemSchemaID', id:'hdnAssetItemSchemaID', placeholder: 'AssetItemSchemaID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
                      SchemaSpan11.append(AssetFieldIDIDInput2);
                      form.append(SchemaSpan11);
+
+                     const SchemaSpanTree = $('<div>').attr({ style: 'padding-top:1em;width:80%', });
+                                 const AssetFieldIDIDInputTree = $('<input>').attr({ type: 'hidden', value:assetItemTreeeID ,name: 'AssetItemTreeeID', id:'hdnAssetItemTreeeID', placeholder: 'AssetItemTreeeID' , style:'width:80%;background-color:#f2f2f2;border-color:#f2f2f2'});
+                     SchemaSpanTree.append(AssetFieldIDIDInputTree);
+                     form.append(SchemaSpanTree);
+
+
                     $.each(optionsData, function (index, item) {
                   // alert(item.assetID + " , " + item.assetSchemaID);
                    // alert(item["assetID"] + " , " + item["assetSchemaID"]);
@@ -3356,7 +3364,13 @@ body {font-family: Arial;}
 
                                    var assetItemID= $("#hdnAssetItemID").val();
                                       var assetItemSchemaID= $("#hdnAssetItemSchemaID").val();
-                                       // alert('btnSaveAssetFields' +assetItemTreeeID + ''+ assetItemSchemaID );
+                                       var assetItemTreeeID= $("#hdnAssetItemTreeeID").val();
+                                          //  alert('btnSaveAssetFields' +assetItemTreeeID + ''+ assetItemSchemaID ''+ assetItemID );
+                                         // alert('btnSaveAssetFields' +assetItemID  );
+
+                                                //alert('btnSaveAssetFields' +assetItemSchemaID  );
+
+                                              // alert('btnSaveAssetFields' +assetItemTreeeID  );
 
                                     controls.each(function() {
                                         var control = $(this);
@@ -3406,11 +3420,13 @@ body {font-family: Arial;}
                                             //alert("success");
                                              if (response === true) {
                                                 showAlert("Asset contnet successfully updated.");
-                                                     //alert("Successfully saved!");
+                                                             //alert(assetItemTreeeID);
+                                                     ViewContentItem( assetItemTreeeID) 
                                                  }
                                                   else {
                                                      showAlert("Oops! Error while updaging asset content.");
                                                           //alert("Failed while saving");
+                                                                  ViewContentItem( assetItemID)
                                                     }
                                              //alert("Success:", response);
                                              // RecordCount= response.length;
@@ -3813,7 +3829,7 @@ let resultnew = [];
                               getSchema( currentitemid );
                               openCity1(event, 'content')
 
-                               //alert(currentitemid);
+                               //alert("ViewContentItem"+ currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
                                    var assetid = $("#editSchemaForm #txtSchemaID").val();
                                  getAssetMasterLayoutDetails(assetid);
