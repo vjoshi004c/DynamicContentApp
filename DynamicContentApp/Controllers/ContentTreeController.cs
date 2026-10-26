@@ -1,4 +1,5 @@
 using DynamicContentApp.DataLayer;
+using  DynamicContentApp.Filters;
 using DynamicContentApp.JSON;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,9 +17,9 @@ using System.Dynamic;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
-using  DynamicContentApp.Filters;
 
 namespace DynamicContentApp.Controllers
 {
@@ -32,7 +34,8 @@ namespace DynamicContentApp.Controllers
         //private string _connectionString = "Data Source=SQL1026;Initial Catalog=TestDCA;TrustServerCertificate=True;User ID=sa;Password=Wstinol1";
         private string _connectionString = "";//"Data Source=manyapc;Initial Catalog=TestDCA_V1;TrustServerCertificate=True;User ID=sa;Password=vpm031207";
         private readonly IConfiguration _configuration;
-        public ContentTreeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService, IConfiguration configuration) : base(logger, viewRenderService, controllerRenderService)
+        private readonly InMemoryFileProvider _inMemoryProvider;
+        public ContentTreeController(ILogger<BaseController> logger, IViewRenderService viewRenderService, IControllerRenderService controllerRenderService, IOptions<SystemConfigOptions> options, ICMSService cmsService, IConfiguration configuration, InMemoryFileProvider inMemoryProvider) : base(logger, viewRenderService, controllerRenderService)
         {
             _logger = logger;
             _viewRenderService = viewRenderService;
@@ -41,6 +44,7 @@ namespace DynamicContentApp.Controllers
             _cmsService = cmsService;
             _configuration = configuration;
             _connectionString = _configuration["ConnectionStrings:DefaultConnection"];
+            _inMemoryProvider = inMemoryProvider;
         }
         [HttpPost]
         public async Task<IActionResult> UploadAndSave(IFormFile uploadedFile, string assetFieldID , string assetSchemaID, string assetItemID, string schemaPath)
@@ -128,10 +132,108 @@ namespace DynamicContentApp.Controllers
             }
         }
 
+        //[HttpGet]
+        //public IActionResult JsonToModelByID(string AssetItemID)
+        //{
 
-       
+
+
+        //    string AssetItemPathNew = string.Empty;
+        //    string jsonOutput = string.Empty;
+        //    DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+        //    List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemID);
+        //    string AssetItemPath = string.Empty;
+
+        //    if (SchemaModellist != null && SchemaModellist.Count > 0)
+        //    {
+        //        foreach (SchemaModel item in SchemaModellist)
+        //        {
+        //            AssetItemPath = item.SchemaPath;
+
+        //        }
+
+        //    }
+
+
+        //    if (AssetItemIDNew != string.Empty && AssetItemPath != string.Empty )
+        //    {
+        //        // await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
+        //        CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration, _inMemoryProvider);
+
+        //        dynamic dynamicObject = CMSServiceDynamic.JsonToModel(AssetItemPath);
+
+        //        // jsonOutput = JsonConvert.SerializeObject(dynamicObject);
+        //        jsonOutput = dynamicObject.ToString(Formatting.Indented);
+        //        // return Json(dynamicObject);
+        //        return Ok(jsonOutput);
+        //    }
+        //    else
+        //    {
+        //        return Ok("AssetItmeID is not available in current URL");
+        //    }
+        //}
+        // sample urls to test 
+        //http://localhost:5287/CONTENTTREE/JsonToModel?AssetItemID=8144904A-FC80-49CE-AE62-CD89753D106D
+        //http://localhost:5287/CONTENTTREE/JsonToModel?AssetItemPath=/UniversalCMS/Content/ArticleSite
         [HttpGet]
-        public IActionResult JsonToModel()
+        public IActionResult JsonToModel(string AssetItemPath, string AssetItemID)
+        {
+            string jsonOutput = string.Empty;
+            string AssetItemIDNew = string.Empty;
+            string AssetItemPathNew = string.Empty;
+            if (!String.IsNullOrEmpty(HttpContext.Request.Query["AssetItemID"]))
+            {
+                AssetItemIDNew = HttpContext.Request.Query["AssetItemID"].ToString();
+                DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+                List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemIDNew);
+               
+
+                if (SchemaModellist != null && SchemaModellist.Count > 0)
+                {
+                    foreach (SchemaModel item in SchemaModellist)
+                    {
+                        AssetItemPathNew = item.SchemaPath;
+
+                    }
+
+                }
+            }
+
+            if (AssetItemIDNew == string.Empty )
+            {
+                if (!String.IsNullOrEmpty(HttpContext.Request.Query["AssetItemPath"]))
+                {
+                    AssetItemPathNew = HttpContext.Request.Query["AssetItemPath"].ToString();
+                }
+            }
+            
+
+
+            if (AssetItemPathNew != string.Empty)
+            {
+                // await _cmsService.IfModeIsContentManagement(HomeViewModel, false, PageItemID );
+                CMSServiceDynamic CMSServiceDynamic = new CMSServiceDynamic(null, _viewRenderService, _controllerRenderService, _options, _configuration, _inMemoryProvider);
+
+                dynamic dynamicObject = CMSServiceDynamic.JsonToModel(AssetItemPathNew);
+
+                // jsonOutput = JsonConvert.SerializeObject(dynamicObject);
+                jsonOutput = dynamicObject.ToString(Formatting.Indented);
+                // return Json(dynamicObject);
+                return Ok(jsonOutput);
+            }
+            else
+            {
+                return Ok("AssetItemID or AssetItmePath  is not available in current URL");
+            }
+
+            //  return Json(dynamicObject.ToString());
+
+            //const obj = JSON.parse(jsonString);
+            //string minifiedJson = jsonObject.ToString(Formatting.None);
+
+        }
+            [HttpGet]
+        public IActionResult JsonToModel_old()
         {
 
             string AssetItemPath = "/UniversalCMS/Content/ArticleSite";
@@ -200,9 +302,9 @@ namespace DynamicContentApp.Controllers
 
             dynamic dynamicObjectN= JObject.Parse(JsonData);
 
-            dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(JsonData);
+           // dynamic dynamicObject = JsonSerializer.Deserialize<ExpandoObject>(JsonData);
 
-            dynamic dynamicObject1 = JsonSerializer.Deserialize<dynamic>(JsonData);
+            //dynamic dynamicObject1 = JsonSerializer.Deserialize<dynamic>(JsonData);
 
             // string json = "{ 'Name': 'John Doe', 'Age': 30, 'Address': { 'City': 'New York' } }";
             string SquidGame = @"
