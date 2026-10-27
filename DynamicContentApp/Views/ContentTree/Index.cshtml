@@ -901,8 +901,47 @@ body {font-family: Arial;}
                         <input type="text" id="txtSelectedItemID" value="" style="width:90%;" />
             <div style="padding-top:10px">
                              <input type="button" id="btnSelectedItemPath" value="Select" class="unfake-disabled-button" style="float:left;"/>
-                        <input type="button" id="btnSelectedItemPathSchema" value="Select" class="unfake-disabled-button" style="float:left;" />
+                        <input type="button" id="btnSelectedItemPathSchema" value="Select Schema" class="unfake-disabled-button" style="float:left;" />
+                          <input type="button" id="btnSelectedItemPathLink" value="Select Link" class="unfake-disabled-button" style="float:left;" />
+                            <input type="button" id="btnSelectedItemPathMedia" value="Select Media" class="unfake-disabled-button" style="float:left;" />
                         <input type="button" id="closeModalBtnSecond" value="Close" class="unfake-disabled-button" style="margin-left:5px" />
+                        </div>
+                        <div class="main-container">
+                            <div class="sidebar scroll-container " id="myUL1Div">
+
+                                <h2 id="myUL1h1">Content Tree</h2>
+                                <ul id="myUL1">
+                                    @* <li tag="1049D17E-6C1C-45A9-9B75-5F779B61023E">
+                                        <span  id="1049D17E-6C1C-45A9-9B75-5F779B61023E" tag="1049D17E-6C1C-45A9-9B75-5F779B61023E" class="caret_lup default-color">Lookup tree</span>
+                                        <ul id="lup_1049D17E-6C1C-45A9-9B75-5F779B61023E" class="nested" >
+                                        </ul>
+                                    </li> *@
+                                </ul>
+
+                            </div>
+                        </div>
+                        <input type="hidden" id="hdnChildCount1" runat="server" value="0" />
+                       
+                    </div>
+                </div>
+
+                 <div id="customModalInternalLink" class="modal-overlay">
+                    <!-- Modal Box Content -->
+                    <div class="modal-content">
+                        <span id="closeModalBtnInternalLink" class="close-x">&times;</span>
+                        <h2><span id="lblModelTitleInternalLink></span></h2>
+                        <input type="hidden" id="hdnTitleInternalLink" />
+                         <input type="hidden" id="hdnParentIdInternalLink" />
+                         <input type="hidden" id="hdnParentPathInternalLink" />
+                        <input type="hidden" id="hdnAssetIdInternalLink" />
+                        <input type="hidden" id="hdnTitleInternalLink" />
+                        <span>Select internal path of site page</span>
+                        <input type="text" id="txtSelectedItemPathInternalLink" value="" style="width:90%;" />
+                        <input type="text" id="txtSelectedItemIDInternalLink" value="" style="width:90%;" />
+            <div style="padding-top:10px">
+                             <input type="button" id="btnSelectedItemPathInternalLink" value="Select" class="unfake-disabled-button" style="float:left;"/>
+                        <input type="button" id="btnSelectedItemPathSchemaInternalLink" value="Select" class="unfake-disabled-button" style="float:left;" />
+                        <input type="button" id="closeModalBtnSecondInternalLink" value="Close" class="unfake-disabled-button" style="margin-left:5px" />
                         </div>
                         <div class="main-container">
                             <div class="sidebar scroll-container " id="myUL1Div">
@@ -937,7 +976,7 @@ body {font-family: Arial;}
          <input type="text" id="txtSelectedItemPathExternalLInk" value="" style="width:90%;" />
          <input type="text" id="txtSelectedItemIDExternalLInk" value="" style="width:90%;display:none;" />
          <div style="padding-top:10px">
-              <input type="button" id="btnSelectedItemPathExternalLInk" value="Select" class="unfake-disabled-button" style="float:left;"/>
+              <input type="button" id="btnSelectedItemPathExternalLInk" value="Save Link" class="unfake-disabled-button" style="float:left;"/>
          <input type="button" id="btnSelectedItemPathSchemaExternalLInk" value="Select" class="unfake-disabled-button" style="float:left;" />
          <input type="button" id="closeModalBtnSecondExternalLInk" value="Close" class="unfake-disabled-button" style="margin-left:5px" />
          </div>
@@ -3035,6 +3074,27 @@ body {font-family: Arial;}
                      }
                      if(item.schemaFieldType =='LINK')
                      {
+                          let linkID ='';
+                                         let linkPath='';
+                          if(assetFieldValue.includes("LINK::"))
+                                     {
+                                           let assetFieldValueNew= assetFieldValue.replace("LINK::", "");
+                                        
+                                       
+                                         let parts = assetFieldValueNew.split(";"); 
+
+                                             linkID = parts[0];  // "apple"
+                                             linkPath = parts[1];
+
+                                             //alert(assetFieldValueNew +' ' + linkID +' ' +linkPath )
+                                             //$('#'+htmlid).val(linkPath)
+                                            // alert($('#'+htmlid).val())
+                                     }
+                                     else 
+                                     {
+                                         linkPath=assetFieldValue;
+                                     }
+
                             const htmlid = 'LINK_'+schemaFieldID
                             const htmlrawid = 'LINK_RAW_'+schemaFieldID
                             SchemaSpan2.append(AssetFieldNameLabel);
@@ -3045,11 +3105,19 @@ body {font-family: Arial;}
                             form.append(SchemaSpan2);
 
                             const SchemaSpanMediaDiv_Link = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                                const AssetFieldHtmlb_Link = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue', readonly:'readonly',placeholder: 'Select  link to internal  or external page url ' , style:'width:100%;'});
+                                const AssetFieldHtmlb_Link = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'', value:linkPath, name: 'AssetFieldSingleValue', readonly:'readonly',placeholder: 'Select  link to internal  or external page url ' , style:'width:100%;'});
                             SchemaSpanMediaDiv_Link.append(AssetFieldHtmlb_Link);
-                           // const AssetFieldHtmlb_LinkRaw = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlrawid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
-                            //SchemaSpanMediaDiv_Link.append(AssetFieldHtmlb_LinkRaw);
+                             const SchemaSpanMediaDivRaw_Link = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                           const AssetFieldHtmlb_LinkRaw = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlrawid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
+                            SchemaSpanMediaDivRaw_Link.append(AssetFieldHtmlb_LinkRaw);
                             form.append(SchemaSpanMediaDiv_Link);
+                            form.append(SchemaSpanMediaDivRaw_Link);
+
+
+                           
+
+
+
                                      AssetFieldHtmlb_InternalLink.on("click", function () {
                                                                         //alert("inside AssetFieldHtmlb_MediaInsert");
                                                                         const mediaPath = $('#'+htmlid).val();
@@ -3058,58 +3126,65 @@ body {font-family: Arial;}
                                                                                  $("#lblModelTitle").html('');
                                                                                 const currenttitle = this.getAttribute('title');
                                                                                 $("#lblModelTitle").html(currenttitle);
-                                                                                $("#hdnParentId").val(htmlid);
+                                                                                $("#hdnParentId").val(htmlrawid);
+                                                                                 $("#hdnParentPath").val(htmlid);
                                                                                 $("#btnSelectedItemPath").css("display", "none");
                                                                                 $("#btnSelectedItemPathSchema").css("display", "none");
+                                                                                 $("#btnSelectedItemPathLink").css("display", "none");
+                                                                                $("#btnSelectedItemPathMedia").css("display", "none");
                                                                                     if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
-                                                                                // $("#btnSelectedItemPath").css("visibility", "visible");
-                                                                                $("#btnSelectedItemPath").css("display", "block");
-                                                                                $("#txtSelectedItemPath").val(mediaPath);
-                        $('#txtSelectedItemPath').prop('readonly', true);
-                                                                                $('#txtSelectedItemID').prop('readonly', true);
-                                                                                if( mediaPath.includes("http"))
-                                                                                    {
-                                                                                        //alert("External link is not allowed for internal link selection");
-                                                                                         $("#txtSelectedItemPath").val('');
+                                                                                        // $("#btnSelectedItemPath").css("visibility", "visible");
+                                                                                        $("#btnSelectedItemPathLink").css("display", "block");
+                                                                                        $("#txtSelectedItemPath").val(mediaPath);
+                                                                                        // $('#txtSelectedItemPathInternalLink').prop('readonly', true);
+                                                                                        //$('#txtSelectedItemIDInternalLink').prop('readonly', true);
+                                                                                        if( mediaPathRaw.includes("http"))
+                                                                                                {
+                                                                                                    //alert("External link is not allowed for internal link selection");
+                                                                                                     $("#txtSelectedItemPath").val('');
+                                                                                                      $("#txtSelectedItemID").val('');
                                                                                    
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                    //alert("Internal link is selected");
-
-                                                                                     $("#txtSelectedItemPath").val(mediaPath);
-                                                                                    }
-
-
-
-                                                                                $("#txtSelectedItemID").val('');
                                                                                                 }
-                                                                                 $("#customModal").show();
-                                                                                       lookupTree('D1B2BE76-C76B-447A-A30A-DDDF4959A8FC', 'Internal Link');
-                                                                });
+                                                                                                else
+                                                                                                {
+                                                                                                //alert("Internal link is selected");
+
+                                                                                                 $("#txtSelectedItemPath").val(mediaPath);
+                                                                                                 $("#txtSelectedItemID").val(mediaPathRaw);
+                                                                                                }
+                                                                                                   
+                                                                                        }
+                                                                                    $("#customModal").show();
+                                                                                               lookupTree('D1B2BE76-C76B-447A-A30A-DDDF4959A8FC', 'Internal Link');
+                                                                             });
+
                                         AssetFieldHtmlb_ExternalLink.on("click", function () {
                                                 //alert("inside AssetFieldHtmlb_MediaInsert");
                                                 const mediaPath = $('#'+htmlid).val();
+                                                  const mediaPathRaw = $('#'+htmlrawid).val();
                                                     //alert(mediaPath);
                                                             $("#lblModelTitleExternalLInk").html('');
                                                         const currenttitle = this.getAttribute('title');
                                                         $("#lblModelTitleExternalLInk").html(currenttitle);
-                                                        $("#hdnParentIdExternalLInk").val(htmlid);
+                                                        $("#hdnParentIdExternalLInk").val(htmlrawid);
+                                                        $("#hdnParentPathExternalLInk").val(htmlid);
                                                         $("#btnSelectedItemPathExternalLInk").css("display", "none");
                                                         $("#btnSelectedItemPathSchemaExternalLInk").css("display", "none");
                                                             if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
-                                                        // $("#btnSelectedItemPath").css("visibility", "visible");
-                                                        $("#btnSelectedItemPathExternalLInk").css("display", "block");
-                                                            if( mediaPath.includes("http"))
-                                                            {
+                                                                    // $("#btnSelectedItemPath").css("visibility", "visible");
+                                                                    $("#btnSelectedItemPathExternalLInk").css("display", "block");
+                                                                        if( mediaPath.includes("http"))
+                                                                        {
                                                            
                                                            
-                                                             $("#txtSelectedItemPathExternalLInk").val(mediaPath);
-                                                            }
-                                                            else
-                                                            {
-                                                              $("#txtSelectedItemPathExternalLInk").val('');
-                                                            }
+                                                                         $("#txtSelectedItemPathExternalLInk").val(mediaPath);
+                                                                           $("#txtSelectedItemIDExternalLInk").val(mediaPath);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                          $("#txtSelectedItemPathExternalLInk").val('');
+                                                                            $("#txtSelectedItemIDExternalLInk").val('');
+                                                                        }
                                                         
                                                        // $("#txtSelectedItemIDExternalLInk").val('');
                                                                         }
@@ -3186,9 +3261,11 @@ body {font-family: Arial;}
                                                                                 $("#hdnParentId").val(htmlid);
                                                                                 $("#btnSelectedItemPath").css("display", "none");
                                                                                 $("#btnSelectedItemPathSchema").css("display", "none");
+                                                                                  $("#btnSelectedItemPathLink").css("display", "none");
+                                                                                $("#btnSelectedItemPathMedia").css("display", "none");
                                                                                     if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
                                                                                 // $("#btnSelectedItemPath").css("visibility", "visible");
-                                                                                $("#btnSelectedItemPath").css("display", "block");
+                                                                                $("#btnSelectedItemPathMedia").css("display", "block");
                                                                                 $("#txtSelectedItemPath").val(mediaPath);
                                                                                 $("#txtSelectedItemID").val('');
                                                                                                 }

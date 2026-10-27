@@ -116,6 +116,8 @@ $(document).ready(function () {
         // $("#btnSelectedItemPathSchema").css("visibility", "hidden");
         $("#btnSelectedItemPath").css("display", "none");
         $("#btnSelectedItemPathSchema").css("display", "none");
+        $("#btnSelectedItemPathLink").css("display", "none");
+        $("#btnSelectedItemPathMedia").css("display", "none");
         if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
             // $("#btnSelectedItemPath").css("visibility", "visible");
             $("#btnSelectedItemPath").css("display", "block");
@@ -177,6 +179,8 @@ $(document).ready(function () {
         // $("#btnSelectedItemPathSchema").css("visibility", "hidden");
         $("#btnSelectedItemPath").css("display", "none");
         $("#btnSelectedItemPathSchema").css("display", "none");
+        $("#btnSelectedItemPathLink").css("display", "none");
+        $("#btnSelectedItemPathMedia").css("display", "none");
         if (parentitem.indexOf('txtAssetItemSchema') > -1) {
             // $("#btnSelectedItemPathSchema").css("visibility", "visible");
             $("#btnSelectedItemPathSchema").css("display", "block");
@@ -209,6 +213,8 @@ $(document).ready(function () {
         // $("#btnSelectedItemPathSchema").css("visibility", "hidden");
         $("#btnSelectedItemPath").css("display", "none");
         $("#btnSelectedItemPathSchema").css("display", "none");
+        $("#btnSelectedItemPathLink").css("display", "none");
+        $("#btnSelectedItemPathMedia").css("display", "none");
         if (parentitem.indexOf('txtAssetItemSchema') > -1) {
             // $("#btnSelectedItemPathSchema").css("visibility", "visible");
             $("#btnSelectedItemPathSchema").css("display", "block");
@@ -261,6 +267,33 @@ $(document).ready(function () {
         $("#customModal").hide();
     });
 
+    $("#btnSelectedItemPathLink").on("click", function () {
+
+        const parentitemid = $("#hdnParentId").val();
+
+        let parentitemPath = '';
+        if ($("#hdnParentPath").length && $("#hdnParentPath").val().trim() !== '') {
+            parentitemPath = $("#hdnParentPath").val();
+        }
+        //const parentitemid = $("#hdnParentId").val();
+        const parentitempath = $("#hdnParentPath").val();
+        const selectedItemPath = $("#txtSelectedItemPath").val();
+        const selectedItemID = $("#txtSelectedItemID").val();
+        // $("#" + parentitemid).val(selectedItemPath);
+        if (parentitemPath !== '') {
+            $("#" + parentitempath).val(selectedItemPath);
+        }
+        //$("#" + parentitemid).val(selectedItemID);
+
+         $("#" + parentitemid).val("LINK::" + selectedItemID + ";" + selectedItemPath);
+        //alert($("#" + parentitem).val(selectedItemPath));
+        $("#hdnParentId").val('');
+        $("#hdnParentPath").val('');
+
+        $("#customModal").hide();
+    });
+
+
     $("#closeModalBtnExternalLInk").on("click", function () {
         $("#customModalExternalLInk").hide();
     });
@@ -284,10 +317,23 @@ $(document).ready(function () {
     });
 
 
+
+ 
+     $("#SuccessFailureModalBtn1").on("click", function () {
+        $("#lblModelTitle").html("");    
+        $("#customSuccessFailureModal").hide();
+    });
+     $("#SuccessFailureModalBtn2").on("click", function () {
+        $("#lblModelTitle").html("");
+        $("#customSuccessFailureModal").hide();
+     });
+
     $("#btnSelectedItemPathExternalLInk").on("click", function () {
         const parentitemid = $("#hdnParentIdExternalLInk").val();
+        const parentitemPath = $("#hdnParentPathExternalLInk").val();
         const selectedItemPath = $("#txtSelectedItemPathExternalLInk").val();
         $("#" + parentitemid).val(selectedItemPath);
+        $("#" + parentitemPath).val(selectedItemPath);
         //alert($("#" + parentitem).val(selectedItemPath));
         if (!selectedItemPath.includes("http")) {
             alert("Please enter a valid external link starting with http or https.");
@@ -296,14 +342,7 @@ $(document).ready(function () {
         $("#hdnParentIdExternalLInk").val('');
         $("#customModalExternalLInk").hide();
     });
-     $("#SuccessFailureModalBtn1").on("click", function () {
-        $("#lblModelTitle").html("");    
-        $("#customSuccessFailureModal").hide();
-    });
-     $("#SuccessFailureModalBtn2").on("click", function () {
-        $("#lblModelTitle").html("");
-        $("#customSuccessFailureModal").hide();
-    });
+
    
     $('#btnSaveMasterLayout').click(function (e) {
         e.preventDefault(); // This stops the form from submitting and redirecting

@@ -120,6 +120,8 @@
             $("#txtSelectedItemPath").val(parentitemvalue);
             $("#btnSelectedItemPath").css("display", "none");
             $("#btnSelectedItemPathSchema").css("display", "none");
+            $("#btnSelectedItemPathLink").css("display", "none");
+            $("#btnSelectedItemPathMedia").css("display", "none");
             if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
                 // $("#btnSelectedItemPathSchema").css("visibility", "visible");
                 $("#btnSelectedItemPath").css("display", "block");
@@ -140,6 +142,8 @@
             $("#txtSelectedItemPath").val(parentitemvalue);
             $("#btnSelectedItemPath").css("display", "none");
             $("#btnSelectedItemPathSchema").css("display", "none");
+            $("#btnSelectedItemPathLink").css("display", "none");
+            $("#btnSelectedItemPathMedia").css("display", "none");
             if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
             // $("#btnSelectedItemPathSchema").css("visibility", "visible");
                 $("#btnSelectedItemPath").css("display", "block");
@@ -158,6 +162,8 @@
             $("#txtSelectedItemPath").val(parentitemvalue);
             $("#btnSelectedItemPath").css("display", "none");
             $("#btnSelectedItemPathSchema").css("display", "none");
+            $("#btnSelectedItemPathLink").css("display", "none");
+            $("#btnSelectedItemPathMedia").css("display", "none");
             if (parentitem.indexOf('txtAssetItemSchema') <= -1) {
             // $("#btnSelectedItemPathSchema").css("visibility", "visible");
                 $("#btnSelectedItemPath").css("display", "block");
