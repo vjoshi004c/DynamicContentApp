@@ -293,7 +293,31 @@ $(document).ready(function () {
         $("#customModal").hide();
     });
 
+    $("#btnSelectedItemPathMedia").on("click", function () {
 
+        const parentitemid = $("#hdnParentId").val();
+
+        let parentitemPath = '';
+        if ($("#hdnParentPath").length && $("#hdnParentPath").val().trim() !== '') {
+            parentitemPath = $("#hdnParentPath").val();
+        }
+        //const parentitemid = $("#hdnParentId").val();
+        const parentitempath = $("#hdnParentPath").val();
+        const selectedItemPath = $("#txtSelectedItemPath").val();
+        const selectedItemID = $("#txtSelectedItemID").val();
+        // $("#" + parentitemid).val(selectedItemPath);
+        if (parentitemPath !== '') {
+            $("#" + parentitempath).val(selectedItemPath);
+        }
+        //$("#" + parentitemid).val(selectedItemID);
+
+         $("#" + parentitemid).val("MEDIA::" + selectedItemID + ";" + selectedItemPath);
+        //alert($("#" + parentitem).val(selectedItemPath));
+        $("#hdnParentId").val('');
+        $("#hdnParentPath").val('');
+
+        $("#customModal").hide();
+    });
     $("#closeModalBtnExternalLInk").on("click", function () {
         $("#customModalExternalLInk").hide();
     });

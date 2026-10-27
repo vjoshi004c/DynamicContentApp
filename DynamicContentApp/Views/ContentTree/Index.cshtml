@@ -2896,7 +2896,7 @@ body {font-family: Arial;}
                              SchemaSpan2.append(AssetFieldNameLabel);
                         form.append(SchemaSpan2);
                         const SchemaSpan3Multilist = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                      const AssetFieldMultilist = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+schemaFieldID, tag:'component', value:assetFieldValue, readonly:'readonly',name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
+                      const AssetFieldMultilist = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:'MULTILIST_INPUT_'+schemaFieldID, tag:'component', value:assetFieldValue, readonly:'readonly',name: 'AssetFieldSingleValue',placeholder: 'Raw value of multilist' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
                         SchemaSpan3Multilist.append(AssetFieldMultilist);
                           //$controlWrapper.append(SchemaSpan3Multilist);
                             form.append($controlWrapper);
@@ -3108,7 +3108,7 @@ body {font-family: Arial;}
                                 const AssetFieldHtmlb_Link = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'', value:linkPath, name: 'AssetFieldSingleValue', readonly:'readonly',placeholder: 'Select  link to internal  or external page url ' , style:'width:100%;'});
                             SchemaSpanMediaDiv_Link.append(AssetFieldHtmlb_Link);
                              const SchemaSpanMediaDivRaw_Link = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                           const AssetFieldHtmlb_LinkRaw = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlrawid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
+                           const AssetFieldHtmlb_LinkRaw = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlrawid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Raw value of link' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
                             SchemaSpanMediaDivRaw_Link.append(AssetFieldHtmlb_LinkRaw);
                             form.append(SchemaSpanMediaDiv_Link);
                             form.append(SchemaSpanMediaDivRaw_Link);
@@ -3240,7 +3240,30 @@ body {font-family: Arial;}
                          if(item.schemaFieldType =='IMAGE')
                      {
 
+                                  let mediaID ='';
+                                         let mediaPath='';
+                          if(assetFieldValue.includes("MEDIA::"))
+                                     {
+                                                   let assetFieldValueNew= assetFieldValue.replace("MEDIA::", "");
+                                        
+                                       
+                                         let parts = assetFieldValueNew.split(";"); 
+
+                                             mediaID = parts[0];  // "apple"
+                                             mediaPath = parts[1];
+
+                                             //alert(assetFieldValueNew +' ' + linkID +' ' +linkPath )
+                                             //$('#'+htmlid).val(linkPath)
+                                            // alert($('#'+htmlid).val())
+                                     }
+                                     else 
+                                     {
+                                         mediaPath=assetFieldValue;
+                                     }
+
+
                                 const htmlid = 'MEDIAFILE_'+schemaFieldID
+                                const htmlrawid = 'MEDIAFILE_RAW_'+schemaFieldID
                             SchemaSpan2.append(AssetFieldNameLabel);
                                 const AssetFieldHtmlb_MediaInsert = $('<input>').attr({title:"Select Media Item" ,type: 'button', text:"Insert Media",  onclick:'', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:'Insert Media File', name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;margin-left:15px;padding:3px;font-size:12px;'});
                             SchemaSpan2.append(AssetFieldHtmlb_MediaInsert);
@@ -3248,30 +3271,60 @@ body {font-family: Arial;}
                             form.append(SchemaSpan2);
 
                             const SchemaSpanMediaDiv_Media = $('<div>').attr({ style: 'padding:0em;width:100%',});
-                                const AssetFieldHtmlb_Media = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
+                                        const AssetFieldHtmlb_Media = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlid, tag:'', value:mediaPath, name: 'AssetFieldSingleValue',placeholder: 'Select  media file' , style:'width:100%;'});
                             SchemaSpanMediaDiv_Media.append(AssetFieldHtmlb_Media);
                             form.append(SchemaSpanMediaDiv_Media);
-                                     AssetFieldHtmlb_MediaInsert.on("click", function () {
-                                                                        //alert("inside AssetFieldHtmlb_MediaInsert");
-                                                                        const mediaPath = $('#'+htmlid).val();
-                                                                            //alert(mediaPath);
-                                                                                 $("#lblModelTitle").html('');
-                                                                                const currenttitle = this.getAttribute('title');
-                                                                                $("#lblModelTitle").html(currenttitle);
-                                                                                $("#hdnParentId").val(htmlid);
-                                                                                $("#btnSelectedItemPath").css("display", "none");
-                                                                                $("#btnSelectedItemPathSchema").css("display", "none");
-                                                                                  $("#btnSelectedItemPathLink").css("display", "none");
-                                                                                $("#btnSelectedItemPathMedia").css("display", "none");
-                                                                                    if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
-                                                                                // $("#btnSelectedItemPath").css("visibility", "visible");
-                                                                                $("#btnSelectedItemPathMedia").css("display", "block");
-                                                                                $("#txtSelectedItemPath").val(mediaPath);
-                                                                                $("#txtSelectedItemID").val('');
-                                                                                                }
-                                                                                 $("#customModal").show();
-                                                                                       lookupTree('B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9', 'MediaItem');
-                                                                });
+
+                             const SchemaSpanMediaDiv_MediaRaw = $('<div>').attr({ style: 'padding:0em;width:100%',});
+                                const AssetFieldHtmlb_MediaRaw = $('<input>').attr({ type: 'text', schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:htmlrawid, tag:'component', value:assetFieldValue, name: 'AssetFieldSingleValue',placeholder: 'Raw value of media file' , style:'width:100%;font-size:8px;background-color:#f4f4f4;'});
+                            SchemaSpanMediaDiv_MediaRaw.append(AssetFieldHtmlb_MediaRaw);
+                            
+                                form.append(SchemaSpanMediaDiv_MediaRaw);
+
+                                        AssetFieldHtmlb_MediaInsert.on("click", function () {
+                                                                                //alert("inside AssetFieldHtmlb_MediaInsert");
+                                                                                const mediaPath = $('#'+htmlid).val();
+                                                                                         const mediaPathRaw = $('#'+htmlrawid).val();
+
+                                                                                    //alert(mediaPath);
+                                                                                         $("#lblModelTitle").html('');
+                                                                                        const currenttitle = this.getAttribute('title');
+                                                                                        $("#lblModelTitle").html(currenttitle);
+                                                                                        $("#hdnParentId").val(htmlrawid);
+                                                                                                 $("#hdnParentPath").val(htmlid);
+                                                                                        $("#btnSelectedItemPath").css("display", "none");
+                                                                                         $("#btnSelectedItemPathSchema").css("display", "none");
+                                                                                          $("#btnSelectedItemPathLink").css("display", "none");
+                                                                                         $("#btnSelectedItemPathMedia").css("display", "none");
+
+                                                                                        $("#btnSelectedItemPathMedia").css("display", "none");
+                                                                                        if (htmlid.indexOf('txtAssetItemSchema') <= -1) {
+                                                                                            // $("#btnSelectedItemPath").css("visibility", "visible");
+                                                                                            $("#btnSelectedItemPathMedia").css("display", "block");
+                                                                                            $("#txtSelectedItemPath").val(mediaPath);
+                                                                                                    $("#txtSelectedItemID").val(mediaPathRaw);
+                                                                                        }
+                                                                                         // if( mediaPathRaw.includes("http"))
+                                                                                         //     {
+                                                                                         //         //alert("External link is not allowed for internal link selection");
+                                                                                         //          $("#txtSelectedItemPath").val('');
+                                                                                         //           $("#txtSelectedItemID").val('');
+
+                                                                                         //     }
+                                                                                         //     else
+                                                                                         //     {
+                                                                                         //     //alert("Internal link is selected");
+
+                                                                                         //      $("#txtSelectedItemPath").val(mediaPath);
+                                                                                         //      $("#txtSelectedItemID").val(mediaPathRaw);
+                                                                                         //     }
+
+                                                                                          
+
+                                                                                         $("#customModal").show();
+                                                                                               lookupTree('B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9', 'MediaItem');
+                                                                        });
+                                     
                                
                      }
                      
