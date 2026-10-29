@@ -173,41 +173,60 @@ namespace DynamicContentApp.Controllers
         //    }
         //}
         // sample urls to test 
-        //http://localhost:5287/CONTENTTREE/JsonToModel?AssetItemID=8144904A-FC80-49CE-AE62-CD89753D106D
-        //http://localhost:5287/CONTENTTREE/JsonToModel?AssetItemPath=/UniversalCMS/Content/ArticleSite
+        //http://localhost:5287/CONTENTTREE/GetPageAssetAsJson?AssetItemID=DF43F6E1-53D1-4104-9BD0-877C9EFAB057
+        //http://localhost:5287/CONTENTTREE/GetPageAssetAsJson?AssetItemPath=/UniversalCMS/Content/ArticleSite
         [HttpGet]
-        public IActionResult JsonToModel(string AssetItemPath, string AssetItemID)
+        public IActionResult GetPageAssetAsJson(string AssetItemPath, string AssetItemID) 
         {
             string jsonOutput = string.Empty;
             string AssetItemIDNew = string.Empty;
             string AssetItemPathNew = string.Empty;
+            string AssetItemSchemaMapped= string.Empty;
             if (!String.IsNullOrEmpty(HttpContext.Request.Query["AssetItemID"]))
             {
                 AssetItemIDNew = HttpContext.Request.Query["AssetItemID"].ToString();
-                DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-                List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemIDNew);
-               
 
-                if (SchemaModellist != null && SchemaModellist.Count > 0)
+                DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+
+                List<AssetItemModel> AssetItemModelList = dynamicContentDAL.GetSchemaByAssetID(AssetItemIDNew);
+                if (AssetItemModelList != null && AssetItemModelList.Count > 0)
                 {
-                    foreach (SchemaModel item in SchemaModellist)
+                    foreach (AssetItemModel item in AssetItemModelList)
                     {
-                        AssetItemPathNew = item.SchemaPath;
+                        AssetItemSchemaMapped = item.AssetItemSchemaMapped;
 
                     }
 
                 }
+
+                if (AssetItemSchemaMapped != string.Empty)
+                {
+                    List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemSchemaMapped);
+                    if (SchemaModellist != null && SchemaModellist.Count > 0)
+                    {
+                        foreach (SchemaModel item in SchemaModellist)
+                        {
+                            AssetItemPathNew = item.SchemaPath;
+                        }
+                    }
+                }
+                if (AssetItemPathNew == string.Empty)
+                {
+                    return Ok("Passing AssetItemID parameter is either invalid or not existed.");
+                }
+
+
+               
             }
 
-            if (AssetItemIDNew == string.Empty )
+            if (!String.IsNullOrEmpty(HttpContext.Request.Query["AssetItemPath"]))
             {
-                if (!String.IsNullOrEmpty(HttpContext.Request.Query["AssetItemPath"]))
+                AssetItemPathNew = HttpContext.Request.Query["AssetItemPath"].ToString();
+                if (AssetItemPathNew == string.Empty)
                 {
-                    AssetItemPathNew = HttpContext.Request.Query["AssetItemPath"].ToString();
+                    return Ok("Passing AssetItemPath parameter is either invalid or not existed.");
                 }
             }
-            
-
 
             if (AssetItemPathNew != string.Empty)
             {

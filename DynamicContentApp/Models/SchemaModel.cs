@@ -57,6 +57,26 @@
 
     }
 
+    public class AssetItemModel
+    {
+        public string? ID { get; set; }
+        public string? ItemName { get; set; }
+
+        public string? ItemPath { get; set; }
+
+        public string? SchemaID { get; set; }
+       
+
+        public bool? IsPageItem { get; set; }
+
+        public string? MasterPageLayoutPath { get; set; }
+        public string? ParentID { get; set; }
+        public string? AssetType { get; set; }
+        public string? AssetItemSchemaMapped { get; set; }
+
+
+    }
+
     public class SchemaDeleteModel
     {
         public bool? Status { get; set; }

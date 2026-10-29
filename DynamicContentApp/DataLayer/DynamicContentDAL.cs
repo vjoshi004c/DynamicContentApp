@@ -1182,6 +1182,62 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
+        public List<AssetItemModel> GetSchemaByAssetID(string AsesetItemID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<AssetItemModel> custlist = null;
+            try
+            {
+                custlist = new List<AssetItemModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_schema", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", AsesetItemID);
+                cmd.Parameters.AddWithValue("@SchemaName", "");
+                cmd.Parameters.AddWithValue("@SchemaPath", "");
+                cmd.Parameters.AddWithValue("@ParentID", "");
+                cmd.Parameters.AddWithValue("@AssetTypeID", "");
+                cmd.Parameters.AddWithValue("@Query", 6);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    AssetItemModel cobj = new AssetItemModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.ItemName = ds.Tables[0].Rows[i]["ItemName"].ToString();
+                    cobj.ItemPath = ds.Tables[0].Rows[i]["ItemPath"].ToString();
+                    cobj.SchemaID = ds.Tables[0].Rows[i]["SchemaID"].ToString();
+                    cobj.IsPageItem = Convert.ToBoolean(ds.Tables[0].Rows[i]["IsPageItem"]);
+                    cobj.MasterPageLayoutPath = ds.Tables[0].Rows[i]["MasterPageLayoutPath"].ToString();
+                    cobj.ParentID = ds.Tables[0].Rows[i]["ParentID"].ToString();
+                    cobj.AssetType = ds.Tables[0].Rows[i]["AssetType"].ToString();
+                    cobj.AssetItemSchemaMapped = ds.Tables[0].Rows[i]["AssetItemSchemaMapped"].ToString();
+                    custlist.Add(cobj);
+                }
+
+
+               
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public bool UpdateAssetItemPath(string AssetItemID, string AssetItemPath)
         {
             SqlConnection con = null;
