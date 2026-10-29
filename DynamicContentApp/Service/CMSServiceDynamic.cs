@@ -54,6 +54,25 @@ namespace DynamicContentApp.Service
             _configuration = configuration;
             _inMemoryProvider = inMemoryProvider;
         }
+        public bool IsHtmlEncoded(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return false;
+
+
+            if (input.Contains("&lt;") || input.Contains("&gt;") || input.Contains("&amp;") || input.Contains("&quot;") || input.Contains("&apos;"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+           // string decoded = WebUtility.HtmlDecode(input);
+           // string reencoded = WebUtility.HtmlEncode(decoded);
+
+           // return input.Equals(reencoded, StringComparison.OrdinalIgnoreCase);
+        }
         private void GetAssetData(string AssetItemPath, StringBuilder JsonDataSB, string Area)
         {
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
@@ -71,7 +90,7 @@ namespace DynamicContentApp.Service
                         string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                         string AssetLinkID = string.Empty;
                         string AssteLinkPath = string.Empty;
-                        if ( AssetItemFieldDetail.AssetFieldName == "DynamicContent")
+                        if ( AssetItemFieldDetail.AssetFieldName == "DynamicContent" || IsHtmlEncoded(AssetItemFieldDetail.AssetFieldValue))
                         {
                           string  decodeHtmlData=   WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
                             //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
@@ -173,7 +192,7 @@ namespace DynamicContentApp.Service
                         string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                         string AssetLinkID = string.Empty;
                         string AssteLinkPath = string.Empty;
-                        if (AssetItemFieldDetail.AssetFieldName == "DynamicContent")
+                        if (AssetItemFieldDetail.AssetFieldName == "DynamicContent" || IsHtmlEncoded(AssetItemFieldDetail.AssetFieldValue))
                         {
                             string decodeHtmlData = WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
                             //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
@@ -258,11 +277,11 @@ namespace DynamicContentApp.Service
                     string result = AssetItemPath.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                     string AssetLinkID = string.Empty;
                     string AssteLinkPath = string.Empty;
-                    if (AssetItemPath == "DynamicContent")
+                    if (AssetItemPath == "DynamicContent" || IsHtmlEncoded(AssetItemPath))
                     {
                         string decodeHtmlData = WebUtility.HtmlDecode(AssetItemPath);
-                        //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
-                        JsonDataSB.Append("\"" + AssetItemPath + "\"" + ":" + JsonConvert.SerializeObject(decodeHtmlData) + ",");
+                        JsonDataSB.Append("\"" + Area + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
+                        //JsonDataSB.Append("\"" + AssetItemPath + "\"" + ":" + JsonConvert.SerializeObject(decodeHtmlData) + ",");
                     }
                     else if (AssetItemPath.ToUpper().Contains("/MEDIA/") == true)
                     {
@@ -485,7 +504,7 @@ namespace DynamicContentApp.Service
                     string result = AssetItemFieldDetail.AssetFieldValue.Replace("\"", "\\\"").Replace("/", "\\/").Replace("\r\n", "\\n").Replace("\n", "\\n");
                     string AssetLinkID = string.Empty;
                     string AssteLinkPath = string.Empty;
-                    if (AssetItemFieldDetail.AssetFieldName == "DynamicContent")
+                    if (AssetItemFieldDetail.AssetFieldName == "DynamicContent" || IsHtmlEncoded(AssetItemFieldDetail.AssetFieldValue))
                     {
                         string decodeHtmlData = WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
                         //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
@@ -650,7 +669,13 @@ namespace DynamicContentApp.Service
                     // JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + result + "\",");
                     string AssetLinkID = string.Empty;
                     string AssteLinkPath = string.Empty;
-                    if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") ==true)
+                    if (AssetItemFieldDetail.AssetFieldName == "DynamicContent" || IsHtmlEncoded(AssetItemFieldDetail.AssetFieldValue))
+                    {
+                        string decodeHtmlData = WebUtility.HtmlDecode(AssetItemFieldDetail.AssetFieldValue);
+                        //JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + JsonConvert.SerializeObject(decodeHtmlData) + "\",");
+                        JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + JsonConvert.SerializeObject(decodeHtmlData) + ",");
+                    }
+                    else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") ==true)
                     {
                         AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
                         AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
