@@ -99,10 +99,21 @@ namespace DynamicContentApp.Service
                         else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") == true)
                         {
                             // GetAssetDataMedia(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
-                            AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
-                            AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
-                            GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                            //AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                            //AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                            //GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
 
+                            if (AssetItemPath.Contains("?") == false)
+                            {
+                                AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                                AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                                GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+
+                            }
+                            else
+                            {
+                                JsonDataSB.Append("\"" + Area + "\"" + ":" + "\"" + AssetItemPath + "\",");
+                            }
                         }
                         else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("LINK::") == true)
                         {
@@ -200,9 +211,18 @@ namespace DynamicContentApp.Service
                         }
                         else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") == true)
                         {
-                            AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
-                            AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
-                            GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                           
+                            if (AssetItemPath.Contains("?") == false)
+                            {
+                                AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                                AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                                GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                                
+                            }
+                            else
+                            {
+                                JsonDataSB.Append("\"" + Area + "\"" + ":" + "\"" + AssetItemPath + "\",");
+                            }
 
                             //GetAssetDataMedia(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
                         }
@@ -285,12 +305,21 @@ namespace DynamicContentApp.Service
                     }
                     else if (AssetItemPath.ToUpper().Contains("/MEDIA/") == true)
                     {
-                        AssetItemPath = AssetItemPath.Replace("MEDIA::", "");
-                        AssteLinkPath = GetLinkAndPath(AssetItemPath, ref AssetLinkID);
-                        GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, Area, result);
+                        if (AssetItemPath.Contains("?") == false)
+                        {
 
-                        //GetAssetDataMedia(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
-                    }
+                            AssetItemPath = AssetItemPath.Replace("MEDIA::", "");
+                            AssteLinkPath = GetLinkAndPath(AssetItemPath, ref AssetLinkID);
+                            GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, Area, result);
+                        }
+                        else
+                        {
+                            JsonDataSB.Append("\"" + Area + "\"" + ":" + "\"" + AssetItemPath + "\",");
+                        }
+                            
+
+                    //GetAssetDataMedia(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                }
                     else if (AssetItemPath.ToUpper().Contains("LINK::") == true)
                     {
                         AssetItemPath = AssetItemPath.Replace("LINK::", "");
@@ -512,10 +541,20 @@ namespace DynamicContentApp.Service
                     }
                     else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") == true)
                     {
-                        AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
-                        AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
-                        GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                        //AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                        //AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                        //GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                        if (AssetItemPath.Contains("?") == false)
+                        {
+                            AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                            AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                            GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
 
+                        }
+                        else
+                        {
+                            JsonDataSB.Append("\"" + Area + "\"" + ":" + "\"" + AssetItemPath + "\",");
+                        }
                         //GetAssetDataMedia(AssetItemFieldDetail.AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
                     }
                     else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("LINK::") == true)
@@ -677,11 +716,21 @@ namespace DynamicContentApp.Service
                     }
                     else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("/MEDIA/") ==true)
                     {
-                        AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
-                        AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
-                        GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                        //AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                        //AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                        //GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                        if (AssetItemPath.Contains("?") == false)
+                        {
+                            AssetItemFieldDetail.AssetFieldValue = AssetItemFieldDetail.AssetFieldValue.Replace("MEDIA::", "");
+                            AssteLinkPath = GetLinkAndPath(AssetItemFieldDetail.AssetFieldValue, ref AssetLinkID);
+                            GetAssetDataMedia(AssetLinkID, AssteLinkPath, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
 
-                      //  GetAssetDataMedia(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
+                        }
+                        else
+                        {
+                            JsonDataSB.Append("\"" + AssetItemFieldDetail.AssetFieldName + "\"" + ":" + "\"" + AssetItemPath + "\",");
+                        }
+                        //  GetAssetDataMedia(AssetFieldValue, JsonDataSB, AssetItemFieldDetail.AssetFieldName, result);
                     }
                     else if (AssetItemFieldDetail.AssetFieldValue.ToUpper().Contains("LINK::") == true)
                     {
