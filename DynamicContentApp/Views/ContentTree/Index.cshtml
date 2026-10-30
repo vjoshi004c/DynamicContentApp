@@ -624,7 +624,7 @@ body {font-family: Arial;}
                                 </select>
                             </p>
                              <p>
-                                        <label for="txtFieldDatasource">Field DataSource</label>
+                                        <label for="txtFieldDatasource" style="width:500px;padding:0px;display:none;" >Field DataSource</label>
                                             <input type="text" id="txtFieldDatasource" name="schemaPath" value="Blank" style="width:500px;padding:0px;display:none;">
                                     </p>
                                      
@@ -692,7 +692,7 @@ body {font-family: Arial;}
                                             </select>
                                         </p>
                                          <p>
-                                        <label for="txtFieldDatasource">Field DataSource:</label>
+                                        <label for="txtFieldDatasource" style="width:500px;padding:0px;display:none;" >Field DataSource:</label>
                             <input type="text" id="txtFieldDatasource" name="schemaPath" value="Blank" style="width:500px;padding:0px;display:none;">
                                     </p>
                                   
@@ -1577,7 +1577,7 @@ body {font-family: Arial;}
                                                     var selectedText = $(this).closest('form').find('select[id="AssetTypeDropdown_Add"]').find("option:selected").text();
                                                                  if (selectedText.toUpperCase() === "DROPDOWN" || selectedText.toUpperCase() === "MULTILIST" ) {
                                                                             //alert("assetTypeID" + record.assetTypeID);
-                                                                            var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
+                                                                            var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
                                                                 }
                                                                 else{
                                                                      var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
@@ -2349,7 +2349,7 @@ body {font-family: Arial;}
                                                        var selectedText = $('#editSchemaForm #AssetTypeDropdown_Edit').find("option:selected").text();
                                                        if (selectedText.toUpperCase() === "DROPDOWN" || selectedText.toUpperCase() === "MULTILIST" ) {
                                                                    // alert("assetTypeID" + record.assetTypeID);
-                                                                 var txtFieldDatasource = $("#editSchemaForm #txtFieldDatasource").css("display", "block");
+                                                                 var txtFieldDatasource = $("#editSchemaForm #txtFieldDatasource").css("display", "none");
                                                         }
                                                           else{
                                                              var txtFieldDatasource = $("#editSchemaForm #txtFieldDatasource").css("display", "none");
@@ -2793,6 +2793,7 @@ body {font-family: Arial;}
                      }
                      if(item.schemaFieldType =='MULTILIST')
                      {
+                         
                          var $left_list_id = "left-list" + schemaFieldID;
                                         var $right_list_id = "right-list" + schemaFieldID ;
                                         var $btn_add_id = "btn-add-list" + schemaFieldID;
