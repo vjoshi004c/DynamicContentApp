@@ -691,7 +691,7 @@ namespace DynamicContentApp.Service
             }
             else
             {
-                JsonDataSB.Append("}");
+                JsonDataSB.Append("\"}");
                 return JObject.Parse(JsonDataSB.ToString());
             }
 
