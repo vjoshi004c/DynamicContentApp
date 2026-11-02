@@ -13,9 +13,7 @@
                                 @foreach (var item in Model.SupportOption)
                             {
                                 <div class="feature col">
-                            <div
-                              class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3"
-                            >
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3" style="background-color:#DCDFE0!important">
                               <svg class="bi" width="1em" height="1em" aria-hidden="true">
                                 <use xlink:href="#collection"></use>
                               </svg>
@@ -26,12 +24,13 @@
                             <p style="color:#05507D!important">
                              @item.LongtDescription
                             </p>
-                            <a href="@item.ProductSupportLink.AssetPath" class="icon-link" style="color:#05507D!important"   >
+                    <a href="@item.ProductSupportLink.AssetPath" class="btn btn-sm btn-outline-secondary" style="color:white;background-color: #0472B5 !important; border-color: #0472B5;">  Learn More</a>
+                            @* <a href="@item.ProductSupportLink.AssetPath" class="icon-link" style="color:#05507D!important"   >
                               Call to action
                               <svg class="bi" aria-hidden="true">
                                 <use xlink:href="#chevron-right"></use>
                               </svg>
-                            </a>
+                            </a> *@
                           </div>
                 
                             }
