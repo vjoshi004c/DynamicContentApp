@@ -1,4 +1,5 @@
-﻿ <footer class="container py-5" style="background-color: #05507D !important;max-width: 100% !important;">
+﻿ @using Newtonsoft.Json
+<footer class="container py-5" style="background-color: #05507D !important;max-width: 100% !important;">
       <div class="row">
         <div class="col-12 col-md">
           <svg
@@ -29,158 +30,76 @@
              
           <small class="d-block mb-3 text-body-secondary" style="color:white !important;"
             >
-©2026 VPM Univesal, All rights reserved.</small
+@Model.FooterCppyRight</small
           >
         </div>
-        <div class="col-6 col-md">
-          <h5 style="color:white;">Features</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Content Manager</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >User/Role Manager</a
-              >
-            </li>
-             <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Schema/Layout  Manager</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Form Builder</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Multi-Language Support</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Setting Manager</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Multisite</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Workflowe</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Version management</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Media  Manager</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Publish  Manager</a
-              >
-            </li>
+        @if (Model.FooterOptions != null || Model.FooterOptions.Count>0)
+                            {
+            @foreach (var item in Model.FooterOptions)
+            {
+                 @* @item.FooterSubOptions *@
+                 @* @item.FooterSubOptions *@
+                 @*<a class="link-secondary text-decoration-none" href="#"
+                                        >@item.FooterLink.AssetPath</a
+                                        >*@
+                                 <div class="col-6 col-md">
+                          <h5 style="color:white;">@item.FooterTitle</h5>
+                          <ul class="list-unstyled text-small">
+
+                        @if (item.FooterSubOptions != null || item.FooterSubOptions.Count>0)
+                            {
+                                @foreach (var itemsub in item.FooterSubOptions )
+                                    {
+                                      
+ 
+                            
+                                                    <li>
+                                    @if (itemsub.FooterSubLink != null || item.FooterSubLink.Count>0 )
+                                    {
+                                        @*var obj = JSON.parse(itemsub.FooterSubLink);*@
+                                        var lastLoopValue = itemsub.FooterSubLink;
+                                        @*@lastLoopValue
+                                        var json = System.Text.Json.Parse(lastLoopValue)
+                                         var json = System.Text.Json.JsonSerializer.Serialize(itemsub.FooterSubLink);
+                                        var json1 = lastLoopValue.ToString().Trim().TrimStart('{').TrimEnd('}');*@
+                                         var json1 = lastLoopValue.ToString();
+                                        dynamic json = JsonConvert.DeserializeObject<dynamic>(json1);
+                                      
+                                        @* var footersublinknew = itemsub.FooterSubLink *@
+                                                    <a class="link-secondary text-decoration-none" href="lastLoopValue.AssetPath"
+                                                    >@itemsub.FooterSubTitle</a >
+                                               
+                                       
+                                    }
+                                    else
+                                    {
+                                        <a class="link-secondary text-decoration-none" href="#"
+                                        >@itemsub.FooterSubTitle</a
+                                        >
+                                    }
+                                 @*    <a class="link-secondary text-decoration-none" href="@itemsub.FooterLink.AssetPath"
+                                                        >@itemsub.FooterSubTitle</a
+                                                      > *@
+                                                    </li>
+                                    }
+                            }
+                            
+                          </ul>
+                        </div>
+            }
+        }
+
+
+        
             
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5 style="color:white;" >Support</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Get Help Fast</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Find Your Product Info</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Submit a Ticket</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Self‑Service Tools</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Contact Local Support</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5 style="color:white;" >Site Domain</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >HealthCare</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Academic</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >E-Commerce</a
-              >
-                <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                > Real Estate</a
-              >
-                <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Insurance</a
-              >
-                <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Banking</a
-              >
-               <a class="link-secondary text-decoration-none" href="#"
-                >Travel</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Gaming</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5 style="color:white;" >About</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Team</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Locations</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#"
-                >Privacy</a
-              >
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Terms</a>
-            </li>
-          </ul>
-        </div>
+          
+        
       </div>
     </footer>
+    @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+   

@@ -9,14 +9,14 @@
       <section class="py-5 text-center container">
         <div class="row py-lg-5" style="padding-top:0px!important;padding-bottom:0px!important">
           <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light" style="color:#05507D !important;">
+            <h1 class="fw-light" style="color:#05507D!important">
               <strong>@Model.HeaderTitle</strong>
             </h1>
-            <p class="lead text-body-secondary" style="color:#05507D !important;font-weight: bold;">
-              @Model.LongtDescription</p>
+            <h6 class="text-body-secondary" style="color:#05507D !important;">
+              @Model.LongtDescription</h6>
             <p>
-              <a href="/UniversalCMS/Content/ProductWS/ProductFeatures" class="btn btn-primary my-2" style="background-color:#05507D!important;">Go to product featuress</a>
-              <a href="/UniversalCMS/Content/ProductWS" class="btn btn-secondary my-2" style="background-color:#05507D!important;">Go back to homepage</a>
+              <a href="/UniversalCMS/Content/ProductWS/ProductFeatures" class="btn btn-primary my-2" style="color:white;background-color: #0472B5 !important;">Go to product featuress</a>
+              <a href="/UniversalCMS/Content/ProductWS" class="btn btn-secondary my-2" style="color:white;background-color: #0472B5 !important;">Go back to homepage</a>
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@
                                       
                                                        
                                     <div class="col">
-                                      <div class="card shadow-sm">
+                                      <div class="card shadow-sm" style="padding:1rem">
                                         <svg
                                           aria-label="Placeholder: Thumbnail"
                                           class="bd-placeholder-img card-img-top"
@@ -45,9 +45,9 @@
                                           width="100%"
                                           xmlns="http://www.w3.org/2000/svg"
                                         >
-                                        <img src="@item.ProductImage.File"  style="width:50%;height:100%;" alt="Access Manager" class="img-fluid" />
+                                        <img src="@item.ProductImage.File"  style="width:15%;height:100%;" alt="Access Manager" class="img-fluid" />
                                           <title>Placeholder</title>
-                                          <rect width="100%" height="100%" fill="#55595c"></rect>
+                                          <rect width="25%" height="100%" fill="#55595c"></rect>
                                           <text x="50%" y="50%" fill="#eceeef" dy=".3em">
                                             <strong style="color: #0472B5;">@item.ProductTitle  </strong>
                                           </text>
@@ -61,7 +61,7 @@
                                             class="d-flex justify-content-between align-items-center"
                                           >
                                             <div class="btn-group">
-                                                 <a href="@item.ProductLink.AssetPath"  class="btn btn-sm btn-outline-secondary">  View</a>
+                                                 <a href="@item.ProductLink.AssetPath"  class="btn btn-sm btn-outline-secondary" style="color:white;background-color: #0472B5 !important; border-color: #0472B5;">  View</a>
                                            @*    <button
                                                 type="button"
                                                 class="btn btn-sm btn-outline-secondary"
