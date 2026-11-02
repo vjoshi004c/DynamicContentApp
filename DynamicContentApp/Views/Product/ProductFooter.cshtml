@@ -51,10 +51,8 @@
                                 @foreach (var itemsub in item.FooterSubOptions )
                                     {
                                       
- 
-                            
                                                     <li>
-                                    @if (itemsub.FooterSubLink != null || item.FooterSubLink.Count>0 )
+                                    @if (itemsub.FooterSubLink != null || itemsub.FooterSubLink.Count > 0)
                                     {
                                         @*var obj = JSON.parse(itemsub.FooterSubLink);*@
                                         var lastLoopValue = itemsub.FooterSubLink;
@@ -62,13 +60,15 @@
                                         var json = System.Text.Json.Parse(lastLoopValue)
                                          var json = System.Text.Json.JsonSerializer.Serialize(itemsub.FooterSubLink);
                                         var json1 = lastLoopValue.ToString().Trim().TrimStart('{').TrimEnd('}');*@
-                                         var json1 = lastLoopValue.ToString();
-                                        dynamic json = JsonConvert.DeserializeObject<dynamic>(json1);
-                                      
-                                        @* var footersublinknew = itemsub.FooterSubLink *@
-                                                    <a class="link-secondary text-decoration-none" href="lastLoopValue.AssetPath"
-                                                    >@itemsub.FooterSubTitle</a >
-                                               
+                                        var json1 = lastLoopValue.ToString();
+                                        @* dynamic json2 = JsonConvert.DeserializeObject<dynamic>(json1);
+                                         @json2?.AssetPath *@
+                                    
+                                        if (!string.IsNullOrEmpty(@itemsub.FooterSubLink.AssetPath.ToString()))
+                                        {
+                                            <a class="link-secondary text-decoration-none" href="@itemsub.FooterSubLink.AssetPath?">@itemsub.FooterSubTitle</a>
+                                        }
+                                            
                                        
                                     }
                                     else
