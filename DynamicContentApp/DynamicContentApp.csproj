@@ -4,7 +4,19 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <!-- Force .NET to copy all NuGet DLLs into the bin folder -->
+	  <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="obfuscar.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="obfuscar.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DatabaseScript\August1st2026\" />
@@ -26,6 +38,7 @@
     <Folder Include="DatabaseScript\Sept27th2026\" />
     <Folder Include="DatabaseScript\Sep18th2026\" />
     <Folder Include="MockData\" />
+    <Folder Include="Documentation\" />
     <Folder Include="Treeview\" />
     <Folder Include="Views\Components\" />
     <Folder Include="Views\LookupTree\" />
@@ -41,6 +54,27 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.31" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Obfuscar" Version="3.0.0-beta.22">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
+	<Target Name="ObfuscateRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+		<PropertyGroup>
+			<ObfuscarExe>$(NugetPackageRoot)obfuscar\$(ObfuscarVersion)\tools\Obfuscar.Console.exe</ObfuscarExe>
+			<!-- Fallback if NugetPackageRoot is not defined -->
+			<ObfuscarExe Condition="!Exists('$(ObfuscarExe)')">$(UserProfile)\.nuget\packages\obfuscar\3.0.0-beta.22\tools\Obfuscar.Console.exe</ObfuscarExe>
+		</PropertyGroup>
+		<Message Text="Running Obfuscar code obfuscation..." Importance="high" />
+		<!-- Create temporary folders and execute Obfuscar -->
+		<Exec Command="&quot;$(ObfuscarExe)&quot; obfuscar.xml" />
+
+		<!-- Copy obfuscated files back to the intermediate output directory -->
+		<ItemGroup>
+			<ObfuscatedFiles Include="Obfuscated\*.*" />
+		</ItemGroup>
+		<!--<Copy SourceFiles="@(ObfuscatedFiles)" DestinationFolder="$(ProjectDir)$(IntermediateOutputPath)" OverwriteReadOnlyFiles="true" />-->
+		<Copy SourceFiles="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\Obfuscated\DynamicContentApp.dll" DestinationFolder="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\net8.0" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" /> 
+	</Target>
 
 </Project>

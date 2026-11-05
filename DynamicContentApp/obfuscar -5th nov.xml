@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Obfuscator>
+	<!-- Input and Output Paths (Overridden dynamically by MSBuild below) -->
+	<Var name="AssemblySearchPath" value="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\net8.0" />
+	<Var name="InPath" value="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\net8.0" />
+	<Var name="OutPath" value="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\Obfuscated" />
+	<!--<Var name="InPath" value="$(ProjectDir)\bin\Release\net8.0" />
+	<Var name="OutPath" value="$(ProjectDir)\bin\Release\Obfuscated" />-->
+
+	<AssemblySearchPath path="C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.0" />
+	<AssemblySearchPath path="C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.0" />
+
+	
+	
+	<!-- Obfuscation Configuration -->
+	<Var name="KeepPublicApi" value="true" />
+	<Var name="HidePrivateApi" value="true" />
+	<Var name="RenameProperties" value="false" />
+	<Var name="RenameEvents" value="true" />
+	<Var name="RenameFields" value="true" />
+	<Var name="UseUnicodeNames" value="false" />
+	<Var name="OptimizeMethods" value="true" />
+	<Var name="SuppressIldasm" value="true" />
+	<Var name="KeepDependencies" value="true" />
+	<Var name="HideStrings" value="true" />
+
+	<!-- CRITICAL FIXES FOR REFLECTION & ATTRIBUTE ERROR -->
+	<Var name="KeepAttributes" value="true" />
+	<!-- Specify your project's main DLL output -->
+	<!-- Replace 'YourWebProjectName' with your actual project assembly name -->
+	<Module file="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\net8.0\DynamicContentApp.dll" />
+
+	<!--Optional: Copy the obfuscated DLL back to the main output directory -->
+	<!--<Copy SourceFiles="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\Obfuscated\DynamicContentApp.dll" DestinationFolder="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\net8.0" OverwriteReadOnlyFiles="true" />-->
+	<!--<Module file="$(InPath)\DynamicContentApp.dll" />-->
+
+	<!-- Skip anonymous types and compiler-generated code -->
+	<SkipType name="DynamicContentApp.Program" skipMethods="true" skipFields="true" />
+	<SkipType name="Program" skipMethods="true" skipFields="true" />
+	<SkipType name="*Program*" rx="true" />
+
+	<!-- 2. Skip anonymous types and compiler-generated host methods -->
+	<SkipType name="*&lt;&gt;*" rx="true" />
+	<SkipType name="*AnonymousType*" skipProperties="true" skipMethods="true" skipFields="true" skipEvents="true" skipStringHiding="true" />
+	<SkipType name="*__c" rx="true" />
+	<SkipType name="*+Main$>*" rx="true" />
+	<SkipType name="*Microsoft*" rx="true" />
+
+	<!-- 3. Skip ASP.NET Core infrastructure and custom namespaces -->
+	<SkipNamespace name="AspNetCoreGeneratedDocument" />
+	<SkipNamespace name="DynamicContentApp.Controllers" />
+	<SkipNamespace name="DynamicContentApp.Models" />
+
+	<!-- 4. Controller & Serialization safety rules 
+	<SkipType name="*Controller" rx="true" />
+	<SkipType name="*JsonContext" rx="true" />-->
+	<SkipType name="*Controller" rx="true" skipMethods="true" skipProperties="true" skipFields="true" skipEvents="true" />
+	<SkipType name="*JsonContext" rx="true" skipMethods="true" skipProperties="true" skipFields="true" />
+	
+	<SkipNamespace name="System.Text.Json" />
+	<SkipNamespace name="System.Text.Json.Serialization" />
+
+	<!--<SkipType name="*AnonymousType*" skipProperties="true" skipMethods="true" skipFields="true" skipEvents="true" skipStringHiding="true" />-->
+
+	<!-- Skip ASP.NET Core generated namespaces -->
+	<!--<SkipNamespace name="AspNetCoreGeneratedDocument" />
+	<SkipNamespace name="DynamicContentApp.Controllers" />
+	<SkipNamespace name="DynamicContentApp.Models" />
+	<SkipNamespace name="DynamicContentApp.Program" />
+	<SkipType name="DynamicContentApp.Controllers.*" skipMethods="true" skipProperties="true" />-->
+	<!-- Keep DI services and DTOs intact if bound by reflection 
+	<SkipType name="DynamicContentApp.Models.*" />
+	<SkipClass name="DynamicContentApp.Program" />-->
+
+	<!--<SkipType name="*Controller" rx="true" />
+	<SkipType name="*JsonContext" rx="true" />
+	<SkipNamespace name="System.Text.Json" />
+	<SkipNamespace name="System.Text.Json.Serialization" />-->
+
+</Obfuscator>

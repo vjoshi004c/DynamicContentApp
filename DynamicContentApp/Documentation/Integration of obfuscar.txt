@@ -1,0 +1,106 @@
+Integrating Obfuscar into a .NET 8 Web Project requires defining an obfuscar.xml configuration file and adding a custom MSBuild target to your .csproj file. This automates the obfuscation process during a dotnet publish or a Release build.
+
+Step 1: Install Obfuscar
+
+The most reliable method for automated build pipelines is to install the Obfuscar NuGet Package into your web project.
+Run this command in your project directory:
+bash
+dotnet add package Obfuscar
+Use code with caution.
+
+Step 2: Create the obfuscar.xml File
+
+Create a file named obfuscar.xml in your project's root folder. This file tells Obfuscar which settings to apply and where to look for your compiled outputs.
+xml
+<?xml version="1.0" encoding="utf-8" ?>
+<Obfuscator>
+  <!-- Input and Output Paths (Overridden dynamically by MSBuild below) -->
+  <Var Name="InPath" Value="." />
+  <Var Name="OutPath" Value=".\Obfuscated" />
+
+  <!-- Obfuscation Configuration -->
+  <Var Name="KeepPublicApi" Value="false" />
+  <Var Name="HidePrivateApi" Value="true" />
+  <Var Name="RenameProperties" Value="true" />
+  <Var Name="RenameEvents" Value="true" />
+  <Var Name="RenameFields" Value="true" />
+  <Var Name="UseUnicodeNames" Value="true" />
+  <Var Name="HideStrings" Value="true" />
+  <Var Name="OptimizeMethods" Value="true" />
+  <Var Name="SuppressIldasm" Value="true" />
+
+  <!-- Specify your project's main DLL output -->
+  <!-- Replace 'YourWebProjectName' with your actual project assembly name -->
+  <Module file="$(InPath)\YourWebProjectName.dll" />
+</Obfuscator>
+Use code with caution.
+
+Step 3: Update your .csproj for Automation
+
+To make sure your project is obfuscated every time you build in Release mode or run a Publish, append a custom target to your .csproj file.
+Open your .csproj file and add the following block just before the closing </Project> tag:
+xml
+<Target Name="ObfuscateRelease" AfterTargets="AfterCompile" Condition="'$(Configuration)' == 'Release'">
+  <PropertyGroup>
+    <ObfuscarExe>$(NugetPackageRoot)obfuscar\$(ObfuscarVersion)\tools\Obfuscar.Console.exe</ObfuscarExe>
+    <!-- Fallback if NugetPackageRoot is not defined -->
+    <ObfuscarExe Condition="!Exists('$(ObfuscarExe)')">$(UserProfile)\.nuget\packages\obfuscar\2.2.38\tools\Obfuscar.Console.exe</ObfuscarExe>
+  </PropertyGroup>
+  
+  <!-- Create temporary folders and execute Obfuscar -->
+  <Exec Command="&quot;$(ObfuscarExe)&quot; obfuscar.xml" />
+  
+  <!-- Copy obfuscated files back to the intermediate output directory -->
+  <ItemGroup>
+    <ObfuscatedFiles Include="Obfuscated\*.*" />
+  </ItemGroup>
+  <Copy SourceFiles="@(ObfuscatedFiles)" DestinationFolder="$(ProjectDir)$(IntermediateOutputPath)" OverwriteReadOnlyFiles="true" />
+</Target>
+Use code with caution.
+(Note: If you encounter compatibility quirks with the direct executable execution in newer .NET 8 SDKs, you can alternatively install the global tool using dotnet tool install --global Obfuscar.GlobalTool and replace the <Exec> command with obfuscar.console obfuscar.xml).
+
+********************
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Obfuscator>
+	<!-- Input and Output Paths (Overridden dynamically by MSBuild below) -->
+	<Var name="InPath" value="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release" />
+	<Var name="OutPath" value="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Release\Obfuscated" />
+
+	<!-- Obfuscation Configuration -->
+	<Var name="KeepPublicApi" value="false" />
+	<Var name="HidePrivateApi" value="true" />
+	<Var name="RenameProperties" value="true" />
+	<Var name="RenameEvents" value="true" />
+	<Var name="RenameFields" value="true" />
+	<Var name="UseUnicodeNames" value="true" />
+	<Var name="HideStrings" value="true" />
+	<Var name="OptimizeMethods" value="true" />
+	<Var name="SuppressIldasm" value="true" />
+
+	<!-- Specify your project's main DLL output -->
+	<!-- Replace 'YourWebProjectName' with your actual project assembly name -->
+	<Module file="C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Debug\net8.0\DynamicContentApp.dll" />
+</Obfuscator>
+
+***************
+
+<Target Name="ObfuscateRelease" AfterTargets="AfterCompile" Condition="'$(Configuration)' == 'Release'">
+		<PropertyGroup>
+			<ObfuscarExe>$(NugetPackageRoot)obfuscar\$(ObfuscarVersion)\tools\Obfuscar.Console.exe</ObfuscarExe>
+			<!-- Fallback if NugetPackageRoot is not defined -->
+			<ObfuscarExe Condition="!Exists('$(ObfuscarExe)')">$(UserProfile)\.nuget\packages\obfuscar\3.0.0-beta.22\tools\Obfuscar.Console.exe</ObfuscarExe>
+		</PropertyGroup>
+
+		<!-- Create temporary folders and execute Obfuscar -->
+		<Exec Command="&quot;$(ObfuscarExe)&quot; obfuscar.xml" />
+
+		<!-- Copy obfuscated files back to the intermediate output directory -->
+		<ItemGroup>
+			<ObfuscatedFiles Include="Obfuscated\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(ObfuscatedFiles)" DestinationFolder="$(ProjectDir)$(IntermediateOutputPath)" OverwriteReadOnlyFiles="true" />
+	</Target>
+	*****************
+
+	nuget package Obfuscar -Version 3.0.0-beta.22
