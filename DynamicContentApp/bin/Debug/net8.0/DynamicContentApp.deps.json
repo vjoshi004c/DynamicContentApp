@@ -39,6 +39,7 @@
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "8.0.31",
           "Microsoft.Data.SqlClient": "7.0.1",
           "Newtonsoft.Json": "13.0.4",
+          "Obfuscar": "3.0.0-beta.22",
           "Microsoft.AspNetCore.Antiforgery": "8.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "8.0.0.0",
           "Microsoft.AspNetCore.Authentication.BearerToken": "8.0.0.0",
@@ -2708,6 +2709,9 @@
       "Microsoft.NETCore.Platforms/2.1.2": {
         "compileOnly": true
       },
+      "Obfuscar/3.0.0-beta.22": {
+        "compileOnly": true
+      },
       "System.Collections.Immutable/5.0.0": {
         "compileOnly": true
       },
@@ -4473,6 +4477,13 @@
       "sha512": "sha512-mOJy3M0UN+LUG21dLGMxaWZEP6xYpQEpLuvuEQBaownaX4YuhH6NmNUlN9si+vNkAS6dwJ//N1O4DmLf2CikVg==",
       "path": "microsoft.netcore.platforms/2.1.2",
       "hashPath": "microsoft.netcore.platforms.2.1.2.nupkg.sha512"
+    },
+    "Obfuscar/3.0.0-beta.22": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fXNLRkB50/h+dxVSett93GDOsyIF6rSCoCJoCe46zFLU4vyCLRoy7ceA4MW2CJCoqxvwuSCM+casLRjLIn9LFA==",
+      "path": "obfuscar/3.0.0-beta.22",
+      "hashPath": "obfuscar.3.0.0-beta.22.nupkg.sha512"
     },
     "System.Collections.Immutable/5.0.0": {
       "type": "package",

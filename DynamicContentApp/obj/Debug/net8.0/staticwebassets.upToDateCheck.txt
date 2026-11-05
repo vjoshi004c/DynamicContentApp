@@ -7,6 +7,7 @@ wwwroot\assets\dist\css\bootstrap.rtl.min.css.map
 wwwroot\assets\dist\js\bootstrap.bundle.min.js
 wwwroot\assets\dist\js\bootstrap.bundle.min.js.map
 wwwroot\assets\js\color-modes.js
+wwwroot\assets\product\product.css
 wwwroot\css\jquery-ui-timepicker-addon.min.css
 wwwroot\css\jquery-ui.css
 wwwroot\css\site.css
@@ -32,6 +33,12 @@ wwwroot\images\icon\aboutIcon.png
 wwwroot\images\icon\createIcon.png
 wwwroot\images\icon\documentationIcon.png
 wwwroot\images\icon\dupIcon.png
+wwwroot\images\icon\Icon_Field.jpg
+wwwroot\images\icon\Icon_Folder.png
+wwwroot\images\icon\Icon_Item.jpg
+wwwroot\images\icon\Icon_Layout.jpg
+wwwroot\images\icon\Icon_Media.jpg
+wwwroot\images\icon\Icon_Schema.png
 wwwroot\images\icon\pIcon.png
 wwwroot\images\icon\previewIcon.png
 wwwroot\images\icon\previewImage.png

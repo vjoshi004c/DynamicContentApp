@@ -832,3 +832,4 @@ C:\Project\DynamicContentApp_Second\DynamicContentApp\obj\Debug\net8.0\refint\Dy
 C:\Project\DynamicContentApp_Second\DynamicContentApp\obj\Debug\net8.0\DynamicContentApp.pdb
 C:\Project\DynamicContentApp_Second\DynamicContentApp\obj\Debug\net8.0\DynamicContentApp.genruntimeconfig.cache
 C:\Project\DynamicContentApp_Second\DynamicContentApp\obj\Debug\net8.0\ref\DynamicContentApp.dll
+C:\Vivek\DynamicContentApp\DynamicContentApp\DynamicContentApp\bin\Debug\net8.0\obfuscar.xml
