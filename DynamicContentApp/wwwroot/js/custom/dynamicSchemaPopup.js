@@ -403,6 +403,35 @@ $(document).ready(function () {
         //alert("inside open popup button");
         return false;
     });
+
+
+    $('#btnSeaarchAsset').click(function (e) {
+        e.preventDefault(); // This stops the form from submitting and redirecting
+        e.stopPropagation();
+        //alert("inside #btnSeaarchAsset");
+       
+         var searchType = $('#ddlSerach').find("option:selected").text();
+          //alert(searchType);
+                                                       if (searchType.toUpperCase() === "--SELECT--"  ) {
+                                                                   // alert("assetTypeID" + record.assetTypeID);
+                                                                 showAlert("Alert! searchType is not selected.Please select search type");
+                                                                return false;
+                                                        }
+             var searchValue = $("#txtSearchValue").val();
+        // alert(searchValue);
+        if (searchValue == '') {
+             showAlert("Alert! searchValue  should not be blank.Please enter search value");
+            return false;
+        }  
+        //alert( "$('#dynamicSearchResultDiv')");
+         $("#dynamicSearchResultDiv").css("display", "block");
+         $('#dynamicSearchResultDiv').html("<p style=\"color: red;font-weight: bold;\" >Searching for " + searchType + " with value: " + searchValue + "</p>");
+       // alert(searchValue);
+        //saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePath);
+     // alert("end #btnSeaarchAsset");
+        return false;
+    });
+
    
 });
 function showAlert(finalmessage) {

@@ -594,9 +594,39 @@ body {font-family: Arial;}
     </div> *@
 </div>
 </div>
-<div id="Search" class="tabcontent"  style="width: 100%; height: 400dvh;background-color:#E6E6E6">
-  <h2>Search</h2>
-   
+
+                    <div id="Search" class="tabcontent" style="display: block; border-style: solid;border-width:thin; background-color: #E6E6E6;padding:2em;width:100%;">
+                       @*  <h2>Search Asset <span></span></h2>
+                        <p>
+                            <label for="txtMasterPageItem">Is Item Page Type:</label>
+                            <input type="checkbox" id="chkIsItemPageType" class="unfake-disabled-input" name="MasterPageItem" style="width:100px">
+                        </p> *@
+                        
+                         <div style="width:25%;" >
+                         <label for="SerachDropdown" style="width:25%;">Choose Search Type</label>
+                         </div>
+                         <div style="width:100%;" >
+                            <select id="ddlSerach"style="width:25%;height:1.5em;" >
+                                <option value="">--Select--</option>
+                                <option value="AssetID">AssetID</option>
+                                <option value="AssetName">AssetName</option>
+                              
+                            </select>
+                            </div>
+                        
+                      
+                           <div style="width:25%;" > <label for="txtSearchValue"style="width:25%" >Enter Value</label></div>
+                           <div style="width:100%;" > <input type="text" id="txtSearchValue" class="unfake-disabled-input" name="SearchValue"style="width:25%;height:1.3em;"></div>
+                            @*  <input type="text" id="txtMasterPageItemID" class="unfake-disabled-input" name="MasterPageItemID" style="width:500px"> *@
+                           @*  <button id="openPopupBtnMasterPage" title="To Select Master Layout Item" parentitem="txtMasterPageItem" parentitemID="txtMasterPageItemID">...</button>*@
+                       <div id="dynamicSearchResultDiv" class="tabcontent" style="border-style:solid; border-width:thin; border-color:#d9d9d9; padding:2em;display:none;"></div>
+                        <div style="width:25%;" >
+                            <button id="btnSeaarchAsset" class="unfake-disabled-button">Search</button>
+                         </div>
+
+                    </div>
+
+   <div id="Search_old" class="tabcontent"  style="width: 100%; height: 400dvh;background-color:#E6E6E6">             
 </div>
             
 
@@ -606,7 +636,7 @@ body {font-family: Arial;}
                             <h2>To create new item under parent node- <span></span></h2>
                             <p>
                                 <label for="schemaName">Asset Name:</label>
-                                    <input type="text" id="txtSchemaName" name="schemaName" style="width:500px" >
+                                    <input type="text" id="txtSchemaName" name="schemaName" style="width:500px;height:1em;" >
                             </p>
                             <p>
                                 <label for="schemaPath">Asset Path:</label>
@@ -674,7 +704,7 @@ body {font-family: Arial;}
                                         </p>
                                     <p>
                                         <label for="schemaName">Asset Name:</label>
-                                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px">
+                                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px;height:1em;">
                                     </p>
                                     <p>
                                         <label for="schemaPath">Asset Path:</label>
