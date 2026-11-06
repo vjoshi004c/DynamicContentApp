@@ -409,6 +409,7 @@ $(document).ready(function () {
         e.preventDefault(); // This stops the form from submitting and redirecting
         e.stopPropagation();
         //alert("inside #btnSeaarchAsset");
+           var assetItemTreeID = $("#hdnCurrentSelectAssetItem").val();
        
          var searchType = $('#ddlSerach').find("option:selected").text();
           //alert(searchType);
@@ -418,6 +419,8 @@ $(document).ready(function () {
                                                                 return false;
                                                         }
              var searchValue = $("#txtSearchValue").val();
+
+          
         // alert(searchValue);
         if (searchValue == '') {
              showAlert("Alert! searchValue  should not be blank.Please enter search value");
@@ -427,8 +430,101 @@ $(document).ready(function () {
          $("#dynamicSearchResultDiv").css("display", "block");
          $('#dynamicSearchResultDiv').html("<p style=\"color: red;font-weight: bold;\" >Searching for " + searchType + " with value: " + searchValue + "</p>");
        // alert(searchValue);
-        //saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePath);
-     // alert("end #btnSeaarchAsset");
+         $("#dynamicSearchResultDiv").empty();
+        const optionsData = [
+                                // { value: "0", text: "-Select Field Type -" }
+                                    //{ value: "1", text: "Text" },
+                                    //{ value: "2", text: "Multiline" },
+                                    //{ value: "3", text: "HtmlText" }
+                            ];
+       getSearhResult(searchType, searchValue,optionsData, assetItemTreeID);
+
+        if(optionsData.length >0)
+               {
+
+                //alert('optionsData length  ' +optionsData.length)
+               }
+                 const form = $('<div>').attr({ style: 'padding-top:0.8em;width:100%;background-color:#f2f2f2;border-color:black', });
+             //const form = $('<form>').attr({ method: 'post', action: 'submitFields', id: 'frmAssetFieldDetailsContainer' });
+                          const SchemaSpanHeader = $('<div>').attr({ style: 'padding-bottom:0.2em;width:100%', });
+                          const AssetFieldNameHeaderLabel = $("<h2>", {     class: "form-label",  text: 'Total Search results- '+ optionsData.length, style:'width:100%;background-color:rgb(230, 230, 230);border-color:black' });
+                             SchemaSpanHeader.append(AssetFieldNameHeaderLabel);
+                       form.append(SchemaSpanHeader);
+                       var count = 0 ;
+
+                         $.each(optionsData, function (index, item) {
+
+                             count= count+1;
+                              const maindiv  = $('<div>').attr({ style: 'padding-top:0.8em;width:100%;background-color:white;margin-top:1.0em;margin-bottom:1.0em;border-color:black', });
+
+                            var AssetItemID = item.AssetItemID;
+                           var AssetItemName = item.AssetItemName
+                                var AssetItemPath = item.AssetItemPath
+                                var AssetSchemaID = item.AssetSchemaID
+                                var AssetSchemaName = item.AssetSchemaName  
+                                var AssetItemParentID = item.AssetItemParentID
+                                 var AssetItemAssetTypeID = item.AssetItemAssetTypeID
+                                var AssetItemAssetType = item.AssetItemAssetType
+                                  var AssetItemSchemaMapped = item.AssetItemSchemaMapped
+                                 // alert(AssetItemID +'-'+ AssetItemName+'_'+ AssetItemPath+'-'+ AssetSchemaID +'- '+ AssetSchemaName+'-'+ AssetItemParentID +' -'+ AssetItemAssetTypeID +'- '+ AssetItemAssetType +' -'+ AssetItemSchemaMapped);
+
+                                  const SchemaSpanCount = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelCount = $("<label>", {   class: "form-label",  text:'Search Result : '+count, style:'width:100%;background-color:white;border-color:none;color:red'});
+                                    SchemaSpanCount.append(AssetFieldNameLabelCount);
+                                     maindiv.append(SchemaSpanCount);
+
+
+                                   const SchemaSpanAssetItemID = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetItemID = $("<label>", {   class: "form-label",  text:'AssetItemID : ' + AssetItemID, style:'width:100%;background-color:white;border-color:none;color:red'});
+                                    SchemaSpanAssetItemID.append(AssetFieldNameLabelAssetItemID);
+                                     maindiv.append(SchemaSpanAssetItemID);
+
+                                        const SchemaSpanAssetItemName = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetItemName = $("<label>", {     class: "form-label",  text:'AssetItemName : ' + AssetItemName, style:'width:100%;background-color:white;border-color:none;color:red' });
+                                    SchemaSpanAssetItemName.append(AssetFieldNameLabelAssetItemName);
+                                     maindiv.append(SchemaSpanAssetItemName);
+
+                                       const SchemaSpanAssetItemPath = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetItemPath = $("<label>", {    class: "form-label",  text:'AssetItemPath : ' + AssetItemPath, style:'width:100%;background-color:white;border-color:none;color:red;font-weight:bold' });
+                                    SchemaSpanAssetItemPath.append(AssetFieldNameLabelAssetItemPath);
+                                     maindiv.append(SchemaSpanAssetItemPath);
+
+                                      const SchemaSpanAssetSchemaID = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetSchemaID = $("<label>", {    class: "form-label",  text:'AssetSchemaID : ' + AssetSchemaID, style:'width:100%;background-color:white;border-color:none' });
+                                    SchemaSpanAssetSchemaID.append(AssetFieldNameLabelAssetSchemaID);
+                                     maindiv.append(SchemaSpanAssetSchemaID);
+
+                                        const SchemaSpanAssetSchemaName = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetSchemaName = $("<label>", {    class: "form-label",  text:'AssetSchemaName : ' + AssetSchemaName, style:'width:100%;background-color:white;border-color:none' });
+                                    SchemaSpanAssetSchemaName.append(AssetFieldNameLabelAssetSchemaName);
+                                     maindiv.append(SchemaSpanAssetSchemaName);
+
+                                        const SchemaSpanAssetItemParentID = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetItemParentID = $("<label>", {    class: "form-label",  text:'AssetItemParentID : ' + AssetItemParentID, style:'width:100%;background-color:white;border-color:none' });
+                                    SchemaSpanAssetItemParentID.append(AssetFieldNameLabelAssetItemParentID);
+                                     maindiv.append(SchemaSpanAssetItemParentID);
+
+                                    //    const SchemaSpanAssetItemAssetTypeID = $('<div>').attr({ style: 'padding-top:0.8em;width:100%', });
+                                    //const AssetFieldNameLabelAssetItemAssetTypeID = $("<label>", {    class: "form-label",  text:'AssetItemAssetTypeID : ' + AssetItemAssetTypeID, style:'width:100%;background-color:white;border-color:none' });
+                                    //SchemaSpanAssetItemAssetTypeID.append(AssetFieldNameLabelAssetItemAssetTypeID);
+                                    // maindiv.append(SchemaSpanAssetItemAssetTypeID);
+
+                                        const SchemaSpanAssetItemAssetType = $('<div>').attr({ style: 'padding-top:1.0em;padding-left:1.0em;width:100%', });
+                                    const AssetFieldNameLabelAssetItemAssetType = $("<label>", {    class: "form-label",  text:'AssetItemAssetType : ' + AssetItemAssetType, style:'width:100%;background-color:white;border-color:green' });
+                                    SchemaSpanAssetItemAssetType.append(AssetFieldNameLabelAssetItemAssetType);
+                                     maindiv.append(SchemaSpanAssetItemAssetType);
+
+                                    // const SchemaSpanAssetItemSchemaMapped = $('<div>').attr({ style: 'padding-top:0.8em;width:100%', });
+                                    //const AssetFieldNameLabelAssetItemSchemaMapped = $("<label>", {    class: "form-label",  text:'AssetItemSchemaMapped : ' + AssetItemSchemaMapped, style:'width:100%;background-color:white;border-color:none' });
+                                    //SchemaSpanAssetItemSchemaMapped.append(AssetFieldNameLabelAssetItemSchemaMapped);
+                                    // maindiv.append(SchemaSpanAssetItemSchemaMapped);
+                                      form.append(maindiv);
+
+                             })
+
+
+                         $("#dynamicSearchResultDiv").append(form);
+
         return false;
     });
 
@@ -440,6 +536,76 @@ function showAlert(finalmessage) {
                $("#lblModelSuccessFailure").html(finalmessage);
              $("#customSuccessFailureModal").show();
     }
+
+ function getSearhResult( searchType, searchValue ,optionsData, assetItemTreeID) {
+
+       // alert("assetItemTreeID -"+assetItemTreeID);
+        
+         var requestData1 = {
+                     SearchType: searchType, 
+                     SearchValue: searchValue,
+                     AssetItemTreeID:assetItemTreeID
+                         };
+        //alert('IDSchema ' + ' ' + IDSchema2);
+        $.ajax({
+            type: "GET",
+        url: "/ContentTree/GetSearchResults",
+        data: requestData1,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+            success: function (response) {
+            console.log("Success:", response);
+                         if(response.length>0)
+                        {
+                            //alert('response length  ' +response.length);
+                            $.each(response, function (index, record) {
+
+                                var AssetItemID = record.assetItemID
+                                var AssetItemName = record.assetItemName
+                                var AssetItemPath = record.assetItemPath
+                                var AssetSchemaID = record.assetSchemaID
+                                var AssetSchemaName = record.assetSchemaName  
+                                var AssetItemParentID = record.assetItemParentID
+                                 var AssetItemAssetTypeID = record.assetItemAssetTypeID
+                                var AssetItemAssetType = record.assetItemAssetType
+                                  var AssetItemSchemaMapped = record.assetItemSchemaMapped
+                                // checkChildCount1(record.childSchemaID);
+                                // var childhiddenCount = $("#hdnChildCount1").val();
+                                // var myUl1 = $("#myUL1").find("ul[id='" + IDSchema + "']");
+                               //alert(AssetItemID +'-'+ AssetItemName+'_'+ AssetItemPath+'-'+ AssetSchemaID +'- '+ AssetSchemaName+'-'+ AssetItemParentID +' -'+ AssetItemAssetTypeID +'- '+ AssetItemAssetType +' -'+ AssetItemSchemaMapped);
+                                let newElement2= { AssetItemID:AssetItemID, AssetItemName:AssetItemName,AssetItemPath:AssetItemPath  ,AssetSchemaID:AssetSchemaID ,AssetSchemaName:AssetSchemaName ,AssetItemParentID:AssetItemParentID,AssetItemAssetTypeID:AssetItemAssetTypeID,AssetItemAssetType:AssetItemAssetType,AssetItemSchemaMapped:AssetItemSchemaMapped};
+                                         optionsData.push(newElement2);
+                               
+                               //var myUl1 = $(IDSchema1)
+
+                                //alert('myUl1  ' +myUl1.html());
+                                //if (parseInt(childhiddenCount) > 0) {
+                                //    myUl1.append("<li><span  onclick=GetChildOfSelectedUL1('lup_" + record.childSchemaID + "'); tag='" + record.childSchemaID + "' id='lup_" + record.childSchemaID + "' class='caret default-color'>" + record.childSchemaName + "</span><ul id='lup_" + record.childSchemaID + "'  tag='" + record.childSchemaID + "' class='nested'><li></li></ul></li>");
+                                //   //alert("inside myUl1 parent");
+                                //}
+                                //else {
+                                //    myUl1.append("<li><span id='lup_" + record.childSchemaID + "' tag='" + record.childSchemaID + "' onclick=GetChildOfSelectedLI1('lup_" + record.childSchemaID + "'); class='caretli'>" + record.childSchemaName + "</span></li>");
+                                //   //alert("inside myUl1 child");
+                                // }
+                             });
+
+                         }
+                     },
+                error: function (xhr, status, error) {
+                                    console.error("Error occurred:", error);
+                                        }
+            });
+
+             
+        }
+
+
+
+
+    
+
+
 function saveAssetMasterLayoutDetails(assetItemID, isItemPageType, masterpagePath) {
   //alert(assetItemID + ' ' + isItemPageType + ' ' + masterpagePath );
 

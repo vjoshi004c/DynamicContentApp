@@ -15,6 +15,21 @@
         public string? ChildSchemaID { get; set; }
     }
 
+
+    public class SearchResultsModel
+    {
+        public string? AssetItemID { get; set; }
+        public string? AssetItemName { get; set; }
+        public string? AssetItemPath { get; set; }
+        public string? AssetSchemaID { get; set; }
+        public string? AssetSchemaName { get; set; }
+        public string? AssetItemParentID { get; set; }
+        public string? AssetItemAssetTypeID { get; set; }
+        public string? AssetItemAssetType { get; set; }
+        public string? AssetItemSchemaMapped { get; set; }
+
+
+    }
     public class PublishQueue
     {
         public string? ID { get; set; }

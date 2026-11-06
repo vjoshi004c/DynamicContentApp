@@ -489,6 +489,18 @@ namespace DynamicContentApp.Controllers
             }
             return Ok(ContentTreeModellist);
         }
+        public IActionResult GetSearchResults(string SearchType, string SearchValue, string AssetItemTreeID)
+        {
+           
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<SearchResultsModel> SearchResultsllist = dynamicContentDAL.GetSearchResults(SearchType, SearchValue, AssetItemTreeID);
+            if (SearchResultsllist != null && SearchResultsllist.Count == 0)
+            {
+
+            }
+            return Ok(SearchResultsllist);
+        }
+        
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetAssetItemDetails(string AssetItemID, string AssetItemSchemaID, string AssetItemTreeeID, string SchemaFieldID, string AssetFieldID, string AssetFieldValue)

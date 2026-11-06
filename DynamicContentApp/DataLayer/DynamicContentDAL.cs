@@ -5,6 +5,7 @@ using Microsoft.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -1470,6 +1471,54 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
+        public List<SearchResultsModel> GetSearchResults(string SearchType, string SearchValue, string AssetItemTreeID)
+        {
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<SearchResultsModel> custlist = null;
+            try
+            {
+                custlist = new List<SearchResultsModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_get_search_results", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@SearchType", SearchType);
+                cmd.Parameters.AddWithValue("@SearchValue", SearchValue);
+                cmd.Parameters.AddWithValue("@AssetItemTreeID", AssetItemTreeID);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    SearchResultsModel cobj = new SearchResultsModel();
+                    cobj.AssetItemID = ds.Tables[0].Rows[i]["AssetItemID"].ToString();
+                    cobj.AssetItemName = ds.Tables[0].Rows[i]["AssetItemName"].ToString();
+                    cobj.AssetItemPath = ds.Tables[0].Rows[i]["AssetItemPath"].ToString();
+                    cobj.AssetSchemaID = ds.Tables[0].Rows[i]["AssetSchemaID"].ToString();
+                    cobj.AssetSchemaName = ds.Tables[0].Rows[i]["AssetSchemaName"].ToString();
+                    cobj.AssetItemParentID = ds.Tables[0].Rows[i]["AssetItemParentID"].ToString();
+                    cobj.AssetItemAssetTypeID = ds.Tables[0].Rows[i]["AssetItemAssetTypeID"].ToString();
+                    cobj.AssetItemAssetType = ds.Tables[0].Rows[i]["AssetItemAssetType"].ToString();
+                    cobj.AssetItemSchemaMapped = ds.Tables[0].Rows[i]["AssetItemSchemaMapped"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public List<ContentTreeModel> GetContentTreeItems(string schemaID)
         {
 
@@ -1513,6 +1562,7 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
+
 
         public List<PublishChildrenItem> GetChildrenItemsToPubish(string AssetItemId)
         {
