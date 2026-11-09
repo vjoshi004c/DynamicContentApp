@@ -545,6 +545,48 @@ body {font-family: Arial;}
            
             @* <h2>Asset Details</h2> *@
 @* <p>Click on the buttons inside the tabbed menu:</p> *@
+ @* -------------------------Multilanguagae and version section--------------------------------------------------------*@
+
+                    <div id="div_MultilanguageAndVersion"  style="display: block; border-style: solid;border-width:thin; background-color:#969696 ;border-color:#969696;padding:0.5em;width:100%;display: flex; justify-content: flex-end;">
+                     
+                         <div style="width:10%;" >
+                         <label for="SerachDropdown" style="width:95%;color:black;font-weight: bold;">  Select Language</label>
+                         </div>
+                          <div style="width:20%;" >
+                            <select id="ddlLanguage"style="width:95%;height:1.5em;" >
+                                <option value="">--Select Language--</option>
+                                <option value="AssetID">English</option>
+                                <option value="AssetName">Spanish</option>
+                                <option value="SchemaName">Chinese</option>
+                                <option value="AssetType">Arabic</option>
+                                 <option value="AssetType">Hindi</option>
+                              
+                            </select>
+                            </div>
+                              <div style="width:10%;" >
+                                  <label for="SerachDropdown" style="width:95%;color:black;font-weight: bold;"> Select Version</label> 
+                                  </div>
+                            <div style="width:20%;" >  <select id="ddlVersion"style="width:95%;height:1.5em;" >
+                                <option value="">--Select Version--</option>
+                                <option value="AssetID">Version 1</option>
+                                <option value="AssetName">Version 2</option>
+                                <option value="SchemaName">Version 3</option>
+                                <option value="AssetType">Version 4</option>
+                                 <option value="AssetType">Version 5<</option>
+                                <option value="AssetID">Version 6</option>
+                                <option value="AssetName">Version 7</option>
+                                <option value="AssetType">Version 8</option>
+                                 <option value="AssetType">Version 9</option>
+                                   <option value="AssetType">Version 10</option>
+                              
+                            </select>
+                            </div>
+
+                       
+                    </div>
+
+
+   @* ---------------------------------------------------------------------------------*@
 
 <div class="tab" style="width:100%">
   <button id="btnContent" tag="Content" class="tablinks" onclick="openCity1(event, 'content')">Asset Overview</button>
@@ -1177,12 +1219,19 @@ body {font-family: Arial;}
                      if(managerValue=="form")
                     {
                         // alert("inside managerValue" + managerValue);
-                        IDSchemaManager = "AD5D7169-3E6D-49C8-8EAC-EB563C4160B1";
+                        IDSchemaManager = "DC0600E2-BCB2-4752-BE98-852309313AA9";
                         //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                         getDbDataManager( IDSchema, IDSchemaManager);
                         ViewContentItem(IDSchema);
                     }
-                    
+                     if(managerValue=="multilanguage")
+                    {
+                        // alert("inside managerValue" + managerValue);
+                        IDSchemaManager = "18D607FD-938E-42FD-936A-8003A8F604D7";
+                        //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
+                        getDbDataManager( IDSchema, IDSchemaManager);
+                        ViewContentItem(IDSchema);
+                    }
                    // alert("ViewContentItem" + "id-" + IDSchema);
                     
            
