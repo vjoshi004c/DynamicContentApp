@@ -721,6 +721,21 @@ namespace DynamicContentApp.Controllers
             }
             return Ok(SchemaFieldTypeList);
         }
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetLanguages()
+        {
+
+            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<LanguageModel> LanguageList = dynamicContentDAL.GetLanguages();
+            if (LanguageList != null && LanguageList.Count == 0)
+            {
+
+            }
+            return Ok(LanguageList); 
+        }
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]

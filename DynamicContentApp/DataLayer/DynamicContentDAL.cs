@@ -825,7 +825,54 @@ namespace DynamicContentApp.DataLayer
         }
 
 
+        public List<LanguageModel> GetLanguages()
+        {
 
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<LanguageModel> custlist = null;
+            try
+            {
+                custlist = new List<LanguageModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_languages", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", "");
+                cmd.Parameters.AddWithValue("@Code", "");
+                cmd.Parameters.AddWithValue("@Language", "");
+                cmd.Parameters.AddWithValue("@MarketRegion", "");
+                cmd.Parameters.AddWithValue("@Query", 1);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    LanguageModel cobj = new LanguageModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["ID"].ToString();
+                    cobj.Code = ds.Tables[0].Rows[i]["Code"].ToString();
+                    cobj.Language = ds.Tables[0].Rows[i]["Language"].ToString();
+                    cobj.MarketRegion = ds.Tables[0].Rows[i]["MarketRegion"].ToString();
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
         public List<SchemaFieldType> GetFieldType()
         {
 

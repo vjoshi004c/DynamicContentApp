@@ -107,6 +107,18 @@
 
     }
 
+    public class LanguageModel
+    {
+        public string? ID { get; set; }
+        public string? Language { get; set; }
+
+        public string? MarketRegion { get; set; }
+        public string? Code { get; set; }
+
+
+
+    }
+
     public class WebsiteModel
     {
         public string? ID { get; set; }

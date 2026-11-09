@@ -550,21 +550,21 @@ body {font-family: Arial;}
                     <div id="div_MultilanguageAndVersion"  style="display: block; border-style: solid;border-width:thin; background-color:#969696 ;border-color:#969696;padding:0.5em;width:100%;display: flex; justify-content: flex-end;">
                      
                          <div style="width:10%;" >
-                         <label for="SerachDropdown" style="width:95%;color:black;font-weight: bold;">  Select Language</label>
+                         <label for="ddlLanguage" style="width:95%;color:black;font-weight: bold;">  Select Language</label>
                          </div>
                           <div style="width:20%;" >
                             <select id="ddlLanguage"style="width:95%;height:1.5em;" >
-                                <option value="">--Select Language--</option>
+                                @* <option value="">--Select Language--</option>
                                 <option value="AssetID">English</option>
                                 <option value="AssetName">Spanish</option>
                                 <option value="SchemaName">Chinese</option>
                                 <option value="AssetType">Arabic</option>
-                                 <option value="AssetType">Hindi</option>
+                                 <option value="AssetType">Hindi</option> *@
                               
                             </select>
                             </div>
                               <div style="width:10%;" >
-                                  <label for="SerachDropdown" style="width:95%;color:black;font-weight: bold;"> Select Version</label> 
+                                  <label for="ddlVersion" style="width:95%;color:black;font-weight: bold;"> Select Version</label> 
                                   </div>
                             <div style="width:20%;" >  <select id="ddlVersion"style="width:95%;height:1.5em;" >
                                 <option value="">--Select Version--</option>
@@ -4931,6 +4931,7 @@ let resultnew = [];
 <script src="/js/custom/dynamicSchemaFields.js"></script>
 <script src="/js/custom/dynamicComponents.js"></script>
 <script src="/js/custom/dynamicSchemaPopup.js"></script>
+<script src="/js/custom/dynamicLanguageVersionDropdown.js"></script>
 <script>
 function openCity(evt, cityName) {
         //alert("openCity");
