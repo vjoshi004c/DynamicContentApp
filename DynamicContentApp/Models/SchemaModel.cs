@@ -114,6 +114,18 @@
 
         public string? MarketRegion { get; set; }
         public string? Code { get; set; }
+        public string? AssetItemId { get; set; }
+
+
+
+    }
+    public class VersionModel
+    {
+        public string? ID { get; set; }
+        public string? Number { get; set; }
+        public string? Text { get; set; }
+        public string? AssetItemId { get; set; }
+
 
 
 

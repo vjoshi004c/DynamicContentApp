@@ -740,21 +740,51 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult setLanguages(string SelectedLanguageID, string SelectedLanguageText)
+        public IActionResult setLanguages(string SelectedLanguageID, string SelectedLanguageText, string CurrentSelectAssetItem)
         {
             try
             {
                 LanguageModel languageModel = new LanguageModel();
                 if(SelectedLanguageID =="0")
                 {
-                    SelectedLanguageID = "330BF4F7-3FBD-4DB6-BCB7-27AE5764D1EC";
+                    SelectedLanguageID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23";
                     SelectedLanguageText = "English_UnitedStates_en-US";
                 }
                 languageModel.ID = SelectedLanguageID;
                 languageModel.Language = SelectedLanguageText;
+                languageModel.AssetItemId = CurrentSelectAssetItem;
 
                 HttpContext.Session.SetObject("CurrentLanguage", languageModel);
                 var language = HttpContext.Session.GetObject<LanguageModel>("CurrentLanguage");
+
+                return Ok(true);
+               
+            }
+            catch (Exception ex)
+            {
+                return Ok(false);
+            }
+        }
+        
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult setVersion(string SelectedVersionID, string SelectedVersionText, string CurrentSelectAssetItem)
+        {
+            try
+            {
+                VersionModel versionModel = new VersionModel();
+                if(SelectedVersionID =="0")
+                {
+                    SelectedVersionID = "1";
+                    SelectedVersionText = "Version 1";
+                }
+                versionModel.ID = SelectedVersionID;
+                versionModel.Number = SelectedVersionID;
+                versionModel.Text = SelectedVersionText;
+                versionModel.AssetItemId = CurrentSelectAssetItem;
+
+                HttpContext.Session.SetObject("CurrentVersion", versionModel);
+                var version = HttpContext.Session.GetObject<VersionModel>("CurrentVersion");
 
                 return Ok(true);
                

@@ -12,6 +12,13 @@
         // If the session variable is not set, you can set a default value or handle it as needed
         entityLanguage = new LanguageModel { ID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23", Language = "English_UnitedStates_en-US" }; // Example <default>           </default>)
     }
+     var sessionVersionJson = HttpContextAccessor.HttpContext?.Session.GetString("CurrentVersion");
+    var entityVersion = sessionVersionJson != null ? System.Text.Json.JsonSerializer.Deserialize<VersionModel>(sessionVersionJson) : null;
+    if(entityVersion == null)
+    {
+        // If the session variable is not set, you can set a default value or handle it as needed
+        entityVersion = new VersionModel { ID = "1", Number = "1", Text = "Version 1" }; // Example <default>           </default>)
+    }
 }
 
 <!DOCTYPE html>
@@ -481,7 +488,7 @@ body {font-family: Arial;}
      string EnabledContextMenuAtUniversalCmsNode=Configuration.GetSection("SystemConfig")["EnabledContextMenuAtUniversalCmsNode"]; 
     }
 
-
+    <input type="hidden" id="hdn_CurrentVersion" value="@entityVersion?.Number.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_ID" value="@entityLanguage?.ID.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_Text" value="@entityLanguage?.Language.ToString()" />
 

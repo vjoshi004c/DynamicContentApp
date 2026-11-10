@@ -9,6 +9,7 @@
 
     const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
     const $hdn_CurrentLanguage_Text = $('#hdn_CurrentLanguage_Text');
+    const $hdn_CurrentVersion = $('#hdn_CurrentVersion');
 
     const $selectLanguage = $('#ddlLanguage');
     const $selectVersion = $('#ddlVersion');
@@ -36,6 +37,7 @@
     });
    // alert("Current Language ID - " + $hdn_CurrentLanguage_ID.val());
     $selectLanguage.val($hdn_CurrentLanguage_ID.val());
+     $selectVersion.val($hdn_CurrentVersion.val());
     $selectLanguage.on("change", function () {
        // var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
        // $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
@@ -47,7 +49,7 @@
         var selectedText = $(this).find("option:selected").text();
         //alert("You selected: " + selectedID);
        // alert("You selected: " + selectedText);
-            setLanguages(selectedID, selectedText );
+            setLanguages(selectedID, selectedText ,CurrentSelectAssetItem);
         //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
         //    //alert("You selected: " + selectedID);
         //    //alert("You selected: " + selectedText);
@@ -62,12 +64,13 @@
    // $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
     var CurrentSelectAssetItem = $hdnCurrentSelectAssetItem.val();
      var CurrentSelectAssetParentItem = $hdnCurrentSelectAssetParentItem.val();
-      alert("You selected CurrentSelectAssetItem - " + CurrentSelectAssetItem);
-    alert("You selected CurrentSelectAssetParentItem -" + CurrentSelectAssetParentItem);
+    //  alert("You selected CurrentSelectAssetItem - " + CurrentSelectAssetItem);
+    // alert("You selected CurrentSelectAssetParentItem -" + CurrentSelectAssetParentItem);
     var selectedID = $(this).val();
     var selectedText = $(this).find("option:selected").text();
-    alert("You selected value -" + selectedID);
-    alert("You selected text -" + selectedText);
+    // alert("You selected value -" + selectedID);
+    // alert("You selected text -" + selectedText);
+    setVersion(selectedID, selectedText ,CurrentSelectAssetItem)
     //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
     //    //alert("You selected: " + selectedID);
     //    //alert("You selected: " + selectedText);
@@ -108,14 +111,14 @@
         });
     }
 
-    function setLanguages(selectedLanguageID, selectedLanguageTText ) {
+    function setLanguages(selectedLanguageID, selectedLanguageTText , currentSelectAssetItem) {
                   
 
                     $.ajax({
                         type: "GET",
                         url: "/ContentTree/setLanguages", // PageName/MethodName
                         //data: JSON.stringify(requestData),
-                        data: { SelectedLanguageID: selectedLanguageID, SelectedLanguageText: selectedLanguageTText },
+                        data: { SelectedLanguageID: selectedLanguageID, SelectedLanguageText: selectedLanguageTText, CurrentSelectAssetItem: currentSelectAssetItem },
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: false,
@@ -125,12 +128,12 @@
                                                     $hdn_CurrentLanguage_Text.val(selectedLanguageTText);
                                                             showAlert("Selected language set successfully.");
                                                                          //alert(assetItemTreeeID);
-                                                                 ViewContentItem( assetItemTreeeID) 
+                                                                 ViewContentItem( currentSelectAssetItem) 
                                                              }
                                                               else {
                                                                  showAlert("Oops! Error while setting language.");
                                                                       //alert("Failed while saving");
-                                                                              ViewContentItem( assetItemID)
+                                                                              ViewContentItem( currentSelectAssetItem)
                                                                 }
 
                         },
@@ -139,6 +142,39 @@
                             console.error("Error occurred:", error);
                            // alert("Error occurred:" + error);
                               showAlert("Oops! Error while setting language.");
+                        }
+                    });
+                }
+ function setVersion(selectedVersionID, selectedVersionText ,currentSelectAssetItem) {
+                  
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/ContentTree/setVersion", // PageName/MethodName
+                        //data: JSON.stringify(requestData),
+                        data: { SelectedVersionID: selectedVersionID, SelectedVersionText: selectedVersionText, CurrentSelectAssetItem: currentSelectAssetItem },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (response) {
+                            if (response === true){
+                                                    $hdn_CurrentVersion.val(selectedVersionText);
+                                                            showAlert("Selected Version set successfully.");
+                                                                         //alert(assetItemTreeeID);
+                                                                 ViewContentItem( currentSelectAssetItem) 
+                                                             }
+                                                              else {
+                                                                 showAlert("Oops! Error while setting version.");
+                                                                      //alert("Failed while saving");
+                                                                             ViewContentItem( currentSelectAssetItem)
+                                                                }
+
+                        },
+                        error: function (xhr, status, error) {
+
+                            console.error("Error occurred:", error);
+                           // alert("Error occurred:" + error);
+                              showAlert("Oops! Error while setting version.");
                         }
                     });
                 }
