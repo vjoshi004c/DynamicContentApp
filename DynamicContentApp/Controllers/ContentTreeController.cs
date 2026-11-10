@@ -3,6 +3,7 @@ using  DynamicContentApp.Filters;
 using DynamicContentApp.JSON;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
+using DynamicContentApp.Session;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
@@ -725,7 +726,7 @@ namespace DynamicContentApp.Controllers
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetLanguages()
         {
-
+           
             // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
 
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
@@ -737,6 +738,32 @@ namespace DynamicContentApp.Controllers
             return Ok(LanguageList); 
         }
 
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult setLanguages(string SelectedLanguageID, string SelectedLanguageText)
+        {
+            try
+            {
+                LanguageModel languageModel = new LanguageModel();
+                if(SelectedLanguageID =="0")
+                {
+                    SelectedLanguageID = "330BF4F7-3FBD-4DB6-BCB7-27AE5764D1EC";
+                    SelectedLanguageText = "English_UnitedStates_en-US";
+                }
+                languageModel.ID = SelectedLanguageID;
+                languageModel.Language = SelectedLanguageText;
+
+                HttpContext.Session.SetObject("CurrentLanguage", languageModel);
+                var language = HttpContext.Session.GetObject<LanguageModel>("CurrentLanguage");
+
+                return Ok(true);
+               
+            }
+            catch (Exception ex)
+            {
+                return Ok(false);
+            }
+        }
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetFieldTypeBasedOnPath(string SchemaPath)

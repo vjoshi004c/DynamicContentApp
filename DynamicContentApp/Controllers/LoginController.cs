@@ -1,3 +1,4 @@
+using DynamicContentApp.DataLayer;
 using DynamicContentApp.Models;
 using DynamicContentApp.Service;
 using DynamicContentApp.Session;
@@ -38,9 +39,35 @@ namespace DynamicContentApp.Controllers
             _connectionString= _configuration["ConnectionStrings:DefaultConnection"];
         }
 
+        [HttpGet]
+        public IActionResult SignOff()
+        {
 
-       
-            [HttpPost]
+            try
+            {
+                HttpContext.Session.Clear();  // Removes all keys and values from the session state
+
+                Response.Cookies.Delete(".AspNetCore.Session");
+                // HttpContext.Session.Abandon(); // Destroys the session object entirely on the server
+
+                // Clear the session cookie from the browser
+                //if (Request.Cookies["ASP.NET_SessionId"] != null)
+                //{
+                //    HttpContext.Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
+                //    HttpContext.Response.Cookies["ASP.NET_SessionId"].Expires = DateTime.Now.AddMonths(-20);
+                //}
+
+               // return RedirectToAction("Home", "Login");
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return Ok(false);
+            }
+
+        }
+
+        [HttpPost]
         public IActionResult Validate([FromBody]  UserModel usermodel)
         {
            

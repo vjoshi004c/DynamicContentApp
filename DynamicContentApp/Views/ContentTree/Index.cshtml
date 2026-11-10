@@ -1,6 +1,19 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var sessionLanguageJson = HttpContextAccessor.HttpContext?.Session.GetString("CurrentLanguage");
+    var entityLanguage = sessionLanguageJson != null ? System.Text.Json.JsonSerializer.Deserialize<LanguageModel>(sessionLanguageJson) : null;
+    if(entityLanguage == null)
+    {
+        // If the session variable is not set, you can set a default value or handle it as needed
+        entityLanguage = new LanguageModel { ID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23", Language = "English_UnitedStates_en-US" }; // Example <default>           </default>)
+    }
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -467,6 +480,11 @@ body {font-family: Arial;}
      string dbConnectionString =Configuration.GetSection("SystemConfig")["ApplicationMode"];
      string EnabledContextMenuAtUniversalCmsNode=Configuration.GetSection("SystemConfig")["EnabledContextMenuAtUniversalCmsNode"]; 
     }
+
+
+    <input type="hidden" id="hdn_CurrentLanguage_ID" value="@entityLanguage?.ID.ToString()" />
+    <input type="hidden" id="hdn_CurrentLanguage_Text" value="@entityLanguage?.Language.ToString()" />
+
   @*   <p>Environment: @dbConnectionString</p> *@
        <input type="hidden" id="hdnEnabledContextMenuAtUniversalCmsNode"  value="@EnabledContextMenuAtUniversalCmsNode"/>
        <input type="hidden" id="hdnCurrentSelectAssetItem"  value=""/>
@@ -568,16 +586,16 @@ body {font-family: Arial;}
                                   </div>
                             <div style="width:20%;" >  <select id="ddlVersion"style="width:95%;height:1.5em;" >
                                 <option value="">--Select Version--</option>
-                                <option value="AssetID">Version 1</option>
-                                <option value="AssetName">Version 2</option>
-                                <option value="SchemaName">Version 3</option>
-                                <option value="AssetType">Version 4</option>
-                                 <option value="AssetType">Version 5<</option>
-                                <option value="AssetID">Version 6</option>
-                                <option value="AssetName">Version 7</option>
-                                <option value="AssetType">Version 8</option>
-                                 <option value="AssetType">Version 9</option>
-                                   <option value="AssetType">Version 10</option>
+                                <option value="1">Version 1</option>
+                                <option value="2">Version 2</option>
+                                <option value="3">Version 3</option>
+                                <option value="4">Version 4</option>
+                                 <option value="5">Version 5</option>
+                                <option value="6">Version 6</option>
+                                <option value="7">Version 7</option>
+                                <option value="8">Version 8</option>
+                                 <option value="9">Version 9</option>
+                                   <option value="10">Version 10</option>
                               
                             </select>
                             </div>

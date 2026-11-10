@@ -91,7 +91,16 @@ options.Add(context =>
         // if (isLoginFile == true )
         if (isLoginFile ==true && isLoginController == false)
         {
-            context.HttpContext.Request.Path = "/home/Login";
+            if (path.Contains("/SIGNOF"))
+            {
+                context.HttpContext.Request.Path = "/login/SignOff";
+
+            }
+            else
+            {
+                context.HttpContext.Request.Path = "/home/Login";
+                // context.HttpContext.Request.Path = "/home/Login";
+            }
         }
         if (isDesktopFile)
         {

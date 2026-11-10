@@ -333,8 +333,30 @@
         });
         $(".SignOff-btn").click(function () {
            var CurrnetDomainUrl = document.getElementById("hdn_CurrnetDomainUrl").value;
-           //alert(CurrnetDomainUrl);
-            window.location.href =  CurrnetDomainUrl+ "/login";
+           //alert("SignOff-btn");
+           // window.location.href =  CurrnetDomainUrl+ "/login";
+           $.ajax({
+                                          type: "GET",
+                                           url: "/login/SignOff", // PageName/MethodName
+                                          //data: JSON.stringify(requestData),
+                                                   data: {},
+                                          contentType: "application/json; charset=utf-8",
+                                           dataType: "json",
+                                          success: function (response) {
+                                                if (response == true) {
+                                                   window.location.href =  CurrnetDomainUrl+ "/login";
+                                                 }
+                                                 else {
+                                                    alert("Alert:Oops! Error while signoff.");
+                                                 }
+                                                                                    
+                                       },
+                                    error: function (xhr, status, error) {
+                                        alert("Alert:Oops! Error while signoff.");
+                                          
+                                       }
+                               });
+
         });
         // Close start menu when clicking outside
         $(document).click(function (e) {

@@ -4,8 +4,14 @@
         { value: "0", text: "-Select Language -" }
     ]; 
 
+    const $hdnCurrentSelectAssetItem = $('#hdnCurrentSelectAssetItem');
+    const $hdnCurrentSelectAssetParentItem = $('#hdnCurrentSelectAssetParentItem');
+
+    const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+    const $hdn_CurrentLanguage_Text = $('#hdn_CurrentLanguage_Text');
+
     const $selectLanguage = $('#ddlLanguage');
-    //const $selectVersion = $('#ddlVersion');
+    const $selectVersion = $('#ddlVersion');
     getLanguages(optionsData);
 
     $.each(optionsData, function (index, item) {
@@ -28,14 +34,20 @@
             //);
         }
     });
-
+   // alert("Current Language ID - " + $hdn_CurrentLanguage_ID.val());
+    $selectLanguage.val($hdn_CurrentLanguage_ID.val());
     $selectLanguage.on("change", function () {
        // var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
        // $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
+           var CurrentSelectAssetItem = $hdnCurrentSelectAssetItem.val();
+             var CurrentSelectAssetParentItem = $hdnCurrentSelectAssetParentItem.val();
+             // alert("You selected CurrentSelectAssetItem - " + CurrentSelectAssetItem);
+             //alert("You selected CurrentSelectAssetParentItem -" + CurrentSelectAssetParentItem);
         var selectedID = $(this).val();
         var selectedText = $(this).find("option:selected").text();
-        alert("You selected: " + selectedID);
-        alert("You selected: " + selectedText);
+        //alert("You selected: " + selectedID);
+       // alert("You selected: " + selectedText);
+            setLanguages(selectedID, selectedText );
         //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
         //    //alert("You selected: " + selectedID);
         //    //alert("You selected: " + selectedText);
@@ -45,6 +57,26 @@
         //    var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
         //}
     });
+    $selectVersion.on("change", function () {
+   // var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
+   // $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
+    var CurrentSelectAssetItem = $hdnCurrentSelectAssetItem.val();
+     var CurrentSelectAssetParentItem = $hdnCurrentSelectAssetParentItem.val();
+      alert("You selected CurrentSelectAssetItem - " + CurrentSelectAssetItem);
+    alert("You selected CurrentSelectAssetParentItem -" + CurrentSelectAssetParentItem);
+    var selectedID = $(this).val();
+    var selectedText = $(this).find("option:selected").text();
+    alert("You selected value -" + selectedID);
+    alert("You selected text -" + selectedText);
+    //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
+    //    //alert("You selected: " + selectedID);
+    //    //alert("You selected: " + selectedText);
+    //    $("#spanAssetItemSchema_Add").css("display", "block");
+    //}
+    //if (selectedText.toUpperCase() === "DROPDOWN" || selectedText.toUpperCase() === "MULTILIST") {
+    //    var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
+    //}
+});
    
     function getLanguages(optionsData) {
        // alert("getFieldType");
@@ -76,6 +108,40 @@
         });
     }
 
-    
+    function setLanguages(selectedLanguageID, selectedLanguageTText ) {
+                  
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/ContentTree/setLanguages", // PageName/MethodName
+                        //data: JSON.stringify(requestData),
+                        data: { SelectedLanguageID: selectedLanguageID, SelectedLanguageText: selectedLanguageTText },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (response) {
+                            if (response === true){
+                                                    $hdn_CurrentLanguage_ID.val(selectedLanguageID);
+                                                    $hdn_CurrentLanguage_Text.val(selectedLanguageTText);
+                                                            showAlert("Selected language set successfully.");
+                                                                         //alert(assetItemTreeeID);
+                                                                 ViewContentItem( assetItemTreeeID) 
+                                                             }
+                                                              else {
+                                                                 showAlert("Oops! Error while setting language.");
+                                                                      //alert("Failed while saving");
+                                                                              ViewContentItem( assetItemID)
+                                                                }
+
+                        },
+                        error: function (xhr, status, error) {
+
+                            console.error("Error occurred:", error);
+                           // alert("Error occurred:" + error);
+                              showAlert("Oops! Error while setting language.");
+                        }
+                    });
+                }
+
 
 });
