@@ -6,6 +6,16 @@
         public string? PageContent { get; set; }
     }
 
+    public class ControllerDynamicContent
+    {
+        public string? AreaName { get; set; }       
+        public string? AreaEndpoint { get; set; }
+        public string? AreaEndpointDataType { get; set; }
+        public string? AreaHttpMethod { get; set; }
+        public string? AreaEndpointRequestData { get; set; }
+     
+    }
+    
     public class ContentTreeModel
     {
         public string? ParentSchemaName { get; set; }

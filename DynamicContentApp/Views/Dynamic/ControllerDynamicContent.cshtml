@@ -1,0 +1,29 @@
+﻿@model ControllerDynamicContent
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<P>Dynamic controller content </P>
+<div id="@Model.AreaName" tag="DynamicController" style="background-color:#871409;color:white">
+  
+<div id="@(Model.AreaName+"_PRIMARY")"  endpoint="@Model.AreaEndpoint" endpointdatatype="@Model.AreaEndpointDataType" httpmethod="@Model.AreaHttpMethod" requestdata="@Model.AreaEndpointRequestData" >
+</div>
+<div id="@(Model.AreaName+"_SECONDARY")" >
+
+         <p>  AssetItemID -  [ASSET_ITEM_ID]</p>
+          <p>  AssetItemName -  [ASSET_ITEM_NAME]</p>
+          <p>  AssetItemPath -  [ASSET_ITEM_PATH]</p>
+            <p>  ParrentID -  [PARENTID]</p>
+
+</div>
+   
+         <p>   @Model.AreaName</p>
+           <p>  @Model.AreaEndpoint</p>
+          <p>   @Model.AreaEndpointDataType</p>
+           <p>  @Model.AreaHttpMethod </p>
+          <p>   @Model.AreaEndpointRequestData </p>
+</div>
+<script>
+   
+</script>

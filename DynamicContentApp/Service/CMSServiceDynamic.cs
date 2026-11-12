@@ -1052,7 +1052,9 @@ namespace DynamicContentApp.Service
                         string controllername = node.ControllerName;
                         string controlleraction = node.ControllerAction;
 
-                        Task<String> htmlContent = _controllerRenderService.InvokeDynamicController(controllername, controlleraction, null);
+                        object?[] parameters = new object?[] { (string)node.AreaName, (string)node.AreaEndpoint, (string)node.AreaEndpointDataType, (string)node.AreaHttpMethod, (string)node.AreaEndpointRequestData };
+
+                        Task<String> htmlContent = _controllerRenderService.InvokeDynamicController(controllername, controlleraction, parameters);
                         string resulthtml = await htmlContent;
                         // Utility.AddOnPlaceholderCollection(PageSectionContent, item, resulthtml);
                         Utility.AddOnPlaceholderCollectionDynamic(PageSectionContent, node, resulthtml);

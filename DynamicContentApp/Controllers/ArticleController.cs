@@ -43,7 +43,7 @@ namespace DynamicContentApp.Controllers
             return View();
         }
        
-        public async Task<IActionResult> ContentBody()
+        public async Task<IActionResult> ContentBody(string areaName, string areaEndpoint, string areaEndpointDataType, string areaHttpMethod, string areaEndpointRequestData)
         {
 
             HomeViewModel HomeViewModel = new HomeViewModel();
@@ -53,7 +53,8 @@ namespace DynamicContentApp.Controllers
 
           
         }
-        
+      
+
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
