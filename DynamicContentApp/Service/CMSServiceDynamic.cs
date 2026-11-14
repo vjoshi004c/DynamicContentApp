@@ -1052,7 +1052,7 @@ namespace DynamicContentApp.Service
                         string controllername = node.ControllerName;
                         string controlleraction = node.ControllerAction;
 
-                        object?[] parameters = new object?[] { (string)node.AreaName, (string)node.AreaEndpoint, (string)node.AreaEndpointDataType, (string)node.AreaHttpMethod, (string)node.AreaEndpointRequestData };
+                        object?[] parameters = new object?[] { (string)node.AreaName, (string)node.AreaEndpoint, (string)node.AreaEndpointDataType, (string)node.AreaHttpMethod, (string)node.AreaEndpointRequestData , (string)node.ControllerViewPath };
 
                         Task<String> htmlContent = _controllerRenderService.InvokeDynamicController(controllername, controlleraction, parameters);
                         string resulthtml = await htmlContent;

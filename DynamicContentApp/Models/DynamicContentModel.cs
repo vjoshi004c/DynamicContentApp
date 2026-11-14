@@ -13,7 +13,8 @@
         public string? AreaEndpointDataType { get; set; }
         public string? AreaHttpMethod { get; set; }
         public string? AreaEndpointRequestData { get; set; }
-     
+
+        public string? ControllerViewPath { get; set; }
     }
     
     public class ContentTreeModel

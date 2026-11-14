@@ -56,7 +56,15 @@
 
 
     }
+    public class DynamicControllerViewModel
+    {
+        
+        public string? ResultHtmlContent { get; set; }
 
+       
+
+
+    }
     public class AssetItemModel
     {
         public string? ID { get; set; }

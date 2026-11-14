@@ -43,7 +43,7 @@ namespace DynamicContentApp.Controllers
             return View();
         }
        
-        public async Task<IActionResult> ControllerDynamicContent(string areaName, string areaEndpoint, string areaEndpointDataType, string areaHttpMethod, string areaEndpointRequestData)
+        public async Task<IActionResult> ControllerDynamicContent(string areaName, string areaEndpoint, string areaEndpointDataType, string areaHttpMethod, string areaEndpointRequestData, string controllerViewPath)
         {
 
             ControllerDynamicContent controllerDynamicContent = new ControllerDynamicContent();
@@ -52,7 +52,8 @@ namespace DynamicContentApp.Controllers
             controllerDynamicContent.AreaEndpointDataType = areaEndpointDataType;
             controllerDynamicContent.AreaHttpMethod = areaHttpMethod;
             controllerDynamicContent.AreaEndpointRequestData = areaEndpointRequestData;
-    
+            controllerDynamicContent.ControllerViewPath = controllerViewPath;
+
             return View("~/Views/Dynamic/ControllerDynamicContent.cshtml", controllerDynamicContent, dynamicallyRender :true);
 
           

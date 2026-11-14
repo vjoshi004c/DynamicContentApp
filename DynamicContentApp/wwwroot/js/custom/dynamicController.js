@@ -19,18 +19,21 @@
                                          var PrimaryDiv = $(dynamicprimarycontrol).attr('id')
                                          // alert(PrimaryDiv);
                                          var SecondaryDiv = $(dynamicsecondarycontrol).attr('id')
+                                        dynamicsecondarycontrol.empty();
                                           //alert(SecondaryDiv);
 
                                          var endpoint = $(dynamicprimarycontrol).attr("endpoint");
                                          var endpointdatatype = $(dynamicprimarycontrol).attr("endpointdatatype");
                                          var httpmethod = $(dynamicprimarycontrol).attr("httpmethod");
                                          var requestdata = $(dynamicprimarycontrol).attr("requestdata");
+                                         var controllerViewPath = $(dynamicprimarycontrol).attr("controllerViewPath");
                                         // requestdata= {  requestdata };
                                        //  var requestdatanew = JSON.stringify(requestdata)
                                          //alert("endpoint - " + endpoint);
                                          //alert("endpointdatatype - " + endpointdatatype);
                                          //    alert("httpmethod - " + httpmethod);
-                                         //alert("requestdata - " + requestdata);  
+                                         //alert("requestdata - " + requestdata); 
+                                         //alert("controllerViewPath - " + controllerViewPath);  
 
                                         // *****************************
 
@@ -38,22 +41,29 @@
                                                          type: httpmethod,
                                                           url:endpoint, 
                                                         // data: JSON.stringify(requestdata),
-                                                         data: {SchemaID: requestdata},
+                                                         data: {SchemaID: requestdata, ControllerViewPath: controllerViewPath},
                                                         // data:{requestdata },
                                                         // data: { SchemaID: IDSchema },
                                                          contentType: "application/json; charset=utf-8",
                                                          dataType: endpointdatatype,
                                                            async: false,
                                                          success: function (response) {
-
-                                                                 alert("Total records received: " + response.length);
-                                                               $.each(response, function(index, record) {
+                                                                    var ResultHtmlContent= response.resultHtmlContent;
+                                                                    dynamicsecondarycontrol.html(ResultHtmlContent);
+                                                                    // alert("ResultHtmlContent: " + ResultHtmlContent);
+                                                                 //alert("Total records received: " + response.length);
+                                                                 // if (response.status == true) {
+                                                                 //     var ResultHtmlContent= response.resultHtmlContent;
+                                                                 //     alert("ResultHtmlContent: " + ResultHtmlContent);
+                                                                 //     }
+                                                                    
+                                                               //$.each(response, function(index, record) {
                                                            
-                                                                           alert("Record ID: " + record.id);
-                                                                            alert("Record SchemaName: " + record.schemaName);
-                                                                            alert("Record SchemaPath: " + record.schemaPath);
-                                                                            alert("Record ParentID: " + record.parentID);
-                                                                             });
+                                                                          // alert("Record ID: " + record.id);
+                                                                            //alert("Record SchemaName: " + record.schemaName);
+                                                                            //alert("Record SchemaPath: " + record.schemaPath);
+                                                                           // alert("Record ParentID: " + record.parentID);
+                                                                            // });
                                                                   
                                                               },
                                                           error: function (xhr, status, error) {

@@ -5,9 +5,9 @@
 }
 
 <P>Dynamic controller content </P>
-<div id="@Model.AreaName" tag="DynamicController" style="background-color:#871409;color:white">
+<div id="@Model.AreaName" tag="DynamicController" style="background-color:white;color:gray">
   
-<div id="@(Model.AreaName+"_PRIMARY")"  endpoint="@Model.AreaEndpoint" endpointdatatype="@Model.AreaEndpointDataType" httpmethod="@Model.AreaHttpMethod" requestdata="@Model.AreaEndpointRequestData" >
+<div id="@(Model.AreaName+"_PRIMARY")"  endpoint="@Model.AreaEndpoint" endpointdatatype="@Model.AreaEndpointDataType" httpmethod="@Model.AreaHttpMethod" requestdata="@Model.AreaEndpointRequestData" controllerViewPath="@Model.ControllerViewPath" >
 </div>
 <div id="@(Model.AreaName+"_SECONDARY")" >
 
@@ -17,12 +17,13 @@
             <p>  ParrentID -  [PARENTID]</p>
 
 </div>
-   
+   @* 
          <p>   @Model.AreaName</p>
            <p>  @Model.AreaEndpoint</p>
           <p>   @Model.AreaEndpointDataType</p>
            <p>  @Model.AreaHttpMethod </p>
           <p>   @Model.AreaEndpointRequestData </p>
+          <p>   @Model.ControllerViewPath</p> *@
 </div>
 <script>
    

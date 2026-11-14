@@ -1,0 +1,64 @@
+﻿@model SchemaModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>Article Content- Dynamic Controller </h1>
+@* <div style="background-color:#Green;color:white">
+    <h1 class="display-4">Article Content</h1>
+  
+    <p>ID- @Model.ID</p> 
+     <p>AssetItemSchemaPath- @Model.AssetItemSchemaPath</p> 
+     <p>SchemaName- @Model.SchemaName</p> 
+      <p>AssetTypeID- @Model.AssetTypeID</p> 
+       <p>AssetItemTreeeID-@Model.AssetItemTreeeID</p> 
+        <p>ParentID -@Model.ParentID</p> 
+   
+</div> *@
+
+<div class="row">
+  <div class="column">Field Name</div>
+  <div class="column">FieldData</div>
+</div>
+<div class="row">
+  <div class="column">ID </div>
+  <div class="column">@Model.ID</div>
+</div>
+<div class="row">
+  <div class="column">AssetItemSchemaPath </div>
+  <div class="column">@Model.AssetItemSchemaPath</div>
+</div>
+<div class="row">
+  <div class="column">SchemaName </div>
+  <div class="column">@Model.SchemaName</div>
+</div>
+<div class="row">
+  <div class="column">AssetTypeID </div>
+  <div class="column">@Model.AssetTypeID</div>
+  </div>
+
+  <div class="row">
+  <div class="column">AssetItemTreeeID </div>
+  <div class="column">@Model.AssetItemTreeeID</div>
+  </div>
+
+   <div class="row">
+  <div class="column">ParentID </div>
+  <div class="column">@Model.ParentID</div>
+  </div>
+
+
+
+<style>
+.row {
+  display: flex; /* modern approach */
+margin:5px;
+color:white;
+}
+.column {
+  flex: 1; /* equal width */
+  padding: 10px;
+  background: gray;
+}
+</style>
+

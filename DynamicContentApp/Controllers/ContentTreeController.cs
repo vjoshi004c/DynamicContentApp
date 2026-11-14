@@ -20,6 +20,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DynamicContentApp.Controllers
@@ -707,6 +708,42 @@ namespace DynamicContentApp.Controllers
             return Ok(SchemaModellist);
         }
 
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetSchemaDynamic(string SchemaID, string ControllerViewPath)
+        {
+
+            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            SchemaModel schemaModel = new SchemaModel();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID);
+            string AssetItemPath = string.Empty;
+            string AssetItemID = string.Empty;
+            if (SchemaModellist != null && SchemaModellist.Count > 0)
+            {
+                foreach (SchemaModel item in SchemaModellist)
+                {
+                    schemaModel.ID = item.ID;
+                    schemaModel.AssetItemSchemaPath = item.AssetItemSchemaPath;
+                    schemaModel.SchemaName = item.SchemaName;
+                    schemaModel.AssetTypeID = item.AssetTypeID;
+                    schemaModel.AssetItemTreeeID = item.AssetItemTreeeID;
+                    schemaModel.ParentID = item.ParentID;
+                    schemaModel.SchemaPath = item.SchemaName;
+                }
+
+            }
+            if (AssetItemPath != string.Empty && AssetItemID != string.Empty)
+            {
+                bool updateStatus = dynamicContentDAL.UpdateAssetItemPath(AssetItemID, AssetItemPath);
+            }
+
+            string htmlContent =  _viewRenderService.RenderToStringAsync(ControllerViewPath, schemaModel).Result;
+
+            DynamicControllerViewModel DynamicControllerViewModel = new DynamicControllerViewModel();
+            DynamicControllerViewModel.ResultHtmlContent = htmlContent;
+            return Ok(DynamicControllerViewModel);
+        }
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult GetFieldType()
