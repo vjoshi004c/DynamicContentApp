@@ -1,0 +1,60 @@
+#login-form {
+    background: #6F4E37 !important;
+}
+.login-form-form {
+    background: #C19A6B !important;
+    
+}
+    .login-form-form button {
+        background: #6F4E37 !important;
+        color: white !important;
+        padding: 5px;
+        border-style: none;
+        border-color: transparent;
+    }
+    .login-form-form input {
+        color: #6F4E37 !important;
+    }
+.desktop .icon div {
+    color: #692C02 !important;
+}
+.taskbar {
+    background: #6F4E37 !important;
+}
+.window-header {
+    background: #6F4E37 !important;
+}
+.tray-container {
+    background-color: rgb(212, 205, 205)!important;
+   
+}
+
+#div_MultilanguageAndVersion {
+    background-color: rgb(212, 205, 205) !important;
+    border-color: #6F4E37 !important;
+}
+.unfake-disabled-button {
+    background-color: #6F4E37 !important;
+    border-color: #6F4E37 !important;
+
+    }
+.caret::before {
+    color: #E38C24 !important;
+}
+.caret span span{
+    background-color: #E38C24 !important;
+}
+.sidebar {
+    background-color: white !important;
+}
+.content {
+    background-color: white !important;
+}
+.tab {
+    border: 1px solid #ccc;
+    background-color: #B5A89A !important;
+}
+    .tab button:hover {
+        background-color: #C19A6B !important;
+    }
+
