@@ -101,6 +101,35 @@
     color: white !important;
     font-weight: bold !important;
 }
+#dynamicSearchResultDiv .form-label {
+    /*width: 100% !important;
+    background-color: white !important;
+    border-color: none !important;*/
+    color: #6F4E37 !important;
+    font-weight: 400 !important;
+}
+select {
+    height: 2.0em;
+    border-color: #C19A6B;
+    background-color: #faf1eb;
+}
+input[type="text"], textarea {
+    width: 100% !important;
+    border-color: #C19A6B !important;
+    border-style: solid !important;
+    border-width:1px;
+}
+label, h2 {
+    color: #6F4E37 !important;
+    font-weight: bold !important;
+}
+#dynamicFormContainer_Edit_AssetFieldComponentDetails label {
+    background-color:white !important;
+}
+
+
+
+
 
 
 
