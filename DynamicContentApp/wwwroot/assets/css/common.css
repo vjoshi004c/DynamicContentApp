@@ -25,10 +25,17 @@
     background: #6F4E37 !important;
 }
 .tray-container {
-    background-color: rgb(212, 205, 205)!important;
-   
+  /*  background-color: rgb(212, 205, 205) !important;*/
+    background-color: #C19A6B !important;
 }
-
+.tray-container span{
+    /*  background-color: rgb(212, 205, 205) !important;*/
+    color: white !important;
+}
+.tray-container2 {
+    /*  background-color: rgb(212, 205, 205) !important;*/
+    background-color: #C19A6B !important;
+}
 #div_MultilanguageAndVersion {
     background-color: rgb(212, 205, 205) !important;
     border-color: #6F4E37 !important;
@@ -50,11 +57,52 @@
 .content {
     background-color: white !important;
 }
-.tab {
+/*.tab {
     border: 1px solid #ccc;
-    background-color: #B5A89A !important;
-}
+    background-color: #C19A6B !important;
+    color:white;
+}*/
     .tab button:hover {
-        background-color: #C19A6B !important;
+        background-color: #B5A89A !important;
+       
     }
+.tablinks {
+    background-color: #C19A6B !important;
+    color: #ffffff !important;
+}
+#adddiv, #refreshdiv, #editdiv, #removediv, #publishdiv, #duplicatediv, #dynamicFormContainer_Edit, #dynamicFormContainer_Edit_AssetFieldDetails, #masterPageDiv, #ComponentPageDiv {
+    background-color: white !important;
+}
+
+#myUL1Div {
+    width: 100% !important;
+}
+#openPopupBtnAssetSchemaEdit, #openPopupBtnMasterPage, #openPopupBtnComponentName, #openPopupBtnDataSourceName, #openPopupBtnPlaceholderName {
+    background-color: #B84A04 !important;
+    border-style: none !important;
+    width: 50px !important;
+    height: 25px !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+.button-section input {
+    background-color: #B84A04 !important;
+    border-style: none !important;
+    width: 50px !important;
+    height: 25px !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+.tabcontent form input[type="button"] {
+    background-color: #B84A04 !important;
+    border-style: none !important;
+    width: 200px !important;
+    height: 25px !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+
+
+
 

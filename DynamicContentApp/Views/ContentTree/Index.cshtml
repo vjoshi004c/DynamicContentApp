@@ -488,7 +488,8 @@ body {font-family: Arial;}
      string EnabledContextMenuAtUniversalCmsNode=Configuration.GetSection("SystemConfig")["EnabledContextMenuAtUniversalCmsNode"]; 
     }
 
-    <input type="hidden" id="hdn_CurrentVersion" value="@entityVersion?.Number.ToString()" />
+    <input type="hidden" id="hdn_CurrentVersion_ID" value="@entityVersion?.ID.ToString()" />
+    <input type="hidden" id="hdn_CurrentVersion_Text" value="@entityVersion?.Text.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_ID" value="@entityLanguage?.ID.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_Text" value="@entityLanguage?.Language.ToString()" />
 
@@ -572,9 +573,9 @@ body {font-family: Arial;}
 @* <p>Click on the buttons inside the tabbed menu:</p> *@
  @* -------------------------Multilanguagae and version section--------------------------------------------------------*@
 
-                    <div id="div_MultilanguageAndVersion"  style="display: block; border-style: solid;border-width:thin; background-color:#969696 ;border-color:#969696;padding:0.5em;width:100%;display: flex; justify-content: flex-end;">
+                    <div id="div_MultilanguageAndVersion"  style="display: block; border-style: solid;border-width:thin; background-color:#969696 ;border-color:#969696;padding:0.5em;width:100%;display: flex; justify-content: flex-start;">
                      
-                         <div style="width:15%;" >
+                         <div style="width:10%;" >
                          <label for="ddlLanguage" style="width:95%;color:black;font-weight: bold;">  Select Language</label>
                          </div>
                           <div style="width:20%;" >
@@ -588,10 +589,16 @@ body {font-family: Arial;}
                               
                             </select>
                             </div>
+                             <div style="width:10%;" >
+                         <label  for="txtCurrentLanguage" ID="lblCurrentLanguage"style="color:black;font-weight: bold;">  Current Language</label>
+                          </div>
+                          <div style="width:10%;" >
+                         <input type="text" id="txtCurrentLanguage" name="CurrentLanguage" class="fake-disabled-input" style="width:100%">
+                         </div>
                               <div style="width:10%;" >
                                   <label for="ddlVersion" style="width:95%;color:black;font-weight: bold;"> Select Version</label> 
                                   </div>
-                            <div style="width:20%;" >  <select id="ddlVersion"style="width:95%;height:1.5em;" >
+                            <div style="width:10%;" >  <select id="ddlVersion"style="width:95%;height:1.5em;" >
                                 <option value="">--Select Version--</option>
                                 <option value="1">Version 1</option>
                                 <option value="2">Version 2</option>
@@ -606,6 +613,15 @@ body {font-family: Arial;}
                               
                             </select>
                             </div>
+                             <div style="width:10%;" >
+                         <label or="txtCurrentVersion" ID="lblCurrentVersion"style="color:black;font-weight: bold;">  Current Version</label>
+                         </div>
+                          <div style="width:10%;" >
+                         <input type="text" id="txtCurrentVersion" name="CurrentVersion" class="fake-disabled-input" style="width:100%">
+                         </div>
+                          <div style="width:10%;" >
+                         <button id="btnNewVersion" class="unfake-disabled-button">Add new verson</button>
+                         </div>
 
                        
                     </div>

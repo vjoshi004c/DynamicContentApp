@@ -9,10 +9,13 @@
 
     const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
     const $hdn_CurrentLanguage_Text = $('#hdn_CurrentLanguage_Text');
-    const $hdn_CurrentVersion = $('#hdn_CurrentVersion');
+    const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+     const $hdn_CurrentVersion_Text = $('#hdn_CurrentVersion_Text');
 
     const $selectLanguage = $('#ddlLanguage');
     const $selectVersion = $('#ddlVersion');
+    const $btnNewVersion = $('#btnNewVersion');
+    
     getLanguages(optionsData);
 
     $.each(optionsData, function (index, item) {
@@ -37,7 +40,9 @@
     });
    // alert("Current Language ID - " + $hdn_CurrentLanguage_ID.val());
     $selectLanguage.val($hdn_CurrentLanguage_ID.val());
-     $selectVersion.val($hdn_CurrentVersion.val());
+     $selectVersion.val($hdn_CurrentVersion_ID.val());
+      $("#txtCurrentLanguage").val($hdn_CurrentLanguage_Text.val());
+       $("#txtCurrentVersion").val($hdn_CurrentVersion_Text.val());
     $selectLanguage.on("change", function () {
        // var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
        // $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
@@ -49,6 +54,10 @@
         var selectedText = $(this).find("option:selected").text();
         //alert("You selected: " + selectedID);
        // alert("You selected: " + selectedText);
+         //alert($("#lblCurrentLanguage").html());
+          $("#txtCurrentLanguage").val(selectedText);
+        // var lblOfCurrentLangaeg = $("#lblCurrentLanguage").html();
+   // $("#lblCurrentLanguage").html(lblOfCurrentLangaeg + "-" + selectedText);
             setLanguages(selectedID, selectedText ,CurrentSelectAssetItem);
         //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
         //    //alert("You selected: " + selectedID);
@@ -68,8 +77,10 @@
     // alert("You selected CurrentSelectAssetParentItem -" + CurrentSelectAssetParentItem);
     var selectedID = $(this).val();
     var selectedText = $(this).find("option:selected").text();
+   
     // alert("You selected value -" + selectedID);
     // alert("You selected text -" + selectedText);
+       $("#txtCurrentVersion").val(selectedText);
     setVersion(selectedID, selectedText ,CurrentSelectAssetItem)
     //if (selectedText.toUpperCase() === "CONTENT_ITEM") {
     //    //alert("You selected: " + selectedID);
@@ -80,7 +91,13 @@
     //    var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "block");
     //}
 });
-   
+
+ $btnNewVersion.on("click", function () {
+               // e.preventDefault(); // This stops the form from submitting and redirecting
+               // e.stopPropagation();
+                 alert("btnNewVersion click" );
+                })
+
     function getLanguages(optionsData) {
        // alert("getFieldType");
 
@@ -128,12 +145,12 @@
                                                     $hdn_CurrentLanguage_Text.val(selectedLanguageTText);
                                                             showAlert("Selected language set successfully.");
                                                                          //alert(assetItemTreeeID);
-                                                                 ViewContentItem( currentSelectAssetItem) 
+                                                                // ViewContentItem( currentSelectAssetItem) 
                                                              }
                                                               else {
                                                                  showAlert("Oops! Error while setting language.");
                                                                       //alert("Failed while saving");
-                                                                              ViewContentItem( currentSelectAssetItem)
+                                                                              //ViewContentItem( currentSelectAssetItem)
                                                                 }
 
                         },
@@ -158,15 +175,17 @@
                         async: false,
                         success: function (response) {
                             if (response === true){
-                                                    $hdn_CurrentVersion.val(selectedVersionText);
+                                                   // $hdn_CurrentVersion.val(selectedVersionText);
+                                                    $hdn_CurrentVersion_ID.val(selectedVersionID);
+                                                    $hdn_CurrentVersion_Text.val(selectedVersionText);
                                                             showAlert("Selected Version set successfully.");
                                                                          //alert(assetItemTreeeID);
-                                                                 ViewContentItem( currentSelectAssetItem) 
+                                                                // ViewContentItem( currentSelectAssetItem) 
                                                              }
                                                               else {
                                                                  showAlert("Oops! Error while setting version.");
                                                                       //alert("Failed while saving");
-                                                                             ViewContentItem( currentSelectAssetItem)
+                                                                            // ViewContentItem( currentSelectAssetItem)
                                                                 }
 
                         },
