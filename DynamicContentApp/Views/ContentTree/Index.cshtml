@@ -599,9 +599,9 @@ body {font-family: Arial;}
                                   <label for="ddlVersion" style="width:95%;color:black;font-weight: bold;"> Select Version</label> 
                                   </div>
                             <div style="width:10%;" >  <select id="ddlVersion"style="width:95%;height:1.5em;" >
-                                <option value="">--Select Version--</option>
-                                <option value="1">Version 1</option>
-                                <option value="2">Version 2</option>
+                                @*  <option value="">--Select Version--</option>
+                              <option value="1">Version 1</option>
+                                 <option value="2">Version 2</option>
                                 <option value="3">Version 3</option>
                                 <option value="4">Version 4</option>
                                  <option value="5">Version 5</option>
@@ -609,7 +609,7 @@ body {font-family: Arial;}
                                 <option value="7">Version 7</option>
                                 <option value="8">Version 8</option>
                                  <option value="9">Version 9</option>
-                                   <option value="10">Version 10</option>
+                                   <option value="10">Version 10</option> *@
                               
                             </select>
                             </div>
@@ -4074,6 +4074,43 @@ let resultnew = [];
   $("#btnContent").css("background-color", " #ccc");
   //evt.currentTarget.className += " active";
 }
+function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage_ID) {
+       //alert("getFieldType"  +currentSelectAssetItem + currentLanguage_ID);
+
+        $.ajax({
+            type: "GET",
+            url: "/ContentTree/GetVersions", // PageName/MethodName
+            //data: JSON.stringify(requestData),
+              data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguage_ID: currentLanguage_ID },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                //alert(response.message + " Status is: " + response.status);
+                //alert("Total records received: " + response.length);
+                 if (response.length >0){
+                $.each(response, function (index, record) {
+                    const newElement = "{ value:\"" + record.number + "\", text: \"" + record.text +"\"}";
+                    //alert(newElement);
+                    let newItem = { value: record.number, text: record.text };
+                    optionsVersionData.push(newItem);
+
+                });
+                 }
+                 else
+                 {
+                     showAlert("Oops! No version available for current selected languagae. To create new version please  click \"Add new version\" button");
+                 }
+
+            },
+            error: function (xhr, status, error) {
+
+                console.error("Error occurred:", error);
+                alert("Error occurred:" + error);
+            }
+        });
+    }
+
      function ViewContentItem( currentitemid) {
           //$("#btnEditSchemaFields").removeClass("fake-disabled-button");
                             closeAllViewPanels();
@@ -4086,11 +4123,33 @@ let resultnew = [];
                               getSchema( currentitemid );
                               openCity1(event, 'content')
 
-                               //alert("ViewContentItem"+ currentitemid);
+                              // alert("ViewContentItem"+ currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
                                    var assetid = $("#editSchemaForm #txtSchemaID").val();
                                  getAssetMasterLayoutDetails(assetid);
                                    getAssetComponentDetails('', assetid)
+
+                                  
+                                   //******************************************* to get list of version of item*/
+                                   const optionsVersionData = [
+                                        { value: "0", text: "-Select Version -" }
+                                    ];
+                                    const $selectVersion = $('#ddlVersion');
+                                    $selectVersion.empty();
+                                    const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+                                    // alert( $hdn_CurrentLanguage_ID.val());
+                                    getVersion(optionsVersionData,currentitemid , $hdn_CurrentLanguage_ID.val()) ;
+                                     $.each(optionsVersionData, function (index, item) {
+                                    // Validate that both value and text exist
+                                    if (typeof item.value === "string" && typeof item.text === "string") {
+                                        $("<option>", {
+                                            value: item.value,
+                                            text: item.text
+                                        }).appendTo($selectVersion);
+                                        
+                                    }
+                                });
+                                    //************************************************** */
                             //$("#editSchemaForm #txtSchemaName").val(content);
                             //const innerElement = editdiv.querySelector('h2 span');
                            //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";

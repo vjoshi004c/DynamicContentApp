@@ -873,6 +873,53 @@ namespace DynamicContentApp.DataLayer
             }
 
         }
+
+        public List<VersionModel> GetVersions(string CurrentSelectAssetItem, string CurrentLanguage_ID)
+        {
+
+
+            SqlConnection con = null;
+            DataSet ds = null;
+            List<VersionModel> custlist = null;
+            try
+            {
+                custlist = new List<VersionModel>();
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_versions", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Language", CurrentLanguage_ID);
+                cmd.Parameters.AddWithValue("@AssetItemID", CurrentSelectAssetItem);
+                cmd.Parameters.AddWithValue("@Query", 1);
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                ds = new DataSet();
+                da.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    VersionModel cobj = new VersionModel();
+                    cobj.ID = ds.Tables[0].Rows[i]["AssetID"].ToString();
+                    cobj.Number = ds.Tables[0].Rows[i]["Number"].ToString();
+                    cobj.Text = ds.Tables[0].Rows[i]["Text"].ToString();
+                  
+                    custlist.Add(cobj);
+                }
+
+                return custlist;
+
+            }
+            catch (Exception ex)
+            {
+
+                return custlist;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+        }
         public List<SchemaFieldType> GetFieldType()
         {
 

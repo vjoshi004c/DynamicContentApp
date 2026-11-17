@@ -4,6 +4,10 @@
         { value: "0", text: "-Select Language -" }
     ]; 
 
+    const optionsVersionData = [
+        { value: "0", text: "-Select Version -" }
+    ];
+
     const $hdnCurrentSelectAssetItem = $('#hdnCurrentSelectAssetItem');
     const $hdnCurrentSelectAssetParentItem = $('#hdnCurrentSelectAssetParentItem');
 
@@ -17,6 +21,9 @@
     const $btnNewVersion = $('#btnNewVersion');
     
     getLanguages(optionsData);
+    //alert($hdnCurrentSelectAssetItem.val());
+   // alert( $hdn_CurrentLanguage_ID.val());
+    getVersion(optionsVersionData,$hdnCurrentSelectAssetItem.val() , $hdn_CurrentLanguage_ID.val()) ;
 
     $.each(optionsData, function (index, item) {
         // Validate that both value and text exist
@@ -25,6 +32,26 @@
                 value: item.value,
                 text: item.text
             }).appendTo($selectLanguage);
+            //$("<option>", {
+            //    value: item.value,
+            //    text: item.text
+            //}).appendTo($select2);
+           // alert("inside optiondata");
+            //$('#AssetTypeDropdown_Add').append(
+            //    $('<option></option>').val(value).html(text)
+            //);
+            //$('#AssetTypeDropdown_Edit').append(
+            //    $('<option></option>').val(value).html(text)
+            //);
+        }
+    });
+     $.each(optionsVersionData, function (index, item) {
+        // Validate that both value and text exist
+        if (typeof item.value === "string" && typeof item.text === "string") {
+            $("<option>", {
+                value: item.value,
+                text: item.text
+            }).appendTo($selectVersion);
             //$("<option>", {
             //    value: item.value,
             //    text: item.text
@@ -128,6 +155,36 @@
         });
     }
 
+    function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage_ID) {
+       //alert("getFieldType"  +currentSelectAssetItem + currentLanguage_ID);
+
+        $.ajax({
+            type: "GET",
+            url: "/ContentTree/GetVersions", // PageName/MethodName
+            //data: JSON.stringify(requestData),
+              data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguage_ID: currentLanguage_ID },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                //alert(response.message + " Status is: " + response.status);
+                //alert("Total records received: " + response.length);
+                $.each(response, function (index, record) {
+                    const newElement = "{ value:\"" + record.number + "\", text: \"" + record.text +"\"}";
+                    let newItem = { value: record.id, text: record.language };
+                    optionsVersionData.push(newItem);
+
+                });
+
+            },
+            error: function (xhr, status, error) {
+
+                console.error("Error occurred:", error);
+                alert("Error occurred:" + error);
+            }
+        });
+    }
+
     function setLanguages(selectedLanguageID, selectedLanguageTText , currentSelectAssetItem) {
                   
 
@@ -162,41 +219,41 @@
                         }
                     });
                 }
- function setVersion(selectedVersionID, selectedVersionText ,currentSelectAssetItem) {
-                  
+                function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage_ID) {
+                       //alert("getFieldType"  +currentSelectAssetItem + currentLanguage_ID);
 
-                    $.ajax({
-                        type: "GET",
-                        url: "/ContentTree/setVersion", // PageName/MethodName
-                        //data: JSON.stringify(requestData),
-                        data: { SelectedVersionID: selectedVersionID, SelectedVersionText: selectedVersionText, CurrentSelectAssetItem: currentSelectAssetItem },
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        async: false,
-                        success: function (response) {
-                            if (response === true){
-                                                   // $hdn_CurrentVersion.val(selectedVersionText);
-                                                    $hdn_CurrentVersion_ID.val(selectedVersionID);
-                                                    $hdn_CurrentVersion_Text.val(selectedVersionText);
-                                                            showAlert("Selected Version set successfully.");
-                                                                         //alert(assetItemTreeeID);
-                                                                // ViewContentItem( currentSelectAssetItem) 
-                                                             }
-                                                              else {
-                                                                 showAlert("Oops! Error while setting version.");
-                                                                      //alert("Failed while saving");
-                                                                            // ViewContentItem( currentSelectAssetItem)
-                                                                }
+                        $.ajax({
+                            type: "GET",
+                            url: "/ContentTree/GetVersions", // PageName/MethodName
+                            //data: JSON.stringify(requestData),
+                              data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguage_ID: currentLanguage_ID },
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (response) {
+                                //alert(response.message + " Status is: " + response.status);
+                                //alert("Total records received: " + response.length);
+                                 if (response.length >0){
+                                $.each(response, function (index, record) {
+                                    const newElement = "{ value:\"" + record.number + "\", text: \"" + record.text +"\"}";
+                                    //alert(newElement);
+                                    let newItem = { value: record.number, text: record.text };
+                                    optionsVersionData.push(newItem);
 
-                        },
-                        error: function (xhr, status, error) {
+                                });
+                                 }
+                                 else
+                                 {
+                                     showAlert("Oops! No version availabel for current selected languagae");
+                                 }
 
-                            console.error("Error occurred:", error);
-                           // alert("Error occurred:" + error);
-                              showAlert("Oops! Error while setting version.");
-                        }
-                    });
-                }
+                            },
+                            error: function (xhr, status, error) {
 
+                                console.error("Error occurred:", error);
+                                alert("Error occurred:" + error);
+                            }
+                        });
+                    }
 
 });

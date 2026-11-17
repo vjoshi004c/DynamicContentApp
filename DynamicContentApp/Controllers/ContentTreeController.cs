@@ -777,6 +777,22 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetVersions(string CurrentSelectAssetItem, string CurrentLanguage_ID)
+        {
+
+            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<VersionModel> VersionList = dynamicContentDAL.GetVersions( CurrentSelectAssetItem,  CurrentLanguage_ID);
+            if (VersionList != null && VersionList.Count == 0)
+            {
+
+            }
+            return Ok(VersionList);
+        }
+
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
         public IActionResult setLanguages(string SelectedLanguageID, string SelectedLanguageText, string CurrentSelectAssetItem)
         {
             try
