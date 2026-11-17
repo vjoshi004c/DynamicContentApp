@@ -96,7 +96,7 @@
 .tabcontent form input[type="button"] {
     background-color: #B84A04 !important;
     border-style: none !important;
-    width: 200px !important;
+    width: 150px !important;
     height: 25px !important;
     color: white !important;
     font-weight: bold !important;
@@ -112,6 +112,7 @@ select {
     height: 2.0em;
     border-color: #C19A6B;
     background-color: #faf1eb;
+    width: 100% !important;
 }
 input[type="text"], textarea {
     width: 100% !important;
@@ -126,6 +127,64 @@ label, h2 {
 #dynamicFormContainer_Edit_AssetFieldComponentDetails label {
     background-color:white !important;
 }
+
+input[id="txtMasterPageItem"], input[id="txtAssetItemSchemaPathEdit"], input[id="txtAssetItemSchemaPath"] {
+    width: 95% !important;
+}
+input[id="username"] {
+    width: 60% !important;
+}
+.dual-listbox {
+    width:100%;
+}
+.list-section select {
+    width: 100% !important;
+}
+.list-section {
+    width: 45% !important;
+}
+#dynamicFormContainer_Edit_AssetFieldDetails select {
+    width: 100% !important;
+}
+#ddlSerach {
+    width: 100%;
+}
+#dynamicFormContainer_Component input[type="text"] {
+    width: 80% !important;
+    margin-right: 5px !important;
+}
+
+#dynamicFormContainer_Edit_AssetFieldComponentDetails div {
+    width: 100% !important;
+}
+.content #Search div {
+    margin-bottom: 5px !important;
+}
+.content #Search {
+    background-color: #faf1eb !important;
+}
+#dynamicFormContainer_Component {
+    border-color: #faf1eb !important;
+    background-color: #faf1eb !important;
+}
+    #dynamicFormContainer_Component label {
+        
+        background-color: #faf1eb !important;
+    }
+
+h2 {
+    background-color: #faf1eb !important;
+    width: 100% !important;
+}
+
+.modal-content {
+    background-color: #faf1eb !important;
+    border: 5px solid #F7E0D0 !important;
+}
+
+
+ 
+
 
 
 

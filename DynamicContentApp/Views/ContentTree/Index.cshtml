@@ -527,7 +527,7 @@ body {font-family: Arial;}
 
             <ul id="myUL">
                 <li  tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE">
-                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="caret default-color"><img src="/images/icon/Icon_Folder.png" style="width:15px;height:15px;" alt="icon" class="arrow-icon" /><span style="color:white;padding:2px;background-color:red;padding-left:5px;padding-right:5px;">UniversalCMS</span>
+                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="caret default-color"><img src="/images/icon/Icon_Folder.png" style="width:15px;height:15px;" alt="icon" class="arrow-icon" /><span style="color:white;padding:2px;background-color:#DE2007;padding-left:5px;padding-right:5px;">UniversalCMS</span>
                     <ul id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="nested">
                         <li>
                             <span tag="101" class="caretli">Water</span>
@@ -745,7 +745,7 @@ body {font-family: Arial;}
                                     </p>
                                      
                             <p>
-                            <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;">
+                            <span id="spanAssetItemSchema_Add" style="display:block;padding:2em;border:solid;margin-bottom:2em;border-width:thin;">
                                 <label for="txtAssetItemSchema">Schema linked with Asset Item:</label>
                                     <input type="text" id="txtAssetItemSchemaPath" name="AssetItemSchema" value="" class="fake-disabled-input" style="width:400px;">
                                     <button id="openPopupBtnAssetSchemaAdd" title="To Select Schema Item" parentitem="txtAssetItemSchemaAdd" parentitemPath="txtAssetItemSchemaPath">...</button>
@@ -967,7 +967,7 @@ body {font-family: Arial;}
                         <p>
                             <div id="dynamicFormContainer_Component" style="border-style:solid; border-width:thin; border-color:darkslategray; padding:2em;display:none;background-color: #D4CDCD;"></div>
                         </p>
-                        <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails"  style="border-style:none; border-width:thin; border-color:darkslategray; padding:2em;display:none;"></div>
+                        <div id="dynamicFormContainer_Edit_AssetFieldComponentDetails"  style="border-style:none; border-width:thin; border-color:darkslategray; padding:2em;display:none;overflow-x: auto;height: 50dvh;"></div>
            
             </div>
 
@@ -3463,10 +3463,11 @@ body {font-family: Arial;}
                                                     const previewcall =    "openCityEditor(event,'"+  previewid+"');";
                                                     const htmlcall =    "openCityEditor(event,'"+  htmlid+"');";
 
-                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"PREVIEW", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;padding:3px;font-size:12px;'});
-                                                    const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text: "HTML", class: "tablinkseditor", onclick: htmlcall, schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, id: schemaFieldID, value: "HTML", name: 'AssetFieldSingleValue', placeholder: 'Enter Asset Field Value2', style: 'width:10%;padding:3px;font-size:12px;' });
-                                                    SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
+                                                    const AssetFieldHtmlbutton1 = $('<input>').attr({ type: 'button', text:"PREVIEW", class:"tablinkseditor" ,onclick:previewcall,schemaFieldID:schemaFieldID, assetFieldID:assetFieldID, id:schemaFieldID,  value:"DESIGN", name: 'AssetFieldSingleValue',placeholder: 'Enter Asset Field Value1' , style:'width:10%;padding:3px;font-size:12px;margin-right:3px;'});
+                                                    const AssetFieldHtmlbutton2 = $('<input>').attr({ type: 'button', text: "HTML", class: "tablinkseditor", onclick: htmlcall, schemaFieldID: schemaFieldID, assetFieldID: assetFieldID, id: schemaFieldID, value: "HTML", name: 'AssetFieldSingleValue', placeholder: 'Enter Asset Field Value2', style: 'width:10%;padding:3px;font-size:12px;margin-right:3px;' });
+                                                   
                                                     SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton2);
+                                                     SchemaSpanHtmlDiv.append(AssetFieldHtmlbutton1);
                                        
                                                      form.append(SchemaSpanHtmlDiv);
 
@@ -4081,7 +4082,7 @@ let resultnew = [];
                               var content=$("#" +currentitemid).html();
                             //innerElement.innerHTML = currentitemid;
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
-                               innerElement.innerHTML = "<span style=\"color:red;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
+                               innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
                               getSchema( currentitemid );
                               openCity1(event, 'content')
 
