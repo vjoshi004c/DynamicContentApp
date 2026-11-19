@@ -4110,7 +4110,21 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                  }
                  else
                  {
-                     showAlert("Oops! No version available for current selected languagae. To create new version please  click \"Add new version\" button");
+                            var i, tabcontent, tablinks;
+                            tabcontent = document.getElementsByClassName("tabcontent");
+                            for (i = 0; i < tabcontent.length; i++) {
+                              tabcontent[i].style.display = "none";
+                            }
+                            tablinks = document.getElementsByClassName("tablinks");
+                             for (i = 0; i < tablinks.length; i++) {
+                                              tablinks[i].style.display = "none";
+                             }
+                              $("#txtCurrentVersion").val('None');
+                              // const $selectVersion = $('#ddlVersion');
+                               //$selectVersion.val("0");
+                                const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+                                $hdn_CurrentVersion_ID.val("0");
+                             showAlert("Oops! No version available for current selected languagae. To create new version please  click \"Add new version\" button");
                  }
 
             },
