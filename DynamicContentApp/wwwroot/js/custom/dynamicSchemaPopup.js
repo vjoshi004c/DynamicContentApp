@@ -410,6 +410,11 @@ $(document).ready(function () {
         e.stopPropagation();
         //alert("inside #btnSeaarchAsset");
            var assetItemTreeID = $("#hdnCurrentSelectAssetItem").val();
+
+           if(assetItemTreeID == '') {
+               assetItemTreeID='4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE';
+
+        }
        
          var searchType = $('#ddlSerach').find("option:selected").text();
           //alert(searchType);

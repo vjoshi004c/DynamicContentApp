@@ -487,8 +487,8 @@ body {font-family: Arial;}
      string dbConnectionString =Configuration.GetSection("SystemConfig")["ApplicationMode"];
      string EnabledContextMenuAtUniversalCmsNode=Configuration.GetSection("SystemConfig")["EnabledContextMenuAtUniversalCmsNode"]; 
     }
-
-    <input type="hidden" id="hdn_CurrentVersion_ID" value="@entityVersion?.ID.ToString()" />
+     <input type="hidden" id="hdn_CurrentVersion_ID" value="1" />
+   @*  <input type="hidden" id="hdn_CurrentVersion_ID" value="@entityVersion?.ID.ToString()" /> *@
     <input type="hidden" id="hdn_CurrentVersion_Text" value="@entityVersion?.Text.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_ID" value="@entityLanguage?.ID.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_Text" value="@entityLanguage?.Language.ToString()" />
@@ -527,7 +527,8 @@ body {font-family: Arial;}
 
             <ul id="myUL">
                 <li  tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE">
-                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="caret default-color"><img src="/images/icon/Icon_Folder.png" style="width:15px;height:15px;" alt="icon" class="arrow-icon" /><span style="color:white;padding:2px;background-color:#DE2007;padding-left:5px;padding-right:5px;">UniversalCMS</span>
+                    <span id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE"  tag="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="caret default-color">
+                        <img src="/images/icon/Icon_Folder.png" style="width:15px;height:15px;" alt="icon" class="arrow-icon" /><span style="color:white;padding:2px;background-color:#DE2007;padding-left:5px;padding-right:5px;"><span style="background-color:#DE2007!important;" id="span_universalCMS">UniversalCMS</span></span>
                     <ul id="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" class="nested">
                         <li>
                             <span tag="101" class="caretli">Water</span>
@@ -4005,8 +4006,18 @@ let resultnew = [];
     var txtSchemaPath = $("#hdnAssetPath").val();
 
     var tabTag= tablinks[i].getAttribute('tag');
-     //alert("openCity1 tag" +txtSchemaPath + tabTag +tabcontent[i]);
-     
+    // alert("openCity1 tag" +txtSchemaPath + tabTag +tabcontent[i]);
+
+         
+                  if (txtSchemaPath ==="" )  {
+
+                    $("#btnPage").css("display", "none");
+                    $("#btnComponents").css("display", "none");
+                    $("#btnPreview").css("display", "none");
+                    $("#btnSearch").css("display", "block");
+                             $("#btnAssetdetail").css("display", "none");
+                 }
+               
      if (txtSchemaPath.indexOf("/"+ "Content" ) != -1) {
           if (txtSchemaPath ==="/UniversalCMS/Content" )  {
 
@@ -4110,7 +4121,65 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
             }
         });
     }
+     function ViewContentItemAtStartUp( currentitemid) {
+          //$("#btnEditSchemaFields").removeClass("fake-disabled-button");
+                            closeAllViewPanels();
+                            editdiv.style.display = "block";
+                              const innerElement = editdiv.querySelector('h2 span');
+                              var content=$("#" +currentitemid).html();
+                            //innerElement.innerHTML = currentitemid;
+                            // innerElement.innerHTML = content+ " {" +currentitemid +"}";
+                               innerElement.innerHTML = "<span style=\"color:#DE2007;\">" +" UniversalCMS" +"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
+                              getSchema( currentitemid );
+                              openCity1(event, 'content')
 
+                              // alert("ViewContentItem"+ currentitemid);
+                                  //alert($("#editSchemaForm #txtSchemaID").val());
+                                   var assetid = $("#editSchemaForm #txtSchemaID").val();
+                                 getAssetMasterLayoutDetails(assetid);
+                                   getAssetComponentDetails('', assetid)
+
+                                  
+                                   //******************************************* to get list of version of item*/
+                                   const optionsVersionData = [
+                                        { value: "0", text: "-Select Version -" }
+                                    ];
+                                    const $selectVersion = $('#ddlVersion');
+                                    $selectVersion.empty();
+                                    const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+                                     const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+                                    // alert( $hdn_CurrentLanguage_ID.val());
+                                      // alert( currentitemid);
+                                    getVersion(optionsVersionData,currentitemid , $hdn_CurrentLanguage_ID.val()) ;
+                                     $.each(optionsVersionData, function (index, item) {
+                                    // Validate that both value and text exist
+                                    if (typeof item.value === "string" && typeof item.text === "string") {
+                                        $("<option>", {
+                                            value: item.value,
+                                            text: item.text
+                                        }).appendTo($selectVersion);
+                                        
+                                    }
+                                });
+                                 $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                    //************************************************** */
+                            //$("#editSchemaForm #txtSchemaName").val(content);
+                            //const innerElement = editdiv.querySelector('h2 span');
+                           //editdiv.innerHTML ="<h2>Edit selected item - <span>"+ currentitemid +" </span></h2>";
+                           // removediv.style.display = "none";
+                          // duplicatediv.style.display = "none";
+                          //alert('inside div - ' + currentid +' and item id -'+ currentitemid);
+
+                               // var  AssetItemSchemaID = $('#editSchemaForm').find('input[id="txtAssetItemSchema"]').val();
+                               //   var AssetItemTreeeID = $(this).closest('form').find('input[id="txtAssetItemTreeeID"]').val();
+                               //   var  AssetItemID = $(this).closest('form').find('input[id="txtSchemaID"]').val();
+
+                                // var AssetItemSchemaID= ("#editSchemaForm #txtAssetItemSchema").val();
+                                // var AssetItemTreeeID= $("#editSchemaForm #txtAssetItemTreeeID").val();
+                                // var AssetItemID= $("#editSchemaForm #txtSchemaID").val();
+                               
+                        
+               }
      function ViewContentItem( currentitemid) {
           //$("#btnEditSchemaFields").removeClass("fake-disabled-button");
                             closeAllViewPanels();
@@ -4137,6 +4206,9 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                     const $selectVersion = $('#ddlVersion');
                                     $selectVersion.empty();
                                     const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+                                    const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+                                    // alert( $hdn_CurrentLanguage_ID.val());
+                                      // alert( currentitemid);
                                     // alert( $hdn_CurrentLanguage_ID.val());
                                     getVersion(optionsVersionData,currentitemid , $hdn_CurrentLanguage_ID.val()) ;
                                      $.each(optionsVersionData, function (index, item) {
@@ -4149,6 +4221,7 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                         
                                     }
                                 });
+                                $selectVersion.val($hdn_CurrentVersion_ID.val());
                                     //************************************************** */
                             //$("#editSchemaForm #txtSchemaName").val(content);
                             //const innerElement = editdiv.querySelector('h2 span');
@@ -4445,6 +4518,26 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                
      }
 
+             $("#span_universalCMS").on("click", function(event) {
+                 // alert("GetRootItemSummary" );
+                          event.preventDefault();
+                     event.stopPropagation();
+                     // alert("GetRootItemSummary" );
+                      // getDbData(SchemaID);
+                        openCity1(event, 'content')
+                         ViewContentItemAtStartUp("4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE") ;
+          
+        });
+
+          // function GetRootItemSummary(SchemaID, event) {
+          //                  event.preventDefault();
+          //   event.stopPropagation();
+          //             alert("GetRootItemSummary" );
+          //             // getDbData(SchemaID);
+          //               openCity1(event, 'content')
+          //                        ViewContentItemAtStartUp(SchemaID) ;
+
+          // }
         //************************ */
 
          if(IDSchema ="4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE")
@@ -4488,12 +4581,14 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                             });
                             toggler[i].classList.toggle("highlight");
                             const spans1 = document.querySelectorAll('span.highlight');
+                            openCity1(event, 'content')
+                                     ViewContentItemAtStartUp(idSchema) ;
                             spans1.forEach(span => {
                                 //alert(this.id);
                                 setupcontextmenu(this);
 
                             });
-                            ViewContentItem(idSchema) ;
+                           // ViewContentItem(idSchema) ;
 
                         //});
                     }
@@ -4579,7 +4674,7 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
             // contextMenu.style.display = "none";
                 if (!element.dataset.hasClickListener) {
                    
-            // alert("inside hasClickListener");
+             //alert("inside hasClickListener");
             //element.on("contextmenu", function (e) {
             element.addEventListener("contextmenu", function (e) {
                   //alert("setupcontextmenu");
