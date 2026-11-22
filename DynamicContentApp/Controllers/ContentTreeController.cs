@@ -781,8 +781,11 @@ namespace DynamicContentApp.Controllers
         {
 
             // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
-
-            if (CurrentSelectAssetItem == "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE")
+            if (String.IsNullOrEmpty(CurrentSelectAssetItem))
+            {
+                CurrentSelectAssetItem = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            }
+            if (CurrentSelectAssetItem == "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE" )
             {
                 CurrentLanguage_ID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23";
             }

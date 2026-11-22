@@ -1216,7 +1216,7 @@ body {font-family: Arial;}
                           //  ViewContentItem(IDSchema);
                        // alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                        getDbDataManager( IDSchema, IDSchemaManager);
-                       ViewContentItem(IDSchema);
+                       ViewContentItemAtStartUp(IDSchema);
                     }
                      if(managerValue=="schema")
                     {
@@ -1224,7 +1224,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "1049D17E-6C1C-45A9-9B75-5F779B61023E";
                           //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                         getDbDataManager( IDSchema, IDSchemaManager);
-                        ViewContentItem(IDSchema);
+                        ViewContentItemAtStartUp(IDSchema);
                     }
                      if(managerValue=="layout")
                     {
@@ -1232,7 +1232,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "111035FA-612A-4EB5-9CBC-8DF91E9152A3";
                         //alert("layout inside managerValue" + managerValue + "id-" + IDSchemaManager);
                        getDbDataManager( IDSchema, IDSchemaManager);
-                       ViewContentItem(IDSchema);
+                       ViewContentItemAtStartUp(IDSchema);
                     }
                      if(managerValue=="media")
                     {
@@ -1240,7 +1240,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "B8FFD700-4AA9-45A0-B4B3-A65ED6F993B9";
                         //alert("inside media managerValue" + managerValue + "id-" + IDSchemaManager);
                         getDbDataManager( IDSchema, IDSchemaManager);
-                        ViewContentItem(IDSchema);
+                        ViewContentItemAtStartUp(IDSchema);
                     }
                      if(managerValue=="website")
                     {
@@ -1248,7 +1248,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "78610893-8DF7-41DF-BD14-C458BE7F3038";
                       //  alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                        getDbDataManager( IDSchema, IDSchemaManager);
-                       ViewContentItem(IDSchema);
+                       ViewContentItemAtStartUp(IDSchema);
                     }
                     if(managerValue=="setting")
                     {
@@ -1256,7 +1256,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "DC30B818-0EF8-4BF9-84E2-812EC508A483";
                         //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                         getDbDataManager( IDSchema, IDSchemaManager);
-                        ViewContentItem(IDSchema);
+                        ViewContentItemAtStartUp(IDSchema);
                     }
                      if(managerValue=="form")
                     {
@@ -1264,7 +1264,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "DC0600E2-BCB2-4752-BE98-852309313AA9";
                         //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                         getDbDataManager( IDSchema, IDSchemaManager);
-                        ViewContentItem(IDSchema);
+                        ViewContentItemAtStartUp(IDSchema);
                     }
                      if(managerValue=="multilanguage")
                     {
@@ -1272,7 +1272,7 @@ body {font-family: Arial;}
                         IDSchemaManager = "18D607FD-938E-42FD-936A-8003A8F604D7";
                         //alert("inside managerValue" + managerValue + "id-" + IDSchemaManager);
                         getDbDataManager( IDSchema, IDSchemaManager);
-                        ViewContentItem(IDSchema);
+                        ViewContentItemAtStartUp(IDSchema);
                     }
                    // alert("ViewContentItem" + "id-" + IDSchema);
                     
@@ -4006,10 +4006,10 @@ let resultnew = [];
     var txtSchemaPath = $("#hdnAssetPath").val();
 
     var tabTag= tablinks[i].getAttribute('tag');
-    // alert("openCity1 tag" +txtSchemaPath + tabTag +tabcontent[i]);
+     //alert("openCity1 tag" +txtSchemaPath + tabTag +tabcontent[i]);
 
          
-                  if (txtSchemaPath ==="" )  {
+                  if (txtSchemaPath ==="" || txtSchemaPath ==="/UniversalCMS")  {
 
                     $("#btnPage").css("display", "none");
                     $("#btnComponents").css("display", "none");
@@ -4038,6 +4038,22 @@ let resultnew = [];
          }
      }
      if (txtSchemaPath.indexOf("/"+ "Layout" ) != -1) {
+
+         $("#btnPage").css("display", "none");
+          $("#btnComponents").css("display", "none");
+           $("#btnPreview").css("display", "none");
+            $("#btnSearch").css("display", "block");
+             $("#btnAssetdetail").css("display", "block");
+     }
+     if (txtSchemaPath.indexOf("/"+ "Forms" ) != -1) {
+
+         $("#btnPage").css("display", "none");
+          $("#btnComponents").css("display", "none");
+           $("#btnPreview").css("display", "none");
+            $("#btnSearch").css("display", "block");
+             $("#btnAssetdetail").css("display", "block");
+     }
+     if (txtSchemaPath.indexOf("/"+ "Languages" ) != -1) {
 
          $("#btnPage").css("display", "none");
           $("#btnComponents").css("display", "none");
@@ -4538,7 +4554,7 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                      event.stopPropagation();
                      // alert("GetRootItemSummary" );
                       // getDbData(SchemaID);
-                        openCity1(event, 'content')
+                       // openCity1(event, 'content')
                          ViewContentItemAtStartUp("4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE") ;
           
         });

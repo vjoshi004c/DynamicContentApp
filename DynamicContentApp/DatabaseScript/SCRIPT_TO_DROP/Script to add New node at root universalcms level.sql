@@ -1,6 +1,6 @@
 
 
-*****************
+--*****************
 
 --script to update languageid and versionid in following tables for multi language and multi version support
 
@@ -46,3 +46,79 @@ INSERT INTO [dbo].[AssetItem]
            ,'4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE'
            ,'ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23'
            ,1)
+
+          -- *****************************
+
+        -- to  insert assetitem which not existed for associated assetschema id 
+
+        begin tran
+INSERT INTO [dbo].[AssetItem]
+           ([ItemName]
+           ,[ItemPath]
+           ,[SchemaID]
+           ,[IsPageItem]
+           ,[MasterPageLayoutPath]
+           ,[ParentID]
+           ,[AssetType]
+           ,[AssetItemSchemaMapped]
+           ,[LanguageID]
+           ,[Version])
+  
+           select 
+                    ass.SchemaName, 
+                    ass.SchemaPath,
+                    'EF62364C-F2AF-41CC-99C9-2D4D227AD736',
+                    0,
+                    null,
+                    ass.ParentID,
+                    ass.AssetTypeID,
+                    ass.id,
+                    'ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23',
+                    1
+                from assetschema  ass
+                left  join assetitem  ait 
+                on  ass.id = ait.AssetItemSchemaMapped
+                where ait.LanguageID is  null
+          
+
+           rollback tran
+
+           -- **************
+           --To delete unnecessary item from assetitem , assetitemfields and componentpresenation table to make assetitem and assetschema should has same count of record
+           begin tran
+
+delete from assetitem where id in (
+select ait.id
+from assetschema  ass
+right  join assetitem  ait 
+on  ass.id = ait.AssetItemSchemaMapped
+where ass.id is  null)
+
+rollback tran
+begin tran
+delete from  AssetItemFields where AssetItemID in
+(
+select ait.id
+from assetschema  ass
+right  join assetitem  ait 
+on  ass.id = ait.AssetItemSchemaMapped
+where ass.id is  null
+)
+rollback tran
+begin tran
+delete from  ComponentPresentation where AssetItemID in
+(
+select ait.id
+from assetschema  ass
+right  join assetitem  ait 
+on  ass.id = ait.AssetItemSchemaMapped
+where ass.id is  null
+)
+rollback tran
+
+select count(*) from assetitem
+select count(*) from assetschema
+
+--*********************************
+
+
