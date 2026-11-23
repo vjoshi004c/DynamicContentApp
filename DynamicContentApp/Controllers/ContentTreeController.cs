@@ -178,7 +178,7 @@ namespace DynamicContentApp.Controllers
         //http://localhost:5287/CONTENTTREE/GetPageAssetAsJson?AssetItemID=DF43F6E1-53D1-4104-9BD0-877C9EFAB057
         //http://localhost:5287/CONTENTTREE/GetPageAssetAsJson?AssetItemPath=/UniversalCMS/Content/ArticleSite
         [HttpGet]
-        public IActionResult GetPageAssetAsJson(string AssetItemPath, string AssetItemID) 
+        public IActionResult GetPageAssetAsJson(string AssetItemPath, string AssetItemID, string CurrentLanguageID, string CurrentVersionID) 
         {
             string jsonOutput = string.Empty;
             string AssetItemIDNew = string.Empty;
@@ -203,7 +203,8 @@ namespace DynamicContentApp.Controllers
 
                 if (AssetItemSchemaMapped != string.Empty)
                 {
-                    List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemSchemaMapped);
+                    List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemSchemaMapped, CurrentLanguageID, CurrentVersionID);
+                   // List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemSchemaMapped, null, null);
                     if (SchemaModellist != null && SchemaModellist.Count > 0)
                     {
                         foreach (SchemaModel item in SchemaModellist)
@@ -624,7 +625,27 @@ namespace DynamicContentApp.Controllers
             }
         }
 
-        public IActionResult InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
+        public IActionResult CreateNewVersion(string CurrentSelectAssetItem, string CurrentLanguageID, string DefaultLanguageID)
+        {
+            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+           // string DefaultLanguageID = _configuration["DefaultLanguageID"];
+            bool isInsertSuccess = dynamicContentDAL.CreateNewVersion(CurrentSelectAssetItem, CurrentLanguageID, DefaultLanguageID);
+            //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
+            //{
+
+            //}
+            if (isInsertSuccess)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
+
+        public IActionResult InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped, string CurrentLanguageID, string CurrentVersionID)
         {
             List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             //if (String.IsNullOrEmpty(SchemaID))
@@ -632,7 +653,7 @@ namespace DynamicContentApp.Controllers
             //    SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             //}
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            bool isInsertSuccess = dynamicContentDAL.InsertAssetItemSchema(SchemaName, SchemaPath, SchemaParent, AssetTypeID,  AssetItemSchema, AssetItemSchemaMapped);
+            bool isInsertSuccess = dynamicContentDAL.InsertAssetItemSchema(SchemaName, SchemaPath, SchemaParent, AssetTypeID, AssetItemSchema, AssetItemSchemaMapped, CurrentLanguageID, CurrentVersionID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 
@@ -682,13 +703,13 @@ namespace DynamicContentApp.Controllers
 
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
-        public IActionResult GetSchema(string SchemaID)
+        public IActionResult GetSchema(string SchemaID, string CurrentLanguageID, string CurrentVersionID)
         {
 
            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
 
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID);
+            List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID,  CurrentLanguageID,  CurrentVersionID);
             string AssetItemPath = string.Empty;
             string AssetItemID = string.Empty;
             if (SchemaModellist != null && SchemaModellist.Count > 0)
@@ -716,7 +737,8 @@ namespace DynamicContentApp.Controllers
             // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             SchemaModel schemaModel = new SchemaModel();
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-            List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID);
+            //List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(AssetItemSchemaMapped, $('#hdn_CurrentLanguage_ID').val(), $('#hdn_CurrentVersion_ID').val());
+            List<SchemaModel> SchemaModellist = dynamicContentDAL.GetSchema(SchemaID, null, null);
             string AssetItemPath = string.Empty;
             string AssetItemID = string.Empty;
             if (SchemaModellist != null && SchemaModellist.Count > 0)

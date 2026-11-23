@@ -122,9 +122,45 @@
 });
 
  $btnNewVersion.on("click", function () {
+                //alert("btnNewVersion click" );
                // e.preventDefault(); // This stops the form from submitting and redirecting
-               // e.stopPropagation();
-                 alert("btnNewVersion click" );
+                //e.stopPropagation();
+                  const $hdnCurrentSelectAssetItem = $('#hdnCurrentSelectAssetItem');
+                      const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+                    var currentSelectAssetItem = $hdnCurrentSelectAssetItem.val();
+                    var currentLanguageID = $hdn_CurrentLanguage_ID.val();
+                    var defaultLanguageID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23";
+                     //alert("btnNewVersion click" );
+                                   //alert(currentSelectAssetItem);
+                                   // alert(currentLanguageID);
+                                   // alert(defaultLanguageID);
+
+                      $.ajax({
+                                                             type: "GET",
+                                                              url: "/ContentTree/CreateNewVersion", // PageName/MethodName
+                                                             //data: JSON.stringify(requestData),
+                                                                         data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguageID: currentLanguageID, DefaultLanguageID: defaultLanguageID },
+                                                             contentType: "application/json; charset=utf-8",
+                                                              dataType: "json",
+                                                               async: false,
+                                                             success: function (response) {
+                                                                // alert("success");
+                                                              console.log("Success:", response);
+                                                               showAlert("New version of selected asset has been created.");
+                                                                ViewContentItem($currentSelectAssetItem) ;
+                                                              
+
+                                                          },
+                                                       error: function (xhr, status, error) {
+                                                            showAlert("Oops! Error while creating new version of selected asset.");
+                                                              console.error("Error occurred:", error);
+
+                                                          }
+                                                  });
+
+
+
+
                 })
 
     function getLanguages(optionsData) {

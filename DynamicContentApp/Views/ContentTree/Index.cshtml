@@ -792,7 +792,7 @@ body {font-family: Arial;}
                                         </p>
                                     <p>
                                         <label for="schemaName">Asset Name:</label>
-                                        <input type="text" id="txtSchemaName" name="schemaName" style="width:500px;height:1em;">
+                                        <input type="text" id="txtSchemaName" name="schemaName" class="fake-disabled-input" style="width:500px;height:1em;">
                                     </p>
                                     <p>
                                         <label for="schemaPath">Asset Path:</label>
@@ -1500,7 +1500,7 @@ body {font-family: Arial;}
                     type: "GET",
                      url: "/ContentTree/GetSchema", // PageName/MethodName
                     //data: JSON.stringify(requestData),
-                    data: { SchemaID: IDSchema },
+                    data: { SchemaID: IDSchema , CurrentLanguageID: $('#hdn_CurrentLanguage_ID').val(), CurrentVersionID: $('#hdn_CurrentVersion_ID').val()  },
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                       async: false,
@@ -1786,6 +1786,10 @@ body {font-family: Arial;}
                                           //alert("Error occurred:" + error);
                                      }
                              });
+                                    $('#hdn_CurrentVersion_ID').val("1");
+                                    $('#hdn_CurrentLanguage_ID').val("ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23");
+                                    alert($('#hdn_CurrentVersion_ID').val());
+                                    alert($('#hdn_CurrentLanguage_ID').val());
                                if(txtAssetItemSchema !== "" || txtAssetItemSchema !== "NONE" && NewSchemaId != "")
                                      {
                                   //alert("InsertAssetItemSchema NewSchemaId" +NewSchemaId);
@@ -1793,7 +1797,7 @@ body {font-family: Arial;}
                                          type: "GET",
                                           url: "/ContentTree/InsertAssetItemSchema", // PageName/MethodName
                                          //data: JSON.stringify(requestData),
-                                                     data: { SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue,AssetItemSchema:txtAssetItemSchema, AssetItemSchemaMapped: NewSchemaId},
+                                                     data: { SchemaName: txtSchemaName, SchemaPath: txtSchemaPath,SchemaParent:txtSchemaParent , AssetTypeID:ddlAssetTypeValue,AssetItemSchema:txtAssetItemSchema, AssetItemSchemaMapped: NewSchemaId, CurrentLanguageID: $('#hdn_CurrentLanguage_ID').val(), CurrentVersionID: $('#hdn_CurrentVersion_ID').val() },
                                          contentType: "application/json; charset=utf-8",
                                           dataType: "json",
                                            async: false,
@@ -2419,6 +2423,13 @@ body {font-family: Arial;}
 
 
                   function getSchema( IDSchema ) {
+
+                      //const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+                            // const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+                    //const $hdn_CurrentVersion_ID_OnChange = $('#hdn_CurrentVersion_ID_OnChange');
+                    //const $hdn_CurrentLanguage_Text = $('#hdn_CurrentLanguage_Text');
+             
+                    // const $hdn_CurrentVersion_Text = $('#hdn_CurrentVersion_Text');
                       //alert(IDSchema);
 
                            var MessageSucess=  $("#lblEditMessageSucess");
@@ -2441,7 +2452,7 @@ body {font-family: Arial;}
                  type: "GET",
                   url: "/ContentTree/GetSchema", // PageName/MethodName
                  //data: JSON.stringify(requestData),
-                 data: { SchemaID: IDSchema },
+                 data: { SchemaID: IDSchema , CurrentLanguageID: $('#hdn_CurrentLanguage_ID').val(), CurrentVersionID: $('#hdn_CurrentVersion_ID').val()  },
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
                    async: false,
@@ -3792,7 +3803,7 @@ let resultnew = [];
                   type: "GET",
                    url: "/ContentTree/GetSchema", // PageName/MethodName
                   //data: JSON.stringify(requestData),
-                  data: { SchemaID: IDSchema },
+                  data: { SchemaID: IDSchema, CurrentLanguageID: $('#hdn_CurrentLanguage_ID').val(), CurrentVersionID: $('#hdn_CurrentVersion_ID').val() },
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
                   success: function (response) {
@@ -5311,7 +5322,7 @@ function openCity(evt, cityName) {
                 var pathname = window.location.pathname; // e.g., "/current-page"
                  // e.g., "?query=exam
                // alert(txtSchemaPath);
-                    var urlOfPreviewPage = protocol + '//' + host + "/CONTENTTREE/GetPageAssetAsJson?AssetItemPath=" + txtSchemaPath;
+                    var urlOfPreviewPage = protocol + '//' + host + "/CONTENTTREE/GetPageAssetAsJson?AssetItemPath=" + txtSchemaPath + "&CurrentLanguageID=" + $('#hdn_CurrentLanguage_ID').val() + "&CurrentVersionID=" + $('#hdn_CurrentVersion_ID').val();
 
 
               window.open(urlOfPreviewPage, '_blank');

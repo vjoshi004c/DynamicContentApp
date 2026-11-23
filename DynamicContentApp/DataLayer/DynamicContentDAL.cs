@@ -560,7 +560,7 @@ namespace DynamicContentApp.DataLayer
             }
         }
 
-        public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped)
+        public bool InsertAssetItemSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string AssetItemSchema, string AssetItemSchemaMapped, string CurrentLanguageID, string CurrentVersionID)
         {
             SqlConnection con = null;
             //string result = "";
@@ -579,6 +579,8 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@ParentID", SchemaParent);
                 cmd.Parameters.AddWithValue("@AssetType", AssetTypeID);
                 cmd.Parameters.AddWithValue("@AssetItemSchemaMapped", AssetItemSchemaMapped);
+                cmd.Parameters.AddWithValue("@CurrentLanguageID", CurrentLanguageID);
+                cmd.Parameters.AddWithValue("@CurrentVersionID", Convert.ToInt32(CurrentVersionID));
                 cmd.Parameters.AddWithValue("@Query", 1);
 
                 con.Open();
@@ -596,7 +598,37 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-        
+        public bool CreateNewVersion(string CurrentSelectAssetItem, string CurrentLanguageID, string DefaultLanguageID)
+        {
+            SqlConnection con = null;
+            //string result = "";
+            try
+            {
+                con = new SqlConnection(ConnenctionString);
+                SqlCommand cmd = new SqlCommand("dca_curd_asset_versions", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@AssetItemID", CurrentSelectAssetItem);
+                cmd.Parameters.AddWithValue("@Language", CurrentLanguageID);
+                cmd.Parameters.AddWithValue("@DefaultLanguage", DefaultLanguageID);
+                
+                cmd.Parameters.AddWithValue("@Query", 2);
+
+                con.Open();
+
+                cmd.ExecuteScalar();
+                // result = cmd.ExecuteScalar().ToString();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public string InsertSchema(string SchemaName, string SchemaPath, string SchemaParent, string AssetTypeID, string FieldDataSourcePath)
         {
             SqlConnection con = null;
@@ -935,7 +967,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Language", CurrentLanguage_ID);
                 cmd.Parameters.AddWithValue("@AssetItemID", CurrentSelectAssetItem);
-                cmd.Parameters.AddWithValue("@Query", 2);
+                cmd.Parameters.AddWithValue("@Query", 1);
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = cmd;
@@ -1259,7 +1291,7 @@ namespace DynamicContentApp.DataLayer
             }
        }
 
-        public List<SchemaModel> GetSchema(string SchemaID)
+        public List<SchemaModel> GetSchema(string SchemaID, string CurrentLanguageID, string CurrentVersionID)
         {
 
 
@@ -1277,6 +1309,8 @@ namespace DynamicContentApp.DataLayer
                 cmd.Parameters.AddWithValue("@SchemaPath", "");
                 cmd.Parameters.AddWithValue("@ParentID", "");
                 cmd.Parameters.AddWithValue("@AssetTypeID", "");
+                cmd.Parameters.AddWithValue("@CurrentLanguageID", CurrentLanguageID);
+                cmd.Parameters.AddWithValue("@CurrentVersionID", CurrentVersionID);
                 cmd.Parameters.AddWithValue("@Query", 4);
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();
