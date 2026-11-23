@@ -488,6 +488,7 @@ body {font-family: Arial;}
      string EnabledContextMenuAtUniversalCmsNode=Configuration.GetSection("SystemConfig")["EnabledContextMenuAtUniversalCmsNode"]; 
     }
      <input type="hidden" id="hdn_CurrentVersion_ID" value="1" />
+      <input type="hidden" id="hdn_CurrentVersion_ID_OnChange" value="false" />
    @*  <input type="hidden" id="hdn_CurrentVersion_ID" value="@entityVersion?.ID.ToString()" /> *@
     <input type="hidden" id="hdn_CurrentVersion_Text" value="@entityVersion?.Text.ToString()" />
     <input type="hidden" id="hdn_CurrentLanguage_ID" value="@entityLanguage?.ID.ToString()" />
@@ -1353,7 +1354,7 @@ body {font-family: Arial;}
                                            // if (myUl.length < 0)
                                             //{
                                                     myUl.append("<li><span  onclick=GetChildOfSelectedUL('" + record.childSchemaID + "'); tag='"+record.childSchemaID+ "' id='"+record.childSchemaID+  "' class='caret default-color'><img src='/images/icon/Icon_Folder.png'  style='width:15px;height:15px;' alt='icon' class='arrow-icon' />"+record.childSchemaName+"</span><ul id='"+record.childSchemaID+ "'  tag='"+record.childSchemaID+ "' class='nested'><li></li></ul></li>");
-                                        
+                                                 GetChildOfSelectedUL(record.childSchemaID );
                                                // }
 //myUl.append("");
                                        //addEventListener_caret();
@@ -4151,6 +4152,48 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
             }
         });
     }
+    function getLastVersion(lastVersion, currentSelectAssetItem , currentLanguage_ID) {
+       //alert("getLastVersion"  +currentSelectAssetItem + currentLanguage_ID);
+
+        $.ajax({
+            type: "GET",
+            url: "/ContentTree/GetLastVersion", // PageName/MethodName
+            //data: JSON.stringify(requestData),
+              data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguage_ID: currentLanguage_ID },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                //alert(response.message + " Status is: " + response.status);
+                //alert("Total records received: " + response.length);
+                 if (response.length >0){
+                $.each(response, function (index, record) {
+                    
+                    //const newElement = "{ value:\"" + record.number + "\", text: \"" + record.text +"\"}";
+                    //alert(newElement);
+                    //let newItem = { value: record.number, text: record.text };
+                   // optionsVersionData.push(newItem);
+                   lastVersion= record.lastVersion;
+                  // alert("Total records received: " + response.length + " "+lastVersion);
+                    const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+                   $hdn_CurrentVersion_ID.val(lastVersion);
+                });
+                 }
+                 else
+                 {
+                      const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
+                     $hdn_CurrentVersion_ID.val("1");
+                            lastVersion= "1";
+                 }
+
+            },
+            error: function (xhr, status, error) {
+
+                console.error("Error occurred:", error);
+                alert("Error occurred:" + error);
+            }
+        });
+    }
      function ViewContentItemAtStartUp( currentitemid) {
           //$("#btnEditSchemaFields").removeClass("fake-disabled-button");
                             closeAllViewPanels();
@@ -4191,6 +4234,10 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                         
                                     }
                                 });
+                                var lastVersion = "1";
+                                getLastVersion(lastVersion, currentitemid , $hdn_CurrentLanguage_ID.val()) ;
+                                //alert("lastversoin" +lastVersion);
+                                   //$hdn_CurrentVersion_ID.val(lastVersion);
                                  $selectVersion.val($hdn_CurrentVersion_ID.val());
                                     //************************************************** */
                             //$("#editSchemaForm #txtSchemaName").val(content);
@@ -4222,7 +4269,7 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                               getSchema( currentitemid );
                               openCity1(event, 'content')
 
-                              // alert("ViewContentItem"+ currentitemid);
+                             // alert("ViewContentItem"+ currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
                                    var assetid = $("#editSchemaForm #txtSchemaID").val();
                                  getAssetMasterLayoutDetails(assetid);
@@ -4251,7 +4298,49 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                         
                                     }
                                 });
-                                $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                var lastVersion = "1";
+                                // alert($hdn_CurrentVersion_ID.val());
+                                //alert("lastVersion"+ lastVersion);
+                                  const $hdn_CurrentVersion_ID_OnChange = $('#hdn_CurrentVersion_ID_OnChange');
+                                 // alert($hdn_CurrentVersion_ID_OnChange.val());
+                               if($hdn_CurrentVersion_ID_OnChange.val() ==="false" )
+                                    {
+                                        //alert("if $hdn_CurrentVersion_ID is 0 and hdn_CurrentVersion_ID_OnChange is false");
+                                            getLastVersion(lastVersion, currentitemid , $hdn_CurrentLanguage_ID.val()) ;
+                                             $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                             var selectedText = $selectVersion.find("option:selected").text();
+                                            $("#txtCurrentVersion").val(selectedText);
+                                            $hdn_CurrentVersion_ID_OnChange.val("false");
+                                    }
+                                    else 
+                                    {
+                                        if($hdn_CurrentVersion_ID.val() ==="0")
+                                            {
+                                                  //alert("if $hdn_CurrentVersion_ID is 0 and hdn_CurrentVersion_ID_OnChange is true");
+                                                getLastVersion(lastVersion, currentitemid , $hdn_CurrentLanguage_ID.val()) ;
+                                                $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                              
+                                                 var selectedText = $selectVersion.find("option:selected").text();
+                                                    $("#txtCurrentVersion").val(selectedText);
+                                                 $hdn_CurrentVersion_ID_OnChange.val("false");
+                                            }
+                                            else 
+                                            {
+                                                    //alert("if $hdn_CurrentVersion_ID is not  and hdn_CurrentVersion_ID_OnChange is true");
+                                                    $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                                     var selectedText = $selectVersion.find("option:selected").text();
+                                                    $("#txtCurrentVersion").val(selectedText);
+                                                     $hdn_CurrentVersion_ID_OnChange.val("false");
+                                            }
+                                         
+                                    }
+                               
+                               
+                                  // $hdn_CurrentVersion_ID.val(lastVersion);
+                                 $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                // alert("lastVersion" +lastVersion);
+                                //    hdn_CurrentVersion_ID.val(lastVersion);
+                                // $selectVersion.val($hdn_CurrentVersion_ID.val());
                                     //************************************************** */
                             //$("#editSchemaForm #txtSchemaName").val(content);
                             //const innerElement = editdiv.querySelector('h2 span');

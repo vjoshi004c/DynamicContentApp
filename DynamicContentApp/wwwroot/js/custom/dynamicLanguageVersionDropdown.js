@@ -12,6 +12,7 @@
     const $hdnCurrentSelectAssetParentItem = $('#hdnCurrentSelectAssetParentItem');
 
     const $hdn_CurrentLanguage_ID = $('#hdn_CurrentLanguage_ID');
+    const $hdn_CurrentVersion_ID_OnChange = $('#hdn_CurrentVersion_ID_OnChange');
     const $hdn_CurrentLanguage_Text = $('#hdn_CurrentLanguage_Text');
     const $hdn_CurrentVersion_ID = $('#hdn_CurrentVersion_ID');
      const $hdn_CurrentVersion_Text = $('#hdn_CurrentVersion_Text');
@@ -23,7 +24,7 @@
     getLanguages(optionsData);
     //alert($hdnCurrentSelectAssetItem.val());
    // alert( $hdn_CurrentLanguage_ID.val());
-    getVersion(optionsVersionData,$hdnCurrentSelectAssetItem.val() , $hdn_CurrentLanguage_ID.val()) ;
+    //getVersion(optionsVersionData,$hdnCurrentSelectAssetItem.val() , $hdn_CurrentLanguage_ID.val()) ;
 
     $.each(optionsData, function (index, item) {
         // Validate that both value and text exist
@@ -96,6 +97,7 @@
         //}
     });
     $selectVersion.on("change", function () {
+        // alert("You selected value -" + selectedID);
    // var txtFieldDatasource = $(this).closest('form').find('input[id="txtFieldDatasource"]').css("display", "none");
    // $(this).closest('form').find('input[id="txtFieldDatasource"]').val('');
     var CurrentSelectAssetItem = $hdnCurrentSelectAssetItem.val();
@@ -105,7 +107,7 @@
     var selectedID = $(this).val();
     var selectedText = $(this).find("option:selected").text();
    
-    // alert("You selected value -" + selectedID);
+    
     // alert("You selected text -" + selectedText);
        $("#txtCurrentVersion").val(selectedText);
     setVersion(selectedID, selectedText ,CurrentSelectAssetItem)
@@ -200,9 +202,9 @@
                             if (response === true){
                                                     $hdn_CurrentLanguage_ID.val(selectedLanguageID);
                                                     $hdn_CurrentLanguage_Text.val(selectedLanguageTText);
-                                                            showAlert("Selected language set successfully.");
+                                                           // showAlert("Selected language set successfully.");
                                                                          //alert(assetItemTreeeID);
-                                                                // ViewContentItem( currentSelectAssetItem) 
+                                                                 ViewContentItem( currentSelectAssetItem) 
                                                              }
                                                               else {
                                                                  showAlert("Oops! Error while setting language.");
@@ -219,41 +221,78 @@
                         }
                     });
                 }
-                function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage_ID) {
-                       //alert("getFieldType"  +currentSelectAssetItem + currentLanguage_ID);
+                // function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage_ID) {
+                //        //alert("getFieldType"  +currentSelectAssetItem + currentLanguage_ID);
 
-                        $.ajax({
-                            type: "GET",
-                            url: "/ContentTree/GetVersions", // PageName/MethodName
-                            //data: JSON.stringify(requestData),
-                              data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguage_ID: currentLanguage_ID },
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            async: false,
-                            success: function (response) {
-                                //alert(response.message + " Status is: " + response.status);
-                                //alert("Total records received: " + response.length);
-                                 if (response.length >0){
-                                $.each(response, function (index, record) {
-                                    const newElement = "{ value:\"" + record.number + "\", text: \"" + record.text +"\"}";
-                                    //alert(newElement);
-                                    let newItem = { value: record.number, text: record.text };
-                                    optionsVersionData.push(newItem);
+                //         $.ajax({
+                //             type: "GET",
+                //             url: "/ContentTree/GetVersions", // PageName/MethodName
+                //             //data: JSON.stringify(requestData),
+                //               data: { CurrentSelectAssetItem: currentSelectAssetItem, CurrentLanguage_ID: currentLanguage_ID },
+                //             contentType: "application/json; charset=utf-8",
+                //             dataType: "json",
+                //             async: false,
+                //             success: function (response) {
+                //                 //alert(response.message + " Status is: " + response.status);
+                //                 //alert("Total records received: " + response.length);
+                //                  if (response.length >0){
+                //                 $.each(response, function (index, record) {
+                //                     const newElement = "{ value:\"" + record.number + "\", text: \"" + record.text +"\"}";
+                //                     //alert(newElement);
+                //                     let newItem = { value: record.number, text: record.text };
+                //                     optionsVersionData.push(newItem);
 
-                                });
-                                 }
-                                 else
-                                 {
-                                     showAlert("Oops! No version availabel for current selected languagae");
-                                 }
+                //                 });
+                //                  }
+                //                  else
+                //                  {
+                //                      showAlert("Oops! No version available for current selected languagae");
+                //                  }
 
-                            },
-                            error: function (xhr, status, error) {
+                //             },
+                //             error: function (xhr, status, error) {
 
-                                console.error("Error occurred:", error);
-                                alert("Error occurred:" + error);
-                            }
-                        });
-                    }
+                //                 console.error("Error occurred:", error);
+                //                 alert("Error occurred:" + error);
+                //             }
+                //         });
+                //     }
+                function setVersion(selectedVersionID, selectedVersionText ,currentSelectAssetItem) {
+                  
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/ContentTree/setVersion", // PageName/MethodName
+                        //data: JSON.stringify(requestData),
+                        data: { SelectedVersionID: selectedVersionID, SelectedVersionText: selectedVersionText, CurrentSelectAssetItem: currentSelectAssetItem },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (response) {
+                            if (response === true){
+                                                   // $hdn_CurrentVersion.val(selectedVersionText);
+                                                    $hdn_CurrentVersion_ID.val(selectedVersionID);
+                                                    $hdn_CurrentVersion_ID_OnChange.val("true");
+                                                    $hdn_CurrentVersion_Text.val(selectedVersionText);
+                                                            showAlert("Selected Version set successfully.");
+                                                                        // alert($hdn_CurrentVersion_ID.val());
+                                                                 ViewContentItem( currentSelectAssetItem) 
+                                                             }
+                                                              else {
+                                                                 showAlert("Oops! Error while setting version.");
+                                                                      //alert("Failed while saving");
+                                                                            // ViewContentItem( currentSelectAssetItem)
+                                                                }
+
+                        },
+                        error: function (xhr, status, error) {
+
+                            console.error("Error occurred:", error);
+                           // alert("Error occurred:" + error);
+                              showAlert("Oops! Error while setting version.");
+                        }
+                    });
+                }
+
 
 });

@@ -181,6 +181,13 @@ h2 {
     background-color: #faf1eb !important;
     border: 5px solid #F7E0D0 !important;
 }
+.caret-down .highlight {
+    color: #6F4E37 !important;
+    font-weight: bold !important;
+    /*background-color: #C19A6B !important;*/
+    background-color: rgb(212, 205, 205) !important;
+    padding: 2px;
+}
 
 
  

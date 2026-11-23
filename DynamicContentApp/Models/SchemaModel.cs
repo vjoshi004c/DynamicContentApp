@@ -133,6 +133,7 @@
         public string? Number { get; set; }
         public string? Text { get; set; }
         public string? AssetItemId { get; set; }
+        public string? LastVersion { get; set; }
 
 
 

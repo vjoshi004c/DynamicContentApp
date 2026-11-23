@@ -781,7 +781,7 @@ namespace DynamicContentApp.Controllers
         {
 
             // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
-            if (String.IsNullOrEmpty(CurrentSelectAssetItem))
+            if (String.IsNullOrEmpty(CurrentSelectAssetItem))   
             {
                 CurrentSelectAssetItem = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
             }
@@ -798,7 +798,29 @@ namespace DynamicContentApp.Controllers
             }
             return Ok(VersionList);
         }
+        [HttpGet]
+        //[HttpGet("Index/{SchemaID}")]
+        public IActionResult GetLastVersion(string CurrentSelectAssetItem, string CurrentLanguage_ID)
+        {
 
+            // string SchemaID = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            //if (String.IsNullOrEmpty(CurrentSelectAssetItem))
+            //{
+            //    CurrentSelectAssetItem = "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE";
+            //}
+            //if (CurrentSelectAssetItem == "4FDB8DDB-C19C-4DCA-AD64-5C2A52F969DE")
+            //{
+            //    CurrentLanguage_ID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23";
+            //}
+
+            DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
+            List<VersionModel> VersionList = dynamicContentDAL.GetLastVersion(CurrentSelectAssetItem, CurrentLanguage_ID);
+            if (VersionList != null && VersionList.Count == 0)
+            {
+
+            }
+            return Ok(VersionList);
+        }
         [HttpGet]
         //[HttpGet("Index/{SchemaID}")]
         public IActionResult setLanguages(string SelectedLanguageID, string SelectedLanguageText, string CurrentSelectAssetItem)
