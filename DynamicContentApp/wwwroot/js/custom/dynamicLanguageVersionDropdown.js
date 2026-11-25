@@ -130,6 +130,7 @@
                     var currentSelectAssetItem = $hdnCurrentSelectAssetItem.val();
                     var currentLanguageID = $hdn_CurrentLanguage_ID.val();
                     var defaultLanguageID = "ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23";
+
                      //alert("btnNewVersion click" );
                                    //alert(currentSelectAssetItem);
                                    // alert(currentLanguageID);
@@ -150,7 +151,7 @@
                                                                 // alert("success");
                                                               console.log("Success:", response);
                                                                showAlert("New version of selected asset has been created.");
-                                                                ViewContentItem($currentSelectAssetItem) ;
+                                                                ViewContentItem(currentSelectAssetItem) ;
                                                               
 
                                                           },
@@ -241,6 +242,16 @@
                             if (response === true){
                                                     $hdn_CurrentLanguage_ID.val(selectedLanguageID);
                                                     $hdn_CurrentLanguage_Text.val(selectedLanguageTText);
+                                                      $hdn_CurrentVersion_ID_OnChange.val("true");
+
+                                                       var lastVersion = "1";
+                                                         //alert("getLastVersion" +$hdn_CurrentVersion_ID.val());
+                                                         getLastVersion(lastVersion, currentSelectAssetItem , $hdn_CurrentLanguage_ID.val()) ;
+                                                     
+                                                        //$hdn_CurrentVersion_ID.val(lastVersion);
+                                                        $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                                           //alert("lastversoin" +$hdn_CurrentVersion_ID.val());
+
                                                            // showAlert("Selected language set successfully.");
                                                                          //alert(assetItemTreeeID);
                                                                  ViewContentItem( currentSelectAssetItem) 
