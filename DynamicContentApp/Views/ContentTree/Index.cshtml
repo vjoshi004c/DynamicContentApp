@@ -4212,6 +4212,7 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
         });
     }
      function ViewContentItemAtStartUp( currentitemid) {
+
           //$("#btnEditSchemaFields").removeClass("fake-disabled-button");
                             closeAllViewPanels();
                             editdiv.style.display = "block";
@@ -4223,6 +4224,7 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                 
                                getSchema( currentitemid );
                                openCity1(event, 'content')
+
 
                               // alert("ViewContentItem"+ currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
@@ -4288,8 +4290,31 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
                               // innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
                                //  innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span><span style=\" font-size:0.6em !important;font-style:italic !important;\" >[SelectedLanguage -" +$('#hdn_CurrentLanguage_Text').val() +"]</span></span><span style=\" font-size:0.6em !important;font-style:italic !important;\" >[Selected Version -" +$('#hdn_CurrentVersion_ID').val() +"]</span>";
-                               
-                                  getSchema( currentitemid );
+                                getSchema( currentitemid );
+
+                        //************************* For other section except content to using only englihs lanugage and disabled  multi language and versioning support it*/
+
+                               var assetpath = $("#hdnAssetPath").val();
+                                 //var assetpath = $("#editSchemaForm #txtSchemaPath").val();
+
+                                  if (assetpath.indexOf("/Content/" ) == -1) {
+                                 //if (assetpath !=="/UniversalCMS/Content" ||assetpath.indexOf("/Content/" ) == -1) {
+                                 // alert("ViewContentItem" + currentitemid + " and assetpath" + assetpath);
+                                       $('#hdn_CurrentLanguage_ID').val('ABA8A444-C2F0-4EF5-AD74-A7CDB1D90C23');
+                                        $('#hdn_CurrentVersion_Text').val('1');
+                                        $('#ddlLanguage').val($('#hdn_CurrentLanguage_ID').val());
+                                        $('#ddlVersion').val($('#hdn_CurrentVersion_ID').val());
+
+                                    var languagetext = $("#ddlLanguage option[value='" + $('#hdn_CurrentLanguage_ID').val() + "']").text();
+                                    //alert(languagetext);
+                                    $('#hdn_CurrentLanguage_Text').val(languagetext);
+                                     $("#txtCurrentLanguage").val( $('#hdn_CurrentLanguage_Text').val());
+                                      // $('#hdn_CurrentLanguage_Text').val(languagetext);
+                                      // $('#hdn_CurrentVersion_ID').val('1');
+                                       
+                                 }
+                                //************************* For other section except content to using only englihs lanugage and disabled  multi language and versioning support it */
+                                 
                                openCity1(event, 'content')
 
                              // alert("ViewContentItem"+ currentitemid);
@@ -4297,6 +4322,8 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                    var assetid = $("#editSchemaForm #txtSchemaID").val();
                                  getAssetMasterLayoutDetails(assetid);
                                    getAssetComponentDetails('', assetid)
+
+                                    
 
                                   
                                    //******************************************* to get list of version of item*/
