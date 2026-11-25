@@ -598,9 +598,10 @@ namespace DynamicContentApp.DataLayer
                 con.Close();
             }
         }
-        public bool CreateNewVersion(string CurrentSelectAssetItem, string CurrentLanguageID, string DefaultLanguageID)
+        public string CreateNewVersion(string CurrentSelectAssetItem, string CurrentLanguageID, string DefaultLanguageID)
         {
             SqlConnection con = null;
+            string newId = string.Empty;
             //string result = "";
             try
             {
@@ -616,13 +617,20 @@ namespace DynamicContentApp.DataLayer
 
                 con.Open();
 
-                cmd.ExecuteScalar();
+                //cmd.ExecuteScalar();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    newId = Convert.ToString(result);
+                    //Console.WriteLine($"Newly Inserted ID: {newId}");
+                }
                 // result = cmd.ExecuteScalar().ToString();
-                return true;
+                return newId;
             }
             catch (Exception ex)
             {
-                return false;
+                return string.Empty;
             }
             finally
             {
@@ -967,7 +975,7 @@ namespace DynamicContentApp.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Language", CurrentLanguage_ID);
                 cmd.Parameters.AddWithValue("@AssetItemID", CurrentSelectAssetItem);
-                cmd.Parameters.AddWithValue("@Query", 1);
+                cmd.Parameters.AddWithValue("@Query", 3);
                 con.Open();
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = cmd;

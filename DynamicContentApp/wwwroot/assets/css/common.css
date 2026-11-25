@@ -175,6 +175,7 @@ input[id="username"] {
 h2 {
     background-color: #faf1eb !important;
     width: 100% !important;
+    padding: 5px !important;
 }
 
 .modal-content {

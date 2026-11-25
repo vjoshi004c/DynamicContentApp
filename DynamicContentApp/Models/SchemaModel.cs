@@ -103,6 +103,15 @@
         public string? Message { get; set; }
 
     }
+    public class NewVersionInsertModel
+    {
+        public bool? Status { get; set; }
+        public string? NewVersionId { get; set; }
+        public string? Error { get; set; }
+
+        public string? Message { get; set; }
+
+    }
 
     public class SchemaFieldType
     {

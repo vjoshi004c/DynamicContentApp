@@ -1754,6 +1754,7 @@ body {font-family: Arial;}
                                          dataType: "json",
                                            async: false,
                                         success: function (response) {
+                                           // alert("success with new id" + NewSchemaId);
                                               NewSchemaId=response.newSchemaId;
                                               //alert("SaveSchema"+response.newSchemaId);
                                          console.log("Success:", response);
@@ -2314,6 +2315,7 @@ body {font-family: Arial;}
                                           success: function (response) {
                                               //alert("success");
                                           // alert("Success:", response);
+                                          //$('#hdn_CurrentVersion_ID_OnChange').val("true"); // To refresh the version dropdown on change of asset item schema
                                             showAlert("Asset successfully updated.");
                                               MessageSucess.css('display', 'none');
                                              MessageError.css('display', 'none');
@@ -3691,6 +3693,7 @@ body {font-family: Arial;}
                                              if (response === true) {
                                                 showAlert("Asset contnet successfully updated.");
                                                              //alert(assetItemTreeeID);
+                                                              $('#hdn_CurrentVersion_ID_OnChange').val("true"); // To refresh the version dropdown on change of asset item schema
                                                      ViewContentItem( assetItemTreeeID) 
                                                  }
                                                   else {
@@ -4213,9 +4216,10 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                               var content=$("#" +currentitemid).html();
                             //innerElement.innerHTML = currentitemid;
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
-                               innerElement.innerHTML = "<span style=\"color:#DE2007;\">" +" UniversalCMS" +"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
-                              getSchema( currentitemid );
-                              openCity1(event, 'content')
+                              // innerElement.innerHTML = "<span style=\"color:#DE2007;\">" +" UniversalCMS" +"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
+                                
+                              // getSchema( currentitemid );
+                              // openCity1(event, 'content')
 
                               // alert("ViewContentItem"+ currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
@@ -4250,6 +4254,9 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                 //alert("lastversoin" +lastVersion);
                                    //$hdn_CurrentVersion_ID.val(lastVersion);
                                  $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + "UniversalCMS" +"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span><span style=\" color:#C19A6B;font-size:0.6em !important;font-style:italic !important;\" >[SelectedLanguage -" +$('#hdn_CurrentLanguage_Text').val() +"]</span></span><span style=\" color:#C19A6B;font-size:0.6em !important;font-style:italic !important;\" >[Selected Version -" +$('#hdn_CurrentVersion_ID').val() +"]</span>";
+                                     getSchema( currentitemid );
+                                    openCity1(event, 'content')
                                     //************************************************** */
                             //$("#editSchemaForm #txtSchemaName").val(content);
                             //const innerElement = editdiv.querySelector('h2 span');
@@ -4276,9 +4283,11 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                               var content=$("#" +currentitemid).html();
                             //innerElement.innerHTML = currentitemid;
                             // innerElement.innerHTML = content+ " {" +currentitemid +"}";
-                               innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
-                              getSchema( currentitemid );
-                              openCity1(event, 'content')
+                              // innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span>";
+                               //  innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content+"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span><span style=\" font-size:0.6em !important;font-style:italic !important;\" >[SelectedLanguage -" +$('#hdn_CurrentLanguage_Text').val() +"]</span></span><span style=\" font-size:0.6em !important;font-style:italic !important;\" >[Selected Version -" +$('#hdn_CurrentVersion_ID').val() +"]</span>";
+                               
+                              //    getSchema( currentitemid );
+                              // openCity1(event, 'content')
 
                              // alert("ViewContentItem"+ currentitemid);
                                   //alert($("#editSchemaForm #txtSchemaID").val());
@@ -4349,6 +4358,9 @@ function getVersion(optionsVersionData, currentSelectAssetItem , currentLanguage
                                
                                   // $hdn_CurrentVersion_ID.val(lastVersion);
                                  $selectVersion.val($hdn_CurrentVersion_ID.val());
+                                 innerElement.innerHTML = "<span style=\"color:#DE2007;\">" + content +"</span> <span style=\" font-size:0.6em !important;font-style:italic !important;\" >{ Content Tree ID -" +currentitemid +"}</span><span style=\" color:#C19A6B;font-size:0.6em !important;font-style:italic !important;\" >[SelectedLanguage -" +$('#hdn_CurrentLanguage_Text').val() +"]</span></span><span style=\" color:#C19A6B;font-size:0.6em !important;font-style:italic !important;\" >[Selected Version -" +$('#hdn_CurrentVersion_ID').val() +"]</span>";
+                                    getSchema( currentitemid );
+                                    openCity1(event, 'content')
                                 // alert("lastVersion" +lastVersion);
                                 //    hdn_CurrentVersion_ID.val(lastVersion);
                                 // $selectVersion.val($hdn_CurrentVersion_ID.val());

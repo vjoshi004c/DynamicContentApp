@@ -134,6 +134,7 @@
                                    //alert(currentSelectAssetItem);
                                    // alert(currentLanguageID);
                                    // alert(defaultLanguageID);
+                                   var NewVersionId='1';
 
                       $.ajax({
                                                              type: "GET",
@@ -144,6 +145,8 @@
                                                               dataType: "json",
                                                                async: false,
                                                              success: function (response) {
+                                                                  NewVersionId=response.newVersionId;
+                                                                   $('#hdn_CurrentVersion_ID').val(NewVersionId);
                                                                 // alert("success");
                                                               console.log("Success:", response);
                                                                showAlert("New version of selected asset has been created.");

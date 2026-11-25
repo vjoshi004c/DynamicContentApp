@@ -627,21 +627,35 @@ namespace DynamicContentApp.Controllers
 
         public IActionResult CreateNewVersion(string CurrentSelectAssetItem, string CurrentLanguageID, string DefaultLanguageID)
         {
-            List<ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
+            NewVersionInsertModel newVersionInsertModel = new NewVersionInsertModel();
+            List <ContentTreeModel> ContentTreeModellist = new List<ContentTreeModel>();
             DynamicContentDAL dynamicContentDAL = new DynamicContentDAL(_logger, _configuration);
-           // string DefaultLanguageID = _configuration["DefaultLanguageID"];
-            bool isInsertSuccess = dynamicContentDAL.CreateNewVersion(CurrentSelectAssetItem, CurrentLanguageID, DefaultLanguageID);
+            // string DefaultLanguageID = _configuration["DefaultLanguageID"];
+            string isInsertSuccess = dynamicContentDAL.CreateNewVersion(CurrentSelectAssetItem, CurrentLanguageID, DefaultLanguageID);
             //if (ContentTreeModellist != null && ContentTreeModellist.Count == 0)
             //{
 
             //}
-            if (isInsertSuccess)
+            //if (isInsertSuccess)
+            //{
+            //    return Ok(true);
+            //}
+            //else
+            //{
+            //    return Ok(false);
+            //}
+            if (isInsertSuccess != string.Empty)
             {
-                return Ok(true);
+                newVersionInsertModel.NewVersionId = isInsertSuccess;
+                newVersionInsertModel.Status = true;
+
+                return Ok(newVersionInsertModel);
             }
             else
             {
-                return Ok(false);
+                newVersionInsertModel.NewVersionId = string.Empty;
+                newVersionInsertModel.Status = true;
+                return Ok(newVersionInsertModel);
             }
         }
 
